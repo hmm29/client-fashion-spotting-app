@@ -1,0 +1,3 @@
+rootProject.name = 'Eyespot'
+
+include ':app'
