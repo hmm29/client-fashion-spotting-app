@@ -1,37 +1,41 @@
-# eyespot
-Celena client application built with React Native
+# Eyespot
+A Celena client application built with React Native.
+
+Waffle.io Feature Tracker: COMING SOON
 
 ## FEATURES
 						
-Email Login & User Profiles
-­ username, email, password ­
+#### Email Login & User Profiles
+username, email, password
 						
-Facebook Login
-­ Profile picture imported from FB
-­ uses Firebase Fb Authentication ­
+#### Facebook Login
+Profile picture imported from FB
+uses Firebase Fb Authentication
 						
-Social Sharing
-­ Facebook, Twitter, Email, Text ­ 
+#### Social Sharing
+Facebook, Twitter, Email, Text
 						
-Camera & Photos
-­ front, back, upload from library ­
+#### Camera & Photos
+front, back, upload from library
 						
-Geolocation
-­ Google Maps Api, places, long/lat ­ 
+#### Geolocation
+Google Maps Api, places, long/lat
 						
-Maps View
-­ enable markers ­
+#### Map Views
+enable markers
 						
-Search				
+#### Search
+search with parameters
 					
-In­app notifications
-­ real­time notifications ­ 			
+#### In-app Notifications
+real-time notifications			
 	
-Analytics		
-­ unimited reporting for up to 10 custom events
-­ basic Firebase analytics that come with: Firebase setup
-Active users
-Retention cohort
-User engagement
-Location
-Demographics
+#### Analytics		
+unimited reporting for up to 10 custom events,
+
+basic Firebase analytics that come with Firebase setup:
+* Active users
+* Retention cohort
+* User engagement
+* Location
+* Demographics
