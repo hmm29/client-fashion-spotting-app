@@ -1,7 +1,7 @@
 /**
- * MapView.js
+ * MapsView.js
  * See product location on map
  *
- * @providesModule MapView
+ * @providesModule MapsView
  * @flow
  */

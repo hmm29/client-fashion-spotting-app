@@ -28,7 +28,7 @@ class Eyespot extends Component {
           style={styles.nav}
           initialRoute={{
             title: "",
-            component: null,
+            component: View,
             passProps: onExit,
           }}
           itemWrapperStyle={styles.itemWrapper} />
