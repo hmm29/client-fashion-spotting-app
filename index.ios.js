@@ -22,7 +22,6 @@ class Eyespot extends Component {
         <StatusBar barStyle="light-content" />
         <NavigatorIOS
           navigationBarHidden={true}
-          style={styles.nav}
           initialRoute={{
             title: '',
             component: View,
@@ -40,10 +39,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#000'
   },
   itemWrapper: {
-
-  },
-  nav: {
-
+    backgroundColor: '#fff'
   }
 });
 
