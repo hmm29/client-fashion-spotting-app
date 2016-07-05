@@ -16,3 +16,11 @@ const {
 const Button = require('apsl-react-native-button');
 const { Form } = require('tcomb-form-native').form;
 const FormValidator = require('validate.js');
+
+var LoginPage = React.createClass({
+    render() {
+
+    }
+});
+
+module.exports = LoginPage;
