@@ -19,15 +19,12 @@ class Eyespot extends Component {
 
     return (
       <View style={styles.container}>
-        <StatusBar
-            translucent={true}
-            backgroundColor="rgba(0, 0, 0, 0.2)"
-            barStyle="light-content" />
+        <StatusBar barStyle="light-content" />
         <NavigatorIOS
           navigationBarHidden={true}
           style={styles.nav}
           initialRoute={{
-            title: "",
+            title: '',
             component: View,
             passProps: onExit,
           }}
@@ -39,7 +36,8 @@ class Eyespot extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#000'
   },
   itemWrapper: {
 
