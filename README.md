@@ -1,6 +1,8 @@
 # eyespot
 Celena client application built with React Native
 
+Waffle.io Feature Tracker: [https://waffle.io/hmm29/eyespot](https://waffle.io/hmm29/eyespot)
+
 ## FEATURES
 						
 Email Login & User Profiles
