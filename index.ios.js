@@ -1,27 +1,37 @@
-/* @flow */
+/**
+ * Eyespot
+ * Top-level app component 
+ */
+'use strict';
 
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  NavigatorIOS,
+  StatusBar,
   StyleSheet,
-  Text,
   View
 } from 'react-native';
 
 class Eyespot extends Component {
   render() {
+    const onExit = {};
+
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <StatusBar
+            translucent={true}
+            backgroundColor="rgba(0, 0, 0, 0.2)"
+            barStyle="light-content" />
+        <NavigatorIOS
+          navigationBarHidden={true}
+          style={styles.navigator}
+          initialRoute={{
+            title: "",
+            component: null,
+            passProps: onExit,
+          }}
+          itemWrapperStyle={styles.itemWrapper} />
       </View>
     );
   }
@@ -29,21 +39,14 @@ class Eyespot extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    flex: 1
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  itemWrapper: {
+
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  navigator: {
+
+  }
 });
 
 AppRegistry.registerComponent('Eyespot', () => Eyespot);
