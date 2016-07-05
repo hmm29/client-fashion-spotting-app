@@ -1,7 +1,7 @@
 # Eyespot
 A Celena client application built with React Native.
 
-Waffle.io Feature Tracker: COMING SOON
+Waffle.io Feature Tracker: [https://waffle.io/CelenaConsortium/eyespot](https://waffle.io/CelenaConsortium/eyespot)
 
 ## FEATURES
 						
