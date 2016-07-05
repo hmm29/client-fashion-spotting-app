@@ -1,6 +1,16 @@
 package com.eyespot;
 
 import com.facebook.react.ReactActivity;
+import com.cmcewen.blurview.BlurViewPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import cl.json.RNSharePackage;
+import com.airbnb.android.react.maps.MapsPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
+import com.imagepicker.ImagePickerPackage;
+import com.evollu.react.fa.FIRAnalyticsPackage;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.magus.fblogin.FacebookLoginPackage;
+import com.microsoft.codepush.react.CodePush;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 
@@ -34,7 +44,17 @@ public class MainActivity extends ReactActivity {
     @Override
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
-            new MainReactPackage()
+            new MainReactPackage(),
+            new BlurViewPackage(),
+            new VectorIconsPackage(),
+            new RNSharePackage(),
+            new MapsPackage(),
+            new LinearGradientPackage(),
+            new ImagePickerPackage(),
+            new FIRAnalyticsPackage(),
+            new FBSDKPackage(),
+            new FacebookLoginPackage(),
+            new CodePush(null, this, BuildConfig.DEBUG)
         );
     }
 }

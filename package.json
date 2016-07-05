@@ -6,7 +6,46 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "apsl-react-native-button": "git+https://git@github.com/bartonhammond/react-native-button.git",
+    "crc32": "~0.2.2",
+    "firebase": "^2.4.2",
+    "google-maps-api": "^2.0.1",
+    "immutable": "^3.7.6",
+    "lodash": "~4.13.1",
     "react": "15.2.0",
-    "react-native": "^0.28.0"
+    "react-native": "^0.28.0",
+    "react-native-blur": "^1.0.0",
+    "react-native-code-push": "^1.13.2-beta",
+    "react-native-facebook-login": "^1.2.0",
+    "react-native-fbsdk": "^0.2.1",
+    "react-native-firebase-analytics": "^1.0.3",
+    "react-native-gifted-listview": "0.0.15",
+    "react-native-image-picker": "^0.20.0",
+    "react-native-image-progress": "^0.5.0",
+    "react-native-linear-gradient": "~1.5.0",
+    "react-native-maps": "^0.6.0",
+    "react-native-navbar": "git+https://git@github.com/react-native-fellowship/react-native-navbar.git",
+    "react-native-parallax-view": "^2.0.5",
+    "react-native-photo-browser": "^0.2.1",
+    "react-native-share": "^1.0.11",
+    "react-native-swiper": "^1.4.6",
+    "react-native-vector-icons": "^2.0.3",
+    "react-timer-mixin": "~0.13.3",
+    "tcomb-form-native": "^0.5.1",
+    "validate.js": "^0.10.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "~6.1.0",
+    "babel-jest": "~13.0.0",
+    "babel-polyfill": "~6.9.1",
+    "eslint": "~2.13.1",
+    "eslint-plugin-react": "~5.2.2",
+    "istanbul": "^0.4.2",
+    "jest-cli": "~13.0.0",
+    "react-addons-test-utils": "^15.2.0"
+  },
+  "engines": {
+    "node": ">=4.0",
+    "npm": ">=3.0"
   }
 }
