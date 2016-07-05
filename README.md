@@ -1,5 +1,5 @@
-# eyespot
-Celena client application built with React Native
+# Eyespot
+A Celena client application built with React Native.
 
 Waffle.io Feature Tracker: [https://waffle.io/hmm29/eyespot](https://waffle.io/hmm29/eyespot)
 
@@ -26,14 +26,14 @@ Maps View
 						
 Search				
 					
-In­app notifications
+In-app Notifications
 ­ real­time notifications ­ 			
 	
 Analytics		
 ­ unimited reporting for up to 10 custom events
-­ basic Firebase analytics that come with: Firebase setup
-Active users
-Retention cohort
-User engagement
-Location
-Demographics
+­ basic Firebase analytics that come with Firebase setup:
+* Active users
+* Retention cohort
+* User engagement
+* Location
+* Demographics
