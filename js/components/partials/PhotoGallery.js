@@ -5,15 +5,26 @@
  * @providesModule PhotoGallery
  * @flow
  */
+'use strict';
 
- const PhotoBrowser = require('react-native-photo-browser');
+const React = require('react');
+const ReactNative = require('react-native');
+const {
+  Text,
+  View,
+  StyleSheet
+} = ReactNative;
 
- var PhotoGallery = React.createClass({
+const PhotoBrowser = require('react-native-photo-browser');
+
+var PhotoGallery = React.createClass({
     render() {
 
     }
- });
+});
 
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
 
- });
+});
+
+module.exports = PhotoGallery;
