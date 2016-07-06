@@ -18,6 +18,7 @@ import {
 
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
+import { LoginManager } from 'react-native-fbsdk';
 import FormValidator from 'validate.js';
 import SignUpPage from '../signup/SignUpPage';
 
@@ -76,7 +77,21 @@ var LoginPage = React.createClass({
                         </Button>
                         <Button
                           style={[styles.facebookLogin, styles.buttons]} textStyle={[styles.facebookLoginText, styles.buttonText]}
-                          onPress={() => {}}>
+                          onPress={() => {
+                            LoginManager.logInWithReadPermissions(['public_profile']).then(
+                              function(result) {
+                                if (result.isCancelled) {
+                                  alert('Login cancelled');
+                                } else {
+                                  alert('Login success with permissions: '
+                                    +result.grantedPermissions.toString());
+                                }
+                              },
+                              function(error) {
+                                alert('Login fail with error: ' + error);
+                              }
+                            );
+                          }}>
                             LOGIN WITH FACEBOOK
                         </Button>
                     </View>
