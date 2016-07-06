@@ -19,7 +19,9 @@ import {
 
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
+import DiscoverPage from '../discover/DiscoverPage';
 import EyespotPageBase from '../EyespotPageBase';
+import { LoginManager } from 'react-native-fbsdk';
 import Header from '../../partials/Header';
 
 var {height, width} = Dimensions.get('window')
@@ -38,15 +40,22 @@ var SignUpPage = React.createClass({
         
     },
 
+    _renderHeader() {
+        return (
+            <Header containerStyle={styles.headerContainer} noTitle={true}>
+                <BackIcon color='#444' onPress={() => this.props.navigator.pop()} />
+                <View />
+            </Header>
+        );
+    },
+
     render() {
         return (
             <EyespotPageBase
                 keyboardShouldPersistTaps={false} 
                 noScroll={true}>
                 <View style={styles.container}>
-                    <Header containerStyle={styles.headerContainer} noTitle={true}>
-                        <View style={{height: 20, width: 20, backgroundColor: 'black'}} />
-                    </Header>
+                    {this._renderHeader()}
                     <View style={styles.section}>
                           <Image source={require('../../partials/img/eyespot-logo.png')} 
                                 style={styles.logoImg} />
@@ -104,7 +113,26 @@ var SignUpPage = React.createClass({
                         </Button>
                         <Button
                           style={[styles.facebookLogin, styles.buttons]} textStyle={[styles.facebookLoginText, styles.buttonText]}
-                          onPress={() => {}}>
+                          onPress={() => {
+                            LoginManager.logInWithReadPermissions(['public_profile']).then(
+                              function(result) {
+                                if (result.isCancelled) {
+                                  alert('Login cancelled');
+                                } else {
+                                  alert('Login success with permissions: '
+                                    +result.grantedPermissions.toString());
+                                  this.props.navigator.resetTo({
+                                    title: 'DiscoverPage',
+                                    component: DiscoverPage,
+                                    passProps: {}
+                                  });
+                                }
+                              },
+                              function(error) {
+                                alert('Login fail with error: ' + error);
+                              }
+                            );
+                          }}>
                             LOGIN WITH FACEBOOK
                         </Button>
                     </View>
@@ -145,7 +173,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         position: 'absolute',
         height: height/80,
-        top: 0
+        top: -20
     },
     input: {
         alignSelf: 'center',
