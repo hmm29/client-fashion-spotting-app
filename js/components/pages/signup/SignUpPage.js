@@ -19,6 +19,7 @@ import {
 
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
+import DiscoverPage from '../discover/DiscoverPage';
 import EyespotPageBase from '../EyespotPageBase';
 import { LoginManager } from 'react-native-fbsdk';
 import Header from '../../partials/Header';
@@ -41,7 +42,7 @@ var SignUpPage = React.createClass({
 
     _renderHeader() {
         return (
-            <Header containerStyle={styles.headerContainer} noTitle={false}>
+            <Header containerStyle={styles.headerContainer} noTitle={true}>
                 <BackIcon color='#444' onPress={() => this.props.navigator.pop()} />
                 <View />
             </Header>
@@ -120,6 +121,11 @@ var SignUpPage = React.createClass({
                                 } else {
                                   alert('Login success with permissions: '
                                     +result.grantedPermissions.toString());
+                                  this.props.navigator.resetTo({
+                                    title: 'DiscoverPage',
+                                    component: DiscoverPage,
+                                    passProps: {}
+                                  });
                                 }
                               },
                               function(error) {

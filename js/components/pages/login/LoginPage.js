@@ -17,6 +17,7 @@ import {
 } from 'react-native';
 
 import Button from 'apsl-react-native-button';
+import DiscoverPage from '../discover/DiscoverPage';
 import EyespotPageBase from '../EyespotPageBase';
 import { LoginManager } from 'react-native-fbsdk';
 import FormValidator from 'validate.js';
@@ -85,6 +86,11 @@ var LoginPage = React.createClass({
                                 } else {
                                   alert('Login success with permissions: '
                                     +result.grantedPermissions.toString());
+                                  this.props.navigator.resetTo({
+                                    title: 'DiscoverPage',
+                                    component: DiscoverPage,
+                                    passProps: {}
+                                  });
                                 }
                               },
                               function(error) {
