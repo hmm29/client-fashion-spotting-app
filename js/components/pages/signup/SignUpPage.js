@@ -38,15 +38,22 @@ var SignUpPage = React.createClass({
         
     },
 
+    _renderHeader() {
+        return (
+            <Header containerStyle={styles.headerContainer} noTitle={false}>
+                <BackIcon color='#444' onPress={() => this.props.navigator.pop()} />
+                <View />
+            </Header>
+        );
+    },
+
     render() {
         return (
             <EyespotPageBase
                 keyboardShouldPersistTaps={false} 
                 noScroll={true}>
                 <View style={styles.container}>
-                    <Header containerStyle={styles.headerContainer} noTitle={true}>
-                        <View style={{height: 20, width: 20, backgroundColor: 'black'}} />
-                    </Header>
+                    {this._renderHeader()}
                     <View style={styles.section}>
                           <Image source={require('../../partials/img/eyespot-logo.png')} 
                                 style={styles.logoImg} />
@@ -145,7 +152,7 @@ const styles = StyleSheet.create({
     headerContainer: {
         position: 'absolute',
         height: height/80,
-        top: 0
+        top: -20
     },
     input: {
         alignSelf: 'center',
