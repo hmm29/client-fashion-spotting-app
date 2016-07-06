@@ -19,6 +19,7 @@ import {
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import FormValidator from 'validate.js';
+import SignUpPage from '../signup/SignUpPage';
 
 var {height, width} = Dimensions.get('window')
 
@@ -84,7 +85,12 @@ var LoginPage = React.createClass({
                             style={styles.loginOption}
                             textStyle={styles.loginOptionText}
                             onPress={() => {
+                                this.props.navigator.push({
+                                    title: 'SignUpPage',
+                                    component: SignUpPage,
+                                    passProps: {}
 
+                                })
                             }} >
                             New User? Sign Up Now!
                         </Button>
@@ -107,6 +113,7 @@ const styles = StyleSheet.create({
     buttons: {
         alignSelf: 'center',
         borderRadius: 0,
+        borderWidth: 2,
         width: width/1.4
     },
     buttonText: {
@@ -118,26 +125,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     emailLogin: {
-        borderWidth: 2
     },
     emailLoginText: {
 
     },
     facebookLogin: {
         borderColor: 'rgb(59,89,152)',
-        borderWidth: 2
     },
     facebookLoginText: {
         color: 'rgba(59,89,152,0.8)'
     },
     input: {
         alignSelf: 'center',
-        borderBottomWidth: 2,
-        borderBottomColor: '#ccc',
         marginTop: height/40,
         marginBottom: height/120,
         textAlign: 'center',
-        textDecorationLine: 'underline'
+        height: height/40,
+        width: width/1.4
     },
     logoImg: {
         alignSelf: 'center',
@@ -155,8 +159,6 @@ const styles = StyleSheet.create({
         fontSize: height/40
     },
     password: {
-        height: height/40,
-        width: width/1.4
     },
     section: {
         marginVertical: height/40
@@ -169,8 +171,6 @@ const styles = StyleSheet.create({
         width: width/1.1
     },
     username: {
-        height: height/40,
-        width: width/1.4
     }
 })
 
