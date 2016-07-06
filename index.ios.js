@@ -2,8 +2,9 @@
  * Eyespot
  * Top-level app component 
  */
-'use strict';
+'use strict'; /* use JS strict mode for any ES5 code */
 
+/* import modules */
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -15,9 +16,10 @@ import {
 
 import LoginPage from './js/components/pages/login/LoginPage';
 
+/* define the Eyespot class */
 class Eyespot extends Component {
   render() {
-    const onExit = {};
+    const nextRouteProps = {}; /* properties to pass to next route */
 
     return (
       <View style={styles.container}>
@@ -27,7 +29,7 @@ class Eyespot extends Component {
           initialRoute={{
             title: 'LoginPage',
             component: LoginPage,
-            passProps: onExit,
+            passProps: nextRouteProps,
           }}
           itemWrapperStyle={styles.itemWrapper} 
           style={{flex: 1}} />
@@ -36,6 +38,7 @@ class Eyespot extends Component {
   }
 }
 
+/* CSS stylings */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -47,4 +50,5 @@ const styles = StyleSheet.create({
   }
 });
 
+/* register component as top-level app */
 AppRegistry.registerComponent('Eyespot', () => Eyespot);

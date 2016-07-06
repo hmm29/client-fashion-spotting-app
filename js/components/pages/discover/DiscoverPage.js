@@ -6,6 +6,7 @@
  * @flow
  */
 
+/* import modules */
 import React, { Component } from 'react'; 
 import { 
   Dimensions,
@@ -22,17 +23,22 @@ import Header from '../../partials/Header';
 
 var {height, width} = Dimensions.get('window')
 
+/* define DiscoverPage class */
 var DiscoverPage = React.createClass({
+
+    /* declare and define the component's state variables */
     getInitialState() {
         return {
             
         }
     },
 
+    /* define types for properties that this component receives */
     propTypes: {
         
     },
 
+    /* render the header element */
     _renderHeader() {
         return (
             <Header containerStyle={styles.headerContainer}>
@@ -41,6 +47,7 @@ var DiscoverPage = React.createClass({
         );
     },
 
+    /* JSX to declaratively specify page UI */
     render() {
         return (
             <EyespotPageBase
@@ -57,6 +64,7 @@ var DiscoverPage = React.createClass({
     }
 });
 
+/* CSS stylings */
 const styles = StyleSheet.create({
     container: {
 
