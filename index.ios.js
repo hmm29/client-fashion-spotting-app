@@ -13,6 +13,8 @@ import {
   View
 } from 'react-native';
 
+import LoginPage from './js/components/pages/login/LoginPage';
+
 class Eyespot extends Component {
   render() {
     const onExit = {};
@@ -23,11 +25,12 @@ class Eyespot extends Component {
         <NavigatorIOS
           navigationBarHidden={true}
           initialRoute={{
-            title: '',
-            component: View,
+            title: 'LoginPage',
+            component: LoginPage,
             passProps: onExit,
           }}
-          itemWrapperStyle={styles.itemWrapper} />
+          itemWrapperStyle={styles.itemWrapper} 
+          style={{flex: 1}} />
       </View>
     );
   }
@@ -39,7 +42,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#000'
   },
   itemWrapper: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    marginTop: 20
   }
 });
 

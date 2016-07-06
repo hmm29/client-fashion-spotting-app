@@ -6,7 +6,7 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
-    "apsl-react-native-button": "git+https://git@github.com/bartonhammond/react-native-button.git",
+    "apsl-react-native-button": "^2.5.0",
     "crc32": "~0.2.2",
     "firebase": "^2.4.2",
     "google-maps-api": "^2.0.1",
