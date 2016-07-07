@@ -5,8 +5,11 @@
  * @providesModule SignUpPage
  * @flow
  */
- 'use strict';
+ 'use strict'; /* enable JS strict mode for any ES5 code */
 
+/* 
+ * import modules 
+ */
 import React, { Component } from 'react'; 
 import {
   Dimensions, 
@@ -21,12 +24,18 @@ import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import DiscoverPage from '../discover/DiscoverPage';
 import EyespotPageBase from '../EyespotPageBase';
-import { LoginManager } from 'react-native-fbsdk';
 import Header from '../../partials/Header';
+import { LoginManager } from 'react-native-fbsdk';
 
-var {height, width} = Dimensions.get('window')
+var {height, width} = Dimensions.get('window'); /* get screen dimensions */
 
+/* 
+ * defines the Eyespot class 
+ */
 var SignUpPage = React.createClass({
+    /* 
+     * getInitialState(): initialize the component's state variables 
+     */
     getInitialState() {
         return {
             emailAddressText: '',
@@ -36,10 +45,17 @@ var SignUpPage = React.createClass({
         }
     },
 
+
+    /* 
+     * specify types for properties that this component receives 
+     */
     propTypes: {
         
     },
 
+    /* 
+     * _renderHeader(): render the imported header component 
+     */
     _renderHeader() {
         return (
             <Header containerStyle={styles.headerContainer} noTitle={true}>
@@ -49,6 +65,9 @@ var SignUpPage = React.createClass({
         );
     },
 
+    /* 
+     * render(): returns JSX that declaratively specifies page UI 
+     */
     render() {
         return (
             <EyespotPageBase
@@ -142,6 +161,11 @@ var SignUpPage = React.createClass({
     }
 });
 
+/*
+ * CSS stylings
+ * These stylings are accessed in the styles object
+ * e.g. styles.buttons, styles.container
+ */
 const styles = StyleSheet.create({
     buttons: {
         alignSelf: 'center',
@@ -214,4 +238,7 @@ const styles = StyleSheet.create({
     }
 })
 
+/*
+ * export the module so it can be imported to other components
+ */
 module.exports = SignUpPage;
