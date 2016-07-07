@@ -26,6 +26,7 @@ import {
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
+import Footer from '../../partials/Footer';
 import SearchBar from '../../partials/SearchBar';
 
 var {height, width} = Dimensions.get('window'); /* get screen dimensions */
