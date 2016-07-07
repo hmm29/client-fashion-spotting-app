@@ -5,11 +5,13 @@
  * @providesModule LoginPage
  * @flow
  */
+ 
 'use strict'; /* enable JS strict mode for any ES5 code */
 
 /* 
  * import modules 
  */
+
 import React, { Component } from 'react'; 
 import { 
   Dimensions,
@@ -32,11 +34,13 @@ var {height, width} = Dimensions.get('window'); /* get screen dimensions */
 /* 
  * defines the LoginPage class 
  */
+
 var LoginPage = React.createClass({
 
     /* 
-     * getInitialState(): initialize the component's state variables 
+     * getInitialState(): returns object with initialized component state variables 
      */
+
     getInitialState() {
         return {
             passwordText: '',
@@ -45,8 +49,9 @@ var LoginPage = React.createClass({
     },
 
     /* 
-     * specify types for properties that this component receives 
+     * specifies types for properties that this component receives 
      */
+
     propTypes: {
         
     },
@@ -54,6 +59,7 @@ var LoginPage = React.createClass({
     /* 
      * render(): returns JSX that declaratively specifies page UI 
      */
+
     render() {
         return (
             <EyespotPageBase
@@ -156,7 +162,10 @@ var LoginPage = React.createClass({
     }
 });
 
-/* CSS stylings */
+/* 
+ * CSS stylings 
+ */
+
 const styles = StyleSheet.create({
     buttons: {
         alignSelf: 'center',
@@ -225,4 +234,5 @@ const styles = StyleSheet.create({
 /*
  * export the module so it can be imported into other components
  */
+
 module.exports = LoginPage;
