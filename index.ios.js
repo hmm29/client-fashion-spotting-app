@@ -2,11 +2,13 @@
  * index.ios.js
  * Top-level iOS file for registering and running the app 
  */
+ 
 'use strict'; /* enable JS strict mode for any ES5 code */
 
 /* 
  * import modules 
  */
+
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -21,15 +23,19 @@ import LoginPage from './js/components/pages/login/LoginPage';
 /* 
  * defines the Eyespot class 
  */
+
 class Eyespot extends Component {
 
   /* 
    * render(): returns JSX that declaratively specifies page UI 
    */
+
   render() {
+
     /* 
      * nextRouteProps: properties to pass to next route 
      */
+
     const nextRouteProps = {};
 
     return (
@@ -52,6 +58,7 @@ class Eyespot extends Component {
 /* 
  * CSS stylings 
  */
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -64,6 +71,7 @@ const styles = StyleSheet.create({
 });
 
 /* 
- * register component as top-level app
+ * registers this component as the top-level app
  */
+
 AppRegistry.registerComponent('Eyespot', () => Eyespot);

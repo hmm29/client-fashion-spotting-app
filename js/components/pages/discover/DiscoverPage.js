@@ -5,11 +5,13 @@
  * @providesModule DiscoverPage
  * @flow
  */
+ 
 'use strict'; /* enable JS strict mode for any ES5 code */
 
 /* 
  * import modules 
  */
+
 import React, { Component } from 'react'; 
 import { 
   Dimensions,
@@ -29,11 +31,13 @@ var {height, width} = Dimensions.get('window'); /* get screen dimensions */
 /* 
  * defines the DiscoverPage class 
  */
+
 var DiscoverPage = React.createClass({
 
     /* 
-     * getInitialState(): initialize the component's state variables 
+     * getInitialState(): returns object with initialized component state variables
      */
+
     getInitialState() {
         return {
             
@@ -41,15 +45,17 @@ var DiscoverPage = React.createClass({
     },
 
     /* 
-     * specify types for properties that this component receives 
+     * specifies types for properties that this component receives 
      */
+
     propTypes: {
         
     },
 
     /* 
-     * _renderHeader(): render the imported header component 
+     * _renderHeader(): renders the imported header component 
      */
+
     _renderHeader() {
         return (
             <Header containerStyle={styles.headerContainer}>
@@ -61,6 +67,7 @@ var DiscoverPage = React.createClass({
     /* 
      * render(): returns JSX that declaratively specifies page UI 
      */
+
     render() {
         return (
             <EyespotPageBase
@@ -80,6 +87,7 @@ var DiscoverPage = React.createClass({
 /* 
  * CSS stylings 
  */
+
 const styles = StyleSheet.create({
     container: {
 
@@ -97,4 +105,5 @@ const styles = StyleSheet.create({
 /*
  * export the module so it can be imported into other components
  */
+
 module.exports = DiscoverPage;
