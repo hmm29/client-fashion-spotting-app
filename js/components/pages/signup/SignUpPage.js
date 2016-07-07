@@ -5,7 +5,7 @@
  * @providesModule SignUpPage
  * @flow
  */
- 
+
  'use strict'; /* enable JS strict mode for any ES5 code */
 
 /* 
@@ -74,6 +74,7 @@ var SignUpPage = React.createClass({
     /* 
      * render(): returns JSX that declaratively specifies page UI 
      */
+     
     render() {
         return (
             <EyespotPageBase

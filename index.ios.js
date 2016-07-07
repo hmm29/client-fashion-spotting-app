@@ -5,8 +5,8 @@
  
 'use strict'; /* enable JS strict mode for any ES5 code */
 
-/* 
- * import modules 
+/*
+ * import modules
  */
 
 import React, { Component } from 'react';
@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 
 import LoginPage from './js/components/pages/login/LoginPage';
+import DiscoverPage from './js/components/pages/discover/DiscoverPage';
 
 /* 
  * defines the Eyespot class 
@@ -44,9 +45,9 @@ class Eyespot extends Component {
         <NavigatorIOS
           navigationBarHidden={true}    /* hide navigation bar */
           initialRoute={{               /* initial route in navigator */
-            title: 'LoginPage',
-            component: LoginPage,
-            passProps: nextRouteProps,
+            title: 'DiscoverPage',
+            component: DiscoverPage,
+            passProps: onExit,
           }}
           itemWrapperStyle={styles.itemWrapper} /* styles for nav background */
           style={{flex: 1}} />
