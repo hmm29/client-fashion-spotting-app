@@ -23,15 +23,15 @@ import LoginPage from './js/components/pages/login/LoginPage';
  */
 class Eyespot extends Component {
 
+  /* 
+   * render(): returns JSX that declaratively specifies page UI 
+   */
   render() {
     /* 
      * nextRouteProps: properties to pass to next route 
      */
     const nextRouteProps = {};
 
-    /* 
-     * render(): returns JSX that declaratively specifies page UI 
-     */
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
