@@ -30,7 +30,7 @@ import SignUpPage from '../signup/SignUpPage';
 var {height, width} = Dimensions.get('window'); /* get screen dimensions */
 
 /* 
- * define the LoginPage class 
+ * defines the LoginPage class 
  */
 var LoginPage = React.createClass({
 
