@@ -27,7 +27,7 @@ import Header from '../../partials/Header';
 var {height, width} = Dimensions.get('window'); /* get screen dimensions */
 
 /* 
- * define DiscoverPage class 
+ * defines the DiscoverPage class 
  */
 var DiscoverPage = React.createClass({
 

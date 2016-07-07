@@ -30,7 +30,7 @@ import { LoginManager } from 'react-native-fbsdk';
 var {height, width} = Dimensions.get('window'); /* get screen dimensions */
 
 /* 
- * defines the Eyespot class 
+ * defines the SignUpPage class 
  */
 var SignUpPage = React.createClass({
     /* 
