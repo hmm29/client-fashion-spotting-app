@@ -5,7 +5,11 @@
  * @providesModule LoginPage
  * @flow
  */
+'use strict'; /* enable JS strict mode for any ES5 code */
 
+/* 
+ * import modules 
+ */
 import React, { Component } from 'react'; 
 import { 
   Dimensions,
@@ -19,13 +23,20 @@ import {
 import Button from 'apsl-react-native-button';
 import DiscoverPage from '../discover/DiscoverPage';
 import EyespotPageBase from '../EyespotPageBase';
-import { LoginManager } from 'react-native-fbsdk';
 import FormValidator from 'validate.js';
+import { LoginManager } from 'react-native-fbsdk';
 import SignUpPage from '../signup/SignUpPage';
 
-var {height, width} = Dimensions.get('window')
+var {height, width} = Dimensions.get('window'); /* get screen dimensions */
 
+/* 
+ * define the LoginPage class 
+ */
 var LoginPage = React.createClass({
+
+    /* 
+     * getInitialState(): initialize the component's state variables 
+     */
     getInitialState() {
         return {
             passwordText: '',
@@ -33,10 +44,16 @@ var LoginPage = React.createClass({
         }
     },
 
+    /* 
+     * specify types for properties that this component receives 
+     */
     propTypes: {
         
     },
 
+    /* 
+     * render(): returns JSX that declaratively specifies page UI 
+     */
     render() {
         return (
             <EyespotPageBase
@@ -73,7 +90,16 @@ var LoginPage = React.createClass({
                     <View style={styles.section}>
                         <Button
                           style={[styles.emailLogin, styles.buttons]} textStyle={[styles.emailLoginText, styles.buttonText]}
-                          onPress={() => {}}>
+                          onPress={() => {
+                            /*
+                             * TODO: remove this temp shortcut to Discover page
+                             */
+                            this.props.navigator.replace({
+                                    title: 'DiscoverPage',
+                                    component: DiscoverPage,
+                                    passProps: {}
+                            });
+                          }}>
                             LOGIN WITH EMAIL
                         </Button>
                         <Button
@@ -86,7 +112,7 @@ var LoginPage = React.createClass({
                                 } else {
                                   alert('Login success with permissions: '
                                     +result.grantedPermissions.toString());
-                                  this.props.navigator.resetTo({
+                                  this.props.navigator.replace({
                                     title: 'DiscoverPage',
                                     component: DiscoverPage,
                                     passProps: {}
@@ -130,6 +156,7 @@ var LoginPage = React.createClass({
     }
 });
 
+/* CSS stylings */
 const styles = StyleSheet.create({
     buttons: {
         alignSelf: 'center',
@@ -195,4 +222,7 @@ const styles = StyleSheet.create({
     }
 })
 
+/*
+ * export the module so it can be imported to other components
+ */
 module.exports = LoginPage;

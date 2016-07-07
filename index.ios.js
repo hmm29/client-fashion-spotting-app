@@ -1,10 +1,12 @@
 /**
- * Eyespot
- * Top-level app component 
+ * index.ios.js
+ * Top-level iOS file for registering and running the app 
  */
-'use strict'; /* use JS strict mode for any ES5 code */
+'use strict'; /* enable JS strict mode for any ES5 code */
 
-/* import modules */
+/* 
+ * import modules 
+ */
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -16,29 +18,40 @@ import {
 
 import LoginPage from './js/components/pages/login/LoginPage';
 
-/* define the Eyespot class */
+/* 
+ * defines the Eyespot class 
+ */
 class Eyespot extends Component {
-  render() {
-    const nextRouteProps = {}; /* properties to pass to next route */
 
+  render() {
+    /* 
+     * nextRouteProps: properties to pass to next route 
+     */
+    const nextRouteProps = {};
+
+    /* 
+     * render(): returns JSX that declaratively specifies page UI 
+     */
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <NavigatorIOS
-          navigationBarHidden={true}
-          initialRoute={{
+          navigationBarHidden={true}    /* hide navigation bar */
+          initialRoute={{               /* initial route in navigator */
             title: 'LoginPage',
             component: LoginPage,
             passProps: nextRouteProps,
           }}
-          itemWrapperStyle={styles.itemWrapper} 
+          itemWrapperStyle={styles.itemWrapper} /* styles for nav background */
           style={{flex: 1}} />
       </View>
     );
   }
 }
 
-/* CSS stylings */
+/* 
+ * CSS stylings 
+ */
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -50,5 +63,7 @@ const styles = StyleSheet.create({
   }
 });
 
-/* register component as top-level app */
+/* 
+ * register component as top-level app
+ */
 AppRegistry.registerComponent('Eyespot', () => Eyespot);
