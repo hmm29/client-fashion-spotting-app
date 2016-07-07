@@ -5,11 +5,11 @@
  * @providesModule DiscoverPage
  * @flow
  */
- 
+
 'use strict'; /* enable JS strict mode for any ES5 code */
 
-/* 
- * import modules 
+/*
+ * import modules
  */
 
 import React, { Component } from 'react';
@@ -30,20 +30,66 @@ import SearchBar from '../../partials/SearchBar';
 
 var {height, width} = Dimensions.get('window'); /* get screen dimensions */
 
-/* 
+/*
+ * defines the Categories class
+ * this code is for the two-column category component
+ */
+
+ var Featured = React.createClass({
+
+   /*
+    * getInitialState(): returns object with initialized component state variables
+    */
+
+   getInitialState() {
+     return {
+     }
+   },
+
+   /*
+    * render(): returns JSX that declaratively specifies page UI
+    */
+
+   render(){
+
+
+     return (
+       <View>
+         <View style={styles.featuredPanel}>
+           <Image source={require('./test.jpg')} style={styles.featuredPanelImage}/>
+           <View style={styles.textContainer}>
+             <Text style={styles.panelText}>FEATURED CONTRIBUTOR</Text>
+           </View>
+           <View style={styles.featuredApplyBox}>
+              <View style={styles.textContainer}>
+                <Text style={styles.featuredPanelText}>apply to be a featured contributor</Text>
+              </View>
+           </View>
+         </View>
+       </View>
+     )
+   }
+ })
+
+
+/*
  * defines the Categories class
  * this code is for the two-column category component
  */
 
 var Categories = React.createClass({
 
-  /* 
+  /*
    * getInitialState(): returns object with initialized component state variables
    */
 
   getInitialState() {
     return {
       categories : [
+        {
+          'name' : 'ALL',
+          'imgUrl' : './test.jpg'
+        },
         {
           'name' : 'SHOE',
           'imgUrl' : './test.jpg'
@@ -72,18 +118,19 @@ var Categories = React.createClass({
     }
   },
 
-  /* 
-   * render(): returns JSX that declaratively specifies page UI 
+  /*
+   * render(): returns JSX that declaratively specifies page UI
    */
 
   render(){
 
-    /* 
+    /*
      * FIXME: get jpegs for product images
      */
-     
+
     return (
       <View style ={styles.categories}>
+        <Featured/>
         {this.state.categories.map(function(c, i){
           return (
             <View key={i} style={styles.panel}>
@@ -99,13 +146,13 @@ var Categories = React.createClass({
   }
 })
 
-/* 
+/*
  * defines the DiscoverPage class
  */
 
 var DiscoverPage = React.createClass({
 
-    /* 
+    /*
      * getInitialState(): returns object with initialized component state variables
      */
 
@@ -115,16 +162,16 @@ var DiscoverPage = React.createClass({
         }
     },
 
-    /* 
-     * specifies types for properties that this component receives 
+    /*
+     * specifies types for properties that this component receives
      */
 
     propTypes: {
 
     },
 
-    /* 
-     * _renderHeader(): renders the imported header component 
+    /*
+     * _renderHeader(): renders the imported header component
      */
 
     _renderHeader() {
@@ -136,8 +183,8 @@ var DiscoverPage = React.createClass({
         );
     },
 
-    /* 
-     * render(): returns JSX that declaratively specifies page UI 
+    /*
+     * render(): returns JSX that declaratively specifies page UI
      */
 
     render() {
@@ -156,19 +203,46 @@ var DiscoverPage = React.createClass({
     }
 });
 
-/* 
- * CSS stylings 
+/*
+ * CSS stylings
  */
 
 const panelMargin = 5;
 const sideMargin = 20;
 const panelWidth = (width - panelMargin * 4 - sideMargin * 2)/2;
+const featuredPanelWidth = panelWidth * 2 + panelMargin * 2;
 
 const styles = StyleSheet.create({
     categories:{
         flexDirection:'row',
         flexWrap: 'wrap',
         padding: sideMargin
+    },
+    featuredPanel: {
+      width: featuredPanelWidth,
+      height: panelWidth,
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      margin: panelMargin
+    },
+    featuredPanelImage: {
+      width: featuredPanelWidth,
+      height: panelWidth,
+      position: 'absolute',
+      top: 0
+    },
+    featuredApplyBox: {
+      position: 'absolute',
+      bottom: 20,
+      width: featuredPanelWidth,
+      paddingHorizontal: 20,
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    featuredPanelText: {
+      backgroundColor: 'transparent',
+      color: 'white'
     },
     panel: {
         width: panelWidth,
