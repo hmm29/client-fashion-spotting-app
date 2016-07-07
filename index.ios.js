@@ -1,6 +1,6 @@
 /**
  * Eyespot
- * Top-level app component 
+ * Top-level app component
  */
 'use strict';
 
@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 
 import LoginPage from './js/components/pages/login/LoginPage';
+import DiscoverPage from './js/components/pages/discover/DiscoverPage';
 
 class Eyespot extends Component {
   render() {
@@ -26,10 +27,10 @@ class Eyespot extends Component {
           navigationBarHidden={true}
           initialRoute={{
             title: 'LoginPage',
-            component: LoginPage,
+            component: DiscoverPage,
             passProps: onExit,
           }}
-          itemWrapperStyle={styles.itemWrapper} 
+          itemWrapperStyle={styles.itemWrapper}
           style={{flex: 1}} />
       </View>
     );
