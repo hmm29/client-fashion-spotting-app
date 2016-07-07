@@ -95,6 +95,6 @@ const styles = StyleSheet.create({
 })
 
 /*
- * export the module so it can be imported to other components
+ * export the module so it can be imported into other components
  */
 module.exports = DiscoverPage;
