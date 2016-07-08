@@ -5,8 +5,8 @@
  * @providesModule SignUpPage
  * @flow
  */
- 
- 'use strict'; /* enable JS strict mode for any ES5 code */
+
+ 'use strict'; /* enables JS strict mode for any ES5 code */
 
 /* 
  * import modules 
@@ -29,7 +29,7 @@ import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import { LoginManager } from 'react-native-fbsdk';
 
-var {height, width} = Dimensions.get('window'); /* get screen dimensions */
+var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /* 
  * defines the SignUpPage class 
@@ -64,7 +64,7 @@ var SignUpPage = React.createClass({
 
     _renderHeader() {
         return (
-            <Header containerStyle={styles.headerContainer} noTitle={true}>
+            <Header containerStyle={styles.headerContainer}>
                 <BackIcon color='#444' onPress={() => this.props.navigator.pop()} />
                 <View />
             </Header>
@@ -74,6 +74,7 @@ var SignUpPage = React.createClass({
     /* 
      * render(): returns JSX that declaratively specifies page UI 
      */
+     
     render() {
         return (
             <EyespotPageBase
@@ -191,6 +192,7 @@ const styles = StyleSheet.create({
         bottom: height/20
     },
     emailLogin: {
+
     },
     emailLoginText: {
 
@@ -202,9 +204,6 @@ const styles = StyleSheet.create({
         color: 'rgba(59,89,152,0.8)'
     },
     headerContainer: {
-        position: 'absolute',
-        height: height/80,
-        top: -20
     },
     input: {
         alignSelf: 'center',

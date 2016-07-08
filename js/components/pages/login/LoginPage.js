@@ -6,7 +6,7 @@
  * @flow
  */
  
-'use strict'; /* enable JS strict mode for any ES5 code */
+'use strict'; /* enables JS strict mode for any ES5 code */
 
 /* 
  * import modules 
@@ -29,7 +29,7 @@ import FormValidator from 'validate.js';
 import { LoginManager } from 'react-native-fbsdk';
 import SignUpPage from '../signup/SignUpPage';
 
-var {height, width} = Dimensions.get('window'); /* get screen dimensions */
+var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /* 
  * defines the LoginPage class 
@@ -177,11 +177,12 @@ const styles = StyleSheet.create({
         fontSize: height/40
     },
     container: {
-        flex: 1,
+        marginTop: height/15,
         flexDirection: 'column',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     emailLogin: {
+
     },
     emailLoginText: {
 

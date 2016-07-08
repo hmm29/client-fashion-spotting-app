@@ -5,7 +5,11 @@
  * @providesModule Header
  * @flow
  */
-'use strict';
+'use strict'; /* enables JS strict mode for any ES5 code */
+
+/*
+ * import modules 
+ */
 
 import React, { Component } from 'react';
 import {
@@ -15,19 +19,31 @@ import {
   View
   } from 'react-native';
 
-var {height, width} = Dimensions.get('window');
+var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+
+/* 
+ * defines the Header class 
+ */
 
 var Header = React.createClass({
+
+  /* 
+   * specifies types for properties that this component receives 
+   */
+
   propTypes: {
     containerStyle: View.propTypes.style,
-    noTitle: React.PropTypes.bool
   },
+
+ /*
+  * render(): returns JSX that declaratively specifies header UI
+  */
 
   render() {
     const noTitle = this.props.noTitle;
-    const length = this.props.children && this.props.children.length || 0;
+    const childCount = (this.props.children && this.props.children.length) || 0;
 
-    if (length === 4) {
+    if (childCount === 4) {
       return (
         <View style={[styles.headerContainer, this.props.containerStyle]}>
           <View style={styles.header}>
@@ -38,17 +54,17 @@ var Header = React.createClass({
           </View>
         </View>
       )
-    } else if (length === 3) {
+    } else if (childCount === 3) {
       return (
         <View style={[styles.headerContainer, this.props.containerStyle]}>
           <View style={styles.header}>
             <View style={{position: 'absolute', left: 10}}>{this.props.children[0]}</View>
-            <Text style={styles.headerText}>{this.props.children[1]}</Text>
+            {this.props.children[1]}
             <View style={{position: 'absolute', right: 10}}>{this.props.children[2]}</View>
           </View>
         </View>
       )
-    } else if (length === 2) {
+    } else if (childCount === 2) {
       return (
         <View style={[styles.headerContainer, this.props.containerStyle]}>
           <View style={styles.header}>
@@ -57,32 +73,17 @@ var Header = React.createClass({
           </View>
         </View>
       )
-    } else if (length === 1 && noTitle) {
-      return (
-        <View style={[styles.headerContainer, this.props.containerStyle]}>
-          <View style={styles.header}>
-            <View style={{position: 'absolute', left: 10}}>{this.props.children[0]}</View>
-          </View>
-        </View>
-      )
-    } else if (length === 1) {
-      return (
-         <View style={[styles.headerContainer, this.props.containerStyle]}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>{this.props.children[0]}</Text>
-          </View>
-        </View>
-      )
     } else {
       return (
-        <View style={[styles.headerContainer, this.props.containerStyle]}>
-          <View style={styles.header}>
-          </View>
-        </View>
+        <View style={[styles.headerContainer, this.props.containerStyle]} />
       )
     }
   }
 });
+
+/*
+ * CSS stylings
+ */
 
 var styles = StyleSheet.create({
   header: {
@@ -92,10 +93,10 @@ var styles = StyleSheet.create({
   },
   headerContainer: {
     width,
-    height: height / 20,
+    height: height / 8.5,
     backgroundColor: 'transparent',
     paddingHorizontal: 20,
-    paddingVertical: height / 15
+    paddingVertical: height / 25
   },
   headerText: {
     color: '#fff',
@@ -103,5 +104,9 @@ var styles = StyleSheet.create({
     fontFamily: 'AvenirNextCondensed-Regular'
   }
 });
+
+/*
+ * export the module so it can be imported into other components
+ */
 
 module.exports = Header;
