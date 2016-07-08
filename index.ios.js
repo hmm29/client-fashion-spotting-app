@@ -3,10 +3,10 @@
  * Top-level iOS file for registering and running the app
  */
 
-'use strict'; /* enable JS strict mode for any ES5 code */
+'use strict'; /* enables JS strict mode for any ES5 code */
 
 /*
- * import modules
+ * imports required modules
  */
 
 import React, { Component } from 'react';
@@ -29,7 +29,7 @@ class Eyespot extends Component {
 
 
   /*
-   * render(): returns JSX that declaratively specifies page UI
+   * render(): returns JSX that declaratively specifies overall app UI
    */
 
   render() {

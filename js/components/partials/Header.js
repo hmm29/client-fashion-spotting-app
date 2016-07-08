@@ -5,10 +5,11 @@
  * @providesModule Header
  * @flow
  */
+ 
 'use strict'; /* enables JS strict mode for any ES5 code */
 
 /*
- * import modules 
+ * imports required modules 
  */
 
 import React, { Component } from 'react';
@@ -106,7 +107,7 @@ var styles = StyleSheet.create({
 });
 
 /*
- * export the module so it can be imported into other components
+ * exports this component as a module so it can be imported into other modules
  */
 
 module.exports = Header;
