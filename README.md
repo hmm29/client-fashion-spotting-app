@@ -2,9 +2,9 @@
 
 Eyespot lets users discover quality fashion products through a community-driven, visual magazine.
 
-# Most recent snapshot: Discover Page in the works
+# Most recent snapshot: Discover page in the works
 
-![Alt text](./discovery-page-snapshot?raw=true "Title")
+![Alt text](./discover-page-snapshot.png?raw=true "Title")
 
 ## Running this app
 
