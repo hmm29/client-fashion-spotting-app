@@ -75,7 +75,7 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
  * defines the Categories class
- * this code is for the two-column category component
+ * this is the code for the two-column category component
  */
 
 var Categories = React.createClass({
