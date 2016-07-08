@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
    },
    navsContainer: {
      position: 'absolute',
-     top: 0,
+     top: 5,
      justifyContent:'center',
      flexDirection: 'row',
      alignItems:'center',
@@ -196,27 +196,32 @@ const styles = StyleSheet.create({
      flexDirection: 'row',
      width: searchBarInnerWidth,
      justifyContent: 'center',
+    //  backgroundColor: 'red'
    },
    nav: {
      flex: 1,
-     flexDirection: 'row',
+     height: navsContainerHeight,
+     flexDirection: 'column',
      justifyContent: 'center',
-   },
-   navText: {
-     padding: 10,
+     alignItems: 'center',
+    //  backgroundColor:'gray'
    },
    navTouch:{
      flexDirection: 'row',
      width: searchBarInnerWidth/3,
-     marginVertical: 5,
-     paddingHorizontal: 20,
+     height: navsContainerHeight,
+
+    justifyContent: 'center',
+    alignItems: 'center',
    },
+   navText: {
+    //  backgroundColor:'yellow',
+   },
+
    dropdownIcon:{
      width: 15,
      resizeMode: 'contain',
-     position: 'absolute',
-    //  right: 20,
-     bottom:10
+     marginLeft:10,
    },
 
    dropdownContainer: {
@@ -226,7 +231,7 @@ const styles = StyleSheet.create({
      flexDirection: 'row',
      alignItems:'center',
      width: width,
-     backgroundColor: 'transparent'
+    //  backgroundColor: 'transparent'
    },
    dropdownInner:{
      flexDirection: 'row',

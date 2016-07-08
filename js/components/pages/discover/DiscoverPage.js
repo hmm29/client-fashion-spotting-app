@@ -190,7 +190,7 @@ var DiscoverPage = React.createClass({
             <Header containerStyle={styles.headerContainer}>
                 <View />
                 <View style={styles.pageTitle}>
-                  <Image source={require('./eyespot-logo-negative.png')} 
+                  <Image source={require('./eyespot-logo-negative.png')}
                                   style={styles.pageTitleLogo} />
                     <Text style={styles.pageTitleText}>Discover</Text>
                 </View>
