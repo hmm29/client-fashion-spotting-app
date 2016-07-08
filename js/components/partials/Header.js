@@ -8,7 +8,7 @@
 'use strict'; /* enables JS strict mode for any ES5 code */
 
 /*
- * import modules 
+ * import modules
  */
 
 import React, { Component } from 'react';
@@ -21,14 +21,14 @@ import {
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
-/* 
- * defines the Header class 
+/*
+ * defines the Header class
  */
 
 var Header = React.createClass({
 
-  /* 
-   * specifies types for properties that this component receives 
+  /*
+   * specifies types for properties that this component receives
    */
 
   propTypes: {
