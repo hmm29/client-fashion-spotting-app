@@ -205,6 +205,7 @@ var DiscoverPage = React.createClass({
                       <SearchBar/>
                     </View>
                 </View>
+                <Footer/>
             </EyespotPageBase>
         );
     }
