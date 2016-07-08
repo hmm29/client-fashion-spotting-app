@@ -4,7 +4,7 @@ Eyespot lets users discover quality fashion products through a community-driven,
 
 # Most recent snapshot: Discover page in the works
 
-![Alt text](./discover-page-snapshot.png?raw=true "Title")
+![Screenshot](discover-page-snapshot.png?raw=true "Discover page screenshot")
 
 ## Running this app
 
