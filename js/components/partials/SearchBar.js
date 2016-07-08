@@ -102,6 +102,11 @@ var Navs = React.createClass({
  }
 })
 
+
+/*
+* SearchBar - reusable component for different searchbar dropdowns
+*/
+
 var SearchBar = React.createClass({
  getInitialState() {
    return {

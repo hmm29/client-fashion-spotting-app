@@ -103,7 +103,7 @@ var styles = StyleSheet.create({
    width: width,
    height: footerHeight,
    position: 'absolute',
-   bottom: 200, //FIXME why does bottom 0 not work?
+   bottom: 200,
  },
  footer: {
    flexDirection: 'row',
