@@ -94,7 +94,7 @@ var styles = StyleSheet.create({
   },
   headerContainer: {
     width,
-    height: height / 8.5,
+    height: height / 10,
     backgroundColor: 'transparent',
     paddingHorizontal: 20,
     paddingVertical: height / 25

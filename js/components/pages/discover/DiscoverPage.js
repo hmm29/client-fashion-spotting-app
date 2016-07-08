@@ -172,6 +172,16 @@ var DiscoverPage = React.createClass({
     },
 
     /*
+     * _renderFooter(): renders the imported footer component
+     */
+
+    _renderFooter() {
+      return (
+          <Footer />
+      )
+    },
+
+    /*
      * _renderHeader(): renders the imported header component
      */
 
@@ -195,18 +205,23 @@ var DiscoverPage = React.createClass({
 
     render() {
         return (
+          <View style={styles.layeredPageContainer}>
+            {this._renderHeader()}
             <EyespotPageBase
                 keyboardShouldPersistTaps={false}
                 noScroll={false}>
                 <View style={styles.container}>
-                    {this._renderHeader()}
                     <View>
                       <Categories/>
                       <SearchBar/>
                     </View>
                 </View>
-                <Footer/>
             </EyespotPageBase>
+            <View style={styles.fixedFooterSpacer} />
+            <View style={styles.fixedFooterWrapper}>
+              {this._renderFooter()}
+            </View>
+          </View>
         );
     }
 });
@@ -252,9 +267,19 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent',
       color: 'white'
     },
+    fixedFooterSpacer: {
+      height: 60
+    },
+    fixedFooterWrapper: {
+      position: 'absolute',
+      top: height * 1.27
+    },
     headerContainer: {
       backgroundColor: '#000',
-      top: -30
+      top: -10
+    },
+    layeredPageContainer: {
+      flex: 1
     },
     pageTitle: {
       flexDirection: 'row',

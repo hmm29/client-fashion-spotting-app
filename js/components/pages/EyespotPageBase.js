@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 
 /* 
- * defines the EyespotPageBase class 
+ * defines the EyespotPageBase class
  */
 
 var EyespotPageBase = React.createClass({
