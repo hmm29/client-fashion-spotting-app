@@ -6,7 +6,7 @@
  * @flow
  */
 
-'use strict'; /* enable JS strict mode for any ES5 code */
+'use strict'; /* enables JS strict mode for any ES5 code */
 
 /*
  * import modules
@@ -29,7 +29,7 @@ import Header from '../../partials/Header';
 import Footer from '../../partials/Footer';
 import SearchBar from '../../partials/SearchBar';
 
-var {height, width} = Dimensions.get('window'); /* get screen dimensions */
+var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
  * defines the Categories class
@@ -61,11 +61,11 @@ var {height, width} = Dimensions.get('window'); /* get screen dimensions */
            <View style={styles.textContainer}>
              <Text style={styles.panelText}>FEATURED CONTRIBUTOR</Text>
            </View>
-           <View style={styles.featuredApplyBox}>
+           <TouchableOpacity style={styles.featuredApplyBox}>
               <View style={styles.textContainer}>
                 <Text style={styles.featuredPanelText}>apply to be a featured contributor</Text>
               </View>
-           </View>
+           </TouchableOpacity>
          </View>
        </View>
      )
@@ -134,12 +134,12 @@ var Categories = React.createClass({
         <Featured/>
         {this.state.categories.map(function(c, i){
           return (
-            <View key={i} style={styles.panel}>
+            <TouchableOpacity key={i} style={styles.panel}>
               <Image source={require('./test.jpg')} style={styles.panelImage}/>
               <View style={styles.textContainer}>
                 <Text style={styles.panelText}>{c.name}</Text>
               </View>
-            </View>
+            </TouchableOpacity>
           )
         })}
       </View>
@@ -177,8 +177,13 @@ var DiscoverPage = React.createClass({
 
     _renderHeader() {
         return (
-            <Header containerStyle={styles.headerContainer} noTitle={true}>
-                <BackIcon color='#444' onPress={() => this.props.navigator.pop()} />
+            <Header containerStyle={styles.headerContainer}>
+                <View />
+                <View style={styles.pageTitle}>
+                  <Image source={require('./eyespot-logo-negative.png')} 
+                                  style={styles.pageTitleLogo} />
+                    <Text style={styles.pageTitleText}>Discover</Text>
+                </View>
                 <View />
             </Header>
         );
@@ -192,9 +197,10 @@ var DiscoverPage = React.createClass({
         return (
             <EyespotPageBase
                 keyboardShouldPersistTaps={false}
-                noScroll={true}>
+                noScroll={false}>
                 <View style={styles.container}>
-                    <View style={styles.section}>
+                    {this._renderHeader()}
+                    <View>
                       <Categories/>
                       <SearchBar/>
                     </View>
@@ -244,6 +250,29 @@ const styles = StyleSheet.create({
     featuredPanelText: {
       backgroundColor: 'transparent',
       color: 'white'
+    },
+    headerContainer: {
+      backgroundColor: '#000',
+      top: -30
+    },
+    pageTitle: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      bottom: height/200
+    },
+    pageTitleLogo: {
+      alignSelf: 'center',
+      backgroundColor: 'transparent',
+      width: width/3.2,
+      height: height/24,
+      resizeMode: Image.resizeMode.contain
+    },
+    pageTitleText: {
+      color: '#fff',
+      fontSize: height/40,
+      fontFamily: 'BodoniSvtyTwoITCTT-Book'
+
     },
     panel: {
         width: panelWidth,

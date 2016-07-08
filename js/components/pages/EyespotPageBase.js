@@ -40,7 +40,7 @@ var EyespotPageBase = React.createClass({
 
   render() {
     let ContentWrapper;
-    let wrapperProps;
+    let wrapperProps = {};
 
     if (this.props.noScroll) {
       ContentWrapper = (ScrollView: ReactClass<any>);
@@ -74,7 +74,6 @@ const styles = StyleSheet.create({
     flex: 1
   },
   wrapper: {
-    flex: 1,
     paddingTop: 10
   }
 });
