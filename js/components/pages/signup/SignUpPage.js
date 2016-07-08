@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
         color: 'rgba(59,89,152,0.8)'
     },
     headerContainer: {
+        marginBottom: 10
     },
     input: {
         alignSelf: 'center',
