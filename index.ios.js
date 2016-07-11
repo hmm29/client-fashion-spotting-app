@@ -20,6 +20,7 @@ import {
 
 import LoginPage from './js/components/pages/login/LoginPage';
 import DiscoverPage from './js/components/pages/discover/DiscoverPage';
+import ProductPage from './js/components/pages/product/ProductPage';
 
 /*
  * defines the Eyespot class
@@ -49,7 +50,7 @@ class Eyespot extends Component {
           navigationBarHidden={true}    /* hide navigation bar */
           initialRoute={{               /* initial route in navigator */
             title: 'DiscoverPage',
-            component: DiscoverPage,
+            component: ProductPage,
           }}
           itemWrapperStyle={styles.itemWrapper} /* styles for nav background */
           style={{flex: 1}} />
