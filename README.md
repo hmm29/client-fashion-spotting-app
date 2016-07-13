@@ -5,7 +5,7 @@ Eyespot lets users discover quality fashion products through a community-driven,
 ## Most recent snapshot: 
 ### Discover page in the works
 
-![Screenshot](https://raw.githubusercontent.com/CelenaConsortium/eyespot/discover-integration/discover-page-screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/CelenaConsortium/eyespot/discover-integration/discover-page-with-footer.png)
 
 ## Running this app
 

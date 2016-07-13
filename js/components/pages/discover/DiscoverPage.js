@@ -9,7 +9,7 @@
 'use strict'; /* enables JS strict mode for any ES5 code */
 
 /*
- * import modules
+ * imports required modules
  */
 
 import React, { Component } from 'react';
@@ -75,7 +75,7 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
  * defines the Categories class
- * this code is for the two-column category component
+ * this is the code for the two-column category component
  */
 
 var Categories = React.createClass({
@@ -172,6 +172,16 @@ var DiscoverPage = React.createClass({
     },
 
     /*
+     * _renderFooter(): renders the imported footer component
+     */
+
+    _renderFooter() {
+      return (
+          <Footer />
+      )
+    },
+
+    /*
      * _renderHeader(): renders the imported header component
      */
 
@@ -180,7 +190,7 @@ var DiscoverPage = React.createClass({
             <Header containerStyle={styles.headerContainer}>
                 <View />
                 <View style={styles.pageTitle}>
-                  <Image source={require('./eyespot-logo-negative.png')} 
+                  <Image source={require('./eyespot-logo-negative.png')}
                                   style={styles.pageTitleLogo} />
                     <Text style={styles.pageTitleText}>Discover</Text>
                 </View>
@@ -195,17 +205,23 @@ var DiscoverPage = React.createClass({
 
     render() {
         return (
+          <View style={styles.layeredPageContainer}>
+            {this._renderHeader()}
             <EyespotPageBase
                 keyboardShouldPersistTaps={false}
                 noScroll={false}>
-                <View style={styles.container}>
-                    {this._renderHeader()}
+                <View>
                     <View>
                       <Categories/>
                       <SearchBar/>
                     </View>
                 </View>
             </EyespotPageBase>
+            <View style={styles.fixedFooterSpacer} />
+            <View style={styles.fixedFooterWrapper}>
+              {this._renderFooter()}
+            </View>
+          </View>
         );
     }
 });
@@ -251,9 +267,19 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent',
       color: 'white'
     },
+    fixedFooterSpacer: {
+      height: 60
+    },
+    fixedFooterWrapper: {
+      position: 'absolute',
+      top: height * 1.27
+    },
     headerContainer: {
       backgroundColor: '#000',
-      top: -30
+      top: -10
+    },
+    layeredPageContainer: {
+      flex: 1
     },
     pageTitle: {
       flexDirection: 'row',
@@ -302,7 +328,7 @@ const styles = StyleSheet.create({
 })
 
 /*
- * export the module so it can be imported into other components
+ * exports this component as a module so it can be imported into other modules
  */
 
 module.exports = DiscoverPage;

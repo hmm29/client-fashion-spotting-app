@@ -5,26 +5,47 @@
  * @providesModule PhotoGallery
  * @flow
  */
-'use strict';
 
-const React = require('react');
-const ReactNative = require('react-native');
-const {
+'use strict'; /* enables JS strict mode for any ES5 code */
+
+/*
+ * imports required modules
+ */
+
+import React, { Component } from 'react';
+import {
+  StyleSheet,
   Text,
-  View,
-  StyleSheet
-} = ReactNative;
+  View
+} from 'react-native';
 
-const PhotoBrowser = require('react-native-photo-browser');
+import PhotoBrowser from 'react-native-photo-browser';
+
+/*
+ * defines the PhotoGallery class
+ */
 
 var PhotoGallery = React.createClass({
+
+   /*
+    * render(): returns JSX that declaratively specifies photo gallery UI
+    */
+
     render() {
 
     }
 });
 
+/*
+ * CSS stylings
+ */
+
 const styles = StyleSheet.create({
 
 });
+
+/*
+ * exports this component as a module so it can be imported into other modules
+ */
 
 module.exports = PhotoGallery;

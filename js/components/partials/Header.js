@@ -5,10 +5,11 @@
  * @providesModule Header
  * @flow
  */
+
 'use strict'; /* enables JS strict mode for any ES5 code */
 
 /*
- * import modules 
+ * imports required modules
  */
 
 import React, { Component } from 'react';
@@ -21,14 +22,14 @@ import {
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
-/* 
- * defines the Header class 
+/*
+ * defines the Header class
  */
 
 var Header = React.createClass({
 
-  /* 
-   * specifies types for properties that this component receives 
+  /*
+   * specifies types for properties that this component receives
    */
 
   propTypes: {
@@ -93,7 +94,7 @@ var styles = StyleSheet.create({
   },
   headerContainer: {
     width,
-    height: height / 8.5,
+    height: height / 10,
     backgroundColor: 'transparent',
     paddingHorizontal: 20,
     paddingVertical: height / 25
@@ -106,7 +107,7 @@ var styles = StyleSheet.create({
 });
 
 /*
- * export the module so it can be imported into other components
+ * exports this component as a module so it can be imported into other modules
  */
 
 module.exports = Header;
