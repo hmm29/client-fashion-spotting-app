@@ -212,7 +212,7 @@ var DiscoverPage = React.createClass({
             <EyespotPageBase
                 keyboardShouldPersistTaps={false}
                 noScroll={false}>
-                <View style={styles.container}>
+                <View>
                     <View>
                       <Categories/>
                       <SearchBar/>
