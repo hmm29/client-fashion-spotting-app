@@ -5,19 +5,19 @@
  * @providesModule LoginPage
  * @flow
  */
- 
+
 'use strict'; /* enables JS strict mode for any ES5 code */
 
-/* 
- * imports required modules 
+/*
+ * imports required modules
  */
 
-import React, { Component } from 'react'; 
-import { 
+import React, { Component } from 'react';
+import {
   Dimensions,
   Image,
   StyleSheet,
-  Text, 
+  Text,
   TextInput,
   View
 } from 'react-native';
@@ -31,65 +31,63 @@ import SignUpPage from '../signup/SignUpPage';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
-/* 
- * defines the LoginPage class 
+/*
+ * defines the LoginPage class
  */
 
 var LoginPage = React.createClass({
 
-    /* 
-     * getInitialState(): returns object with initialized component state variables 
+    /*
+     * getInitialState(): returns object with initialized component state variables
      */
 
     getInitialState() {
         return {
             passwordText: '',
             usernameText: ''
-        }
+        };
     },
 
-    /* 
-     * specifies types for properties that this component receives 
+    /*
+     * specifies types for properties that this component receives
      */
 
-    propTypes: {
-        
-    },
+    propTypes: {},
 
-    /* 
-     * render(): returns JSX that declaratively specifies page UI 
+    /*
+     * render(): returns JSX that declaratively specifies page UI
      */
 
     render() {
         return (
             <EyespotPageBase
-                keyboardShouldPersistTaps={false} 
+                keyboardShouldPersistTaps={false}
                 noScroll={true}>
                 <View style={styles.container}>
                     <View style={styles.section}>
-                          <Image source={require('../../partials/img/eyespot-logo.png')} 
+                          <Image source={require('../../partials/img/eyespot-logo.png')}
                                 style={styles.logoImg} />
                     </View>
                     <View style={styles.section}>
-                        <TextInput 
+                        <TextInput
                             autocapitalize="none"
                             autocorrect={false}
                             onChangeText={(usernameText) => this.setState({usernameText})}
                             maxLength={30}
-                            placeholder="USER NAME" 
+                            placeholder="USER NAME"
                             placeholderTextColor="#999"
-                            style={[styles.input, styles.username]} 
+                            style={[styles.input, styles.username]}
                             value={this.state.usernameText} />
                             <View style={styles.underline} />
-                        <TextInput 
+                        <TextInput
                             autocapitalize="none"
                             autocorrect={false}
                             onChangeText={(passwordText) => this.setState({passwordText})}
                             maxLength={16}
-                            placeholder="PASSWORD" 
+                            placeholder="PASSWORD"
                             placeholderTextColor="#999"
                             secureTextEntry={true}
-                            style={[styles.input, styles.password]} 
+                            style={[styles.input, styles.password]}
                             value={this.state.passwordText} />
                             <View style={styles.underline} />
                     </View>
@@ -97,6 +95,7 @@ var LoginPage = React.createClass({
                         <Button
                           style={[styles.emailLogin, styles.buttons]} textStyle={[styles.emailLoginText, styles.buttonText]}
                           onPress={() => {
+
                             /*
                              * TODO: remove this temp shortcut to Discover page
                              */
@@ -117,7 +116,7 @@ var LoginPage = React.createClass({
                                   alert('Login cancelled');
                                 } else {
                                   alert('Login success with permissions: '
-                                    +result.grantedPermissions.toString());
+                                    + result.grantedPermissions.toString());
                                   this.props.navigator.replace({
                                     title: 'DiscoverPage',
                                     component: DiscoverPage,
@@ -134,7 +133,7 @@ var LoginPage = React.createClass({
                         </Button>
                     </View>
                     <View style={styles.section}>
-                        <Button 
+                        <Button
                             style={styles.loginOption}
                             textStyle={styles.loginOptionText}
                             onPress={() => {
@@ -143,11 +142,11 @@ var LoginPage = React.createClass({
                                     component: SignUpPage,
                                     passProps: {}
 
-                                })
+                                });
                             }} >
                             New User? Sign Up Now!
                         </Button>
-                        <Button 
+                        <Button
                             style={[styles.loginOption, {bottom: 20}]}
                             textStyle={styles.loginOptionText}
                             onPress={() => {
@@ -162,8 +161,8 @@ var LoginPage = React.createClass({
     }
 });
 
-/* 
- * CSS stylings 
+/*
+ * CSS stylings
  */
 
 const styles = StyleSheet.create({
@@ -171,66 +170,50 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         borderRadius: 0,
         borderWidth: 2,
-        width: width/1.4
+        width: width / 1.4
     },
-    buttonText: {
-        fontSize: height/40
-    },
+    buttonText: {fontSize: height / 40},
     container: {
-        marginTop: height/15,
+        marginTop: height / 15,
         flexDirection: 'column',
         justifyContent: 'center',
     },
-    emailLogin: {
-
-    },
-    emailLoginText: {
-
-    },
-    facebookLogin: {
-        borderColor: 'rgb(59,89,152)',
-    },
-    facebookLoginText: {
-        color: 'rgba(59,89,152,0.8)'
-    },
+    emailLogin: {},
+    emailLoginText: {},
+    facebookLogin: {borderColor: 'rgb(59,89,152)' },
+    facebookLoginText: {color: 'rgba(59,89,152,0.8)'},
     input: {
         alignSelf: 'center',
-        marginTop: height/40,
-        marginBottom: height/120,
+        marginTop: height / 40,
+        marginBottom: height / 120,
         textAlign: 'center',
-        height: height/40,
-        width: width/1.4
+        height: height / 40,
+        width: width / 1.4
     },
     logoImg: {
         alignSelf: 'center',
         backgroundColor: 'transparent',
-        width: width/1.4,
-        height: height/8,
+        width: width / 1.4,
+        height: height / 8,
         resizeMode: Image.resizeMode.contain
     },
-    loginOption: {
-        borderWidth: 0,
-    },
+    loginOption: {borderWidth: 0 },
     loginOptionText: {
         color: '#aaa',
         textDecorationLine: 'underline',
-        fontSize: height/40
+        fontSize: height / 40
     },
-    password: {
-    },
-    section: {
-        marginVertical: height/40
-    },
+    password: {},
+    section: {marginVertical: height / 40},
     underline: {
         alignSelf: 'center',
         borderColor: '#aaa',
         borderWidth: 1,
-        marginBottom: height/40,
-        width: width/1.1
+        marginBottom: height / 40,
+        width: width / 1.1
     },
-    username: {
-    }
-})
+    username: {}
+});
 
 /*
  * exports this component as a module so it can be imported into other modules

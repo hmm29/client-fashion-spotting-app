@@ -32,9 +32,7 @@ var Header = React.createClass({
    * specifies types for properties that this component receives
    */
 
-  propTypes: {
-    containerStyle: View.propTypes.style,
-  },
+  propTypes: {containerStyle: View.propTypes.style },
 
  /*
   * render(): returns JSX that declaratively specifies header UI
@@ -54,7 +52,7 @@ var Header = React.createClass({
             {this.props.children[3]}
           </View>
         </View>
-      )
+      );
     } else if (childCount === 3) {
       return (
         <View style={[styles.headerContainer, this.props.containerStyle]}>
@@ -64,7 +62,7 @@ var Header = React.createClass({
             <View style={{position: 'absolute', right: 10}}>{this.props.children[2]}</View>
           </View>
         </View>
-      )
+      );
     } else if (childCount === 2) {
       return (
         <View style={[styles.headerContainer, this.props.containerStyle]}>
@@ -73,11 +71,11 @@ var Header = React.createClass({
             <View style={{position: 'absolute', right: 10}}>{this.props.children[1]}</View>
           </View>
         </View>
-      )
+      );
     } else {
       return (
         <View style={[styles.headerContainer, this.props.containerStyle]} />
-      )
+      );
     }
   }
 });

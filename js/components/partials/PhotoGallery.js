@@ -40,9 +40,7 @@ var PhotoGallery = React.createClass({
  * CSS stylings
  */
 
-const styles = StyleSheet.create({
-
-});
+const styles = StyleSheet.create({});
 
 /*
  * exports this component as a module so it can be imported into other modules

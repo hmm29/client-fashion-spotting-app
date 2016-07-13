@@ -43,15 +43,14 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
     */
 
    getInitialState() {
-     return {
-     }
+     return {};
    },
 
    /*
     * render(): returns JSX that declaratively specifies page UI
     */
 
-   render(){
+   render() {
 
 
      return (
@@ -61,7 +60,7 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
            <View style={styles.textContainer}>
              <Text style={styles.panelText}>FEATURED CONTRIBUTOR</Text>
            </View>
-           {/*}
+           {/* }
            <TouchableOpacity style={styles.featuredApplyBox}>
               <View style={styles.textContainer}>
                 <Text style={styles.featuredPanelText}>apply to be a featured contributor</Text>
@@ -70,9 +69,9 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
            */}
          </View>
        </View>
-     )
+     );
    }
- })
+ });
 
 
 /*
@@ -88,44 +87,44 @@ var Categories = React.createClass({
 
   getInitialState() {
     return {
-      categories : [
+      categories: [
         {
-          'name' : 'ALL',
-          'imgUrl' : './test.jpg'
+          'name': 'ALL',
+          'imgUrl': './test.jpg'
         },
         {
-          'name' : 'SHOE',
-          'imgUrl' : './test.jpg'
+          'name': 'SHOE',
+          'imgUrl': './test.jpg'
         },
         {
-          'name' : 'SKIRT',
-          'imgUrl' : './test.jpg'
+          'name': 'SKIRT',
+          'imgUrl': './test.jpg'
         },
         {
-          'name' : 'DRESS',
-          'imgUrl' : './test.jpg'
+          'name': 'DRESS',
+          'imgUrl': './test.jpg'
         },
         {
-          'name' : 'BAG',
-          'imgUrl' : './test.jpg'
+          'name': 'BAG',
+          'imgUrl': './test.jpg'
         },
         {
-          'name' : 'BLOUSE',
-          'imgUrl' : './test.jpg'
+          'name': 'BLOUSE',
+          'imgUrl': './test.jpg'
         },
         {
-          'name' : 'COAT',
-          'imgUrl' : '../../../../../assets/images/test.jpg'
+          'name': 'COAT',
+          'imgUrl': '../../../../../assets/images/test.jpg'
         }
       ]
-    }
+    };
   },
 
   /*
    * render(): returns JSX that declaratively specifies page UI
    */
 
-  render(){
+  render() {
 
     /*
      * FIXME: get jpegs for product images
@@ -134,7 +133,7 @@ var Categories = React.createClass({
     return (
       <View style ={styles.categories}>
         <Featured/>
-        {this.state.categories.map(function(c, i){
+        {this.state.categories.map(function(c, i) {
           return (
             <TouchableOpacity key={i} style={styles.panel}>
               <Image source={require('./test.jpg')} style={styles.panelImage}/>
@@ -142,12 +141,12 @@ var Categories = React.createClass({
                 <Text style={styles.panelText}>{c.name}</Text>
               </View>
             </TouchableOpacity>
-          )
+          );
         })}
       </View>
-    )
+    );
   }
-})
+});
 
 /*
  * defines the DiscoverPage class
@@ -160,18 +159,14 @@ var DiscoverPage = React.createClass({
      */
 
     getInitialState() {
-        return {
-
-        }
+        return {};
     },
 
     /*
      * specifies types for properties that this component receives
      */
 
-    propTypes: {
-
-    },
+    propTypes: {},
 
     /*
      * _renderFooter(): renders the imported footer component
@@ -180,7 +175,7 @@ var DiscoverPage = React.createClass({
     _renderFooter() {
       return (
           <Footer />
-      )
+      );
     },
 
     /*
@@ -234,12 +229,12 @@ var DiscoverPage = React.createClass({
 
 const panelMargin = 5;
 const sideMargin = 20;
-const panelWidth = (width - panelMargin * 4 - sideMargin * 2)/2;
+const panelWidth = (width - panelMargin * 4 - sideMargin * 2) / 2;
 const featuredPanelWidth = panelWidth * 2 + panelMargin * 2;
 
 const styles = StyleSheet.create({
-    categories:{
-        flexDirection:'row',
+    categories: {
+        flexDirection: 'row',
         flexWrap: 'wrap',
         padding: sideMargin
     },
@@ -269,9 +264,7 @@ const styles = StyleSheet.create({
       backgroundColor: 'transparent',
       color: 'white'
     },
-    fixedFooterSpacer: {
-      height: 60
-    },
+    fixedFooterSpacer: {height: 60},
     fixedFooterWrapper: {
       position: 'absolute',
       top: height * 1.27
@@ -280,25 +273,23 @@ const styles = StyleSheet.create({
       backgroundColor: '#000',
       top: -10
     },
-    layeredPageContainer: {
-      flex: 1
-    },
+    layeredPageContainer: {flex: 1},
     pageTitle: {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      bottom: height/200
+      bottom: height / 200
     },
     pageTitleLogo: {
       alignSelf: 'center',
       backgroundColor: 'transparent',
-      width: width/3.2,
-      height: height/24,
+      width: width / 3.2,
+      height: height / 24,
       resizeMode: Image.resizeMode.contain
     },
     pageTitleText: {
       color: '#fff',
-      fontSize: height/40,
+      fontSize: height / 40,
       fontFamily: 'BodoniSvtyTwoITCTT-Book'
 
     },
@@ -329,7 +320,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: 'white'
     }
-})
+});
 
 /*
  * exports this component as a module so it can be imported into other modules

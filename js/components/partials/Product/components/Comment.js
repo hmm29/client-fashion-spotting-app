@@ -31,9 +31,9 @@ var Comments = React.createClass({
         <Image source={require('../img/quotes.png')} style={styles.icon}/>
         <Text style={styles.commentText}>{comment}</Text>
       </View>
-    )
+    );
   }
-})
+});
 
 
 /*
@@ -42,26 +42,26 @@ var Comments = React.createClass({
 
 const panelMargin = 5;
 const sideMargin = 20;
-const panelWidth = (width - panelMargin * 4 - sideMargin * 2)/2;
+const panelWidth = (width - panelMargin * 4 - sideMargin * 2) / 2;
 const featuredPanelWidth = panelWidth * 2 + panelMargin * 2;
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     transform: [{translateY: -20}],
     flexDirection: 'column',
     alignItems: 'center',
-    padding:10
+    padding: 10
   },
-  icon:{
+  icon: {
     width: 20,
     height: 20,
     resizeMode: 'contain'
   },
-  commentText:{
-    textAlign:'center',
+  commentText: {
+    textAlign: 'center',
     lineHeight: 20
   }
-})
+});
 
 /*
 * exports this component as a module so it can be imported into other modules

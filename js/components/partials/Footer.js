@@ -34,12 +34,12 @@ var Footer = React.createClass({
     * position based on offset of icons
     */
 
-   var activeMargin = width/3 * active;
-   if(active == 0){
-     activeMargin -= iconOffset/2;
+   var activeMargin = width / 3 * active;
+   if (active == 0) {
+     activeMargin -= iconOffset / 2;
    }
-   else if(active == 2){
-     activeMargin += iconOffset/2;
+   else if (active == 2) {
+     activeMargin += iconOffset / 2;
    }
 
    var activePadding = {marginLeft: activeMargin};
@@ -51,7 +51,7 @@ var Footer = React.createClass({
     var LeftIcon =
      <View style={styles.iconContainer}>
        <Image source={require('./img/browse.png')} style={[styles.icon, styles.iconLeft]}/>
-     </View>
+     </View>;
 
    /*
     * middle icon - eyespot emblem, goes to contribute page
@@ -62,7 +62,7 @@ var Footer = React.createClass({
        <View style={styles.iconEmblemContainer}>
          <Image source={require('./img/emblem.png')} style={styles.iconEmblem}/>
        </View>
-     </View>
+     </View>;
 
    /*
     * right icon - profile icon, goes to personal profile
@@ -71,7 +71,7 @@ var Footer = React.createClass({
     var RightIcon =
      <View style={styles.iconContainer}>
        <Image source={require('./img/profile.png')} style={[styles.icon, styles.iconRight]}/>
-     </View>
+     </View>;
 
     return (
       <View style={[styles.footerContainer]}>
@@ -88,7 +88,7 @@ var Footer = React.createClass({
           </View>
         </View>
       </View>
-    )
+    );
   }
 });
 
@@ -100,7 +100,7 @@ const iconEmblemHeight = iconEmblemWidth * 2;
 
 var styles = StyleSheet.create({
  footerContainer: {
-   width: width,
+   width,
    height: footerHeight,
    position: 'absolute',
    bottom: 200,
@@ -109,8 +109,8 @@ var styles = StyleSheet.create({
    flexDirection: 'row',
    justifyContent: 'center',
    alignItems: 'center',
-   backgroundColor:'black',
-   width: width,
+   backgroundColor: 'black',
+   width,
    height: footerHeight,
 
  },
@@ -119,45 +119,40 @@ var styles = StyleSheet.create({
    fontSize: 22,
    fontFamily: 'AvenirNextCondensed-Regular'
  },
- iconContainer:{
-   flex:1,
+ iconContainer: {
+   flex: 1,
    flexDirection: 'row',
    justifyContent: 'center',
  },
- icon:{
-   width:iconWidth,
-   height:iconWidth,
-   resizeMode:'contain'
+ icon: {
+   width: iconWidth,
+   height: iconWidth,
+   resizeMode: 'contain'
  },
- iconLeft:{
-   marginRight: iconOffset
- },
- iconRight:{
-   marginLeft: iconOffset
- },
+ iconLeft: {marginRight: iconOffset},
+ iconRight: {marginLeft: iconOffset},
  iconEmblemContainer: {
-   width:iconEmblemWidth,
-   height:iconEmblemHeight,
+   width: iconEmblemWidth,
+   height: iconEmblemHeight,
   //  backgroundColor: 'green'
  },
- iconEmblem:{
-   width:iconEmblemWidth,
-   height:iconEmblemHeight,
-   resizeMode:'contain',
+ iconEmblem: {
+   width: iconEmblemWidth,
+   height: iconEmblemHeight,
+   resizeMode: 'contain',
    position: 'absolute',
    top: -30
  },
  activeContainer: {
-   width: width/3,
+   width: width / 3,
    flexDirection: 'row',
    justifyContent: 'center',
  },
- activeIconContainer:{
- },
- activeIcon:{
-   width:28,
-   height:28,
-   resizeMode:'contain',
+ activeIconContainer: {},
+ activeIcon: {
+   width: 28,
+   height: 28,
+   resizeMode: 'contain',
    transform: [{translateY: -18}]
  }
 });

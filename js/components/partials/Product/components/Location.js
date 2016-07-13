@@ -33,9 +33,9 @@ var Location = React.createClass({
         <Text><Text style={styles.italic}>at</Text> {store} /</Text>
         <Text> {location}</Text>
       </View>
-    )
+    );
   }
-})
+});
 
 
 /*
@@ -43,23 +43,21 @@ var Location = React.createClass({
 */
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     paddingVertical: 10,
-    width: width,
+    width,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderRightWidth:0,
-    borderLeftWidth:0,
-    borderColor: "black",
+    borderRightWidth: 0,
+    borderLeftWidth: 0,
+    borderColor: 'black',
     transform: [{translateY: -20}],
   },
-  italic: {
-    fontStyle: "italic"
-  },
+  italic: {fontStyle: 'italic'},
 
-})
+});
 
 /*
 * exports this component as a module so it can be imported into other modules

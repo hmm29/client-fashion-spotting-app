@@ -31,12 +31,12 @@ var Contributor = React.createClass({
         <View style={styles.profileContainer}>
           <Image source={require('../img/testUser.jpg')} style={styles.profile}/>
         </View>
-        <Text style={[styles.bodoni, {fontStyle :"italic"}]}>spotted by</Text>
+        <Text style={[styles.bodoni, {fontStyle: 'italic'}]}>spotted by</Text>
         <Text style={[styles.name, styles.bodoni]}>{product.user.username.toUpperCase()}</Text>
       </View>
-    )
+    );
   }
-})
+});
 
 /*
 * CSS stylings
@@ -50,26 +50,26 @@ const innerProfileDiameter = innerProfileRadius * 2;
 
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flexDirection: 'column',
     alignItems: 'center',
     flex: 1,
     transform: [{translateY: -(profileRadius)}]
   },
-  profileContainer:{
+  profileContainer: {
     width: profileDiameter,
     height: profileDiameter,
     borderRadius: profileRadius,
-    shadowOffset:{
+    shadowOffset: {
         width: 0,
         height: 0,
     },
     shadowColor: 'black',
     shadowOpacity: .4,
     shadowRadius: 3,
-    borderWidth: borderWidth,
-    borderColor:"white",
-    marginBottom:10
+    borderWidth,
+    borderColor: 'white',
+    marginBottom: 10
 
   },
  profile: {
@@ -78,14 +78,12 @@ const styles = StyleSheet.create({
    resizeMode: 'cover',
    borderRadius: innerProfileRadius,
  },
- bodoni:{
-   fontFamily: 'BodoniSvtyTwoITCTT-Book',
- },
- name:{
+ bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book' },
+ name: {
    color: 'red',
    fontSize: 25,
  }
-})
+});
 
 /*
 * exports this component as a module so it can be imported into other modules

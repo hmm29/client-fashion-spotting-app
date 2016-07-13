@@ -44,31 +44,31 @@ var Title = React.createClass({
   render() {
     const { user } = this.props;
 
-    return(
+    return (
       <View style={styles.titleContainer}>
         <Text style={[styles.italic, styles.bodoni]}>by</Text>
         <Text style={[styles.username, styles.bodoni]}>{user.username.toUpperCase()}</Text>
       </View>
-    )
+    );
   }
 
-})
+});
 
 var ProfileContainer = React.createClass({
 
   render() {
     const { user } = this.props;
 
-    return(
+    return (
       <View>
         <Image
           source={require('./img/profilePicture.jpg')}
           style={styles.profileImage} />
       </View>
-    )
+    );
   }
 
-})
+});
 
 
 var UserProducts = React.createClass({
@@ -76,19 +76,18 @@ var UserProducts = React.createClass({
   render() {
     const { user } = this.props;
 
-    return(
+    return (
       <View>
-        {user.products.map((product, i) =>{
+        {user.products.map((product, i) => {
           return (
             <Product key={i} product={product}/>
-          )
+          );
         })}
       </View>
-    )
+    );
   }
 
-})
-
+});
 
 
 /*
@@ -99,18 +98,16 @@ const user = {
   username: 'lovelycarrie',
   products: [
     {
-      'name' : 'none',
-      'imgUrl' : './test.jpg',
+      'name': 'none',
+      'imgUrl': './test.jpg',
       likes: 42,
-      store: "Adidas",
-      location: "Beverely Center",
-      comment: "I've found this pair of cute beauties at Adidas Beverly Center. It's super comfy and looks amazing!",
-      user: {
-        username: 'lovelycarrie'
-      }
+      store: 'Adidas',
+      location: 'Beverely Center',
+      comment: 'I\'ve found this pair of cute beauties at Adidas Beverly Center. It\'s super comfy and looks amazing!',
+      user: {username: 'lovelycarrie'}
     }
   ]
-}
+};
 
 var PersonalPage = React.createClass({
 
@@ -118,8 +115,7 @@ var PersonalPage = React.createClass({
     * specifies types for properties that this component receives
     */
 
-   propTypes: {
-   },
+   propTypes: {},
 
    /*
     * _renderFooter(): renders the imported footer component
@@ -128,7 +124,7 @@ var PersonalPage = React.createClass({
    _renderFooter() {
      return (
          <Footer />
-     )
+     );
    },
 
    /*
@@ -184,36 +180,28 @@ var PersonalPage = React.createClass({
 */
 
 const styles = StyleSheet.create({
-   container:{
-     flexDirection:'column',
+   container: {
+     flexDirection: 'column',
      alignItems: 'center',
    },
-   titleContainer:{
-     flexDirection:'column',
+   titleContainer: {
+     flexDirection: 'column',
      alignItems: 'center',
      paddingBottom: 15
    },
-   italic:{
-     fontStyle: 'italic'
+   italic: {fontStyle: 'italic'},
+   bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book'},
+   username: {fontSize: 30 },
+   profileImage: {
+     width,
+     height: height / 3,
+     resizeMode: 'cover'
    },
-   bodoni:{
-     fontFamily: 'BodoniSvtyTwoITCTT-Book'
-   },
-   username:{
-     fontSize: 30,
-   },
-   profileImage:{
-     width: width,
-     height: height/3,
-     resizeMode:'cover'
-   },
-   myContributions:{
-     width: width,
+   myContributions: {
+     width,
      padding: 20,
    },
-   fixedFooterSpacer: {
-     height: 60
-   },
+   fixedFooterSpacer: {height: 60},
    fixedFooterWrapper: {
      position: 'absolute',
      top: height * 1.27
@@ -222,29 +210,27 @@ const styles = StyleSheet.create({
      backgroundColor: '#000',
      top: -10
    },
-   layeredPageContainer: {
-     flex: 1
-   },
+   layeredPageContainer: {flex: 1},
    pageTitle: {
      flexDirection: 'row',
      justifyContent: 'center',
      alignItems: 'center',
-     bottom: height/200
+     bottom: height / 200
    },
    pageTitleLogo: {
      alignSelf: 'center',
      backgroundColor: 'transparent',
-     width: width/3.2,
-     height: height/24,
+     width: width / 3.2,
+     height: height / 24,
      resizeMode: Image.resizeMode.contain
    },
    pageTitleText: {
      color: '#fff',
-     fontSize: height/40,
+     fontSize: height / 40,
      fontFamily: 'BodoniSvtyTwoITCTT-Book'
 
    },
-})
+});
 
 /*
 * exports this component as a module so it can be imported into other modules

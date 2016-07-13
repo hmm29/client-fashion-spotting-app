@@ -42,17 +42,15 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 // HACK: replace with real data
 const products = [
     {
-      'name' : 'none',
-      'imgUrl' : './test.jpg',
+      'name': 'none',
+      'imgUrl': './test.jpg',
       likes: 42,
-      store: "Adidas",
-      location: "Beverely Center",
-      comment: "I've found this pair of cute beauties at Adidas Beverly Center. It's super comfy and looks amazing!",
-      user: {
-        username: 'lovelycarrie'
-      }
+      store: 'Adidas',
+      location: 'Beverely Center',
+      comment: 'I\'ve found this pair of cute beauties at Adidas Beverly Center. It\'s super comfy and looks amazing!',
+      user: {username: 'lovelycarrie'}
     }
-  ]
+  ];
 
 var Products = React.createClass({
 
@@ -60,7 +58,7 @@ var Products = React.createClass({
   * render(): returns JSX that declaratively specifies page UI
   */
 
- render(){
+ render() {
 
    const { products } = this.props;
 
@@ -74,14 +72,14 @@ var Products = React.createClass({
 
         return (
           <Product key={i} product={product}/>
-        )
+        );
 
        })}
 
      </View>
-   )
+   );
  }
-})
+});
 
 /*
 * defines the ProductPage class
@@ -93,9 +91,7 @@ var ProductPage = React.createClass({
     * specifies types for properties that this component receives
     */
 
-   propTypes: {
-     products: PropTypes.array
-   },
+   propTypes: {products: PropTypes.array},
 
    /*
     * _renderFooter(): renders the imported footer component
@@ -104,7 +100,7 @@ var ProductPage = React.createClass({
    _renderFooter() {
      return (
          <Footer />
-     )
+     );
    },
 
    /*
@@ -160,48 +156,43 @@ const sideMargin = 20;
 
 // FIXME: put header and footer styles in seperate file
 const styles = StyleSheet.create({
-    container: {
-    },
-    products:{
-      flexDirection:'column',
-      justifyContent:'flex-start',
+    container: {},
+    products: {
+      flexDirection: 'column',
+      justifyContent: 'flex-start',
       paddingHorizontal: sideMargin,
     },
     headerContainer: {
       backgroundColor: '#000',
       top: -10
     },
-    layeredPageContainer: {
-      flex: 1
-    },
+    layeredPageContainer: {flex: 1},
     pageTitle: {
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      bottom: height/200
+      bottom: height / 200
     },
     pageTitleLogo: {
       alignSelf: 'center',
       backgroundColor: 'transparent',
-      width: width/3.2,
-      height: height/24,
+      width: width / 3.2,
+      height: height / 24,
       resizeMode: Image.resizeMode.contain
     },
     pageTitleText: {
       color: '#fff',
-      fontSize: height/40,
+      fontSize: height / 40,
       fontFamily: 'BodoniSvtyTwoITCTT-Book'
     },
-    fixedFooterSpacer: {
-      height: 60
-    },
+    fixedFooterSpacer: {height: 60},
     fixedFooterWrapper: {
       position: 'absolute',
       top: height * 1.27
     },
 
 
-})
+});
 
 /*
 * exports this component as a module so it can be imported into other modules

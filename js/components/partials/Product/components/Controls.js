@@ -22,18 +22,18 @@ import Button from 'apsl-react-native-button';
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var Share = React.createClass({
-  render(){
+  render() {
     return (
       <View style={styles.control}>
         <Image source={require('../img/share.png')} style={styles.icon}/>
       </View>
-    )
+    );
   }
-})
+});
 
 
 var Likes = React.createClass({
-  render(){
+  render() {
 
     const { product } = this.props;
     const likes = product.likes;
@@ -44,20 +44,20 @@ var Likes = React.createClass({
         <Image source={require('../img/like.png')} style={styles.icon}/>
         <Text style={styles.bodoni}>{likes}</Text>
       </View>
-    )
+    );
   }
-})
+});
 
 
 var More = React.createClass({
-  render(){
+  render() {
     return (
       <View style={styles.control}>
         <Image source={require('../img/more.png')} style={styles.icon}/>
       </View>
-    )
+    );
   }
-})
+});
 
 var Controls = React.createClass({
   render() {
@@ -68,9 +68,9 @@ var Controls = React.createClass({
         <Share/>
         <More/>
       </View>
-    )
+    );
   }
-})
+});
 
 
 /*
@@ -80,19 +80,19 @@ var Controls = React.createClass({
 const controlWidth = 20;
 
 const styles = StyleSheet.create({
-  container:{
+  container: {
     flexDirection: 'row',
-    position:'absolute',
+    position: 'absolute',
     top: 0,
     left: 0,
-    padding:10,
+    padding: 10,
   },
-  icon:{
+  icon: {
     width: controlWidth,
     height: controlWidth,
     resizeMode: 'contain'
   },
-  control:{
+  control: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontFamily: 'BodoniSvtyTwoITCTT-Book',
   }
-})
+});
 
 /*
 * exports this component as a module so it can be imported into other modules
