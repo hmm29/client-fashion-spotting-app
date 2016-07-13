@@ -29,6 +29,7 @@ import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import Footer from '../../partials/Footer';
 import SearchBar from '../../partials/SearchBar';
+import Product from '../../partials/Product';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -37,28 +38,87 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 * this code is for the two-column category component
 */
 
+
+var Title = React.createClass({
+
+  render() {
+    const { user } = this.props;
+
+    return(
+      <View style={styles.titleContainer}>
+        <Text style={[styles.italic, styles.bodoni]}>by</Text>
+        <Text style={[styles.username, styles.bodoni]}>{user.username.toUpperCase()}</Text>
+      </View>
+    )
+  }
+
+})
+
+var ProfileContainer = React.createClass({
+
+  render() {
+    const { user } = this.props;
+
+    return(
+      <View>
+        <Image
+          source={require('./img/profilePicture.jpg')}
+          style={styles.profileImage} />
+      </View>
+    )
+  }
+
+})
+
+
+var UserProducts = React.createClass({
+
+  render() {
+    const { user } = this.props;
+
+    return(
+      <View>
+        {user.products.map((product, i) =>{
+          return (
+            <Product key={i} product={product}/>
+          )
+        })}
+      </View>
+    )
+  }
+
+})
+
+
+
 /*
 * defines the PersonalPage class
 */
 
+const user = {
+  username: 'lovelycarrie',
+  products: [
+    {
+      'name' : 'none',
+      'imgUrl' : './test.jpg',
+      likes: 42,
+      store: "Adidas",
+      location: "Beverely Center",
+      comment: "I've found this pair of cute beauties at Adidas Beverly Center. It's super comfy and looks amazing!",
+      user: {
+        username: 'lovelycarrie'
+      }
+    }
+  ]
+}
+
 var PersonalPage = React.createClass({
-
-   /*
-    * getInitialState(): returns object with initialized component state variables
-    */
-
-   getInitialState() {
-       return {
-
-       }
-   },
 
    /*
     * specifies types for properties that this component receives
     */
 
    propTypes: {
-
    },
 
    /*
@@ -93,21 +153,29 @@ var PersonalPage = React.createClass({
     */
 
    render() {
-       return (
-         <View style={styles.layeredPageContainer}>
-           {this._renderHeader()}
-           <EyespotPageBase
-               keyboardShouldPersistTaps={false}
-               noScroll={false}>
-               <View style={styles.container}>
-               </View>
-           </EyespotPageBase>
-           <View style={styles.fixedFooterSpacer} />
-           <View style={styles.fixedFooterWrapper}>
-             {this._renderFooter()}
-           </View>
+     return (
+       <View style={styles.layeredPageContainer}>
+         {this._renderHeader()}
+         <EyespotPageBase
+             keyboardShouldPersistTaps={false}
+             noScroll={false}>
+             <View style={styles.container}>
+               <Title user={user}/>
+               <ProfileContainer user={user}/>
+               <View style={styles.myContributions}>
+                 <Text style={styles.bodoni}>
+                   <Text style={styles.italic}>My</Text> CONTRIBUTIONS
+                 </Text>
+              </View>
+               <UserProducts user={user}/>
+             </View>
+         </EyespotPageBase>
+         <View style={styles.fixedFooterSpacer} />
+         <View style={styles.fixedFooterWrapper}>
+           {this._renderFooter()}
          </View>
-       );
+       </View>
+     );
    }
 });
 
@@ -117,7 +185,31 @@ var PersonalPage = React.createClass({
 
 const styles = StyleSheet.create({
    container:{
-     
+     flexDirection:'column',
+     alignItems: 'center',
+   },
+   titleContainer:{
+     flexDirection:'column',
+     alignItems: 'center',
+     paddingBottom: 15
+   },
+   italic:{
+     fontStyle: 'italic'
+   },
+   bodoni:{
+     fontFamily: 'BodoniSvtyTwoITCTT-Book'
+   },
+   username:{
+     fontSize: 30,
+   },
+   profileImage:{
+     width: width,
+     height: height/3,
+     resizeMode:'cover'
+   },
+   myContributions:{
+     width: width,
+     padding: 20,
    },
    fixedFooterSpacer: {
      height: 60
