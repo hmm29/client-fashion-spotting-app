@@ -28,7 +28,7 @@ import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import Footer from '../../partials/Footer';
 import SearchBar from '../../partials/SearchBar';
-import Product from './components/Product';
+import Product from '../../partials/Product';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -41,18 +41,18 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 // HACK: replace with real data
 const products = [
-      {
-       'name' : 'none',
-       'imgUrl' : './test.jpg',
-       likes: 42,
-       store: "Adidas",
-       location: "Beverely Center",
-       comment: "I've found this pair of cute beauties at Adidas Beverly Center. It's super comfy and looks amazing!",
-       user: {
+    {
+      'name' : 'none',
+      'imgUrl' : './test.jpg',
+      likes: 42,
+      store: "Adidas",
+      location: "Beverely Center",
+      comment: "I've found this pair of cute beauties at Adidas Beverly Center. It's super comfy and looks amazing!",
+      user: {
         username: 'lovelycarrie'
       }
     }
-    ]
+  ]
 
 var Products = React.createClass({
 

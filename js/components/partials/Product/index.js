@@ -25,10 +25,10 @@ import {
 } from 'react-native';
 
 
-import Controls from './Controls';
-import Location from './Location';
-import Contributor from './Contributor';
-import Comment from './Comment';
+import Controls from './components/Controls';
+import Location from './components/Location';
+import Contributor from './components/Contributor';
+import Comment from './components/Comment';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -44,7 +44,7 @@ var Product = React.createClass({
 
     return (
       <View style={styles.product}>
-        <Image source={require('../img/test.jpg')} style={styles.productImage}/>
+        <Image source={require('./img/test.jpg')} style={styles.productImage}/>
         <View style={styles.info}>
           <Contributor product={product}/>
           <Location product={product}/>

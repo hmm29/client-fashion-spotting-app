@@ -5,28 +5,28 @@
  * @providesModule EyespotPageBase
  * @flow
  */
- 
+
 'use strict'; /* enables JS strict mode for any ES5 code */
 
-/* 
- * imports required modules 
+/*
+ * imports required modules
  */
- 
-import React, { Component } from 'react'; 
-import { 
-  ScrollView, 
-  StyleSheet, 
-  View 
+
+import React, { Component } from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  View
 } from 'react-native';
 
-/* 
+/*
  * defines the EyespotPageBase class
  */
 
 var EyespotPageBase = React.createClass({
 
-  /* 
-   * specifies types for properties that this component receives 
+  /*
+   * specifies types for properties that this component receives
    */
 
   propTypes: {
@@ -34,8 +34,8 @@ var EyespotPageBase = React.createClass({
       noScroll: React.PropTypes.bool
   },
 
-  /* 
-   * render(): returns JSX that declaratively specifies page UI 
+  /*
+   * render(): returns JSX that declaratively specifies page UI
    */
 
   render() {
@@ -83,5 +83,3 @@ const styles = StyleSheet.create({
  */
 
 module.exports = EyespotPageBase;
-
- 
