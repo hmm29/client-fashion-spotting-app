@@ -61,11 +61,13 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
            <View style={styles.textContainer}>
              <Text style={styles.panelText}>FEATURED CONTRIBUTOR</Text>
            </View>
+           {/*}
            <TouchableOpacity style={styles.featuredApplyBox}>
               <View style={styles.textContainer}>
                 <Text style={styles.featuredPanelText}>apply to be a featured contributor</Text>
               </View>
            </TouchableOpacity>
+           */}
          </View>
        </View>
      )
@@ -317,7 +319,9 @@ const styles = StyleSheet.create({
     panelText: {
         fontSize: 20,
         backgroundColor: 'transparent',
-        color: 'white'
+        color: 'white',
+        fontFamily: 'BodoniSvtyTwoITCTT-Book'
+
     },
     textContainer: {
         paddingVertical: 5,
