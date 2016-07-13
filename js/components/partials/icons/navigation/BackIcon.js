@@ -5,7 +5,12 @@
  * @providesModule BackIcon
  * @flow
  */
-'use strict';
+
+'use strict'; /* enables JS strict mode for any ES5 code */
+
+/*
+ * imports required modules
+ */
 
 import React, { Component } from 'react';
 import {
@@ -18,7 +23,11 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const SIZE = 32;
+const SIZE = 32; /* icon font size */
+
+/* 
+ * specifies types for properties that this component receives 
+ */
 
 type Props = {
   color: React.PropTypes.string,
@@ -27,11 +36,19 @@ type Props = {
   style: View.propTypes.style
 };
 
+/*
+ * defines the BackIcon class
+ */
+
 class BackIcon extends Component {
   constructor(props:Props) {
     super(props);
     this.state = {};
   };
+
+  /*
+   * render(): returns JSX that declaratively specifies icon appearance
+   */
 
   render() {
     return (
@@ -50,6 +67,10 @@ class BackIcon extends Component {
   };
 }
 
+/*
+ * CSS stylings
+ */
+
 const styles = StyleSheet.create({
   icon: {
     opacity: 1.0,
@@ -57,5 +78,9 @@ const styles = StyleSheet.create({
     height: SIZE
   }
 });
+
+/*
+ * exports this component as a module so it can be imported into other modules
+ */
 
 module.exports = BackIcon;

@@ -9,7 +9,7 @@
  'use strict'; /* enables JS strict mode for any ES5 code */
 
 /* 
- * import modules 
+ * imports required modules 
  */
 
 import React, { Component } from 'react'; 
@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
         color: 'rgba(59,89,152,0.8)'
     },
     headerContainer: {
+        marginBottom: 10
     },
     input: {
         alignSelf: 'center',
@@ -245,7 +246,7 @@ const styles = StyleSheet.create({
 })
 
 /*
- * export the module so it can be imported into other components
+ * exports this component as a module so it can be imported into other modules
  */
 
 module.exports = SignUpPage;
