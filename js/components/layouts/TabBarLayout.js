@@ -22,6 +22,7 @@ import {
  View
 } from 'react-native';
 
+import ContributePage from '../pages/contribute/ContributePage';
 import DiscoverPage from '../pages/discover/DiscoverPage';
 import PersonalPage from '../pages/personal/PersonalPage';
 import Tabs from 'react-native-tabs';
@@ -84,7 +85,7 @@ var TabBarLayout = React.createClass({
     */
 
     var EmblemIcon =
-     <View component={null} style={styles.iconContainer}>
+     <View title='ContributePage' component={<ContributePage navigator={this.props.navigator} />} style={styles.iconContainer}>
        <View style={styles.iconEmblemContainer}>
          <Image source={require('../partials/img/emblem.png')} style={styles.iconEmblem}/>
        </View>
