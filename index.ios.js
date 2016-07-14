@@ -52,13 +52,8 @@ class Eyespot extends Component {
         <NavigatorIOS
           navigationBarHidden={true}    /* hide navigation bar */
           initialRoute={{               /* initial route in navigator */
-<<<<<<< HEAD
-            title: 'DiscoverPage',
-            component: PersonalPage
-=======
-            title: 'TabBarLayout',
+            title: 'LoginPage',
             component: LoginPage,
->>>>>>> 31d37fadd0acb6ac531fa1f55f4ff05e9bf5fef7
           }}
           itemWrapperStyle={styles.itemWrapper} /* styles for nav background */
           style={{flex: 1}} />
