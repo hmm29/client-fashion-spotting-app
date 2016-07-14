@@ -71,7 +71,7 @@ var Products = React.createClass({
         */
 
         return (
-          <Product key={i} product={product}/>
+          <Product key={i} navigator={this.props.navigator} product={product}/>
         );
 
        })}
@@ -134,7 +134,7 @@ var ProductPage = React.createClass({
                noScroll={false}>
                <View style={styles.container}>
                  <View>
-                   <Products products={products}/>
+                   <Products navigator={this.props.navigator} products={products}/>
                   </View>
                </View>
            </EyespotPageBase>

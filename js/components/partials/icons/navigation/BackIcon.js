@@ -21,7 +21,7 @@ import {
   View
 } from 'react-native';
 
-const SIZE = 22; /* icon font size */
+const SIZE = 20; /* icon font size */
 
 /* 
  * specifies types for properties that this component receives 

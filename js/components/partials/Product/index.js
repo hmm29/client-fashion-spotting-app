@@ -46,7 +46,7 @@ var Product = React.createClass({
       <View style={styles.product}>
         <Image source={require('./img/test.jpg')} style={styles.productImage}/>
         <View style={styles.info}>
-          <Contributor product={product}/>
+          <Contributor navigator={this.props.navigator} product={product}/>
           <Location product={product}/>
           <Comment product={product}/>
           <Controls product={product}/>
