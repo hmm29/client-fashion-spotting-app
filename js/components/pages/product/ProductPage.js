@@ -23,6 +23,7 @@ import {
  TouchableOpacity
 } from 'react-native';
 
+import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
@@ -109,7 +110,7 @@ var ProductPage = React.createClass({
    _renderHeader() {
        return (
            <Header containerStyle={styles.headerContainer}>
-               <View />
+               <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
                <View style={styles.pageTitle}>
                  <Image source={require('./img/eyespot-logo-negative.png')}
                                  style={styles.pageTitleLogo} />

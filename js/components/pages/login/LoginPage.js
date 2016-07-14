@@ -19,15 +19,16 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View
 } from 'react-native';
 
 import Button from 'apsl-react-native-button';
-import DiscoverPage from '../discover/DiscoverPage';
 import EyespotPageBase from '../EyespotPageBase';
 import FormValidator from 'validate.js';
 import { LoginManager } from 'react-native-fbsdk';
 import SignUpPage from '../signup/SignUpPage';
+import TabBarLayout from '../../layouts/TabBarLayout';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -92,23 +93,23 @@ var LoginPage = React.createClass({
                             <View style={styles.underline} />
                     </View>
                     <View style={styles.section}>
-                        <Button
-                          style={[styles.emailLogin, styles.buttons]} textStyle={[styles.emailLoginText, styles.buttonText]}
-                          onPress={() => {
+                           <TouchableOpacity onPress={() => {
 
                             /*
                              * TODO: remove this temp shortcut to Discover page
                              */
                             this.props.navigator.replace({
-                                    title: 'DiscoverPage',
-                                    component: DiscoverPage,
+                                    title: 'TabBarLayout',
+                                    component: TabBarLayout,
                                     passProps: {}
                             });
                           }}>
-                            LOGIN WITH EMAIL
-                        </Button>
-                        <Button
-                          style={[styles.facebookLogin, styles.buttons]} textStyle={[styles.facebookLoginText, styles.buttonText]}
+                            <Image
+                              source={require('../../partials/img/login-with-email.png')}
+                              style={[styles.emailLogin, styles.buttons]} />
+                          </TouchableOpacity>
+
+                        <TouchableOpacity
                           onPress={() => {
                             LoginManager.logInWithReadPermissions(['public_profile']).then(
                               function(result) {
@@ -129,8 +130,10 @@ var LoginPage = React.createClass({
                               }
                             );
                           }}>
-                            LOGIN WITH FACEBOOK
-                        </Button>
+                            <Image
+                                source={require('../../partials/img/login-with-facebook.png')}
+                                style={[styles.facebookLogin, styles.buttons]} />
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.section}>
                         <Button
@@ -168,20 +171,16 @@ var LoginPage = React.createClass({
 const styles = StyleSheet.create({
     buttons: {
         alignSelf: 'center',
-        borderRadius: 0,
-        borderWidth: 2,
-        width: width / 1.4
+        marginVertical: height/100,
+        width: width / 1.4,
+        height: height/14,
+        resizeMode: Image.resizeMode.contain
     },
-    buttonText: {fontSize: height / 40},
     container: {
         marginTop: height / 15,
         flexDirection: 'column',
         justifyContent: 'center',
     },
-    emailLogin: {},
-    emailLoginText: {},
-    facebookLogin: {borderColor: 'rgb(59,89,152)' },
-    facebookLoginText: {color: 'rgba(59,89,152,0.8)'},
     input: {
         alignSelf: 'center',
         marginTop: height / 40,

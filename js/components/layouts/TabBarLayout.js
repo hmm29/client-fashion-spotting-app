@@ -32,7 +32,7 @@ const iconOffset = 40;
 var TabBarLayout = React.createClass({
 	getInitialState() {
 		return {
-			selected: <DiscoverPage />,
+			selected: <DiscoverPage navigator={this.props.navigator} />, // be sure to pass navigator
 			selectedTitle: 'DiscoverPage'
 		}
 	},
@@ -70,10 +70,11 @@ var TabBarLayout = React.createClass({
 
    /*
     * left icon, goes to discover page
+    * be sure to pass navigator to component for routing
     */
 
     var LeftIcon =
-    <View title='DiscoverPage' component={<DiscoverPage />} style={styles.iconContainer}>
+    <View title='DiscoverPage' component={<DiscoverPage navigator={this.props.navigator} />} style={styles.iconContainer}>
        <Image source={require('../partials/img/browse.png')} style={[styles.icon, styles.iconLeft]}/>
      {activeArrow}
      </View>
@@ -91,10 +92,11 @@ var TabBarLayout = React.createClass({
 
    /*
     * right icon - profile icon, goes to personal profile
+    * be sure to pass navigator to component for routing
     */
 
     var RightIcon =
-     <View title='PersonalPage' component={<PersonalPage />} style={styles.iconContainer}>
+     <View title='PersonalPage' component={<PersonalPage navigator={this.props.navigator} />} style={styles.iconContainer}>
        <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
        <View style={[{marginLeft: iconOffset/2, width: 28, height: 28}]} />
      </View>;
