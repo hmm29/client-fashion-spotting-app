@@ -6,15 +6,11 @@
  * @flow
  */
 
- import React, { Component } from 'react';
+ import React from 'react';
+
  import {
    Dimensions,
-   Image,
-   StyleSheet,
-   Text,
-   TextInput,
-   View,
-   TouchableOpacity
+   StyleSheet
  } from 'react-native';
 
 
@@ -156,18 +152,18 @@ const styles = StyleSheet.create({
    container: {},
    section: {
        marginVertical: height / 40,
-       flex: 1,
+       flex: 1
    },
    searchBarContainer: {
        position: 'absolute',
        height: height / 80,
-       top: -20,
+       top: -20
 
    },
    searchBar: {
      position: 'absolute',
      height: height / 80,
-     top: -40,
+     top: -40
    },
    navsContainer: {
      position: 'absolute',
@@ -179,18 +175,18 @@ const styles = StyleSheet.create({
      height: navsContainerHeight,
      shadowOffset: {
          width: 0,
-         height: 5,
+         height: 5
      },
      shadowColor: 'black',
      shadowOpacity: .2,
-     paddingHorizontal: 20,
+     paddingHorizontal: 20
    },
 
    navsInner: {
      height: navsContainerHeight,
      flexDirection: 'row',
      width: searchBarInnerWidth,
-     justifyContent: 'center',
+     justifyContent: 'center'
     //  backgroundColor: 'red'
    },
    nav: {
@@ -198,7 +194,7 @@ const styles = StyleSheet.create({
      height: navsContainerHeight,
      flexDirection: 'column',
      justifyContent: 'center',
-     alignItems: 'center',
+     alignItems: 'center'
     //  backgroundColor:'gray'
    },
    navTouch: {
@@ -207,14 +203,14 @@ const styles = StyleSheet.create({
      height: navsContainerHeight,
 
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
    },
    navText: {},
 
    dropdownIcon: {
      width: 15,
      resizeMode: 'contain',
-     marginLeft: 10,
+     marginLeft: 10
    },
 
    dropdownContainer: {
@@ -223,7 +219,7 @@ const styles = StyleSheet.create({
      justifyContent: 'center',
      flexDirection: 'row',
      alignItems: 'center',
-     width,
+     width
     //  backgroundColor: 'transparent'
    },
    dropdownInner: {
@@ -245,7 +241,7 @@ const styles = StyleSheet.create({
      paddingBottom: 20,
      shadowOffset: {
          width: 0,
-         height: 5,
+         height: 5
      },
      shadowColor: 'black',
      shadowOpacity: .2,
@@ -253,8 +249,8 @@ const styles = StyleSheet.create({
    },
    dropdownText: {
      marginVertical: 5,
-     marginHorizontal: 20,
-   },
+     marginHorizontal: 20
+   }
 
 });
 

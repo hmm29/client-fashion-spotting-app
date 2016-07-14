@@ -1,3 +1,10 @@
+/**
+ * Comment.js
+ * Page header element
+ *
+ * @providesModule Comment
+ * @flow
+ */
 
 
 'use strict'; /* enables JS strict mode for any ES5 code */
@@ -6,18 +13,14 @@
 * imports required modules
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
  Dimensions,
- Image,
  StyleSheet,
- Text,
- TextInput,
  View,
- TouchableOpacity
+ Text,
+ Image
 } from 'react-native';
-
-import Button from 'apsl-react-native-button';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 

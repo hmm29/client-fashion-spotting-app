@@ -12,19 +12,14 @@
  * imports required modules
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Dimensions,
   Image,
-  StyleSheet,
-  Text,
-  TextInput,
-  View
+  StyleSheet
 } from 'react-native';
 
-import Button from 'apsl-react-native-button';
 import DiscoverPage from '../discover/DiscoverPage';
-import EyespotPageBase from '../EyespotPageBase';
 import FormValidator from 'validate.js';
 import { LoginManager } from 'react-native-fbsdk';
 import SignUpPage from '../signup/SignUpPage';
@@ -176,7 +171,7 @@ const styles = StyleSheet.create({
     container: {
         marginTop: height / 15,
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     emailLogin: {},
     emailLoginText: {},

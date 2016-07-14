@@ -13,7 +13,7 @@
 * imports required modules
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
  Dimensions,
  Image,
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
        flexDirection: 'column',
        alignItems: 'center',
        width: featuredPanelWidth,
-       marginBottom: 50,
+       marginBottom: 50
     },
     productImage: {
       width: featuredPanelWidth,
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
       width: featuredPanelWidth,
       flexDirection: 'column',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'center'
     }
 });
 

@@ -1,3 +1,10 @@
+/**
+ * Location.js
+ * Page header element
+ *
+ * @providesModule Location
+ * @flow
+ */
 
 'use strict'; /* enables JS strict mode for any ES5 code */
 
@@ -5,20 +12,15 @@
 * imports required modules
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
  Dimensions,
- Image,
  StyleSheet,
- Text,
- TextInput,
  View,
- TouchableOpacity
+ Text
 } from 'react-native';
 
-import Button from 'apsl-react-native-button';
-
-var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+var {width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var Location = React.createClass({
   render() {
@@ -53,9 +55,9 @@ const styles = StyleSheet.create({
     borderRightWidth: 0,
     borderLeftWidth: 0,
     borderColor: 'black',
-    transform: [{translateY: -20}],
+    transform: [{translateY: -20}]
   },
-  italic: {fontStyle: 'italic'},
+  italic: {fontStyle: 'italic'}
 
 });
 

@@ -12,19 +12,13 @@
 * imports required modules
 */
 
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes } from 'react';
 import {
  Dimensions,
  Image,
- StyleSheet,
- Text,
- TextInput,
- View,
- TouchableOpacity
+ StyleSheet
 } from 'react-native';
 
-import Button from 'apsl-react-native-button';
-import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import Footer from '../../partials/Footer';
 import SearchBar from '../../partials/SearchBar';
@@ -160,7 +154,7 @@ const styles = StyleSheet.create({
     products: {
       flexDirection: 'column',
       justifyContent: 'flex-start',
-      paddingHorizontal: sideMargin,
+      paddingHorizontal: sideMargin
     },
     headerContainer: {
       backgroundColor: '#000',
@@ -189,8 +183,7 @@ const styles = StyleSheet.create({
     fixedFooterWrapper: {
       position: 'absolute',
       top: height * 1.27
-    },
-
+    }
 
 });
 

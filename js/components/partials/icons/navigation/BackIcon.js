@@ -12,7 +12,7 @@
  * imports required modules
  */
 
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -25,15 +25,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const SIZE = 32; /* icon font size */
 
-/* 
- * specifies types for properties that this component receives 
+/*
+ * specifies types for properties that this component receives
  */
 
 type Props = {
   color: React.PropTypes.string,
   onPress: React.PropTypes.func.isRequired,
   size: React.PropTypes.number,
-  style: View.propTypes.style
+  style: View.PropTypes.style
 };
 
 /*

@@ -12,21 +12,14 @@
  * imports required modules
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Dimensions,
   Image,
-  Text,
-  TextInput,
-  View,
   StyleSheet
 } from 'react-native';
 
-import BackIcon from '../../partials/icons/navigation/BackIcon';
-import Button from 'apsl-react-native-button';
 import DiscoverPage from '../discover/DiscoverPage';
-import EyespotPageBase from '../EyespotPageBase';
-import Header from '../../partials/Header';
 import { LoginManager } from 'react-native-fbsdk';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
@@ -46,7 +39,7 @@ var SignUpPage = React.createClass({
             emailAddressText: '',
             nameText: '',
             nicknameText: '',
-            passwordText: '',
+            passwordText: ''
         };
     },
 

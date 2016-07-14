@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
       width: featuredPanelWidth,
       paddingHorizontal: 20,
       flexDirection: 'column',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     featuredPanelText: {
       backgroundColor: 'transparent',

@@ -9,16 +9,15 @@
 
 'use strict';
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
  Dimensions,
  StyleSheet,
- Image,
- Text,
- View
+ View,
+ Image
  } from 'react-native';
 
-var {height, width} = Dimensions.get('window');
+var {width} = Dimensions.get('window');
 const iconOffset = 40;
 
 
@@ -103,7 +102,7 @@ var styles = StyleSheet.create({
    width,
    height: footerHeight,
    position: 'absolute',
-   bottom: 200,
+   bottom: 200
  },
  footer: {
    flexDirection: 'row',
@@ -111,7 +110,7 @@ var styles = StyleSheet.create({
    alignItems: 'center',
    backgroundColor: 'black',
    width,
-   height: footerHeight,
+   height: footerHeight
 
  },
  footerText: {
@@ -122,7 +121,7 @@ var styles = StyleSheet.create({
  iconContainer: {
    flex: 1,
    flexDirection: 'row',
-   justifyContent: 'center',
+   justifyContent: 'center'
  },
  icon: {
    width: iconWidth,
@@ -133,7 +132,7 @@ var styles = StyleSheet.create({
  iconRight: {marginLeft: iconOffset},
  iconEmblemContainer: {
    width: iconEmblemWidth,
-   height: iconEmblemHeight,
+   height: iconEmblemHeight
   //  backgroundColor: 'green'
  },
  iconEmblem: {
@@ -146,7 +145,7 @@ var styles = StyleSheet.create({
  activeContainer: {
    width: width / 3,
    flexDirection: 'row',
-   justifyContent: 'center',
+   justifyContent: 'center'
  },
  activeIconContainer: {},
  activeIcon: {
