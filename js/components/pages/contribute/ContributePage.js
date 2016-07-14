@@ -24,7 +24,6 @@ import {
 } from 'react-native';
 
 import AddImageView from './swiperViews/AddImageView';
-import BackIcon from '../../partials/icons/navigation/BackIcon';
 import EyespotPageBase from '../EyespotPageBase';
 import FinalizeAndContributeView from './swiperViews/FinalizeAndContributeView';
 import Footer from '../../partials/Footer';
@@ -68,7 +67,7 @@ var ContributePage = React.createClass({
    _renderHeader() {
        return (
            <Header containerStyle={styles.headerContainer}>
-           	 <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
+           	 <View />
 	           <Text style={styles.pageTitleText}>CONTRIBUTE</Text>
              <View />
            </Header>
