@@ -16,10 +16,18 @@ import React from 'react';
 import {
   Dimensions,
   Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
   StyleSheet
 } from 'react-native';
 
 import DiscoverPage from '../discover/DiscoverPage';
+import BackIcon from '../../partials/icons/navigation/BackIcon';
+import Button from 'apsl-react-native-button';
+import EyespotPageBase from '../EyespotPageBase';
+import Header from '../../partials/Header';
 import { LoginManager } from 'react-native-fbsdk';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
@@ -56,7 +64,7 @@ var SignUpPage = React.createClass({
     _renderHeader() {
         return (
             <Header containerStyle={styles.headerContainer}>
-                <BackIcon color="#444" onPress={() => this.props.navigator.pop()} />
+                <BackIcon color='black' onPress={() => this.props.navigator.pop()} />
                 <View />
             </Header>
         );
@@ -84,7 +92,7 @@ var SignUpPage = React.createClass({
                             onChangeText={(nameText) => this.setState({nameText})}
                             maxLength={25}
                             placeholder="NAME"
-                            placeholderTextColor="#999"
+                            placeholderTextColor="#777"
                             secureTextEntry={true}
                             style={[styles.input, styles.name]}
                             value={this.state.nameText} />
@@ -95,7 +103,7 @@ var SignUpPage = React.createClass({
                             onChangeText={(nicknameText) => this.setState({nicknameText})}
                             maxLength={25}
                             placeholder="NICKNAME"
-                            placeholderTextColor="#999"
+                            placeholderTextColor="#777"
                             secureTextEntry={true}
                             style={[styles.input, styles.nickname]}
                             value={this.state.nicknameText} />
@@ -123,13 +131,14 @@ var SignUpPage = React.createClass({
                             <View style={styles.underline} />
                     </View>
                     <View style={styles.section}>
-                        <Button
-                          style={[styles.emailLogin, styles.buttons]} textStyle={[styles.emailLoginText, styles.buttonText]}
-                          onPress={() => {}}>
-                            SIGN UP
-                        </Button>
-                        <Button
-                          style={[styles.facebookLogin, styles.buttons]} textStyle={[styles.facebookLoginText, styles.buttonText]}
+                        <TouchableOpacity onPress={() => {
+                          }}>
+                            <Image
+                              source={require('../../partials/img/sign-up.png')}
+                              style={[styles.emailLogin, styles.buttons]} />
+                          </TouchableOpacity>
+
+                        <TouchableOpacity
                           onPress={() => {
                             LoginManager.logInWithReadPermissions(['public_profile']).then(
                               function(result) {
@@ -138,7 +147,7 @@ var SignUpPage = React.createClass({
                                 } else {
                                   alert('Login success with permissions: '
                                     + result.grantedPermissions.toString());
-                                  this.props.navigator.resetTo({
+                                  this.props.navigator.replace({
                                     title: 'DiscoverPage',
                                     component: DiscoverPage,
                                     passProps: {}
@@ -150,8 +159,10 @@ var SignUpPage = React.createClass({
                               }
                             );
                           }}>
-                            LOGIN WITH FACEBOOK
-                        </Button>
+                            <Image
+                                source={require('../../partials/img/login-with-facebook.png')}
+                                style={[styles.facebookLogin, styles.buttons]} />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </EyespotPageBase>
@@ -168,11 +179,11 @@ var SignUpPage = React.createClass({
 const styles = StyleSheet.create({
     buttons: {
         alignSelf: 'center',
-        borderRadius: 0,
-        borderWidth: 2,
-        width: width / 1.4
+        marginVertical: height/100,
+        width: width / 1.4,
+        height: height/14,
+        resizeMode: Image.resizeMode.contain
     },
-    buttonText: {fontSize: height / 40},
     container: {
         flex: 1,
         flexDirection: 'column',
@@ -187,11 +198,12 @@ const styles = StyleSheet.create({
     headerContainer: {marginBottom: 10},
     input: {
         alignSelf: 'center',
-        marginTop: height / 60,
+        marginTop: height / 40,
         marginBottom: height / 240,
         textAlign: 'center',
         height: height / 40,
-        width: width / 1.4
+        width: width / 1.4,
+        fontFamily: 'Avenir-Book'
     },
     logoImg: {
         alignSelf: 'center',
@@ -200,19 +212,13 @@ const styles = StyleSheet.create({
         height: height / 8,
         resizeMode: Image.resizeMode.contain
     },
-    loginOption: {borderWidth: 0 },
-    loginOptionText: {
-        color: '#aaa',
-        textDecorationLine: 'underline',
-        fontSize: height / 40
-    },
     section: {marginVertical: height / 40},
     underline: {
         alignSelf: 'center',
-        borderColor: '#aaa',
+        borderColor: '#777',
         borderWidth: 1,
         marginBottom: height / 40,
-        width: width / 1.1
+        width: width
     },
     username: {
         height: height / 40,

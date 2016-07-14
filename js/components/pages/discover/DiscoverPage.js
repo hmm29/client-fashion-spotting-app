@@ -26,7 +26,7 @@ import {
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
-import Footer from '../../partials/Footer';
+import ProductPage from '../product/ProductPage';
 import SearchBar from '../../partials/SearchBar';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
@@ -121,10 +121,19 @@ var Categories = React.createClass({
   },
 
   /*
+   * specifies types for properties that this component receives
+   */
+
+   propTypes: {
+    navigator: React.PropTypes.object
+   },
+
+  /*
    * render(): returns JSX that declaratively specifies page UI
    */
 
   render() {
+    let nav = this.props.navigator;
 
     /*
      * FIXME: get jpegs for product images
@@ -135,7 +144,10 @@ var Categories = React.createClass({
         <Featured/>
         {this.state.categories.map(function(c, i) {
           return (
-            <TouchableOpacity key={i} style={styles.panel}>
+            <TouchableOpacity key={i} onPress={() => nav.push({
+              title: 'ProductPage',
+              component: ProductPage
+            })} style={styles.panel}>
               <Image source={require('./test.jpg')} style={styles.panelImage}/>
               <View style={styles.textContainer}>
                 <Text style={styles.panelText}>{c.name}</Text>
@@ -169,16 +181,6 @@ var DiscoverPage = React.createClass({
     propTypes: {},
 
     /*
-     * _renderFooter(): renders the imported footer component
-     */
-
-    _renderFooter() {
-      return (
-          <Footer />
-      );
-    },
-
-    /*
      * _renderHeader(): renders the imported header component
      */
 
@@ -209,15 +211,11 @@ var DiscoverPage = React.createClass({
                 noScroll={false}>
                 <View>
                     <View>
-                      <Categories/>
-                      <SearchBar/>
+                      <Categories navigator={this.props.navigator}/>
                     </View>
                 </View>
             </EyespotPageBase>
-            <View style={styles.fixedFooterSpacer} />
-            <View style={styles.fixedFooterWrapper}>
-              {this._renderFooter()}
-            </View>
+            <SearchBar/>
           </View>
         );
     }
@@ -263,11 +261,6 @@ const styles = StyleSheet.create({
     featuredPanelText: {
       backgroundColor: 'transparent',
       color: 'white'
-    },
-    fixedFooterSpacer: {height: 60},
-    fixedFooterWrapper: {
-      position: 'absolute',
-      top: height * 1.27
     },
     headerContainer: {
       backgroundColor: '#000',

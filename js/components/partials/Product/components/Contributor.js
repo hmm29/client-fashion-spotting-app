@@ -35,9 +35,23 @@ var Contributor = React.createClass({
 
     return (
       <View style={styles.container}>
-        <View style={styles.profileContainer}>
+        <TouchableOpacity onPress={() => {
+
+          // HACK: must lazy load this PersonalPage component
+          // because the UserProducts component rendered in the personal page 
+          // has this Contributor component in it
+
+          const PersonalPage = require('../../../pages/personal/PersonalPage');
+
+          if (this.props.navigator) { // ensure navigator has been passed as prop
+            this.props.navigator.push({
+                title: 'Personal Page',
+                component: PersonalPage
+              });
+          }
+        }} style={styles.profileContainer}>
           <Image source={require('../img/testUser.jpg')} style={styles.profile}/>
-        </View>
+        </TouchableOpacity>
         <Text style={[styles.bodoni, {fontStyle: 'italic'}]}>spotted by</Text>
         <Text style={[styles.name, styles.bodoni]}>{product.user.username.toUpperCase()}</Text>
       </View>

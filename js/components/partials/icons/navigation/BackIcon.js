@@ -14,23 +14,21 @@
 
 import React, { PropTypes, Component } from 'react';
 import {
-  Platform,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View
 } from 'react-native';
 
-import Icon from 'react-native-vector-icons/Ionicons';
-
-const SIZE = 32; /* icon font size */
+const SIZE = 20; /* icon font size */
 
 /*
  * specifies types for properties that this component receives
  */
 
 type Props = {
-  color: React.PropTypes.string,
+  color: React.PropTypes.string.isOptional,
   onPress: React.PropTypes.func.isRequired,
   size: React.PropTypes.number,
   style: View.PropTypes.style
@@ -47,6 +45,26 @@ class BackIcon extends Component {
   };
 
   /*
+   * getIconSource(): get static image path based on color prop
+   */
+
+  getIconSource() {
+    let color = this.props.color,
+        source;
+
+    if (color === 'white') {
+      source = require('./img/back-button-white.png')
+    } else if (color === 'red') {
+      source = require('./img/back-button-red.png')
+    } else {
+      source = require('./img/back-button-black.png')
+    }
+
+    return source;
+  };
+
+
+  /*
    * render(): returns JSX that declaratively specifies icon appearance
    */
 
@@ -57,11 +75,9 @@ class BackIcon extends Component {
         onPress={this.props.onPress}
         style={[this.props.style,{width: (this.props.size || SIZE) * 3.88,
                 height: (this.props.size || SIZE) * 3.88, alignItems: 'flex-start'}]}>
-        <Icon
-          name={Platform.OS === "ios" ? "ios-arrow-back" : "android-arrow-back"}
-          size={this.props.size || SIZE}
-          color={this.props.color || '#ccc'}
-          iconStyle={[styles.icon]} />
+        <Image
+          source={this.getIconSource()}
+          style={[styles.icon]} />
       </TouchableOpacity>
     );
   };
@@ -75,7 +91,8 @@ const styles = StyleSheet.create({
   icon: {
     opacity: 1.0,
     width: SIZE,
-    height: SIZE
+    height: SIZE,
+    resizeMode: Image.resizeMode.contain
   }
 });
 

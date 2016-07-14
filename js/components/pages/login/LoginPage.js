@@ -16,13 +16,21 @@ import React from 'react';
 import {
   Dimensions,
   Image,
-  StyleSheet
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
-import DiscoverPage from '../discover/DiscoverPage';
+import Button from 'apsl-react-native-button';
+import EyespotPageBase from '../EyespotPageBase';
 import FormValidator from 'validate.js';
 import { LoginManager } from 'react-native-fbsdk';
 import SignUpPage from '../signup/SignUpPage';
+import TabBarLayout from '../../layouts/TabBarLayout';
+import DiscoverPage from '../discover/DiscoverPage';
+
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -70,7 +78,7 @@ var LoginPage = React.createClass({
                             onChangeText={(usernameText) => this.setState({usernameText})}
                             maxLength={30}
                             placeholder="USER NAME"
-                            placeholderTextColor="#999"
+                            placeholderTextColor="#777"
                             style={[styles.input, styles.username]}
                             value={this.state.usernameText} />
                             <View style={styles.underline} />
@@ -80,30 +88,30 @@ var LoginPage = React.createClass({
                             onChangeText={(passwordText) => this.setState({passwordText})}
                             maxLength={16}
                             placeholder="PASSWORD"
-                            placeholderTextColor="#999"
+                            placeholderTextColor="#777"
                             secureTextEntry={true}
                             style={[styles.input, styles.password]}
                             value={this.state.passwordText} />
                             <View style={styles.underline} />
                     </View>
                     <View style={styles.section}>
-                        <Button
-                          style={[styles.emailLogin, styles.buttons]} textStyle={[styles.emailLoginText, styles.buttonText]}
-                          onPress={() => {
+                           <TouchableOpacity onPress={() => {
 
                             /*
                              * TODO: remove this temp shortcut to Discover page
                              */
                             this.props.navigator.replace({
-                                    title: 'DiscoverPage',
-                                    component: DiscoverPage,
+                                    title: 'TabBarLayout',
+                                    component: TabBarLayout,
                                     passProps: {}
                             });
                           }}>
-                            LOGIN WITH EMAIL
-                        </Button>
-                        <Button
-                          style={[styles.facebookLogin, styles.buttons]} textStyle={[styles.facebookLoginText, styles.buttonText]}
+                            <Image
+                              source={require('../../partials/img/login-with-email.png')}
+                              style={[styles.emailLogin, styles.buttons]} />
+                          </TouchableOpacity>
+
+                        <TouchableOpacity
                           onPress={() => {
                             LoginManager.logInWithReadPermissions(['public_profile']).then(
                               function(result) {
@@ -124,8 +132,10 @@ var LoginPage = React.createClass({
                               }
                             );
                           }}>
-                            LOGIN WITH FACEBOOK
-                        </Button>
+                            <Image
+                                source={require('../../partials/img/login-with-facebook.png')}
+                                style={[styles.facebookLogin, styles.buttons]} />
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.section}>
                         <Button
@@ -163,27 +173,24 @@ var LoginPage = React.createClass({
 const styles = StyleSheet.create({
     buttons: {
         alignSelf: 'center',
-        borderRadius: 0,
-        borderWidth: 2,
-        width: width / 1.4
+        marginVertical: height/100,
+        width: width / 1.4,
+        height: height/14,
+        resizeMode: Image.resizeMode.contain
     },
-    buttonText: {fontSize: height / 40},
     container: {
         marginTop: height / 15,
         flexDirection: 'column',
         justifyContent: 'center'
     },
-    emailLogin: {},
-    emailLoginText: {},
-    facebookLogin: {borderColor: 'rgb(59,89,152)' },
-    facebookLoginText: {color: 'rgba(59,89,152,0.8)'},
     input: {
         alignSelf: 'center',
         marginTop: height / 40,
         marginBottom: height / 120,
         textAlign: 'center',
         height: height / 40,
-        width: width / 1.4
+        width: width / 1.4,
+        fontFamily: 'Avenir-Book'
     },
     logoImg: {
         alignSelf: 'center',
@@ -194,9 +201,10 @@ const styles = StyleSheet.create({
     },
     loginOption: {borderWidth: 0 },
     loginOptionText: {
-        color: '#aaa',
+        color: '#777',
         textDecorationLine: 'underline',
-        fontSize: height / 40
+        fontSize: height / 40,
+        fontFamily: 'Avenir-Book'
     },
     password: {},
     section: {marginVertical: height / 40},
@@ -205,7 +213,7 @@ const styles = StyleSheet.create({
         borderColor: '#aaa',
         borderWidth: 1,
         marginBottom: height / 40,
-        width: width / 1.1
+        width: width
     },
     username: {}
 });

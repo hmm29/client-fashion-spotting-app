@@ -19,13 +19,15 @@ import {
  StyleSheet
 } from 'react-native';
 
+import BackIcon from '../../partials/icons/navigation/BackIcon';
+import Button from 'apsl-react-native-button';
+import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import Footer from '../../partials/Footer';
 import SearchBar from '../../partials/SearchBar';
 import Product from '../../partials/Product';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
-
 
 /*
 * defines the Products class
@@ -65,7 +67,7 @@ var Products = React.createClass({
         */
 
         return (
-          <Product key={i} product={product}/>
+          <Product key={i} navigator={this.props.navigator} product={product}/>
         );
 
        })}
@@ -93,7 +95,7 @@ var ProductPage = React.createClass({
 
    _renderFooter() {
      return (
-         <Footer />
+         <Footer navigator={this.props.navigator} />
      );
    },
 
@@ -104,7 +106,7 @@ var ProductPage = React.createClass({
    _renderHeader() {
        return (
            <Header containerStyle={styles.headerContainer}>
-               <View />
+               <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
                <View style={styles.pageTitle}>
                  <Image source={require('./img/eyespot-logo-negative.png')}
                                  style={styles.pageTitleLogo} />
@@ -128,7 +130,7 @@ var ProductPage = React.createClass({
                noScroll={false}>
                <View style={styles.container}>
                  <View>
-                   <Products products={products}/>
+                   <Products navigator={this.props.navigator} products={products}/>
                   </View>
                </View>
            </EyespotPageBase>

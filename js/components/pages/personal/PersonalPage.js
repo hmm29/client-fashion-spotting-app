@@ -27,7 +27,6 @@ import {
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
-import Footer from '../../partials/Footer';
 import SearchBar from '../../partials/SearchBar';
 import Product from '../../partials/Product';
 
@@ -102,7 +101,7 @@ const user = {
       'imgUrl': './test.jpg',
       likes: 42,
       store: 'Adidas',
-      location: 'Beverely Center',
+      location: 'Beverly Center',
       comment: 'I\'ve found this pair of cute beauties at Adidas Beverly Center. It\'s super comfy and looks amazing!',
       user: {username: 'lovelycarrie'}
     }
@@ -116,16 +115,6 @@ var PersonalPage = React.createClass({
     */
 
    propTypes: {},
-
-   /*
-    * _renderFooter(): renders the imported footer component
-    */
-
-   _renderFooter() {
-     return (
-         <Footer />
-     );
-   },
 
    /*
     * _renderHeader(): renders the imported header component
@@ -166,10 +155,6 @@ var PersonalPage = React.createClass({
                <UserProducts user={user}/>
              </View>
          </EyespotPageBase>
-         <View style={styles.fixedFooterSpacer} />
-         <View style={styles.fixedFooterWrapper}>
-           {this._renderFooter()}
-         </View>
        </View>
      );
    }
