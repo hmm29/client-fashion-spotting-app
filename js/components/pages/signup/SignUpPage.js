@@ -91,7 +91,7 @@ var SignUpPage = React.createClass({
                             onChangeText={(nameText) => this.setState({nameText})}
                             maxLength={25}
                             placeholder="NAME"
-                            placeholderTextColor="#999"
+                            placeholderTextColor="#777"
                             secureTextEntry={true}
                             style={[styles.input, styles.name]}
                             value={this.state.nameText} />
@@ -102,7 +102,7 @@ var SignUpPage = React.createClass({
                             onChangeText={(nicknameText) => this.setState({nicknameText})}
                             maxLength={25}
                             placeholder="NICKNAME"
-                            placeholderTextColor="#999"
+                            placeholderTextColor="#777"
                             secureTextEntry={true}
                             style={[styles.input, styles.nickname]}
                             value={this.state.nicknameText} />
@@ -197,11 +197,12 @@ const styles = StyleSheet.create({
     headerContainer: {marginBottom: 10},
     input: {
         alignSelf: 'center',
-        marginTop: height / 60,
+        marginTop: height / 40,
         marginBottom: height / 240,
         textAlign: 'center',
         height: height / 40,
-        width: width / 1.4
+        width: width / 1.4,
+        fontFamily: 'Avenir-Book'
     },
     logoImg: {
         alignSelf: 'center',
@@ -210,19 +211,13 @@ const styles = StyleSheet.create({
         height: height / 8,
         resizeMode: Image.resizeMode.contain
     },
-    loginOption: {borderWidth: 0 },
-    loginOptionText: {
-        color: '#aaa',
-        textDecorationLine: 'underline',
-        fontSize: height / 40
-    },
     section: {marginVertical: height / 40},
     underline: {
         alignSelf: 'center',
-        borderColor: '#aaa',
+        borderColor: '#777',
         borderWidth: 1,
         marginBottom: height / 40,
-        width: width / 1.1
+        width: width
     },
     username: {
         height: height / 40,

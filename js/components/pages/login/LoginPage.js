@@ -76,7 +76,7 @@ var LoginPage = React.createClass({
                             onChangeText={(usernameText) => this.setState({usernameText})}
                             maxLength={30}
                             placeholder="USER NAME"
-                            placeholderTextColor="#999"
+                            placeholderTextColor="#777"
                             style={[styles.input, styles.username]}
                             value={this.state.usernameText} />
                             <View style={styles.underline} />
@@ -86,7 +86,7 @@ var LoginPage = React.createClass({
                             onChangeText={(passwordText) => this.setState({passwordText})}
                             maxLength={16}
                             placeholder="PASSWORD"
-                            placeholderTextColor="#999"
+                            placeholderTextColor="#777"
                             secureTextEntry={true}
                             style={[styles.input, styles.password]}
                             value={this.state.passwordText} />
@@ -187,7 +187,8 @@ const styles = StyleSheet.create({
         marginBottom: height / 120,
         textAlign: 'center',
         height: height / 40,
-        width: width / 1.4
+        width: width / 1.4,
+        fontFamily: 'Avenir-Book'
     },
     logoImg: {
         alignSelf: 'center',
@@ -198,9 +199,10 @@ const styles = StyleSheet.create({
     },
     loginOption: {borderWidth: 0 },
     loginOptionText: {
-        color: '#aaa',
+        color: '#777',
         textDecorationLine: 'underline',
-        fontSize: height / 40
+        fontSize: height / 40,
+        fontFamily: 'Avenir-Book'
     },
     password: {},
     section: {marginVertical: height / 40},
@@ -209,7 +211,7 @@ const styles = StyleSheet.create({
         borderColor: '#aaa',
         borderWidth: 1,
         marginBottom: height / 40,
-        width: width / 1.1
+        width: width
     },
     username: {}
 });
