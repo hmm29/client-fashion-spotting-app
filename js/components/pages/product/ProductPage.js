@@ -16,7 +16,9 @@ import React, { PropTypes } from 'react';
 import {
  Dimensions,
  Image,
- StyleSheet
+ StyleSheet,
+ View,
+ Text,
 } from 'react-native';
 
 import BackIcon from '../../partials/icons/navigation/BackIcon';

@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     },
     productImage: {
       width: featuredPanelWidth,
-      height: height / 2,
+      height: height * 5 / 12,
       resizeMode: 'cover',
       flex: 1
     },

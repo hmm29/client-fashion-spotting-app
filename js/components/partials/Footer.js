@@ -126,19 +126,22 @@ var styles = StyleSheet.create({
  iconContainer: {
    flex: 1,
    flexDirection: 'row',
-   justifyContent: 'center'
+   alignItems: 'center',
+   justifyContent: 'center',
  },
  icon: {
    width: iconWidth,
    height: iconWidth,
-   resizeMode: 'contain'
+   resizeMode: 'contain',
+   flexDirection: 'column',
+   justifyContent: 'center',
+   alignItems: 'center',
  },
  iconLeft: {marginRight: iconOffset},
  iconRight: {marginLeft: iconOffset},
  iconEmblemContainer: {
    width: iconEmblemWidth,
    height: iconEmblemHeight
-  //  backgroundColor: 'green'
  },
  iconEmblem: {
    width: iconEmblemWidth,

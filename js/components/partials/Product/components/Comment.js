@@ -56,8 +56,8 @@ const styles = StyleSheet.create({
     padding: 10
   },
   icon: {
-    width: 20,
-    height: 20,
+    width: 15,
+    height: 15,
     resizeMode: 'contain'
   },
   commentText: {

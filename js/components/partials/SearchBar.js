@@ -10,7 +10,11 @@
 
  import {
    Dimensions,
-   StyleSheet
+   StyleSheet,
+   View,
+   TouchableOpacity,
+   Text,
+   Image
  } from 'react-native';
 
 
@@ -217,8 +221,6 @@ const styles = StyleSheet.create({
      justifyContent: 'center',
      flexDirection: 'row',
      alignItems: 'center',
-     width
-    //  backgroundColor: 'transparent'
    },
    dropdownInner: {
      flexDirection: 'row',
