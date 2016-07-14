@@ -32,7 +32,8 @@ const iconOffset = 40;
 var TabBarLayout = React.createClass({
 	getInitialState() {
 		return {
-			selected: <DiscoverPage />
+			selected: <DiscoverPage />,
+			selectedTitle: 'DiscoverPage'
 		}
 	},
 
@@ -57,13 +58,25 @@ var TabBarLayout = React.createClass({
    var activePadding = {marginLeft: activeMargin};
 
    /*
+    * active arrow, appears under active page
+    */
+
+    var activeArrow = 
+     <View style={[styles.activeContainer, activePadding]}>
+          <View style={[styles.activeIconContainer, {marginRight: iconOffset/2}]}>
+            <Image source={require('../partials/img/active.png')} style={styles.activeIcon}/>
+          </View>
+        </View>;
+
+   /*
     * left icon, goes to discover page
     */
 
     var LeftIcon =
-     <View component={<DiscoverPage />} onPress={this.onPressLeft} style={styles.iconContainer}>
+    <View title='DiscoverPage' component={<DiscoverPage />} style={styles.iconContainer}>
        <Image source={require('../partials/img/browse.png')} style={[styles.icon, styles.iconLeft]}/>
-     </View>;
+     {activeArrow}
+     </View>
 
    /*
     * middle icon - eyespot emblem, goes to contribute page
@@ -81,8 +94,9 @@ var TabBarLayout = React.createClass({
     */
 
     var RightIcon =
-     <View component={<PersonalPage />} style={styles.iconContainer}>
+     <View title='PersonalPage' component={<PersonalPage />} style={styles.iconContainer}>
        <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
+       <View style={[{marginLeft: iconOffset/2, width: 28, height: 28}]} />
      </View>;
 
      return (
@@ -91,7 +105,7 @@ var TabBarLayout = React.createClass({
 		       	 <View style={styles.fixedFooterSpacer} />
 	        		<Tabs selected={this.state.selected} style={[styles.fixedFooterWrapper, styles.footer, styles.footerContainer]}
 			          selectedStyle={{}} onSelect={(el) => {
-			          	el.props.component && this.setState({selected: el.props.component});
+			          	el.props.component && this.setState({selected: el.props.component, selectedTitle: el.props.title});
 			          }}
 			          pressOpacity={1}>
 				      {LeftIcon}
@@ -105,8 +119,8 @@ var TabBarLayout = React.createClass({
 });
 
 const footerHeight = 60;
-const iconWidth = height/25;
-const iconEmblemWidth = height/15;
+const iconWidth = height/28;
+const iconEmblemWidth = height/18;
 const iconEmblemHeight = iconEmblemWidth * 2;
 
 const styles = StyleSheet.create({
@@ -139,15 +153,15 @@ const styles = StyleSheet.create({
 	 },
 	 iconContainer: {
 	   flex: 1,
-	   flexDirection: 'row',
+	   flexDirection: 'column',
 	   justifyContent: 'center',
-	   alignItems: 'center'
+	   alignItems: 'center',
 	 },
 	 icon: {
 	   width: iconWidth,
 	   height: iconWidth,
 	   resizeMode: 'contain',
-	   bottom: height/100, // fix: find better way to use flexbox to align
+	   top: height/100, // fix: find better way to use flexbox to align
 	 },
 	 iconLeft: {marginRight: iconOffset},
 	 iconRight: {marginLeft: iconOffset},
@@ -164,16 +178,16 @@ const styles = StyleSheet.create({
 	   top: -(height/25)
 	 },
 	 activeContainer: {
-	   width: width / 3,
 	   flexDirection: 'row',
 	   justifyContent: 'center',
 	 },
-	 activeIconContainer: {},
+	 activeIconContainer: {
+	 },
 	 activeIcon: {
 	   width: 28,
 	   height: 28,
 	   resizeMode: 'contain',
-	   transform: [{translateY: -18}]
+	   transform: [{translateY: 3}]
 	 }
 });
 
