@@ -225,6 +225,7 @@ var DiscoverPage = React.createClass({
  * CSS stylings
  */
 
+const headerHeight = height / 10
 const panelMargin = 5;
 const sideMargin = 20;
 const panelWidth = (width - panelMargin * 4 - sideMargin * 2) / 2;
@@ -234,7 +235,8 @@ const styles = StyleSheet.create({
     categories: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        padding: sideMargin
+        padding: sideMargin,
+        paddingTop: headerHeight
     },
     featuredPanel: {
       width: featuredPanelWidth,

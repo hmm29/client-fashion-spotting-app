@@ -34,7 +34,6 @@ var Dropdowns = React.createClass({
    return (
      <View style ={styles.dropdownContainer}>
        <View style={styles.dropdownInner}>
-
            {this.props.navs.map(function(nav, i) {
              if (i != this.props.nav) {
                return (
@@ -140,8 +139,8 @@ var SearchBar = React.createClass({
    return (
      <View style={styles.searchBar}>
        <Dropdowns nav={this.state.nav} navs={this.state.navs}/>
-         <Navs nav={this.state.nav} navs={this.state.navs}
-           _setNav={this._setNav}/>
+       <Navs nav={this.state.nav} navs={this.state.navs}
+         _setNav={this._setNav}/>
      </View>
    );
  }
@@ -189,7 +188,6 @@ const styles = StyleSheet.create({
      flexDirection: 'row',
      width: searchBarInnerWidth,
      justifyContent: 'center'
-    //  backgroundColor: 'red'
    },
    nav: {
      flex: 1,
@@ -197,7 +195,6 @@ const styles = StyleSheet.create({
      flexDirection: 'column',
      justifyContent: 'center',
      alignItems: 'center'
-    //  backgroundColor:'gray'
    },
    navTouch: {
      flexDirection: 'row',
@@ -214,13 +211,14 @@ const styles = StyleSheet.create({
      resizeMode: 'contain',
      marginLeft: 10
    },
-
    dropdownContainer: {
      position: 'absolute',
      top: 5,
      justifyContent: 'center',
      flexDirection: 'row',
      alignItems: 'center',
+     width: width,
+     backgroundColor: 'transparent'
    },
    dropdownInner: {
      flexDirection: 'row',
