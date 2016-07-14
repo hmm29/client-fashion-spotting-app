@@ -53,6 +53,7 @@ var EyespotPageBase = React.createClass({
     return (
       <View style={styles.container}>
         <ContentWrapper
+          automaticallyAdjustContentInsets={false}
           scrollEnabled={!this.props.noScroll}
           contentContainerStyle={styles.wrapper}
           {...wrapperProps}>
@@ -71,10 +72,9 @@ var EyespotPageBase = React.createClass({
 const styles = StyleSheet.create({
  container: {
     backgroundColor: '#fff',
-    flex: 1
+    flex: 1 // must have flex: 1 for page scrolling
   },
   wrapper: {
-    paddingTop: 10
   }
 });
 
