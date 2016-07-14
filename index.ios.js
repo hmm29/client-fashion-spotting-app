@@ -19,9 +19,11 @@ import {
 } from 'react-native';
 
 import LoginPage from './js/components/pages/login/LoginPage';
+import ContributePage from './js/components/pages/contribute/ContributePage';
 import DiscoverPage from './js/components/pages/discover/DiscoverPage';
 import ProductPage from './js/components/pages/product/ProductPage';
 import PersonalPage from './js/components/pages/personal/PersonalPage';
+import TabBarLayout from './js/components/layouts/TabBarLayout';
 
 /*
  * defines the Eyespot class
@@ -51,7 +53,7 @@ class Eyespot extends Component {
           navigationBarHidden={true}    /* hide navigation bar */
           initialRoute={{               /* initial route in navigator */
             title: 'DiscoverPage',
-            component: PersonalPage,
+            component: TabBarLayout,
           }}
           itemWrapperStyle={styles.itemWrapper} /* styles for nav background */
           style={{flex: 1}} />

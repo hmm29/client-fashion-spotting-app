@@ -26,7 +26,6 @@ import {
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
-import Footer from '../../partials/Footer';
 import SearchBar from '../../partials/SearchBar';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
@@ -169,16 +168,6 @@ var DiscoverPage = React.createClass({
     propTypes: {},
 
     /*
-     * _renderFooter(): renders the imported footer component
-     */
-
-    _renderFooter() {
-      return (
-          <Footer />
-      );
-    },
-
-    /*
      * _renderHeader(): renders the imported header component
      */
 
@@ -210,14 +199,10 @@ var DiscoverPage = React.createClass({
                 <View>
                     <View>
                       <Categories/>
-                      <SearchBar/>
                     </View>
                 </View>
             </EyespotPageBase>
-            <View style={styles.fixedFooterSpacer} />
-            <View style={styles.fixedFooterWrapper}>
-              {this._renderFooter()}
-            </View>
+            <SearchBar/>
           </View>
         );
     }
@@ -263,11 +248,6 @@ const styles = StyleSheet.create({
     featuredPanelText: {
       backgroundColor: 'transparent',
       color: 'white'
-    },
-    fixedFooterSpacer: {height: 60},
-    fixedFooterWrapper: {
-      position: 'absolute',
-      top: height * 1.27
     },
     headerContainer: {
       backgroundColor: '#000',

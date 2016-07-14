@@ -32,7 +32,6 @@ import Product from '../../partials/Product';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
-
 /*
 * defines the Products class
 * this is the code for the two-column category component
@@ -99,7 +98,7 @@ var ProductPage = React.createClass({
 
    _renderFooter() {
      return (
-         <Footer />
+         <Footer navigator={this.props.navigator} />
      );
    },
 

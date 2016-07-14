@@ -15,14 +15,18 @@ import {
  StyleSheet,
  Image,
  Text,
+ TouchableOpacity,
  View
  } from 'react-native';
 
 var {height, width} = Dimensions.get('window');
 const iconOffset = 40;
 
-
 var Footer = React.createClass({
+
+  propTypes: {
+    navigator: React.PropTypes.object
+  },
 
  render() {
 
@@ -49,9 +53,9 @@ var Footer = React.createClass({
     */
 
     var LeftIcon =
-     <View style={styles.iconContainer}>
+     <TouchableOpacity onPress={this.onPressLeft} style={styles.iconContainer}>
        <Image source={require('./img/browse.png')} style={[styles.icon, styles.iconLeft]}/>
-     </View>;
+     </TouchableOpacity>;
 
    /*
     * middle icon - eyespot emblem, goes to contribute page
@@ -69,9 +73,9 @@ var Footer = React.createClass({
     */
 
     var RightIcon =
-     <View style={styles.iconContainer}>
+     <TouchableOpacity onPress={this.onPressRight} style={styles.iconContainer}>
        <Image source={require('./img/profile.png')} style={[styles.icon, styles.iconRight]}/>
-     </View>;
+     </TouchableOpacity>;
 
     return (
       <View style={[styles.footerContainer]}>

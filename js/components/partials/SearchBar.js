@@ -161,13 +161,11 @@ const styles = StyleSheet.create({
    searchBarContainer: {
        position: 'absolute',
        height: height / 80,
-       top: -20,
-
    },
    searchBar: {
      position: 'absolute',
      height: height / 80,
-     top: -40,
+     top: 50,
    },
    navsContainer: {
      position: 'absolute',
@@ -219,7 +217,7 @@ const styles = StyleSheet.create({
 
    dropdownContainer: {
      position: 'absolute',
-     top: 0,
+     top: 5,
      justifyContent: 'center',
      flexDirection: 'row',
      alignItems: 'center',
