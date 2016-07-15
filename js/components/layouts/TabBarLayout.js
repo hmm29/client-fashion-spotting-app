@@ -54,13 +54,44 @@ var TabBarLayout = React.createClass({
 	getInitialState() {
 		return {
 			selected: <DiscoverPage navigator={this.props.navigator} />, // be sure to pass navigator
-			selectedTitle: 'DiscoverPage'
+			selectedTitle: 'DiscoverPage',
+      data: ""
 		}
 	},
 
+
+  /*
+   * componentDidMount(): Invoked once, only on the client (not on the server), immediately after the initial rendering occurs.
+   */
+
+  componentDidMount(){
+
+   /*
+    * retrieve data from firebase data store
+    */
+    var categoriesRef = new Firebase("https://eyespot-658a5.firebaseio.com");
+    var dataStore = {};
+    categoriesRef.on('value', (snap) => {
+      snap.forEach((child) => {
+        data[child.key()] = child.val();
+      });
+    });
+
+    /*
+     * set firebase data to component's state
+     */
+    this.setState({
+      categories: dataStore.categories,
+      products: dataStore.products,
+      users: dataStore.users
+    })
+  },
+
 	render() {
 
-
+   /*
+    * position active arrow
+    */
 
    var activeStyle = {};
    activeStyle.left = activeArrowOffset(this.state.selectedTitle);
@@ -107,19 +138,19 @@ var TabBarLayout = React.createClass({
 
      return (
 			<View style={styles.container}>
-		        {this.state.selected}
-        		<Tabs selected={this.state.selected} style={styles.footer}
-		          selectedStyle={{}} onSelect={(el) => {
-		          	el.props.component && this.setState({selected: el.props.component, selectedTitle: el.props.title});
-		          }}
-		          pressOpacity={1}>
-			        {LeftIcon}
-		          {EmblemIcon}
-		          {RightIcon}
-		        </Tabs>
+	        {this.state.selected}
+      		<Tabs selected={this.state.selected} style={styles.footer}
+	          selectedStyle={{}} onSelect={(el) => {
+	          	el.props.component && this.setState({selected: el.props.component, selectedTitle: el.props.title});
+	          }}
+	          pressOpacity={1}>
+		        {LeftIcon}
+	          {EmblemIcon}
+	          {RightIcon}
+	        </Tabs>
 
-            {Active}
-        </View>
+          {Active}
+      </View>
 		);
   }
 });

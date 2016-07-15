@@ -29,6 +29,8 @@ import Header from '../../partials/Header';
 import ProductPage from '../product/ProductPage';
 import SearchBar from '../../partials/SearchBar';
 
+var Firebase = require('firebase');
+
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
@@ -37,14 +39,6 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
  */
 
  var Featured = React.createClass({
-
-   /*
-    * getInitialState(): returns object with initialized component state variables
-    */
-
-   getInitialState() {
-     return {};
-   },
 
    /*
     * render(): returns JSX that declaratively specifies page UI
