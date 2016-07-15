@@ -1,8 +1,8 @@
 /**
-* ProductPage.js
+* CategoryFeed.js
 * See Product info
 *
-* @providesModule ProductPage
+* @providesModule CategoryFeed
 * @flow
 */
 
@@ -32,25 +32,17 @@ import Product from '../../partials/Product';
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
-* defines the Products class
-* this is the code for the two-column category component
+* defines the CategoryFeed class
+* this is the code for the feed of products after tapping a panel
 */
 
-
-// HACK: replace with real data
-const products = [
-    {
-      'name': 'none',
-      'imgUrl': './test.jpg',
-      likes: 42,
-      store: 'Adidas',
-      location: 'Beverely Center',
-      comment: 'I\'ve found this pair of cute beauties at Adidas Beverly Center. It\'s super comfy and looks amazing!',
-      user: {username: 'lovelycarrie'}
-    }
-  ];
-
 var Products = React.createClass({
+
+  propTypes: {
+    products: PropTypes.array,
+    navigator: PropTypes.object,
+    dataStore: PropTypes.object
+  },
 
  /*
   * render(): returns JSX that declaratively specifies page UI
@@ -58,7 +50,8 @@ var Products = React.createClass({
 
  render() {
 
-   const { products } = this.props;
+   const { navigator, products, dataStore } = this.props;
+
 
    return (
      <View style ={styles.products}>
@@ -68,10 +61,15 @@ var Products = React.createClass({
         * return Product component for each product
         */
 
-        return (
-          <Product key={i} navigator={this.props.navigator} product={product}/>
-        );
+        const user = dataStore.users[product.user.id];
 
+        return (
+          <Product
+            key={i}
+            navigator={navigator}
+            product={product}
+            user={user}/>
+        );
        })}
 
      </View>
@@ -80,16 +78,20 @@ var Products = React.createClass({
 });
 
 /*
-* defines the ProductPage class
+* defines the CategoryFeed class
 */
 
-var ProductPage = React.createClass({
+var CategoryFeed = React.createClass({
 
    /*
     * specifies types for properties that this component receives
     */
 
-   propTypes: {products: PropTypes.array},
+   propTypes: {
+     products: PropTypes.array,
+     navigator: PropTypes.object,
+     dataStore: PropTypes.object
+   },
 
    /*
     * _renderFooter(): renders the imported footer component
@@ -107,15 +109,15 @@ var ProductPage = React.createClass({
 
    _renderHeader() {
        return (
-           <Header containerStyle={styles.headerContainer}>
-               <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
-               <View style={styles.pageTitle}>
-                 <Image source={require('./img/eyespot-logo-negative.png')}
-                                 style={styles.pageTitleLogo} />
-                               <Text style={styles.pageTitleText}>Shoes</Text>
-               </View>
-               <View />
-           </Header>
+         <Header containerStyle={styles.headerContainer}>
+           <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
+           <View style={styles.pageTitle}>
+             <Image source={require('./img/eyespot-logo-negative.png')}
+                             style={styles.pageTitleLogo} />
+                           <Text style={styles.pageTitleText}>Shoes</Text>
+           </View>
+           <View />
+         </Header>
        );
    },
 
@@ -124,24 +126,24 @@ var ProductPage = React.createClass({
     */
 
    render() {
-       return (
-         <View style={styles.layeredPageContainer}>
-           {this._renderHeader()}
-           <EyespotPageBase
-               keyboardShouldPersistTaps={false}
-               noScroll={false}>
-               <View style={styles.container}>
-                 <View>
-                   <Products navigator={this.props.navigator} products={products}/>
-                  </View>
-               </View>
-           </EyespotPageBase>
-           <View style={styles.fixedFooterSpacer} />
-           <View style={styles.fixedFooterWrapper}>
-             {this._renderFooter()}
+
+     return (
+       <View style={styles.layeredPageContainer}>
+         {this._renderHeader()}
+         <EyespotPageBase
+           keyboardShouldPersistTaps={false}
+           noScroll={false}>
+           <View style={styles.container}>
+             <Products
+               {...this.props}/>
            </View>
+         </EyespotPageBase>
+         <View style={styles.fixedFooterSpacer} />
+         <View style={styles.fixedFooterWrapper}>
+           {this._renderFooter()}
          </View>
-       );
+       </View>
+     );
    }
 });
 
@@ -195,4 +197,4 @@ const styles = StyleSheet.create({
 * exports this component as a module so it can be imported into other modules
 */
 
-module.exports = ProductPage;
+module.exports = CategoryFeed;

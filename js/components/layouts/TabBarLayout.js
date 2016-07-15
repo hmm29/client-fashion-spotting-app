@@ -22,6 +22,8 @@ import {
  View
 } from 'react-native';
 
+import Firebase from 'firebase';
+
 import ContributePage from '../pages/contribute/ContributePage';
 import DiscoverPage from '../pages/discover/DiscoverPage';
 import PersonalPage from '../pages/personal/PersonalPage';
@@ -34,13 +36,13 @@ function activeArrowOffset(selectedTitle){
   var activeLeft = 0;
 
   switch (selectedTitle){
-    case "DiscoverPage":
+    case "discover":
       activeLeft = width/3 - iconWidth - iconWidth/2 - iconOffset;
       break;
-    case "ContributePage":
+    case "contribute":
       activeLeft = width/2 - iconWidth/2;
       break;
-    case "PersonalPage":
+    case "personal":
       activeLeft = width*2/3 + iconWidth - iconWidth/2 + iconOffset;
       break;
     default:
@@ -53,7 +55,13 @@ function activeArrowOffset(selectedTitle){
 var TabBarLayout = React.createClass({
 	getInitialState() {
 		return {
-			selected: 'discover'
+			selected: 'discover',
+      loaded: false,
+      categories: "",
+      products: "",
+      users: "",
+      dataStore: ""
+
 		}
 	},
 
@@ -66,39 +74,51 @@ var TabBarLayout = React.createClass({
    /*
     * retrieve data from firebase data store
     */
-    
+
     var categoriesRef = new Firebase("https://eyespot-658a5.firebaseio.com");
     var dataStore = {};
     categoriesRef.on('value', (snap) => {
       snap.forEach((child) => {
         dataStore[child.key()] = child.val();
       });
+
+      /*
+       * set firebase data to component's state
+       */
+      this.setState({
+        dataStore: dataStore,
+        categories: dataStore.categories,
+        products: dataStore.products,
+        users: dataStore.users,
+        loaded: true
+      })
     });
 
-    /*
-     * set firebase data to component's state
-     */
+   },
 
-	    this.setState({
-	      categories: dataStore.categories,
-	      products: dataStore.products,
-	      users: dataStore.users
-	    })
-	  },
 
   	_renderContent() {
-	 	let title = this.state.selected;
+	 	   let title = this.state.selected;
+
+      // FIXME: loading screen
+      if(!this.state.loaded){
+        return <Text>loading</Text>
+      }
 
 	    if (title === 'discover') {
-	      return <DiscoverPage navigator={this.state.navigator} />;
+	      return (
+          <DiscoverPage
+            dataStore={this.state.dataStore}
+            navigator={this.props.navigator} />
+        )
 	    }
 
 	    else if (title === 'personal') {
-	      return <PersonalPage navigator={this.state.navigator} />;
+	      return <PersonalPage navigator={this.props.navigator} />;
 	    }
 
 	    else if (title === 'contribute') {
-	    	return <ContributePage navigator={this.state.navigator} />;
+	    	return <ContributePage navigator={this.props.navigator} />;
 	    }
 
 	    else {
@@ -113,7 +133,7 @@ var TabBarLayout = React.createClass({
     */
 
    var activeStyle = {};
-   activeStyle.left = activeArrowOffset(this.state.selectedTitle);
+   activeStyle.left = activeArrowOffset(this.state.selected);
 
    /*
     * active arrow, appears under active page
@@ -163,11 +183,10 @@ var TabBarLayout = React.createClass({
 	          	el.props.component && this.setState({selected: el.props.component, selectedTitle: el.props.title});
 	          }}
 	          pressOpacity={1}>
-		      {LeftIcon}
-	          {EmblemIcon}
-	          {RightIcon}
+  		      {LeftIcon}
+            {EmblemIcon}
+            {RightIcon}
 	        </Tabs>
-
           {Active}
       </View>
 		);
