@@ -73,7 +73,7 @@ var TabBarLayout = React.createClass({
     var dataStore = {};
     categoriesRef.on('value', (snap) => {
       snap.forEach((child) => {
-        data[child.key()] = child.val();
+        dataStore[child.key()] = child.val();
       });
     });
 
