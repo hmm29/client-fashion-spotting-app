@@ -32,10 +32,10 @@ import Tabs from 'react-native-tabs';
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 const iconOffset = 40;
 
-function activeArrowOffset(selectedTitle){
+function activeArrowOffset(title){
   var activeLeft = 0;
 
-  switch (selectedTitle){
+  switch (title){
     case "discover":
       activeLeft = width/3 - iconWidth - iconWidth/2 - iconOffset;
       break;
@@ -180,7 +180,7 @@ var TabBarLayout = React.createClass({
 	        {this._renderContent()}
       		<Tabs selected={this.state.selected} style={styles.footer}
 	          selectedStyle={{}} onSelect={(el) => {
-	          	el.props.component && this.setState({selected: el.props.component, selectedTitle: el.props.title});
+	          	el.props.component && this.setState({selected: el.props.component});
 	          }}
 	          pressOpacity={1}>
   		      {LeftIcon}
