@@ -33,92 +33,107 @@ const iconOffset = 40;
 var TabBarLayout = React.createClass({
 	getInitialState() {
 		return {
-			selected: <DiscoverPage navigator={this.props.navigator} />, // be sure to pass navigator
-			selectedTitle: 'DiscoverPage'
+			selected: 'discover'
 		}
 	},
 
-	render() {
+	_renderContent() {
+	 	let title = this.state.selected;
 
-  //  var active = this.props.active;
-   var active = 0; // HACK: temporary
+	    if (title === 'discover') {
+	      return <DiscoverPage navigator={this.state.navigator} />;
+	    }
 
-   /*
-    * calculate position (margin) for active arrow
-    * position based on offset of icons
-    */
+	    else if (title === 'personal') {
+	      return <PersonalPage navigator={this.state.navigator} />;
+	    }
 
-   var activeMargin = width / 3 * active;
-   if (active == 0) {
-     activeMargin -= iconOffset / 2;
-   }
-   else if (active == 2) {
-     activeMargin += iconOffset / 2;
-   }
+	    else {
+	      return <View />;
+	    }
+  };
 
-   var activePadding = {marginLeft: activeMargin};
+  	render() {
 
-   /*
-    * active arrow, appears under active page
-    */
+  	   //  var active = this.props.active;
+	   var active = 0; // HACK: temporary
 
-    var activeArrow = 
-     <View style={[styles.activeContainer, activePadding]}>
-          <View style={[styles.activeIconContainer, {marginRight: iconOffset/2}]}>
-            <Image source={require('../partials/img/active.png')} style={styles.activeIcon}/>
-          </View>
-        </View>;
+	   /*
+	    * calculate position (margin) for active arrow
+	    * position based on offset of icons
+	    */
 
-   /*
-    * left icon, goes to discover page
-    * be sure to pass navigator to component for routing
-    */
+	   var activeMargin = width / 3 * active;
+	   if (active == 0) {
+	     activeMargin -= iconOffset / 2;
+	   }
+	   else if (active == 2) {
+	     activeMargin += iconOffset / 2;
+	   }
 
-    var LeftIcon =
-    <View title='DiscoverPage' component={<DiscoverPage navigator={this.props.navigator} />} style={styles.iconContainer}>
-       <Image source={require('../partials/img/browse.png')} style={[styles.icon, styles.iconLeft]}/>
-     {activeArrow}
-     </View>
+	   var activePadding = {marginLeft: activeMargin};
 
-   /*
-    * middle icon - eyespot emblem, goes to contribute page
-    */
+	   /*
+	    * active arrow, appears under active page
+	    */
 
-    var EmblemIcon =
-     <View title='ContributePage' component={<ContributePage navigator={this.props.navigator} />} style={styles.iconContainer}>
-       <View style={styles.iconEmblemContainer}>
-         <Image source={require('../partials/img/emblem.png')} style={styles.iconEmblem}/>
-       </View>
-     </View>;
+	    var activeArrow = 
+	     <View style={[styles.activeContainer, activePadding]}>
+	          <View style={[styles.activeIconContainer, {marginRight: iconOffset/2}]}>
+	            <Image source={require('../partials/img/active.png')} style={styles.activeIcon}/>
+	          </View>
+	        </View>;
 
-   /*
-    * right icon - profile icon, goes to personal profile
-    * be sure to pass navigator to component for routing
-    */
+	   /*
+	    * left icon, goes to discover page
+	    * be sure to pass navigator to component for routing
+	    */
 
-    var RightIcon =
-     <View title='PersonalPage' component={<PersonalPage navigator={this.props.navigator} />} style={styles.iconContainer}>
-       <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
-       <View style={[{marginLeft: iconOffset/2, width: 28, height: 28}]} />
-     </View>;
+	    var LeftIcon =
+	    <View title='DiscoverPage' component={<DiscoverPage navigator={this.props.navigator} />} style={styles.iconContainer}>
+	       <Image source={require('../partials/img/browse.png')} style={[styles.icon, styles.iconLeft]}/>
+	     {activeArrow}
+	     </View>
 
-     return (
-			<View style={styles.container}> 
-		        {this.state.selected}
-		       	 <View style={styles.fixedFooterSpacer} />
-	        		<Tabs selected={this.state.selected} style={[styles.fixedFooterWrapper, styles.footer, styles.footerContainer]}
-			          selectedStyle={{}} onSelect={(el) => {
-			          	el.props.component && this.setState({selected: el.props.component, selectedTitle: el.props.title});
-			          }}
-			          pressOpacity={1}>
-				      {LeftIcon}
-			          {EmblemIcon}
-			          {RightIcon}
-			        </Tabs>
+	   /*
+	    * middle icon - eyespot emblem, goes to contribute page
+	    */
 
-	        </View>
-		);
-  }
+	    var EmblemIcon =
+	     <View title='ContributePage' component={<ContributePage navigator={this.props.navigator} />} style={styles.iconContainer}>
+	       <View style={styles.iconEmblemContainer}>
+	         <Image source={require('../partials/img/emblem.png')} style={styles.iconEmblem}/>
+	       </View>
+	     </View>;
+
+	   /*
+	    * right icon - profile icon, goes to personal profile
+	    * be sure to pass navigator to component for routing
+	    */
+
+	    var RightIcon =
+	     <View title='PersonalPage' component={<PersonalPage navigator={this.props.navigator} />} style={styles.iconContainer}>
+	       <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
+	       <View style={[{marginLeft: iconOffset/2, width: 28, height: 28}]} />
+	     </View>;
+
+	     return (
+				<View style={styles.container}> 
+			        {this._renderContent()}
+			       	 <View style={styles.fixedFooterSpacer} />
+		        		<Tabs selected={this.state.selected} style={[styles.fixedFooterWrapper, styles.footer, styles.footerContainer]}
+				          selectedStyle={{}} onSelect={(el) => {
+				          	el.props.component && this.setState({selected: el.props.component, selectedTitle: el.props.title});
+				          }}
+				          pressOpacity={1}>
+					      {LeftIcon}
+				          {EmblemIcon}
+				          {RightIcon}
+				        </Tabs>
+
+		        </View>
+			);
+	  }
 });
 
 const footerHeight = 60;

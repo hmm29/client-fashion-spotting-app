@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     emailLoginText: {},
     facebookLogin: {borderColor: 'rgb(59,89,152)' },
     facebookLoginText: {color: 'rgba(59,89,152,0.8)'},
-    headerContainer: {marginBottom: 10},
+    headerContainer: {marginBottom: 10, top: height/24},
     input: {
         alignSelf: 'center',
         marginTop: height / 40,
