@@ -30,17 +30,17 @@ import Tabs from 'react-native-tabs';
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 const iconOffset = 40;
 
-function activeArrowOffset(selectedTitle){
+function activeArrowOffset(title){
   var activeLeft = 0;
 
-  switch (selectedTitle){
-    case "DiscoverPage":
+  switch (title){
+    case "discover":
       activeLeft = width/3 - iconWidth - iconWidth/2 - iconOffset;
       break;
-    case "ContributePage":
+    case "contribute":
       activeLeft = width/2 - iconWidth/2;
       break;
-    case "PersonalPage":
+    case "personal":
       activeLeft = width*2/3 + iconWidth - iconWidth/2 + iconOffset;
       break;
     default:
@@ -113,7 +113,7 @@ var TabBarLayout = React.createClass({
     */
 
    var activeStyle = {};
-   activeStyle.left = activeArrowOffset(this.state.selectedTitle);
+   activeStyle.left = activeArrowOffset(this.state.selected);
 
    /*
     * active arrow, appears under active page
@@ -160,7 +160,7 @@ var TabBarLayout = React.createClass({
 	        {this._renderContent()}
       		<Tabs selected={this.state.selected} style={styles.footer}
 	          selectedStyle={{}} onSelect={(el) => {
-	          	el.props.component && this.setState({selected: el.props.component, selectedTitle: el.props.title});
+	          	el.props.component && this.setState({selected: el.props.component});
 	          }}
 	          pressOpacity={1}>
 		      {LeftIcon}
