@@ -1,4 +1,10 @@
-
+/**
+ * Controls.js
+ * Page header element
+ *
+ * @providesModule Controls
+ * @flow
+ */
 
 'use strict'; /* enables JS strict mode for any ES5 code */
 
@@ -6,20 +12,15 @@
 * imports required modules
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
  Dimensions,
- Image,
  StyleSheet,
- Text,
- TextInput,
  View,
- TouchableOpacity
+ Image,
+ Text
 } from 'react-native';
 
-import Button from 'apsl-react-native-button';
-
-var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var Share = React.createClass({
   render() {
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-    padding: 10,
+    padding: 10
   },
   icon: {
     width: controlWidth,
@@ -96,12 +97,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10,
+    marginRight: 10
   },
   bodoni: {
     color: 'gray',
     marginLeft: 5,
-    fontFamily: 'BodoniSvtyTwoITCTT-Book',
+    fontFamily: 'BodoniSvtyTwoITCTT-Book'
   }
 });
 

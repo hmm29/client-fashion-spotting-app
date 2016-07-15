@@ -6,15 +6,15 @@
  * @flow
  */
 
- import React, { Component } from 'react';
+ import React from 'react';
+
  import {
    Dimensions,
-   Image,
    StyleSheet,
-   Text,
-   TextInput,
    View,
-   TouchableOpacity
+   TouchableOpacity,
+   Text,
+   Image
  } from 'react-native';
 
 
@@ -34,7 +34,6 @@ var Dropdowns = React.createClass({
    return (
      <View style ={styles.dropdownContainer}>
        <View style={styles.dropdownInner}>
-
            {this.props.navs.map(function(nav, i) {
              if (i != this.props.nav) {
                return (
@@ -140,8 +139,8 @@ var SearchBar = React.createClass({
    return (
      <View style={styles.searchBar}>
        <Dropdowns nav={this.state.nav} navs={this.state.navs}/>
-         <Navs nav={this.state.nav} navs={this.state.navs}
-           _setNav={this._setNav}/>
+       <Navs nav={this.state.nav} navs={this.state.navs}
+         _setNav={this._setNav}/>
      </View>
    );
  }
@@ -156,7 +155,7 @@ const styles = StyleSheet.create({
    container: {},
    section: {
        marginVertical: height / 40,
-       flex: 1,
+       flex: 1
    },
    searchBarContainer: {
        position: 'absolute',
@@ -177,27 +176,25 @@ const styles = StyleSheet.create({
      height: navsContainerHeight,
      shadowOffset: {
          width: 0,
-         height: 5,
+         height: 5
      },
      shadowColor: 'black',
      shadowOpacity: .2,
-     paddingHorizontal: 20,
+     paddingHorizontal: 20
    },
 
    navsInner: {
      height: navsContainerHeight,
      flexDirection: 'row',
      width: searchBarInnerWidth,
-     justifyContent: 'center',
-    //  backgroundColor: 'red'
+     justifyContent: 'center'
    },
    nav: {
      flex: 1,
      height: navsContainerHeight,
      flexDirection: 'column',
      justifyContent: 'center',
-     alignItems: 'center',
-    //  backgroundColor:'gray'
+     alignItems: 'center'
    },
    navTouch: {
      flexDirection: 'row',
@@ -205,24 +202,23 @@ const styles = StyleSheet.create({
      height: navsContainerHeight,
 
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
    },
    navText: {},
 
    dropdownIcon: {
      width: 15,
      resizeMode: 'contain',
-     marginLeft: 10,
+     marginLeft: 10
    },
-
    dropdownContainer: {
      position: 'absolute',
      top: 5,
      justifyContent: 'center',
      flexDirection: 'row',
      alignItems: 'center',
-     width,
-    //  backgroundColor: 'transparent'
+     width: width,
+     backgroundColor: 'transparent'
    },
    dropdownInner: {
      flexDirection: 'row',
@@ -243,7 +239,7 @@ const styles = StyleSheet.create({
      paddingBottom: 20,
      shadowOffset: {
          width: 0,
-         height: 5,
+         height: 5
      },
      shadowColor: 'black',
      shadowOpacity: .2,
@@ -251,8 +247,8 @@ const styles = StyleSheet.create({
    },
    dropdownText: {
      marginVertical: 5,
-     marginHorizontal: 20,
-   },
+     marginHorizontal: 20
+   }
 
 });
 

@@ -12,7 +12,7 @@
  * imports required modules
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Dimensions,
   Image,
@@ -23,6 +23,7 @@ import {
   StyleSheet
 } from 'react-native';
 
+import DiscoverPage from '../discover/DiscoverPage';
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
@@ -46,7 +47,7 @@ var SignUpPage = React.createClass({
             emailAddressText: '',
             nameText: '',
             nicknameText: '',
-            passwordText: '',
+            passwordText: ''
         };
     },
 

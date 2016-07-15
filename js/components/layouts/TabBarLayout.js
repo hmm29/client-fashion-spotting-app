@@ -30,6 +30,26 @@ import Tabs from 'react-native-tabs';
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 const iconOffset = 40;
 
+function activeArrowOffset(selectedTitle){
+  var activeLeft = 0;
+
+  switch (selectedTitle){
+    case "DiscoverPage":
+      activeLeft = width/3 - iconWidth - iconWidth/2 - iconOffset;
+      break;
+    case "ContributePage":
+      activeLeft = width/2 - iconWidth/2;
+      break;
+    case "PersonalPage":
+      activeLeft = width*2/3 + iconWidth - iconWidth/2 + iconOffset;
+      break;
+    default:
+     activeLeft = width/3 - iconWidth - iconWidth/2 - iconOffset;
+      break;
+  }
+  return activeLeft;
+}
+
 var TabBarLayout = React.createClass({
 	getInitialState() {
 		return {
@@ -37,7 +57,35 @@ var TabBarLayout = React.createClass({
 		}
 	},
 
-	_renderContent() {
+  /*
+   * componentDidMount(): Invoked once, only on the client (not on the server), immediately after the initial rendering occurs.
+   */
+
+  componentDidMount(){
+
+   /*
+    * retrieve data from firebase data store
+    */
+    var categoriesRef = new Firebase("https://eyespot-658a5.firebaseio.com");
+    var dataStore = {};
+    categoriesRef.on('value', (snap) => {
+      snap.forEach((child) => {
+        dataStore[child.key()] = child.val();
+      });
+    });
+
+    /*
+     * set firebase data to component's state
+     */
+
+	    this.setState({
+	      categories: dataStore.categories,
+	      products: dataStore.products,
+	      users: dataStore.users
+	    })
+	  },
+
+  	_renderContent() {
 	 	let title = this.state.selected;
 
 	    if (title === 'discover') {
@@ -48,92 +96,81 @@ var TabBarLayout = React.createClass({
 	      return <PersonalPage navigator={this.state.navigator} />;
 	    }
 
+	    else if (title === 'contribute') {
+	    	return <ContributePage navigator={this.state.navigator} />;
+	    }
+
 	    else {
 	      return <View />;
 	    }
-  };
+  	};
 
-  	render() {
+	render() {
 
-  	   //  var active = this.props.active;
-	   var active = 0; // HACK: temporary
+   /*
+    * position active arrow
+    */
 
-	   /*
-	    * calculate position (margin) for active arrow
-	    * position based on offset of icons
-	    */
+   var activeStyle = {};
+   activeStyle.left = activeArrowOffset(this.state.selectedTitle);
 
-	   var activeMargin = width / 3 * active;
-	   if (active == 0) {
-	     activeMargin -= iconOffset / 2;
-	   }
-	   else if (active == 2) {
-	     activeMargin += iconOffset / 2;
-	   }
+   /*
+    * active arrow, appears under active page
+    */
 
-	   var activePadding = {marginLeft: activeMargin};
+   var Active =
+   <View style={[styles.activeContainer, activeStyle]}>
+     <Image source={require('../partials/img/active.png')} style={[styles.activeIcon]}/>
+   </View>
 
-	   /*
-	    * active arrow, appears under active page
-	    */
+   /*
+    * left icon, goes to discover page
+    * be sure to pass navigator to component for routing
+    */
 
-	    var activeArrow = 
-	     <View style={[styles.activeContainer, activePadding]}>
-	          <View style={[styles.activeIconContainer, {marginRight: iconOffset/2}]}>
-	            <Image source={require('../partials/img/active.png')} style={styles.activeIcon}/>
-	          </View>
-	        </View>;
+    var LeftIcon =
+    <View component='discover' style={styles.iconContainer}>
+       <Image source={require('../partials/img/browse.png')} style={[styles.icon, styles.iconLeft]}/>
+    </View>
 
-	   /*
-	    * left icon, goes to discover page
-	    * be sure to pass navigator to component for routing
-	    */
+   /*
+    * middle icon - eyespot emblem, goes to contribute page
+    */
 
-	    var LeftIcon =
-	    <View title='DiscoverPage' component={<DiscoverPage navigator={this.props.navigator} />} style={styles.iconContainer}>
-	       <Image source={require('../partials/img/browse.png')} style={[styles.icon, styles.iconLeft]}/>
-	     {activeArrow}
-	     </View>
+    var EmblemIcon =
+     <View component='contribute' style={styles.iconContainer}>
+       <View style={styles.iconEmblemContainer}>
+         <Image source={require('../partials/img/emblem.png')} style={styles.iconEmblem}/>
+       </View>
+     </View>;
 
-	   /*
-	    * middle icon - eyespot emblem, goes to contribute page
-	    */
+   /*
+    * right icon - profile icon, goes to personal profile
+    * be sure to pass navigator to component for routing
+    */
 
-	    var EmblemIcon =
-	     <View title='ContributePage' component={<ContributePage navigator={this.props.navigator} />} style={styles.iconContainer}>
-	       <View style={styles.iconEmblemContainer}>
-	         <Image source={require('../partials/img/emblem.png')} style={styles.iconEmblem}/>
-	       </View>
-	     </View>;
+    var RightIcon =
+     <View component='personal' style={styles.iconContainer}>
+       <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
+     </View>;
 
-	   /*
-	    * right icon - profile icon, goes to personal profile
-	    * be sure to pass navigator to component for routing
-	    */
+     return (
+			<View style={styles.container}>
+	        {this._renderContent()}
+      		<Tabs selected={this.state.selected} style={styles.footer}
+	          selectedStyle={{}} onSelect={(el) => {
+	          	el.props.component && this.setState({selected: el.props.component, selectedTitle: el.props.title});
+	          }}
+	          pressOpacity={1}>
+		      {LeftIcon}
+	          {EmblemIcon}
+	          {RightIcon}
+	        </Tabs>
 
-	    var RightIcon =
-	     <View title='PersonalPage' component={<PersonalPage navigator={this.props.navigator} />} style={styles.iconContainer}>
-	       <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
-	       <View style={[{marginLeft: iconOffset/2, width: 28, height: 28}]} />
-	     </View>;
-
-	     return (
-				<View style={styles.container}> 
-			        {this._renderContent()}
-			       	 <View style={styles.fixedFooterSpacer} />
-		        		<Tabs selected={this.state.selected} style={[styles.fixedFooterWrapper, styles.footer, styles.footerContainer]}
-				          selectedStyle={{}} onSelect={(el) => {
-				          	el.props.component && this.setState({selected: el.props.component, selectedTitle: el.props.title});
-				          }}
-				          pressOpacity={1}>
-					      {LeftIcon}
-				          {EmblemIcon}
-				          {RightIcon}
-				        </Tabs>
-
-		        </View>
-			);
-	  }
+          {Active}
+      </View>
+		);
+  }
 });
 
 const footerHeight = 60;
@@ -146,67 +183,58 @@ const styles = StyleSheet.create({
 		flex: 1,
 	    backgroundColor: '#F5FCFF',
 	},
-	fixedFooterSpacer: {height: 40},
-    fixedFooterWrapper: {
-      position: 'absolute',
-      top: height * .9
-    },
-	footerContainer: {
-	   width,
-	   height: footerHeight,
-	   position: 'absolute',
-	 },
-	 footer: {
-	   flexDirection: 'row',
-	   justifyContent: 'center',
-	   alignItems: 'center',
-	   backgroundColor: 'black',
-	   width,
-	   height: footerHeight,
-	 },
-	 footerText: {
-	   color: '#fff',
-	   fontSize: 22,
-	   fontFamily: 'AvenirNextCondensed-Regular'
-	 },
-	 iconContainer: {
-	   flex: 1,
-	   flexDirection: 'column',
-	   justifyContent: 'center',
-	   alignItems: 'center',
-	 },
-	 icon: {
-	   width: iconWidth,
-	   height: iconWidth,
-	   resizeMode: 'contain',
-	   top: height/100, // fix: find better way to use flexbox to align
-	 },
-	 iconLeft: {marginRight: iconOffset},
-	 iconRight: {marginLeft: iconOffset},
-	 iconEmblemContainer: {
-	   width: iconEmblemWidth,
-	   height: iconEmblemHeight,
-	  //  backgroundColor: 'green'
-	 },
-	 iconEmblem: {
-	   width: iconEmblemWidth,
-	   height: iconEmblemHeight,
-	   resizeMode: 'contain',
-	   position: 'absolute',
-	   top: -(height/25)
-	 },
-	 activeContainer: {
-	   flexDirection: 'row',
-	   justifyContent: 'center',
-	 },
-	 activeIconContainer: {
-	 },
-	 activeIcon: {
-	   width: 28,
-	   height: 28,
-	   resizeMode: 'contain',
-	   transform: [{translateY: 3}]
-	 }
+  footer: {
+    position: 'absolute',
+    bottom:0,
+    width,
+    height: footerHeight,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems:'center',
+    backgroundColor: 'black',
+ },
+ footerText: {
+   color: '#fff',
+   fontSize: 22,
+   fontFamily: 'AvenirNextCondensed-Regular'
+ },
+ iconContainer: {
+   flex:1,
+   flexDirection: 'column',
+   justifyContent: 'center',
+   alignItems: 'center',
+   width: iconWidth,
+ },
+ icon: {
+   width: iconWidth,
+   height: iconWidth,
+   resizeMode: 'contain',
+ },
+ iconEmblemContainer: {
+   width: iconEmblemWidth,
+   height: iconEmblemHeight,
+   flexDirection: 'column',
+   justifyContent: 'center',
+   alignItems: 'center',
+ },
+ iconEmblem: {
+   width: iconEmblemWidth,
+   height: iconEmblemHeight,
+   resizeMode: 'contain',
+   position: 'absolute',
+   top: -(height/25)
+ },
+ activeContainer:{
+    position: 'absolute',
+    bottom: 0,
+    left:0,
+    width: iconWidth,
+ },
+ activeIcon: {
+   width: iconWidth,
+   height: iconWidth/2,
+   resizeMode: 'contain',
+ },
 });
 
 module.exports = TabBarLayout;

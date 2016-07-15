@@ -12,7 +12,7 @@
  * imports required modules
  */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Dimensions,
   Image,
@@ -29,6 +29,8 @@ import FormValidator from 'validate.js';
 import { LoginManager } from 'react-native-fbsdk';
 import SignUpPage from '../signup/SignUpPage';
 import TabBarLayout from '../../layouts/TabBarLayout';
+import DiscoverPage from '../discover/DiscoverPage';
+
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -179,7 +181,7 @@ const styles = StyleSheet.create({
     container: {
         marginTop: height / 15,
         flexDirection: 'column',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
     input: {
         alignSelf: 'center',

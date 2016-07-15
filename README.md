@@ -2,8 +2,8 @@
 
 Eyespot lets users discover quality fashion products through a community-driven, visual magazine.
 
-## Most recent snapshot: 
-### Discover page in the works
+## Most recent snapshot(s): 
+#### Personal Page - Product Detail Page - Discover Page
 
 ![Screenshot](https://raw.githubusercontent.com/CelenaConsortium/eyespot/master/personal-page-screenshot.png)
 

@@ -1,3 +1,10 @@
+/**
+ * Contributor.js
+ * Page header element
+ *
+ * @providesModule Contributor
+ * @flow
+ */
 
 'use strict'; /* enables JS strict mode for any ES5 code */
 
@@ -5,7 +12,7 @@
 * imports required modules
 */
 
-import React, { Component } from 'react';
+import React from 'react';
 import {
  Dimensions,
  Image,
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
     borderRadius: profileRadius,
     shadowOffset: {
         width: 0,
-        height: 0,
+        height: 0
     },
     shadowColor: 'black',
     shadowOpacity: .4,
@@ -90,12 +97,12 @@ const styles = StyleSheet.create({
    width: innerProfileDiameter,
    height: innerProfileDiameter,
    resizeMode: 'cover',
-   borderRadius: innerProfileRadius,
+   borderRadius: innerProfileRadius
  },
  bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book' },
  name: {
    color: 'red',
-   fontSize: 25,
+   fontSize: 25
  }
 });
 

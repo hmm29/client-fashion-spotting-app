@@ -167,7 +167,7 @@ var PersonalPage = React.createClass({
 const styles = StyleSheet.create({
    container: {
      flexDirection: 'column',
-     alignItems: 'center',
+     alignItems: 'center'
    },
    titleContainer: {
      flexDirection: 'column',
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
    },
    myContributions: {
      width,
-     padding: 20,
+     padding: 20
    },
    fixedFooterSpacer: {height: 60},
    fixedFooterWrapper: {
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
      fontSize: height / 40,
      fontFamily: 'BodoniSvtyTwoITCTT-Book'
 
-   },
+   }
 });
 
 /*

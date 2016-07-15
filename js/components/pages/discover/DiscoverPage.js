@@ -29,6 +29,8 @@ import Header from '../../partials/Header';
 import ProductPage from '../product/ProductPage';
 import SearchBar from '../../partials/SearchBar';
 
+var Firebase = require('firebase');
+
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
@@ -37,14 +39,6 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
  */
 
  var Featured = React.createClass({
-
-   /*
-    * getInitialState(): returns object with initialized component state variables
-    */
-
-   getInitialState() {
-     return {};
-   },
 
    /*
     * render(): returns JSX that declaratively specifies page UI
@@ -225,6 +219,7 @@ var DiscoverPage = React.createClass({
  * CSS stylings
  */
 
+const headerHeight = height / 10
 const panelMargin = 5;
 const sideMargin = 20;
 const panelWidth = (width - panelMargin * 4 - sideMargin * 2) / 2;
@@ -234,7 +229,8 @@ const styles = StyleSheet.create({
     categories: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        padding: sideMargin
+        padding: sideMargin,
+        paddingTop: headerHeight
     },
     featuredPanel: {
       width: featuredPanelWidth,
@@ -256,7 +252,7 @@ const styles = StyleSheet.create({
       width: featuredPanelWidth,
       paddingHorizontal: 20,
       flexDirection: 'column',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     featuredPanelText: {
       backgroundColor: 'transparent',

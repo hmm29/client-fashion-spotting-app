@@ -12,7 +12,7 @@
  * imports required modules
  */
 
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import {
   Image,
   StyleSheet,
@@ -23,15 +23,15 @@ import {
 
 const SIZE = 20; /* icon font size */
 
-/* 
- * specifies types for properties that this component receives 
+/*
+ * specifies types for properties that this component receives
  */
 
 type Props = {
   color: React.PropTypes.string.isOptional,
   onPress: React.PropTypes.func.isRequired,
   size: React.PropTypes.number,
-  style: View.propTypes.style
+  style: View.PropTypes.style
 };
 
 /*
