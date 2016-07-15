@@ -103,7 +103,7 @@ var TabBarLayout = React.createClass({
 	    else {
 	      return <View />;
 	    }
-  	};
+  	},
 
 	render() {
 
