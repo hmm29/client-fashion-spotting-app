@@ -60,6 +60,12 @@ var More = React.createClass({
   }
 });
 
+/*
+* defines the Controls class
+* this is the code for the likes, share, and more buttons for each product
+*/
+
+
 var Controls = React.createClass({
   render() {
     const { product } = this.props;

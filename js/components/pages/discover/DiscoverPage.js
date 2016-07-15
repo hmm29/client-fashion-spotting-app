@@ -12,7 +12,7 @@
  * imports required modules
  */
 
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import {
   Dimensions,
   Image,
@@ -26,10 +26,8 @@ import {
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
-import ProductPage from '../product/ProductPage';
 import SearchBar from '../../partials/SearchBar';
-
-var Firebase = require('firebase');
+import Categories from './Categories';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -67,112 +65,17 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
    }
  });
 
-
-/*
- * defines the Categories class
- * this is the code for the two-column category component
- */
-
-var Categories = React.createClass({
-
-  /*
-   * getInitialState(): returns object with initialized component state variables
-   */
-
-  getInitialState() {
-    return {
-      categories: [
-        {
-          'name': 'ALL',
-          'imgUrl': './test.jpg'
-        },
-        {
-          'name': 'SHOE',
-          'imgUrl': './test.jpg'
-        },
-        {
-          'name': 'SKIRT',
-          'imgUrl': './test.jpg'
-        },
-        {
-          'name': 'DRESS',
-          'imgUrl': './test.jpg'
-        },
-        {
-          'name': 'BAG',
-          'imgUrl': './test.jpg'
-        },
-        {
-          'name': 'BLOUSE',
-          'imgUrl': './test.jpg'
-        },
-        {
-          'name': 'COAT',
-          'imgUrl': '../../../../../assets/images/test.jpg'
-        }
-      ]
-    };
-  },
-
-  /*
-   * specifies types for properties that this component receives
-   */
-
-   propTypes: {
-    navigator: React.PropTypes.object
-   },
-
-  /*
-   * render(): returns JSX that declaratively specifies page UI
-   */
-
-  render() {
-    let nav = this.props.navigator;
-
-    /*
-     * FIXME: get jpegs for product images
-     */
-
-    return (
-      <View style ={styles.categories}>
-        <Featured/>
-        {this.state.categories.map(function(c, i) {
-          return (
-            <TouchableOpacity key={i} onPress={() => nav.push({
-              title: 'ProductPage',
-              component: ProductPage
-            })} style={styles.panel}>
-              <Image source={require('./test.jpg')} style={styles.panelImage}/>
-              <View style={styles.textContainer}>
-                <Text style={styles.panelText}>{c.name}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-    );
-  }
-});
-
 /*
  * defines the DiscoverPage class
  */
 
 var DiscoverPage = React.createClass({
 
-    /*
-     * getInitialState(): returns object with initialized component state variables
-     */
-
-    getInitialState() {
-        return {};
+    propTypes: {
+      dataStore: PropTypes.object,
+      navigator: PropTypes.object
     },
 
-    /*
-     * specifies types for properties that this component receives
-     */
-
-    propTypes: {},
 
     /*
      * _renderHeader(): renders the imported header component
@@ -197,16 +100,16 @@ var DiscoverPage = React.createClass({
      */
 
     render() {
+
         return (
           <View style={styles.layeredPageContainer}>
             {this._renderHeader()}
             <EyespotPageBase
                 keyboardShouldPersistTaps={false}
                 noScroll={false}>
-                <View>
-                    <View>
-                      <Categories navigator={this.props.navigator}/>
-                    </View>
+                <View style={styles.container}>
+                  <Featured/>
+                  <Categories {...this.props} />
                 </View>
             </EyespotPageBase>
             <SearchBar/>
@@ -226,9 +129,9 @@ const panelWidth = (width - panelMargin * 4 - sideMargin * 2) / 2;
 const featuredPanelWidth = panelWidth * 2 + panelMargin * 2;
 
 const styles = StyleSheet.create({
-    categories: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
+    container: {
+        flexDirection: 'column',
+        // flexWrap: 'wrap',
         padding: sideMargin,
         paddingTop: headerHeight
     },

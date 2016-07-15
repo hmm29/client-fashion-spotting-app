@@ -12,7 +12,7 @@
 * imports required modules
 */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
  Dimensions,
  Image,
@@ -29,16 +29,22 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var Contributor = React.createClass({
 
+  propTypes: {
+    navigator: PropTypes.object,
+    user: PropTypes.object
+  },
+
+
   render() {
 
-    const { product } = this.props;
+    const { user } = this.props;
 
     return (
       <View style={styles.container}>
         <TouchableOpacity onPress={() => {
 
           // HACK: must lazy load this PersonalPage component
-          // because the UserProducts component rendered in the personal page 
+          // because the UserProducts component rendered in the personal page
           // has this Contributor component in it
 
           const PersonalPage = require('../../../pages/personal/PersonalPage');
@@ -50,10 +56,10 @@ var Contributor = React.createClass({
               });
           }
         }} style={styles.profileContainer}>
-          <Image source={require('../img/testUser.jpg')} style={styles.profile}/>
+          <Image source={{uri: user.profilePicture}} style={styles.profile}/>
         </TouchableOpacity>
         <Text style={[styles.bodoni, {fontStyle: 'italic'}]}>spotted by</Text>
-        <Text style={[styles.name, styles.bodoni]}>{product.user.username.toUpperCase()}</Text>
+        <Text style={[styles.name, styles.bodoni]}>{user.username.toUpperCase()}</Text>
       </View>
     );
   }
