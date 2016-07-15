@@ -66,6 +66,7 @@ var TabBarLayout = React.createClass({
    /*
     * retrieve data from firebase data store
     */
+    
     var categoriesRef = new Firebase("https://eyespot-658a5.firebaseio.com");
     var dataStore = {};
     categoriesRef.on('value', (snap) => {
@@ -101,7 +102,7 @@ var TabBarLayout = React.createClass({
 	    }
 
 	    else {
-	      return <View />;
+	     	return <View />;
 	    }
   	},
 
