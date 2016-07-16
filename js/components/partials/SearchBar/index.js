@@ -6,7 +6,7 @@
  * @flow
  */
 
- import React from 'react';
+ import React, { PropTypes } from 'react';
 
  import {
    Dimensions,
@@ -34,7 +34,7 @@ var Dropdowns = React.createClass({
    return (
      <View style ={styles.dropdownContainer}>
        <View style={styles.dropdownInner}>
-           {this.props.navs.map(function(nav, i) {
+           {this.props.filters.map(function(filter, i) {
              if (i != this.props.nav) {
                return (
                  <View key={i} style={styles.dropdown}>
@@ -44,7 +44,7 @@ var Dropdowns = React.createClass({
              else {
                return (
                  <View key={i} style={styles.dropdownActive}>
-                   {nav.dropdown.map(function(d, i) {
+                   {filter.dropdown.map(function(d, i) {
                      return (
                        <Text style={styles.dropdownText} key={i}>{d}</Text>
                      );
@@ -67,31 +67,30 @@ var Dropdowns = React.createClass({
 var Navs = React.createClass({
 
  render() {
-
    return (
      <View style ={styles.navsContainer}>
        <View style ={styles.navsInner}>
-             {this.props.navs.map(function(nav, i) {
-               if (i == this.props.nav) {
-                 var activeNavStyle = { color: 'red'};
-               }
-               else {
-                 var activeNavStyle = {};
-               }
-               return (
-                 <View key={i} style={styles.nav}>
-                   <TouchableOpacity
-                     activeOpacty={.8}
-                     onPress={() => this.props._setNav(i)}
-                     style={styles.navTouch}>
-                     <Text style={[styles.navText, activeNavStyle]}>
-                       {nav.name}
-                     </Text>
-                     <Image style={styles.dropdownIcon} source={require('./img/dropdown.png')}/>
-                   </TouchableOpacity>
-                 </View>
-               );
-             }, this)}
+           {this.props.filters.map(function(filter, i) {
+             if (i == this.props.nav) {
+               var activeNavStyle = { color: 'red'};
+             }
+             else {
+               var activeNavStyle = {};
+             }
+             return (
+               <View key={i} style={styles.nav}>
+                 <TouchableOpacity
+                   activeOpacty={.8}
+                   onPress={() => this.props._setNav(i)}
+                   style={styles.navTouch}>
+                   <Text style={[styles.navText, activeNavStyle]}>
+                     {filter.name.toUpperCase()}
+                   </Text>
+                   <Image style={styles.dropdownIcon} source={require('../img/dropdown.png')}/>
+                 </TouchableOpacity>
+               </View>
+             );
+           }, this)}
          </View>
      </View>
    );
@@ -104,6 +103,12 @@ var Navs = React.createClass({
 */
 
 var SearchBar = React.createClass({
+
+  propTypes: {
+    filters: PropTypes.object,
+  },
+
+
  getInitialState() {
    return {
      nav: null,
@@ -136,16 +141,23 @@ var SearchBar = React.createClass({
  },
 
  render() {
+   const  { filters } = this.props;
+
    return (
      <View style={styles.searchBar}>
-       <Dropdowns nav={this.state.nav} navs={this.state.navs}/>
-       <Navs nav={this.state.nav} navs={this.state.navs}
+       <Dropdowns
+         nav={this.state.nav}
+         filters={filters}/>
+       <Navs
+         nav={this.state.nav}
+         filters={filters}
          _setNav={this._setNav}/>
      </View>
    );
  }
 });
 
+const headerHeight = 60;
 const navsContainerHeight = 50;
 const dropdownPadding = navsContainerHeight + 20;
 const searchBarPadding = 20;
@@ -164,7 +176,7 @@ const styles = StyleSheet.create({
    searchBar: {
      position: 'absolute',
      height: height / 80,
-     top: 50,
+     top: headerHeight,
    },
    navsContainer: {
      position: 'absolute',

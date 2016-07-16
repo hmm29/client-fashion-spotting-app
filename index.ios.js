@@ -21,6 +21,7 @@ import {
 import LoginPage from './js/components/pages/login/LoginPage';
 import ContributePage from './js/components/pages/contribute/ContributePage';
 import TabBarLayout from './js/components/layouts/TabBarLayout';
+import MapPage from './js/components/pages/map/MapPage';
 
 /*
  * defines the Eyespot class
@@ -49,7 +50,7 @@ class Eyespot extends Component {
           navigationBarHidden={true}    /* hide navigation bar */
           initialRoute={{               /* initial route in navigator */
             title: 'LoginPage',
-            component: LoginPage,
+            component: MapPage,
           }}
           itemWrapperStyle={styles.itemWrapper} /* styles for nav background */
           style={{flex: 1}} />

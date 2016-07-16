@@ -27,6 +27,14 @@ import Button from 'apsl-react-native-button';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
+
+
+/*
+* defines the Contributor class
+* this is the code for the contributor profile and name for each product
+*/
+
+
 var Contributor = React.createClass({
 
   propTypes: {
