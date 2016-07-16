@@ -32,13 +32,12 @@ var FinalizeAndContributeView = React.createClass({
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'column',
-		justifyContent: 'space-around',
+		justifyContent: 'flex-start',
 		alignItems: 'center', 
 		height, 
 		width,
 	},
 	text: {
-		bottom: 100,
 		fontFamily: 'Avenir-Roman',
 	}
 });
