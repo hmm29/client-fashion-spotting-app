@@ -23,6 +23,19 @@ var ProductAndLocationView = React.createClass({
 		return (
 			<View style={styles.container}>
 				<Text style={styles.text}>PRODUCT AND LOCATION</Text>
+				<View style={styles.section}>
+					<Text style={styles.sectionTitle}>ARE YOU HERE?</Text>
+				</View>
+
+				<View style={styles.section}>
+				<Text style={styles.sectionTitle}>IF NOT, SEARCH FOR THE STORE</Text>
+
+				</View>
+
+				<View style={styles.section}>
+				<Text style={styles.sectionTitle}>SPOTTED WHAT:</Text>
+
+				</View>
 			</View>
 		);
 	}
@@ -37,9 +50,19 @@ const styles = StyleSheet.create({
 		height, 
 		width,
 	},
+	section: {
+		width: width/1.3,
+		marginVertical: height/45,
+		flexDirection: 'column',
+		alignItems: 'flex-start'
+	},
+	sectionTitle: {
+
+	},
 	text: {
 		fontFamily: 'Avenir-Roman',
-	}
+		marginBottom: height/45
+	},
 });
 
 module.exports = ProductAndLocationView;

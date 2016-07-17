@@ -1,6 +1,7 @@
 package com.eyespot;
 
 import com.facebook.react.ReactActivity;
+import com.projectseptember.RNGL.RNGLPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -46,6 +47,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new RNGLPackage(),
             new RCTCameraPackage(),
             new BlurViewPackage(),
             new VectorIconsPackage(),

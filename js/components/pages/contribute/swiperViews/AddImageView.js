@@ -18,14 +18,26 @@ import {
 } from 'react-native';
 
 import Camera from 'react-native-camera';
+const {Image: GLImage} = require("gl-react-image"); // must use require syntax to use {Image: GLImage}
 import ImagePicker from 'react-native-image-picker';
+import Icon from 'react-native-vector-icons/EvilIcons';
+import ImageEffects from '../../../partials/ImageEffects';
 import Slider from 'react-native-slider';
+import { Surface } from 'gl-react-native';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var AddImageView = React.createClass({
 	getInitialState() {
 		return {
+			// store effect values separately to avoid
+			// continuously copying and updated a shared object with values
+			brightnessValue: 10,
+			colorTemperatureValue: 10,
+			contrastValue: 10,
+			sharpenValue: 10,
+			// store icon states together
+			// as only one icon will be active at a time
 			effectIconStates: {
 				
 			},
@@ -39,7 +51,7 @@ var AddImageView = React.createClass({
 	},
 
 	getIconColor(state) {
-		if (!state) return [styles.icon, {opacity: 0.3}];
+		if (!state) return [styles.icon, {opacity: 0.4}];
 		else if(state === 'active') return styles.icon;
 		else return {};
 	},
@@ -112,8 +124,30 @@ var AddImageView = React.createClass({
   					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
   						<Text style={styles.bottomContentLabel}>Brightness</Text>
   						  <Slider
-					          value={this.state.value || 0}
-					          onValueChange={(value) => this.setState({value})} />
+  						    maximumValue={100}
+  						  	minimumTrackTintColor='#000'
+  						  	trackStyle={styles.trackStyle}
+				            thumbStyle={styles.thumbStyle}
+					        value={this.state.brightnessValue}
+					        onValueChange={(brightnessValue) => this.setState({brightnessValue})} />
+					      <View style={styles.sliderBoundValues}>
+						      <Text>0</Text>
+						      <Text>100</Text>
+					      </View>
+  					</View>
+  					<View style={styles.bottomContentIcons}>
+  						<TouchableOpacity onPress={() => {
+							// return to list of effects by resetting effectIconStates object
+  							this.setState({effectIconStates: {}});
+  						}}>
+  							<Icon name="check" size={30} color="#000" />
+  						</TouchableOpacity>
+  						<TouchableOpacity onPress={() => {
+  							// return to list of effects by resetting effectIconStates object
+  							this.setState({effectIconStates: {}});
+  						}}>
+  							<Icon name="close-o" size={30} color="#000" />
+  						</TouchableOpacity>
   					</View>
   				</View>
 
@@ -122,20 +156,110 @@ var AddImageView = React.createClass({
 
   		} else if(effectIconStates.colorTemperatureIconState === 'active') {
 
+  			const colorTemperatureControls = 
+  				<View style={styles.bottomContentContainer}>
+  					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
+  						<Text style={styles.bottomContentLabel}>Color Temperature</Text>
+  						  <Slider
+  						   	maximumValue={100}
+  						    minimumTrackTintColor='#000'
+  						  	trackStyle={styles.trackStyle}
+				            thumbStyle={styles.thumbStyle}
+					        value={this.state.colorTemperatureValue}
+					        onValueChange={(colorTemperatureValue) => this.setState({colorTemperatureValue})} />
+					        <View style={styles.sliderBoundValues}>
+						      	<Text>0</Text>
+						      	<Text>100</Text>
+					      </View>
+  					</View>
+  					<View style={styles.bottomContentIcons}>
+  						<TouchableOpacity onPress={() => {
+							// return to list of effects by resetting effectIconStates object
+  							this.setState({effectIconStates: {}});
+  						}}>
+  							<Icon name="check" size={30} color="#000" />
+  						</TouchableOpacity>
+  						<TouchableOpacity onPress={() => {
+  							// return to list of effects by resetting effectIconStates object
+  							this.setState({effectIconStates: {}});
+  						}}>
+  							<Icon name="close-o" size={30} color="#000" />
+  						</TouchableOpacity>
+  					</View>
+  				</View>
+
+  			return colorTemperatureControls;
+
   		} else if(effectIconStates.contrastIconState === 'active') {
   			const contrastControls = 
   				<View style={styles.bottomContentContainer}>
-  					<View style={styles.bottomContentSection}>
+  					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
   						<Text style={styles.bottomContentLabel}>Contrast</Text>
   						  <Slider
-					          value={this.state.value || 0}
-					          onValueChange={(value) => this.setState({value})} />
+  						    maximumValue={100}
+  						    minimumTrackTintColor='#000'
+  						  	trackStyle={styles.trackStyle}
+				            thumbStyle={styles.thumbStyle}
+					        value={this.state.contrastValue}
+					        onValueChange={(contrastValue) => this.setState({contrastValue})} />
+					        <View style={styles.sliderBoundValues}>
+						      	<Text>0</Text>
+						      	<Text>100</Text>
+					      </View>
+  					</View>
+  					<View style={styles.bottomContentIcons}>
+  						<TouchableOpacity onPress={() => {
+							// return to list of effects by resetting effectIconStates object
+  							this.setState({effectIconStates: {}});
+  						}}>
+  							<Icon name="check" size={30} color="#000" />
+  						</TouchableOpacity>
+  						<TouchableOpacity onPress={() => {
+  							// return to list of effects by resetting effectIconStates object
+  							this.setState({effectIconStates: {}});
+  						}}>
+  							<Icon name="close-o" size={30} color="#000" />
+  						</TouchableOpacity>
   					</View>
   				</View>
 
   			return contrastControls;
 
   		} else if(effectIconStates.sharpenIconState === 'active') {
+
+  			const sharpenControls = 
+  						<View style={styles.bottomContentContainer}>
+  					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
+  						<Text style={styles.bottomContentLabel}>Sharpen</Text>
+  						  <Slider
+  						  	maximumValue={100}
+  						    minimumTrackTintColor='#000'
+  						  	trackStyle={styles.trackStyle}
+				            thumbStyle={styles.thumbStyle}
+					        value={this.state.sharpenValue}
+					        onValueChange={(sharpenValue) => this.setState({sharpenValue})} />
+					        <View style={styles.sliderBoundValues}>
+						      	<Text>0</Text>
+						      	<Text>100</Text>
+					      </View>
+  					</View>
+  					<View style={styles.bottomContentIcons}>
+  						<TouchableOpacity onPress={() => {
+  							// return to list of effects by resetting effectIconStates object
+  							this.setState({effectIconStates: {}});
+  						}}>
+  							<Icon name="check" size={30} color="#000" />
+  						</TouchableOpacity>
+  						<TouchableOpacity onPress={() => {
+  							// return to list of effects by resetting effectIconStates object
+  							this.setState({effectIconStates: {}});
+  						}}>
+  							<Icon name="close-o" size={30} color="#000" />
+  						</TouchableOpacity>
+  					</View>
+  				</View>
+
+  			return sharpenControls;
 
   		} else {
 
@@ -169,8 +293,8 @@ var AddImageView = React.createClass({
 								source={require('../../../partials/icons/contribute/img/sharpen-effect-icon.png')} 
 								style={this.getIconColor(this.state.effectIconStates.sharpenIconState)} />
 						</TouchableOpacity>
-					</View>
-  			
+				</View>
+  				
   			return effectIconsContainer;
   		}
   	},
@@ -230,8 +354,24 @@ var AddImageView = React.createClass({
 				</TouchableOpacity>
 			</View>
 
-        const photoGrid = 
-        	<Image source={this.state.imgSource} style={[styles.cameraView, {resizeMode: Image.resizeMode.cover}]} />
+        const photoGrid = (this.state.imgSource ?
+        	<View style={styles.cameraView}>
+        		<Surface ref="surface" width={height/2.2} height={height/2.2}>
+		          <ImageEffects 
+		          	width={height/2.2} 
+		          	height={height/2.2} 
+		          	brightness={this.state.brightnessValue}
+					saturation={this.state.colorTemperatureValue}
+					contrast={this.state.contrastValue}
+					blur={this.state.sharpenValue}>
+					<GLImage
+					  source={this.state.imgSource}
+					  imageSize={{ width: 200, height: 200 }}
+					  resizeMode="contain"
+					/>
+		          </ImageEffects>
+		        </Surface>
+        	</View> : null);
 
 		return (
 			<View style={styles.container}>
@@ -258,8 +398,16 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		width: width
 	},
+	bottomContentIcons: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center'
+	},
 	bottomContentLabel: {
         color: '#000',
+        position: 'absolute',
+        bottom: height/15,
+        left: width/4,
         fontSize: height / 45,
         fontFamily: 'BodoniSvtyTwoITCTT-Book'
     },
@@ -314,11 +462,28 @@ const styles = StyleSheet.create({
 	section: {
 		marginVertical: height/45
 	},
+	sliderBoundValues: {
+		width: width * 0.79, // slider is ~79% width of the screen
+		position: 'absolute',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		bottom: -5
+	},
 	spacer: {
 		height: height/10	
 	},
 	text: {
 		fontFamily: 'Avenir-Roman',
+	},
+	trackStyle: {
+		height: 18,
+		borderRadius: 1,
+		backgroundColor: '#d5d8e8',
+	},
+	thumbStyle: {
+		width: 0,
+		height: 0,
 	}
 });
 
