@@ -32,10 +32,12 @@ var AddImageView = React.createClass({
 		return {
 			// store effect values separately to avoid
 			// continuously copying and updated a shared object with values
-			brightnessValue: 10,
-			colorTemperatureValue: 10,
-			contrastValue: 10,
-			sharpenValue: 10,
+
+			// initial input values for effects on uploaded photo
+			brightnessValue: 1,
+			colorTemperatureValue: 1,
+			contrastValue: 1,
+			sharpenValue: 0,
 			// store icon states together
 			// as only one icon will be active at a time
 			effectIconStates: {
