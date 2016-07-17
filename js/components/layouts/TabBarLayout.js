@@ -14,6 +14,7 @@
 
 import React, { Component } from 'react';
 import {
+ ActivityIndicator,
  Dimensions,
  Image,
  StyleSheet,
@@ -102,7 +103,12 @@ var TabBarLayout = React.createClass({
 
       // FIXME: loading screen
       if(!this.state.loaded){
-        return <Text>loading</Text>
+        return (
+          <View style={styles.centering}>
+            <ActivityIndicator animating={true} size='large' style={{padding: 5}} />
+            <Text>Loading...</Text>
+          </View>
+        )
       }
 
 	    if (title === 'discover') {
@@ -197,8 +203,13 @@ const footerHeight = 60;
 const iconWidth = height/28;
 const iconEmblemWidth = height/18;
 const iconEmblemHeight = iconEmblemWidth * 2;
+const loadingTextFontSize = 12;
 
 const styles = StyleSheet.create({
+  centering: {
+    alignSelf: 'center',
+    top: height/2.5
+  },
 	container: {
 		flex: 1,
 	    backgroundColor: '#F5FCFF',
@@ -243,6 +254,11 @@ const styles = StyleSheet.create({
    resizeMode: 'contain',
    position: 'absolute',
    top: -(height/25)
+ },
+ loadingContent: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
  },
  activeContainer:{
     position: 'absolute',
