@@ -49,7 +49,7 @@ class Eyespot extends Component {
           navigationBarHidden={true}    /* hide navigation bar */
           initialRoute={{               /* initial route in navigator */
             title: 'LoginPage',
-            component: ContributePage,
+            component: TabBarLayout,
           }}
           itemWrapperStyle={styles.itemWrapper} /* styles for nav background */
           style={{flex: 1}} />
