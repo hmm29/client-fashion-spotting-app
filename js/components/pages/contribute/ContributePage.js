@@ -37,14 +37,6 @@ var SWIPER_REF = 'ContributePageSwiper'
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /* 
- * prototype function to capitalize a string 
- */
-
-String.prototype.capitalize = function () {
-  return this.charAt(0).toUpperCase() + this.slice(1);
-};
-
-/* 
  * defines the ContributePage class 
  */
 
@@ -65,9 +57,10 @@ var ContributePage = React.createClass({
     * @param (Boolean) showNextButton: whether or not to show the "NEXT" button
     */
 
-    handleShowNextButton(showNextButton, buttonText=null) {
+    handleShowNextButton(showNextButton, buttonText=null, func=null) {
       this.setState({showNextButton: !!showNextButton}); 
       if(buttonText) this.setState({buttonText});
+      if(func) this.setState({onPressButton: func});
     },
 
    /*
@@ -100,17 +93,20 @@ var ContributePage = React.createClass({
             currentSwiperPageIndex: this.state.currentSwiperPageIndex+1, 
             showNextButton: false
           });
+        } else if (this.state.currentSwiperPageIndex === NUMBER_OF_SWIPER_VIEWS-1) {
+          // call function passed to final button
+          this.state.onPressButton && this.state.onPressButton();
         }
       }}
       style={[styles.footerContainer]}>
         <View style={styles.footer}>
-        <Text style={styles.footerText}>{(this.state.buttonText || "NEXT").capitalize()}</Text>
+        <Text style={styles.footerText}>{(this.state.buttonText || "NEXT").toUpperCase()}</Text>
         </View>
     </TouchableOpacity>;
 
     const swiper = (
       <Swiper ref={SWIPER_REF}
-              // index={1}
+              index={2}
               style={styles.wrapper}
               bounces={false}
               scrollEnabled={false} // prevent touch scrolling

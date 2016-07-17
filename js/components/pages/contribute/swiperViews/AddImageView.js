@@ -8,6 +8,7 @@
 
 import React, { Component } from 'react'; 
 import {
+  ActivityIndicator,
   Dimensions,
   Image,
   StyleSheet,
@@ -126,7 +127,7 @@ var AddImageView = React.createClass({
   					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
   						<Text style={styles.bottomContentLabel}>Brightness</Text>
   						  <Slider
-  						    maximumValue={100}
+  						    maximumValue={2}
   						  	minimumTrackTintColor='#000'
   						  	trackStyle={styles.trackStyle}
 				            thumbStyle={styles.thumbStyle}
@@ -139,14 +140,16 @@ var AddImageView = React.createClass({
   					</View>
   					<View style={styles.bottomContentIcons}>
   						<TouchableOpacity onPress={() => {
+  							// update saved, current effect value with the value of the slider to save the changes
 							// return to list of effects by resetting effectIconStates object
-  							this.setState({effectIconStates: {}});
+  							this.setState({currentBrightnessValue: this.state.brightnessValue, effectIconStates: {}});
   						}}>
   							<Icon name="check" size={30} color="#000" />
   						</TouchableOpacity>
   						<TouchableOpacity onPress={() => {
+  							// revert edited effect value to (current) value saved before editing
   							// return to list of effects by resetting effectIconStates object
-  							this.setState({effectIconStates: {}});
+  							this.setState({brightnessValue: this.state.currentBrightnessValue, effectIconStates: {}});
   						}}>
   							<Icon name="close-o" size={30} color="#000" />
   						</TouchableOpacity>
@@ -163,7 +166,7 @@ var AddImageView = React.createClass({
   					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
   						<Text style={styles.bottomContentLabel}>Color Temperature</Text>
   						  <Slider
-  						   	maximumValue={100}
+  						   	maximumValue={2}
   						    minimumTrackTintColor='#000'
   						  	trackStyle={styles.trackStyle}
 				            thumbStyle={styles.thumbStyle}
@@ -176,14 +179,16 @@ var AddImageView = React.createClass({
   					</View>
   					<View style={styles.bottomContentIcons}>
   						<TouchableOpacity onPress={() => {
+							// update saved, current effect value with the value of the slider to save the changes
 							// return to list of effects by resetting effectIconStates object
-  							this.setState({effectIconStates: {}});
+  							this.setState({currentColorTemperatureValue: this.state.colorTemperatureValue, effectIconStates: {}});
   						}}>
   							<Icon name="check" size={30} color="#000" />
   						</TouchableOpacity>
   						<TouchableOpacity onPress={() => {
+  							// revert edited effect value to (current) value saved before editing
   							// return to list of effects by resetting effectIconStates object
-  							this.setState({effectIconStates: {}});
+  							this.setState({colorTemperatureValue: this.state.currentColorTemperatureValue, effectIconStates: {}});
   						}}>
   							<Icon name="close-o" size={30} color="#000" />
   						</TouchableOpacity>
@@ -198,7 +203,7 @@ var AddImageView = React.createClass({
   					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
   						<Text style={styles.bottomContentLabel}>Contrast</Text>
   						  <Slider
-  						    maximumValue={100}
+  						    maximumValue={2}
   						    minimumTrackTintColor='#000'
   						  	trackStyle={styles.trackStyle}
 				            thumbStyle={styles.thumbStyle}
@@ -211,14 +216,16 @@ var AddImageView = React.createClass({
   					</View>
   					<View style={styles.bottomContentIcons}>
   						<TouchableOpacity onPress={() => {
+							// update saved, current effect value with the value of the slider to save the changes
 							// return to list of effects by resetting effectIconStates object
-  							this.setState({effectIconStates: {}});
+  							this.setState({currentContrastValue: this.state.contrastValue, effectIconStates: {}});
   						}}>
   							<Icon name="check" size={30} color="#000" />
   						</TouchableOpacity>
   						<TouchableOpacity onPress={() => {
+  							// revert edited effect value to (current) value saved before editing
   							// return to list of effects by resetting effectIconStates object
-  							this.setState({effectIconStates: {}});
+  							this.setState({contrastValue: this.state.currentContrastValue, effectIconStates: {}});
   						}}>
   							<Icon name="close-o" size={30} color="#000" />
   						</TouchableOpacity>
@@ -234,7 +241,7 @@ var AddImageView = React.createClass({
   					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
   						<Text style={styles.bottomContentLabel}>Sharpen</Text>
   						  <Slider
-  						  	maximumValue={100}
+  						  	maximumValue={2}
   						    minimumTrackTintColor='#000'
   						  	trackStyle={styles.trackStyle}
 				            thumbStyle={styles.thumbStyle}
@@ -247,14 +254,16 @@ var AddImageView = React.createClass({
   					</View>
   					<View style={styles.bottomContentIcons}>
   						<TouchableOpacity onPress={() => {
-  							// return to list of effects by resetting effectIconStates object
-  							this.setState({effectIconStates: {}});
+  							// update saved, current effect value with the value of the slider to save the changes
+							// return to list of effects by resetting effectIconStates object
+  							this.setState({currentSharpenValue: this.state.sharpenValue, effectIconStates: {}});
   						}}>
   							<Icon name="check" size={30} color="#000" />
   						</TouchableOpacity>
   						<TouchableOpacity onPress={() => {
+  							// revert edited effect value to (current) value saved before editing
   							// return to list of effects by resetting effectIconStates object
-  							this.setState({effectIconStates: {}});
+  							this.setState({sharpenValue: this.state.currentSharpenValue, effectIconStates: {}});
   						}}>
   							<Icon name="close-o" size={30} color="#000" />
   						</TouchableOpacity>
@@ -268,28 +277,36 @@ var AddImageView = React.createClass({
   			const effectIconsContainer = 
   				<View style={styles.bottomContentContainer}>
 						<TouchableOpacity onPress={() => {
-							this.setState({effectIconStates: {contrastIconState: 'active'}})
+							// save the current effect value to revert back to if the user cancels changes to the effect
+							// update effectIconStates object to reflect currently active effect
+							this.setState({currentContrastValue: this.state.contrastValue, effectIconStates: {contrastIconState: 'active'}})
 						}}>
 							<Image 
 								source={require('../../../partials/icons/contribute/img/contrast-effect-icon.png')} 
 								style={this.getIconColor(this.state.effectIconStates.contrastIconState)} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
-							this.setState({effectIconStates: {brightnessIconState: 'active'}})
+							// save the current effect value to revert back to if the user cancels changes to the effect
+							// update effectIconStates object to reflect currently active effect
+							this.setState({currentBrightnessValue: this.state.brightnessValue, effectIconStates: {brightnessIconState: 'active'}})
 						}}>
 							<Image 
 								source={require('../../../partials/icons/contribute/img/brightness-effect-icon.png')} 
 								style={this.getIconColor(this.state.effectIconStates.brightnessIconState)} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
-							this.setState({effectIconStates: {colorTemperatureIconState: 'active'}})
+							// save the current effect value to revert back to if the user cancels changes to the effect
+							// update effectIconStates object to reflect currently active effect
+							this.setState({currentColorTemperatureValue: this.state.colorTemperatureValue, effectIconStates: {colorTemperatureIconState: 'active'}})
 						}}>
 							<Image 
 								source={require('../../../partials/icons/contribute/img/color-temperature-effect-icon.png')} 
 								style={this.getIconColor(this.state.effectIconStates.colorTemperatureIconState)} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
-							this.setState({effectIconStates: {sharpenIconState: 'active'}})
+							// save the current effect value to revert back to if the user cancels changes to the effect
+							// update effectIconStates object to reflect currently active effect
+							this.setState({currentSharpenValue: this.state.sharpenValue, effectIconStates: {sharpenIconState: 'active'}})
 						}}>
 							<Image 
 								source={require('../../../partials/icons/contribute/img/sharpen-effect-icon.png')} 
@@ -356,7 +373,7 @@ var AddImageView = React.createClass({
 				</TouchableOpacity>
 			</View>
 
-        const photoGrid = (this.state.imgSource ?
+        const viewport = (this.state.imgSource ?
         	<View style={styles.cameraView}>
         		<Surface ref="surface" width={height/2.2} height={height/2.2}>
 		          <ImageEffects 
@@ -373,13 +390,13 @@ var AddImageView = React.createClass({
 					/>
 		          </ImageEffects>
 		        </Surface>
-        	</View> : null);
+        	</View> : camera);
 
 		return (
 			<View style={styles.container}>
 				<Text style={styles.text}>ADD / ADJUST YOUR IMAGE(S)</Text>
 				<View style={styles.section}>
-					{this.state.imgSource ? photoGrid : camera}
+					{viewport}
 				</View>
 				<View style={styles.spacer} />
 				<View style={styles.section}>
