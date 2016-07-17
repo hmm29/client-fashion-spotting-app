@@ -28,7 +28,6 @@ import TabBarLayout from './js/components/layouts/TabBarLayout';
 
 class Eyespot extends Component {
 
-
   /*
    * render(): returns JSX that declaratively specifies overall app UI
    */

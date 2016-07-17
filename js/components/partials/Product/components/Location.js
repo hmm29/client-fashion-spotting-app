@@ -22,6 +22,11 @@ import {
 
 var {width} = Dimensions.get('window'); /* gets screen dimensions */
 
+
+/*
+* defines the Location class
+*/
+
 var Location = React.createClass({
   render() {
 

@@ -13,7 +13,7 @@
 * imports required modules
 */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
  Dimensions,
  Image,
@@ -32,7 +32,22 @@ import Comment from './components/Comment';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
+
+/*
+* defines the Product class
+* this is the code for each Product in the Discover Feed
+*/
+
+
 var Product = React.createClass({
+
+
+  propTypes: {
+    product: PropTypes.object,
+    navigator: PropTypes.object,
+    user: PropTypes.object
+  },
+
 
  /*
   * render(): returns JSX that declaratively specifies page UI
@@ -40,17 +55,19 @@ var Product = React.createClass({
 
   render() {
 
-    const { product } = this.props;
+    const { navigator, user, product } = this.props;
 
     return (
       <View style={styles.product}>
-        <Image source={require('./img/test.jpg')} style={styles.productImage}/>
+        <Image source={{uri : product.img }} style={styles.productImage}/>
         <View style={styles.info}>
-          <Contributor navigator={this.props.navigator} product={product}/>
+          <Contributor
+            user={user}
+            navigator={navigator}
+            product={product}/>
           <Location product={product}/>
           <Comment product={product}/>
           <Controls product={product}/>
-
         </View>
       </View>
     );

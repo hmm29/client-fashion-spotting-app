@@ -24,6 +24,12 @@ import {
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
+/*
+* defines the Comments class
+* this is the code for comment attached to the product
+*/
+
+
 var Comments = React.createClass({
   render() {
     const { product } = this.props;
