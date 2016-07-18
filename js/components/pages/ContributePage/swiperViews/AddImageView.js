@@ -58,7 +58,7 @@ var AddImageView = React.createClass({
 	},
 
 	getIconStyle(expression) {
-		if (expression) return [styles.icon, {opacity: 0.4}];
+		if (expression) return [styles.icon, {opacity: 0.3}];
 		else return styles.icon;
 	},
 
