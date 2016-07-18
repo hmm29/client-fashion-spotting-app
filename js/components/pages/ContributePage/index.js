@@ -106,7 +106,7 @@ var ContributePage = React.createClass({
 
     const swiper = (
       <Swiper ref={SWIPER_REF}
-              // index={1}
+              index={2}
               style={styles.wrapper}
               bounces={false}
               scrollEnabled={false} // prevent touch scrolling
