@@ -6,13 +6,13 @@
  * @flow
  */
 
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import {
   Dimensions,
   Image,
   ScrollView,
   StyleSheet,
-  Text, 
+  Text,
   TextInput,
   TouchableOpacity,
   View
@@ -87,7 +87,6 @@ var ProductAndLocationView = React.createClass({
 
 	render() {
 		const { query } = this.state;
-  		const data = this._filterData(query)
 
 		return (
 			<View style={styles.container}>
@@ -96,8 +95,8 @@ var ProductAndLocationView = React.createClass({
 					<Text style={styles.sectionTitle}>ARE YOU HERE?</Text>
 					<View style={styles.storeTagsBar}>
 						<TouchableOpacity onPress={this.getStoreLocations}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/reset-refresh-location-icon.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/reset-refresh-location-icon.png')}
 								style={styles.icon} />
 						</TouchableOpacity>
 						<ScrollView
@@ -142,8 +141,8 @@ var ProductAndLocationView = React.createClass({
 				          style={styles.autocompleteInput}
 					  />
 					  <TouchableOpacity>
-							<Image 
-								source={require('../../../partials/icons/common/img/location-icon.png')} 
+							<Image
+								source={require('../../../partials/icons/common/img/location-icon.png')}
 								style={styles.icon} />
 					  </TouchableOpacity>
 				</View>
@@ -156,7 +155,7 @@ var ProductAndLocationView = React.createClass({
 					  automaticallyAdjustContentInsets={false}
 		              showsVerticalScrollIndicator={false}
 		              directionalLockEnabled={true}>
-						{this._categories && this._categories.map((category, i) => 
+						{this._categories && this._categories.map((category, i) =>
 							<Category key={i} text={category}/>
 						)}
 					</ScrollView>
@@ -176,7 +175,7 @@ const border = {
 
 const styles = StyleSheet.create({
 	autocompleteContainer: {
-	},	
+	},
 	autocompleteInput: {
 		bottom: height/75,
 	},
@@ -199,12 +198,12 @@ const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
-		alignItems: 'center', 
-		height, 
+		alignItems: 'center',
+		height,
 		width,
 	},
 	icon: {
-		width: iconSize, 
+		width: iconSize,
 		height: iconSize,
 		resizeMode: Image.resizeMode.contain,
 		margin: width / 70

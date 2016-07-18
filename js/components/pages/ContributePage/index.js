@@ -8,16 +8,16 @@
 
 'use strict'; /* enables JS strict mode for any ES5 code */
 
-/* 
- * import modules 
+/*
+ * import modules
  */
 
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import {
   Dimensions,
   Image,
   StyleSheet,
-  Text, 
+  Text,
   TextInput,
   TouchableOpacity,
   View
@@ -36,20 +36,38 @@ var NUMBER_OF_SWIPER_VIEWS = 3;
 var SWIPER_REF = 'ContributePageSwiper'
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
-/* 
- * defines the ContributePage class 
+/*
+ * defines the ContributePage class
  */
 
 var ContributePage = React.createClass({
-    /* 
+    /*
      * getInitialState(): returns object with initialized component state variables
      */
 
     getInitialState() {
         return {
           currentSwiperPageIndex: 0,
-          showNextButton: false
+          showNextButton: false,
+          imageViewData: "",
+          productAndLocationViewData: "",
+          finalizeAndContributeViewData: ""
         }
+    },
+
+    updateUploadData(type, data) {
+
+      switch (type) {
+        case "imageView":
+          this.setState({ imageViewData :  data });
+          break;
+        case "finalizeAndContributeView":
+          this.setState({ finalizeAndContributeViewData :  data });
+          break;
+        default:
+          break;
+      }
+
     },
 
    /*
@@ -58,7 +76,7 @@ var ContributePage = React.createClass({
     */
 
     handleShowNextButton(showNextButton, buttonText=null, func=null) {
-      this.setState({showNextButton: !!showNextButton}); 
+      this.setState({showNextButton: !!showNextButton});
       if(buttonText) this.setState({buttonText});
       if(func) this.setState({onPressButton: func});
     },
@@ -77,20 +95,22 @@ var ContributePage = React.createClass({
        );
    },
 
-    /* 
-     * render(): returns JSX that declaratively specifies page UI 
+    /*
+     * render(): returns JSX that declaratively specifies page UI
      */
 
 	render() {
 
-    const nextButton = 
-    <TouchableOpacity 
+    console.log(this.state);
+
+    const nextButton =
+    <TouchableOpacity
       onPress={() => {
         // check current index or page number in swiper
         if (this.state.currentSwiperPageIndex < NUMBER_OF_SWIPER_VIEWS-1) {
           this.refs[SWIPER_REF].scrollBy(1);
           this.setState({
-            currentSwiperPageIndex: this.state.currentSwiperPageIndex+1, 
+            currentSwiperPageIndex: this.state.currentSwiperPageIndex+1,
             showNextButton: false
           });
         } else if (this.state.currentSwiperPageIndex === NUMBER_OF_SWIPER_VIEWS-1) {
@@ -117,7 +137,9 @@ var ContributePage = React.createClass({
               paginationStyle={{top: -(height/1.02)}}
               loop={false}>
               <View style={styles.slide}>
-                <AddImageView handleShowNextButton={this.handleShowNextButton} />
+                <AddImageView
+                  updateImageViewData={this.updateImageViewData}
+                  handleShowNextButton={this.handleShowNextButton} />
               </View>
               <View style={styles.slide}>
                 <ProductAndLocationView handleShowNextButton={this.handleShowNextButton}/>
@@ -214,6 +236,3 @@ const styles = StyleSheet.create({
 });
 
 module.exports = ContributePage;
-
-
-

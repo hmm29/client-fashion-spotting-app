@@ -160,13 +160,13 @@ var CategoryFeed = React.createClass({
 const sideMargin = 20;
 
 
-// FIXME: put header and footer styles in seperate file
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+    },
     products: {
       flexDirection: 'column',
       justifyContent: 'flex-start',
-      paddingHorizontal: sideMargin
+      paddingHorizontal: sideMargin,
     },
     headerContainer: {
       backgroundColor: '#000',

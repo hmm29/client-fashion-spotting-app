@@ -6,13 +6,13 @@
  * @flow
  */
 
-import React, { Component } from 'react'; 
+import React, { PropTypes, Component } from 'react';
 import {
   Dimensions,
   Image,
   ScrollView,
   StyleSheet,
-  Text, 
+  Text,
   TextInput,
   TouchableOpacity,
   View
@@ -21,6 +21,11 @@ import {
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var FinalizeAndContributeView = React.createClass({
+
+  propTypes: {
+    updateUploadData: PropTypes.func.isRequired
+  },
+
 	getInitialState() {
 		return {
 			activeExcitingTags: ['Wow!'],
@@ -39,11 +44,15 @@ var FinalizeAndContributeView = React.createClass({
 			item: 'blouse',
 			store: 'Anthropologie',
 			location: 'Beverly Center, Los Angeles, CA'
-		}});
+		}}, function(){
+      this.props.updateUploadData("finalizeAndContributeView", this.state);
+    });
 	},
 
 	getExcitingTags() {
-		this.setState({excitingTags: ['New', 'Sale', 'Wow!', 'Unique']});
+		this.setState({excitingTags: ['New', 'Sale', 'Wow!', 'Unique']}, function(){
+      this.props.updateUploadData("finalizeAndContributeView", this.state);
+    });
 	},
 
 
@@ -60,7 +69,9 @@ var FinalizeAndContributeView = React.createClass({
 
 	    this.setState({
 	      activeExcitingTags: activeExcitingTagsArr
-	    });
+	    }, function(){
+        this.props.updateUploadData("finalizeAndContributeView", this.state);
+      });
 	},
 
 	render() {
@@ -119,40 +130,40 @@ var FinalizeAndContributeView = React.createClass({
 						<TouchableOpacity onPress={() => {
 
 						}}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/share-facebook.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/share-facebook.png')}
 								style={styles.shareIcon} />
 						</TouchableOpacity>
 						<View style={styles.shareIconPartition} />
 						<TouchableOpacity onPress={() => {
 
 						}}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/share-pinterest.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/share-pinterest.png')}
 								style={styles.shareIcon} />
 						</TouchableOpacity>
 						<View style={styles.shareIconPartition} />
 						<TouchableOpacity onPress={() => {
 
 						}}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/share-twitter.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/share-twitter.png')}
 								style={styles.shareIcon} />
 						</TouchableOpacity>
 						<View style={styles.shareIconPartition} />
 						<TouchableOpacity onPress={() => {
 
 						}}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/share-snapchat.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/share-snapchat.png')}
 								style={styles.shareIcon} />
 						</TouchableOpacity>
 						<View style={styles.shareIconPartition} />
 						<TouchableOpacity onPress={() => {
 
 						}}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/share-SMS.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/share-SMS.png')}
 								style={styles.shareIcon} />
 						</TouchableOpacity>
 				</View>
@@ -177,7 +188,7 @@ const styles = StyleSheet.create({
 	},
 	autocompleteContainer: {
 
-	},	
+	},
 	autocompleteInput: {
 		bottom: height/75,
 	},
@@ -200,21 +211,21 @@ const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
-		alignItems: 'center', 
-		height, 
+		alignItems: 'center',
+		height,
 		width,
 	},
 	contributeSummary: {
 		width: width/1.03,
-		backgroundColor: 'rgba(4,22,43,0.2)', 
+		backgroundColor: 'rgba(4,22,43,0.2)',
 		paddingHorizontal: height/20,
 		flexDirection: 'row',
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	},
 	contributeSummaryPhoto: {
-		width: photoSize, 
-		height: photoSize, 
+		width: photoSize,
+		height: photoSize,
 		resizeMode: Image.resizeMode.stretch
 	},
 	contributeSummaryText: {
@@ -238,7 +249,7 @@ const styles = StyleSheet.create({
 		fontWeight: 'bold'
 	},
 	icon: {
-		width: iconSize, 
+		width: iconSize,
 		height: iconSize,
 		resizeMode: Image.resizeMode.contain,
 		margin: width / 70
@@ -281,7 +292,7 @@ const styles = StyleSheet.create({
 		width: width/1.3
 	},
 	shareIcon: {
-		width: iconSize * 1.8, 
+		width: iconSize * 1.8,
 		height: iconSize * 1.8,
 		resizeMode: Image.resizeMode.contain,
 		margin: width/80,
