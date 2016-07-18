@@ -22,23 +22,6 @@ import Autocomplete from 'react-native-autocomplete-input';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
-var Category = React.createClass({
-	propTypes: {
-		text: React.PropTypes.string.isRequired
-	},
-
-	render() {
-		return (
-			<TouchableOpacity onPress={() => {}} style={styles.category} >
-				<Text style={styles.categoryText}>{this.props.text}</Text>
-				<Image
-					source={require('../../../partials/icons/contribute/img/next-step-icon.png')}
-					style={[styles.icon, styles.nextStepIcon]} />
-			</TouchableOpacity>
-		)
-	}
-});
-
 var ProductAndLocationView = React.createClass({
 	getInitialState() {
 		return {
@@ -87,7 +70,7 @@ var ProductAndLocationView = React.createClass({
 
 	render() {
 		const { query } = this.state;
-  		const data = this._filterData(query)
+  		const data = this._filterData(query);
 
 		return (
 			<View style={styles.container}>
@@ -157,7 +140,9 @@ var ProductAndLocationView = React.createClass({
 		              showsVerticalScrollIndicator={false}
 		              directionalLockEnabled={true}>
 						{this._categories && this._categories.map((category, i) => 
-							<Category key={i} text={category}/>
+							<TouchableOpacity key={i} onPress={() => this.setState({selectedCategory: category})} style={[styles.category, (this.state.selectedCategory === category ? {} : {borderColor: 'rgba(4,22,43,0.45)'})]} >
+								<Text style={[styles.categoryText, (this.state.selectedCategory === category ? {} : {opacity: 0.4})]}>{category}</Text>
+							</TouchableOpacity>
 						)}
 					</ScrollView>
 				</View>

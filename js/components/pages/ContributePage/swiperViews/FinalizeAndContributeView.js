@@ -135,7 +135,7 @@ var FinalizeAndContributeView = React.createClass({
 		                <TouchableOpacity key={i} onPress={() => {
 		                	this.handleToggleButtonState(excitingTag);
 		                	this.props.handleShowNextButton(true, 'Contribute', () => {
-		                		alert('hey');
+		                		alert('done');
 		                	});
 		                }} style={[styles.excitingTag, this.getButtonColor(excitingTag)]}><Text
 		                  style={styles.excitingTagText}>{excitingTag && excitingTag.toUpperCase()}</Text>
