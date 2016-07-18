@@ -24,10 +24,9 @@ import {
 } from 'react-native';
 
 import Firebase from 'firebase';
-
-import ContributePage from '../pages/contribute/ContributePage';
-import DiscoverPage from '../pages/discover/DiscoverPage';
-import PersonalPage from '../pages/personal/PersonalPage';
+import ContributePage from '../pages/ContributePage';
+import DiscoverPage from '../pages/DiscoverPage';
+import PersonalPage from '../pages/PersonalPage';
 import Tabs from 'react-native-tabs';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
@@ -190,7 +189,7 @@ var TabBarLayout = React.createClass({
       		<Tabs selected={this.state.selected} style={styles.footer}
 	          selectedStyle={{}} onSelect={(el) => {
               if(!el.props.component) return;
-              
+
               // push route for ContributePage
               if(el.props.component === 'contribute') this.props.navigator.push({
                 title: 'ContributePage',

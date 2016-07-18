@@ -28,6 +28,8 @@ import Header from '../../partials/Header';
 import Footer from '../../partials/Footer';
 import SearchBar from '../../partials/SearchBar';
 import Product from '../../partials/Product';
+import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
+
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -112,7 +114,7 @@ var CategoryFeed = React.createClass({
          <Header containerStyle={styles.headerContainer}>
            <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
            <View style={styles.pageTitle}>
-             <Image source={require('./img/eyespot-logo-negative.png')}
+             <Image source={EyespotNegativeLogo}
                              style={styles.pageTitleLogo} />
                            <Text style={styles.pageTitleText}>{this.props.categoryKey}</Text>
            </View>
@@ -138,10 +140,14 @@ var CategoryFeed = React.createClass({
                {...this.props}/>
            </View>
          </EyespotPageBase>
+         {/*
+
+           FIXME We need to make this footer work like Tab Layout Bar
+
          <View style={styles.fixedFooterSpacer} />
          <View style={styles.fixedFooterWrapper}>
            {this._renderFooter()}
-         </View>
+         </View>*/}
        </View>
      );
    }
