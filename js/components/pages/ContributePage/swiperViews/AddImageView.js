@@ -27,6 +27,10 @@ import Slider from 'react-native-slider';
 import { Surface } from 'gl-react-native';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+var INITIAL_BRIGHTNESS_VALUE = 1;
+var INITIAL_COLOR_TEMPERATURE_VALUE = 1;
+var INITIAL_CONTRAST_VALUE = 1;
+var INITIAL_SHARPEN_VALUE = 0;
 
 var AddImageView = React.createClass({
 	getInitialState() {
@@ -35,10 +39,10 @@ var AddImageView = React.createClass({
 			// continuously copying and updated a shared object with values
 
 			// initial input values for effects on uploaded photo
-			brightnessValue: 1,
-			colorTemperatureValue: 1,
-			contrastValue: 1,
-			sharpenValue: 0,
+			brightnessValue: INITIAL_BRIGHTNESS_VALUE,
+			colorTemperatureValue: INITIAL_COLOR_TEMPERATURE_VALUE,
+			contrastValue: INITIAL_CONTRAST_VALUE,
+			sharpenValue: INITIAL_SHARPEN_VALUE,
 			// store icon states together
 			// as only one icon will be active at a time
 			effectIconStates: {
@@ -53,10 +57,9 @@ var AddImageView = React.createClass({
 		handleShowNextButton: React.PropTypes.func.isRequired
 	},
 
-	getIconColor(state) {
-		if (!state) return [styles.icon, {opacity: 0.4}];
-		else if(state === 'active') return styles.icon;
-		else return {};
+	getIconStyle(expression) {
+		if (expression) return [styles.icon, {opacity: 0.4}];
+		else return styles.icon;
 	},
 
 	launchImageLibrary() {
@@ -279,38 +282,38 @@ var AddImageView = React.createClass({
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
 							// update effectIconStates object to reflect currently active effect
-							this.setState({currentContrastValue: this.state.contrastValue, effectIconStates: {contrastIconState: 'active'}})
+							if(this.state.imgSource) this.setState({currentContrastValue: this.state.contrastValue, effectIconStates: {contrastIconState: 'active'}})
 						}}>
 							<Image 
 								source={require('../../../partials/icons/contribute/img/contrast-effect-icon.png')} 
-								style={this.getIconColor(this.state.effectIconStates.contrastIconState)} />
+								style={this.getIconStyle(this.state.contrastValue === INITIAL_CONTRAST_VALUE)} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
 							// update effectIconStates object to reflect currently active effect
-							this.setState({currentBrightnessValue: this.state.brightnessValue, effectIconStates: {brightnessIconState: 'active'}})
+							if(this.state.imgSource) this.setState({currentBrightnessValue: this.state.brightnessValue, effectIconStates: {brightnessIconState: 'active'}})
 						}}>
 							<Image 
 								source={require('../../../partials/icons/contribute/img/brightness-effect-icon.png')} 
-								style={this.getIconColor(this.state.effectIconStates.brightnessIconState)} />
+								style={this.getIconStyle(this.state.brightnessValue === INITIAL_BRIGHTNESS_VALUE)} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
 							// update effectIconStates object to reflect currently active effect
-							this.setState({currentColorTemperatureValue: this.state.colorTemperatureValue, effectIconStates: {colorTemperatureIconState: 'active'}})
+							if(this.state.imgSource) this.setState({currentColorTemperatureValue: this.state.colorTemperatureValue, effectIconStates: {colorTemperatureIconState: 'active'}})
 						}}>
 							<Image 
 								source={require('../../../partials/icons/contribute/img/color-temperature-effect-icon.png')} 
-								style={this.getIconColor(this.state.effectIconStates.colorTemperatureIconState)} />
+								style={this.getIconStyle(this.state.colorTemperatureValue === INITIAL_COLOR_TEMPERATURE_VALUE)} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
 							// update effectIconStates object to reflect currently active effect
-							this.setState({currentSharpenValue: this.state.sharpenValue, effectIconStates: {sharpenIconState: 'active'}})
+							if(this.state.imgSource) this.setState({currentSharpenValue: this.state.sharpenValue, effectIconStates: {sharpenIconState: 'active'}})
 						}}>
 							<Image 
 								source={require('../../../partials/icons/contribute/img/sharpen-effect-icon.png')} 
-								style={this.getIconColor(this.state.effectIconStates.sharpenIconState)} />
+								style={this.getIconStyle(this.state.sharpenValue === INITIAL_SHARPEN_VALUE)} />
 						</TouchableOpacity>
 				</View>
   				
@@ -340,38 +343,6 @@ var AddImageView = React.createClass({
 		      	  <View style={styles.rightCameraIcon} />
 	          </View>
 	        </Camera>;
-
-        const effectIconsContainer = 
-        	<View style={styles.effectIconsContainer}>
-				<TouchableOpacity onPress={() => {
-					this.setState({effectIconStates: {contrastIconState: 'active'}})
-				}}>
-					<Image 
-						source={require('../../../partials/icons/contribute/img/contrast-effect-icon.png')} 
-						style={this.getIconColor(this.state.effectIconStates.contrastIconState)} />
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => {
-					this.setState({effectIconStates: {brightnessIconState: 'active'}})
-				}}>
-					<Image 
-						source={require('../../../partials/icons/contribute/img/brightness-effect-icon.png')} 
-						style={this.getIconColor(this.state.effectIconStates.brightnessIconState)} />
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => {
-					this.setState({effectIconStates: {colorTemperatureIconState: 'active'}})
-				}}>
-					<Image 
-						source={require('../../../partials/icons/contribute/img/color-temperature-effect-icon.png')} 
-						style={this.getIconColor(this.state.effectIconStates.colorTemperatureIconState)} />
-				</TouchableOpacity>
-				<TouchableOpacity onPress={() => {
-					this.setState({effectIconStates: {sharpenIconState: 'active'}})
-				}}>
-					<Image 
-						source={require('../../../partials/icons/contribute/img/sharpen-effect-icon.png')} 
-						style={this.getIconColor(this.state.effectIconStates.sharpenIconState)} />
-				</TouchableOpacity>
-			</View>
 
         const viewport = (this.state.imgSource ?
         	<View style={styles.cameraView}>
