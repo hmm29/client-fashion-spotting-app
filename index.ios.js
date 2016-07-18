@@ -18,8 +18,8 @@ import {
   View
 } from 'react-native';
 
-import LoginPage from './js/components/pages/login/LoginPage';
-import ContributePage from './js/components/pages/contribute/ContributePage';
+import LoginPage from './js/components/pages/LoginPage';
+import ContributePage from './js/components/pages/ContributePage';
 import TabBarLayout from './js/components/layouts/TabBarLayout';
 
 /*

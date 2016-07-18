@@ -1,12 +1,12 @@
 /**
- * LoginPage.js
- * Login for users with existing accounts
+ * SignUpPage.js
+ * Sign up for new users
  *
- * @providesModule LoginPage
+ * @providesModule SignUpPage
  * @flow
  */
 
-'use strict'; /* enables JS strict mode for any ES5 code */
+ 'use strict'; /* enables JS strict mode for any ES5 code */
 
 /*
  * imports required modules
@@ -16,29 +16,27 @@ import React from 'react';
 import {
   Dimensions,
   Image,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  StyleSheet
 } from 'react-native';
 
+import DiscoverPage from '../DiscoverPage';
+import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
-import FormValidator from 'validate.js';
+import Header from '../../partials/Header';
 import { LoginManager } from 'react-native-fbsdk';
-import SignUpPage from '../signup/SignUpPage';
-import TabBarLayout from '../../layouts/TabBarLayout';
-import DiscoverPage from '../discover/DiscoverPage';
-
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
- * defines the LoginPage class
+ * defines the SignUpPage class
  */
 
-var LoginPage = React.createClass({
+var SignUpPage = React.createClass({
 
     /*
      * getInitialState(): returns object with initialized component state variables
@@ -46,8 +44,10 @@ var LoginPage = React.createClass({
 
     getInitialState() {
         return {
-            passwordText: '',
-            usernameText: ''
+            emailAddressText: '',
+            nameText: '',
+            nicknameText: '',
+            passwordText: ''
         };
     },
 
@@ -56,6 +56,19 @@ var LoginPage = React.createClass({
      */
 
     propTypes: {},
+
+    /*
+     * _renderHeader(): renders the imported header component
+     */
+
+    _renderHeader() {
+        return (
+            <Header containerStyle={styles.headerContainer}>
+                <BackIcon color='black' onPress={() => this.props.navigator.pop()} />
+                <View />
+            </Header>
+        );
+    },
 
     /*
      * render(): returns JSX that declaratively specifies page UI
@@ -67,20 +80,43 @@ var LoginPage = React.createClass({
                 keyboardShouldPersistTaps={false}
                 noScroll={true}>
                 <View style={styles.container}>
+                    {this._renderHeader()}
                     <View style={styles.section}>
                           <Image source={require('../../partials/img/eyespot-logo.png')}
                                 style={styles.logoImg} />
                     </View>
                     <View style={styles.section}>
+                         <TextInput
+                            autocapitalize="none"
+                            autocorrect={false}
+                            onChangeText={(nameText) => this.setState({nameText})}
+                            maxLength={25}
+                            placeholder="NAME"
+                            placeholderTextColor="#777"
+                            secureTextEntry={true}
+                            style={[styles.input, styles.name]}
+                            value={this.state.nameText} />
+                            <View style={styles.underline} />
                         <TextInput
                             autocapitalize="none"
                             autocorrect={false}
-                            onChangeText={(usernameText) => this.setState({usernameText})}
-                            maxLength={30}
-                            placeholder="USER NAME"
+                            onChangeText={(nicknameText) => this.setState({nicknameText})}
+                            maxLength={25}
+                            placeholder="NICKNAME"
                             placeholderTextColor="#777"
-                            style={[styles.input, styles.username]}
-                            value={this.state.usernameText} />
+                            secureTextEntry={true}
+                            style={[styles.input, styles.nickname]}
+                            value={this.state.nicknameText} />
+                            <View style={styles.underline} />
+                        <TextInput
+                            autocapitalize="none"
+                            autocorrect={false}
+                            onChangeText={(emailAddressText) => this.setState({emailAddressText})}
+                            maxLength={30}
+                            placeholder="EMAIL ADDRESS"
+                            placeholderTextColor="#999"
+                            style={[styles.input, styles.emailAddress]}
+                            value={this.state.emailAddressText} />
                             <View style={styles.underline} />
                         <TextInput
                             autocapitalize="none"
@@ -88,26 +124,17 @@ var LoginPage = React.createClass({
                             onChangeText={(passwordText) => this.setState({passwordText})}
                             maxLength={16}
                             placeholder="PASSWORD"
-                            placeholderTextColor="#777"
+                            placeholderTextColor="#999"
                             secureTextEntry={true}
                             style={[styles.input, styles.password]}
                             value={this.state.passwordText} />
                             <View style={styles.underline} />
                     </View>
                     <View style={styles.section}>
-                           <TouchableOpacity onPress={() => {
-
-                            /*
-                             * TODO: remove this temp shortcut to Discover page
-                             */
-                            this.props.navigator.replace({
-                                    title: 'TabBarLayout',
-                                    component: TabBarLayout,
-                                    passProps: {}
-                            });
+                        <TouchableOpacity onPress={() => {
                           }}>
                             <Image
-                              source={require('../../partials/img/login-with-email.png')}
+                              source={require('../../partials/img/sign-up.png')}
                               style={[styles.emailLogin, styles.buttons]} />
                           </TouchableOpacity>
 
@@ -137,29 +164,6 @@ var LoginPage = React.createClass({
                                 style={[styles.facebookLogin, styles.buttons]} />
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.section}>
-                        <Button
-                            style={styles.loginOption}
-                            textStyle={styles.loginOptionText}
-                            onPress={() => {
-                                this.props.navigator.push({
-                                    title: 'SignUpPage',
-                                    component: SignUpPage,
-                                    passProps: {}
-
-                                });
-                            }} >
-                            New User? Sign Up Now!
-                        </Button>
-                        <Button
-                            style={[styles.loginOption, {bottom: 20}]}
-                            textStyle={styles.loginOptionText}
-                            onPress={() => {
-
-                            }}>
-                            Forgot Password?
-                        </Button>
-                    </View>
                 </View>
             </EyespotPageBase>
         );
@@ -168,6 +172,8 @@ var LoginPage = React.createClass({
 
 /*
  * CSS stylings
+ * These stylings are accessed in the styles object
+ * e.g. styles.buttons, styles.container
  */
 
 const styles = StyleSheet.create({
@@ -179,14 +185,21 @@ const styles = StyleSheet.create({
         resizeMode: Image.resizeMode.contain
     },
     container: {
-        marginTop: height / 15,
+        flex: 1,
         flexDirection: 'column',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignItems: 'center',
+        bottom: height / 20
     },
+    emailLogin: {},
+    emailLoginText: {},
+    facebookLogin: {borderColor: 'rgb(59,89,152)' },
+    facebookLoginText: {color: 'rgba(59,89,152,0.8)'},
+    headerContainer: {marginBottom: 10, top: height/24},
     input: {
         alignSelf: 'center',
         marginTop: height / 40,
-        marginBottom: height / 120,
+        marginBottom: height / 240,
         textAlign: 'center',
         height: height / 40,
         width: width / 1.4,
@@ -199,27 +212,22 @@ const styles = StyleSheet.create({
         height: height / 8,
         resizeMode: Image.resizeMode.contain
     },
-    loginOption: {borderWidth: 0 },
-    loginOptionText: {
-        color: '#777',
-        textDecorationLine: 'underline',
-        fontSize: height / 40,
-        fontFamily: 'Avenir-Book'
-    },
-    password: {},
     section: {marginVertical: height / 40},
     underline: {
         alignSelf: 'center',
-        borderColor: '#aaa',
+        borderColor: '#777',
         borderWidth: 1,
         marginBottom: height / 40,
         width: width
     },
-    username: {}
+    username: {
+        height: height / 40,
+        width: width / 1.4
+    }
 });
 
 /*
  * exports this component as a module so it can be imported into other modules
  */
 
-module.exports = LoginPage;
+module.exports = SignUpPage;
