@@ -24,7 +24,8 @@ var FinalizeAndContributeView = React.createClass({
 	getInitialState() {
 		return {
 			activeExcitingTags: ['Wow!'],
-			excitingTags: []
+			excitingTags: [],
+			input: 'I literally fell in love with this orangy shirt. Anthropologie made my day today!'
 		}
 	},
 
@@ -85,8 +86,8 @@ var FinalizeAndContributeView = React.createClass({
 			        multiline = {true}
 			        editable = {true}
 			        maxLength = {40}
-			        placeholder='I literally fell in love with this orangy shirt. Anthropologie made my day today!'
-			        placeholderTextColor='#000'
+			        onChangeText={(input) => this.setState({input})}
+        			value={this.state.input}
 			        style={styles.multilineTextInput}
 			      />
 				</View>

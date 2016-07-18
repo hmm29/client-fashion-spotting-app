@@ -114,7 +114,7 @@ var CategoryFeed = React.createClass({
            <View style={styles.pageTitle}>
              <Image source={require('./img/eyespot-logo-negative.png')}
                              style={styles.pageTitleLogo} />
-                           <Text style={styles.pageTitleText}>Shoes</Text>
+                           <Text style={styles.pageTitleText}>{this.props.categoryKey}</Text>
            </View>
            <View />
          </Header>

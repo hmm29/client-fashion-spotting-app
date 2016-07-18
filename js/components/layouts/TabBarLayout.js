@@ -123,9 +123,12 @@ var TabBarLayout = React.createClass({
 	      return <PersonalPage navigator={this.props.navigator} />;
 	    }
 
-	    else if (title === 'contribute') {
-	    	return <ContributePage navigator={this.props.navigator} />;
-	    }
+      // make Contribute page push onto route stack, instead of appear in tab layout
+      // or else footer blocks the next button
+
+	    // else if (title === 'contribute') {
+	    // 	return <ContributePage navigator={this.props.navigator} />;
+	    // }
 
 	    else {
 	     	return <View />;
@@ -186,7 +189,14 @@ var TabBarLayout = React.createClass({
 	        {this._renderContent()}
       		<Tabs selected={this.state.selected} style={styles.footer}
 	          selectedStyle={{}} onSelect={(el) => {
-	          	el.props.component && this.setState({selected: el.props.component});
+              if(!el.props.component) return;
+              
+              // push route for ContributePage
+              if(el.props.component === 'contribute') this.props.navigator.push({
+                title: 'ContributePage',
+                component: ContributePage
+              })
+	          	else this.setState({selected: el.props.component});
 	          }}
 	          pressOpacity={1}>
   		      {LeftIcon}

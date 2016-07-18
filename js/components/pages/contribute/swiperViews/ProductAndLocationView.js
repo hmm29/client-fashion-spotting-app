@@ -108,6 +108,7 @@ var ProductAndLocationView = React.createClass({
 				              directionalLockEnabled={true}>
 							{this.state.storeTags && this.state.storeTags.map((storeTag, i) => (
 				                <TouchableOpacity key={i} onPress={() => {
+				                	this.setState({query: storeTag});
 				                	this.props.handleShowNextButton(true);
 				                }} style={styles.storeTag}><Text
 				                  style={styles.storeTagText}>{storeTag && storeTag.toUpperCase()}</Text></TouchableOpacity>
