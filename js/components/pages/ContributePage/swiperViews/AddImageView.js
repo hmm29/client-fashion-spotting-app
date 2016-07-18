@@ -287,7 +287,7 @@ var AddImageView = React.createClass({
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
 							// update effectIconStates object to reflect currently active effect
-							if(this.state.imgSource) this.setState({currentContrastValue: this.state.contrastValue, effectIconStates: {contrastIconState: 'active'}})
+							this.setState({currentContrastValue: this.state.contrastValue, effectIconStates: {contrastIconState: 'active'}})
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/contrast-effect-icon.png')}
@@ -296,7 +296,7 @@ var AddImageView = React.createClass({
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
 							// update effectIconStates object to reflect currently active effect
-							if(this.state.imgSource) this.setState({currentBrightnessValue: this.state.brightnessValue, effectIconStates: {brightnessIconState: 'active'}})
+							this.setState({currentBrightnessValue: this.state.brightnessValue, effectIconStates: {brightnessIconState: 'active'}})
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/brightness-effect-icon.png')}
@@ -305,7 +305,7 @@ var AddImageView = React.createClass({
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
 							// update effectIconStates object to reflect currently active effect
-							if(this.state.imgSource) this.setState({currentColorTemperatureValue: this.state.colorTemperatureValue, effectIconStates: {colorTemperatureIconState: 'active'}})
+							this.setState({currentColorTemperatureValue: this.state.colorTemperatureValue, effectIconStates: {colorTemperatureIconState: 'active'}})
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/color-temperature-effect-icon.png')}
@@ -314,7 +314,7 @@ var AddImageView = React.createClass({
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
 							// update effectIconStates object to reflect currently active effect
-							if(this.state.imgSource) this.setState({currentSharpenValue: this.state.sharpenValue, effectIconStates: {sharpenIconState: 'active'}})
+							this.setState({currentSharpenValue: this.state.sharpenValue, effectIconStates: {sharpenIconState: 'active'}})
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/sharpen-effect-icon.png')}

@@ -10,6 +10,7 @@ import React, { PropTypes, Component } from 'react';
 import {
   Dimensions,
   Image,
+  NativeModules,
   ScrollView,
   StyleSheet,
   Text,
@@ -18,6 +19,7 @@ import {
   View
 } from 'react-native';
 
+var { KDSocialShare } = NativeModules;
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var FinalizeAndContributeView = React.createClass({
@@ -74,6 +76,35 @@ var FinalizeAndContributeView = React.createClass({
       });
 	},
 
+	onShare(appName) {
+		switch(appName) {
+			case 'facebook':
+				KDSocialShare.shareOnFacebook({
+			        'text':'Global democratized marketplace for art',
+			        'link':'https://artboost.com/',
+			        'imagelink':'https://artboost.com/apple-touch-icon-144x144.png',
+			        //or use image
+			        'image': 'artboost-icon',
+			      },
+			      (results) => {
+			        console.log(results);
+			      }
+			    );
+			case 'twitter':
+				KDSocialShare.tweet({
+			        'text':'Global democratized marketplace for art',
+			        'link':'https://artboost.com/',
+			        'imagelink':'https://artboost.com/apple-touch-icon-144x144.png',
+			        //or use image
+			        'image': 'artboost-icon',
+			      },
+			      (results) => {
+			        console.log(results);
+			      }
+			    );
+		}
+	},
+
 	render() {
 		const { item, store, location } = this.state.contributeSummary;
 
@@ -115,7 +146,7 @@ var FinalizeAndContributeView = React.createClass({
 		                <TouchableOpacity key={i} onPress={() => {
 		                	this.handleToggleButtonState(excitingTag);
 		                	this.props.handleShowNextButton(true, 'Contribute', () => {
-		                		alert('hey');
+		                		alert('done');
 		                	});
 		                }} style={[styles.excitingTag, this.getButtonColor(excitingTag)]}><Text
 		                  style={styles.excitingTagText}>{excitingTag && excitingTag.toUpperCase()}</Text>
@@ -128,7 +159,7 @@ var FinalizeAndContributeView = React.createClass({
 				<Text style={styles.sectionTitle}>SHARE ALSO ON:</Text>
 					<View style={styles.shareIconsContainer}>
 						<TouchableOpacity onPress={() => {
-
+							this.onShare('facebook');
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/share-facebook.png')}
@@ -136,7 +167,7 @@ var FinalizeAndContributeView = React.createClass({
 						</TouchableOpacity>
 						<View style={styles.shareIconPartition} />
 						<TouchableOpacity onPress={() => {
-
+							this.onShare('pinterest');
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/share-pinterest.png')}
@@ -144,7 +175,7 @@ var FinalizeAndContributeView = React.createClass({
 						</TouchableOpacity>
 						<View style={styles.shareIconPartition} />
 						<TouchableOpacity onPress={() => {
-
+							this.onShare('twitter');
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/share-twitter.png')}
@@ -152,7 +183,7 @@ var FinalizeAndContributeView = React.createClass({
 						</TouchableOpacity>
 						<View style={styles.shareIconPartition} />
 						<TouchableOpacity onPress={() => {
-
+							this.onShare('snapchat');
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/share-snapchat.png')}
@@ -160,7 +191,7 @@ var FinalizeAndContributeView = React.createClass({
 						</TouchableOpacity>
 						<View style={styles.shareIconPartition} />
 						<TouchableOpacity onPress={() => {
-
+							this.onShare('SMS')
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/share-SMS.png')}
