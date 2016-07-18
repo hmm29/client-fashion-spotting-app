@@ -27,7 +27,8 @@ import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import SearchBar from '../../partials/SearchBar';
-import Categories from './Categories';
+import Categories from './components/Categories';
+import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -86,7 +87,7 @@ var DiscoverPage = React.createClass({
             <Header containerStyle={styles.headerContainer}>
                 <View />
                 <View style={styles.pageTitle}>
-                  <Image source={require('./eyespot-logo-negative.png')}
+                  <Image source={EyespotNegativeLogo}
                                   style={styles.pageTitleLogo} />
                     <Text style={styles.pageTitleText}>Discover</Text>
                 </View>
@@ -131,7 +132,6 @@ const featuredPanelWidth = panelWidth * 2 + panelMargin * 2;
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        // flexWrap: 'wrap',
         padding: sideMargin,
         paddingTop: headerHeight
     },

@@ -29,6 +29,7 @@ import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import SearchBar from '../../partials/SearchBar';
 import Product from '../../partials/Product';
+import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -61,8 +62,8 @@ var ProfileContainer = React.createClass({
     return (
       <View>
         <Image
-          source={require('./img/profilePicture.jpg')}
-          style={styles.profileImage} />
+          source={require('./profilePicture.jpg')}
+          style={styles.profilePicture} />
       </View>
     );
   }
@@ -125,7 +126,7 @@ var PersonalPage = React.createClass({
            <Header containerStyle={styles.headerContainer}>
                <View />
                <View style={styles.pageTitle}>
-                 <Image source={require('./img/eyespot-logo-negative.png')}
+                 <Image source={EyespotNegativeLogo}
                                  style={styles.pageTitleLogo} />
                </View>
                <View />

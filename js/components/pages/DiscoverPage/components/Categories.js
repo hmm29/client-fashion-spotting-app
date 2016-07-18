@@ -23,7 +23,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import CategoryFeed from '../categoryFeed/CategoryFeed';
+import CategoryFeed from '../../ProductFeed';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -83,7 +83,7 @@ var Panel = React.createClass({
           }
         })}
         >
-        <Image source={require('./test.jpg')} style={styles.panelImage}/>
+        <Image source={require('../test.jpg')} style={styles.panelImage}/>
         <View style={styles.textContainer}>
           <Text style={styles.panelText}>{category.name}</Text>
         </View>
