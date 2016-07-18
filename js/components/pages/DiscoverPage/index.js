@@ -33,7 +33,7 @@ import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
- * defines the Categories class
+ * defines the Featured class
  * this code is for the two-column category component
  */
 

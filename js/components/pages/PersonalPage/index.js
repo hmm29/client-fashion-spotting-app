@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
    italic: {fontStyle: 'italic'},
    bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book'},
    username: {fontSize: 30 },
-   profileImage: {
+   profilePicture: {
      width,
      height: height / 3,
      resizeMode: 'cover'
