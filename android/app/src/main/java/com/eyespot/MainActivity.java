@@ -5,7 +5,6 @@ import com.projectseptember.RNGL.RNGLPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import cl.json.RNSharePackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.imagepicker.ImagePickerPackage;
@@ -51,7 +50,6 @@ public class MainActivity extends ReactActivity {
             new RCTCameraPackage(),
             new BlurViewPackage(),
             new VectorIconsPackage(),
-            new RNSharePackage(),
             new MapsPackage(),
             new LinearGradientPackage(),
             new ImagePickerPackage(),

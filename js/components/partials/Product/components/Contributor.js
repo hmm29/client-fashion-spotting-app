@@ -24,6 +24,7 @@ import {
 } from 'react-native';
 
 import Button from 'apsl-react-native-button';
+import BlankProfile from '../../img/profile.png';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -37,6 +38,7 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var Contributor = React.createClass({
 
+
   propTypes: {
     navigator: PropTypes.object,
     user: PropTypes.object
@@ -46,6 +48,19 @@ var Contributor = React.createClass({
   render() {
 
     const { user } = this.props;
+    let username;
+
+    if(user){
+      username = user.username.toUpperCase();
+    }
+    else {
+      username = 'user';
+    }
+
+    var ProfileImage = ( user && user.profilePicture)
+      ? <Image source={{uri: user.profilePicture}} style={styles.profile}/>
+    : <Image source={require('../../img/profile.png')}
+      style={styles.emptyProfile}/>
 
     return (
       <View style={styles.container}>
@@ -55,7 +70,7 @@ var Contributor = React.createClass({
           // because the UserProducts component rendered in the personal page
           // has this Contributor component in it
 
-          const PersonalPage = require('../../../pages/personal/PersonalPage');
+          const PersonalPage = require('../../../pages/PersonalPage');
 
           if (this.props.navigator) { // ensure navigator has been passed as prop
             this.props.navigator.push({
@@ -64,10 +79,10 @@ var Contributor = React.createClass({
               });
           }
         }} style={styles.profileContainer}>
-          <Image source={{uri: user.profilePicture}} style={styles.profile}/>
+          {ProfileImage}
         </TouchableOpacity>
         <Text style={[styles.bodoni, {fontStyle: 'italic'}]}>spotted by</Text>
-        <Text style={[styles.name, styles.bodoni]}>{user.username.toUpperCase()}</Text>
+        <Text style={[styles.name, styles.bodoni]}>{username}</Text>
       </View>
     );
   }
@@ -112,6 +127,13 @@ const styles = StyleSheet.create({
    height: innerProfileDiameter,
    resizeMode: 'cover',
    borderRadius: innerProfileRadius
+ },
+ emptyProfile: {
+   width: innerProfileDiameter,
+   height: innerProfileDiameter,
+   resizeMode: 'contain',
+   borderRadius: innerProfileRadius,
+   backgroundColor: 'black'
  },
  bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book' },
  name: {

@@ -105,7 +105,7 @@ var Navs = React.createClass({
 var SearchBar = React.createClass({
 
   propTypes: {
-    filters: PropTypes.object,
+    filters: PropTypes.array,
   },
 
 

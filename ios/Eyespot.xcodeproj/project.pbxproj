@@ -31,6 +31,8 @@
 		4238D25D1D2D89D700CB94BE /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4238D25A1D2D89D700CB94BE /* FBSDKLoginKit.framework */; };
 		4238D25E1D2D89D700CB94BE /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4238D25B1D2D89D700CB94BE /* FBSDKShareKit.framework */; };
 		4238D2601D2D8F7900CB94BE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4238D25F1D2D8F7900CB94BE /* Bolts.framework */; };
+		425F7B961D3C779C007002E1 /* KDSocialShare.m in Sources */ = {isa = PBXBuildFile; fileRef = 425F7B951D3C779C007002E1 /* KDSocialShare.m */; };
+		425F7B981D3C77C7007002E1 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 425F7B971D3C77C7007002E1 /* Social.framework */; };
 		4263CD051D2F7F7C00E65EEF /* Avenir-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4263CCF61D2F7F7C00E65EEF /* Avenir-Black.ttf */; };
 		4263CD061D2F7F7C00E65EEF /* Avenir-BlackOblique.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4263CCF71D2F7F7C00E65EEF /* Avenir-BlackOblique.ttf */; };
 		4263CD071D2F7F7C00E65EEF /* Avenir-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4263CCF81D2F7F7C00E65EEF /* Avenir-Book.ttf */; };
@@ -48,6 +50,8 @@
 		4263CD131D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-BookIta.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4263CD041D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-BookIta.ttf */; };
 		479A7554302A4FAABD5C3BAD /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C9587EFE2CB408B9B122137 /* Octicons.ttf */; };
 		48C2C0BD626A4BC9AF53ACE7 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C258D0298C44AE91454EEC /* libCodePush.a */; };
+		6817E59C1D3D92C90065D18A /* FileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 6817E59B1D3D92C90065D18A /* FileUpload.m */; };
+		6817E5A31D3DC4CE0065D18A /* libRNUploader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6817E5A21D3DC4870065D18A /* libRNUploader.a */; };
 		68FACDC028274E4288936663 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EFA676D3E4364DF08181EEDD /* Ionicons.ttf */; };
 		6DE146426B344DD3890FBAE3 /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EF44CB5817B544C6A3C2ED49 /* libRNImagePicker.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -133,6 +137,20 @@
 			remoteGlobalIDString = 9350E0F11CE3B0920041D815;
 			remoteInfo = RCTFBSDK;
 		};
+		425F7B8C1D3C755C007002E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02FB84E9FB7D40809FFEB03E /* ReactNativeSocialShare.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 13B07F961A680F5B00A75B9A;
+			remoteInfo = ReactNativeSocialShare;
+		};
+		425F7B8E1D3C755C007002E1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02FB84E9FB7D40809FFEB03E /* ReactNativeSocialShare.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 00E356EE1AD99517003FC87E;
+			remoteInfo = ReactNativeSocialShareTests;
+		};
 		429623E01D29C19C0017903F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 4214318D52164433AF7ABF58 /* AirMaps.xcodeproj */;
@@ -189,6 +207,13 @@
 			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
 			remoteInfo = RNGL;
 		};
+		6817E5A11D3DC4870065D18A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6817E59D1D3DC4870065D18A /* RNUploader.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNUploader;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -217,6 +242,7 @@
 		00E356F21AD99517003FC87E /* EyespotTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EyespotTests.m; sourceTree = "<group>"; };
 		010A1B2E9B614ABAA3222504 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		01C814E6FC5A469B88E0A3FF /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
+		02FB84E9FB7D40809FFEB03E /* ReactNativeSocialShare.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeSocialShare.xcodeproj; path = "../node_modules/react-native-social-share/ReactNativeSocialShare.xcodeproj"; sourceTree = "<group>"; };
 		04C9C5A141EB4DF191FD425F /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/iOS/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
@@ -236,6 +262,9 @@
 		4238D25A1D2D89D700CB94BE /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		4238D25B1D2D89D700CB94BE /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		4238D25F1D2D8F7900CB94BE /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		425F7B941D3C779C007002E1 /* KDSocialShare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDSocialShare.h; sourceTree = "<group>"; };
+		425F7B951D3C779C007002E1 /* KDSocialShare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDSocialShare.m; sourceTree = "<group>"; };
+		425F7B971D3C77C7007002E1 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4263CCF61D2F7F7C00E65EEF /* Avenir-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir-Black.ttf"; sourceTree = "<group>"; };
 		4263CCF71D2F7F7C00E65EEF /* Avenir-BlackOblique.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir-BlackOblique.ttf"; sourceTree = "<group>"; };
 		4263CCF81D2F7F7C00E65EEF /* Avenir-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Avenir-Book.ttf"; sourceTree = "<group>"; };
@@ -252,6 +281,8 @@
 		4263CD031D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BodoniSvtyTwoITCTT-Book.ttf"; sourceTree = "<group>"; };
 		4263CD041D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-BookIta.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BodoniSvtyTwoITCTT-BookIta.ttf"; sourceTree = "<group>"; };
 		5B976BC25A2841FEA131E736 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
+		6817E59B1D3D92C90065D18A /* FileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileUpload.m; path = "../node_modules/react-native-fileupload/FileUpload.m"; sourceTree = "<group>"; };
+		6817E59D1D3DC4870065D18A /* RNUploader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNUploader.xcodeproj; path = "../node_modules/react-native-uploader/RNUploader/RNUploader.xcodeproj"; sourceTree = "<group>"; };
 		7525C36095D149568C0BC5C0 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7ADC7AE722EC4766B41953B1 /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
@@ -288,6 +319,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6817E5A31D3DC4CE0065D18A /* libRNUploader.a in Frameworks */,
+				425F7B981D3C77C7007002E1 /* Social.framework in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				4238D25D1D2D89D700CB94BE /* FBSDKLoginKit.framework in Frameworks */,
@@ -416,6 +449,7 @@
 		3D5D77404F7048BB8603AD5E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				425F7B971D3C77C7007002E1 /* Social.framework */,
 				4238D25F1D2D8F7900CB94BE /* Bolts.framework */,
 				4238D2591D2D89D700CB94BE /* FBSDKCoreKit.framework */,
 				4238D25A1D2D89D700CB94BE /* FBSDKLoginKit.framework */,
@@ -429,6 +463,15 @@
 			isa = PBXGroup;
 			children = (
 				4238D24C1D2D884200CB94BE /* libRCTFBSDK.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		425F7B791D3C755C007002E1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				425F7B8D1D3C755C007002E1 /* ReactNativeSocialShare.app */,
+				425F7B8F1D3C755C007002E1 /* ReactNativeSocialShareTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -497,6 +540,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		6817E59E1D3DC4870065D18A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6817E5A21D3DC4870065D18A /* libRNUploader.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -508,6 +559,9 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				6817E59D1D3DC4870065D18A /* RNUploader.xcodeproj */,
+				425F7B941D3C779C007002E1 /* KDSocialShare.h */,
+				425F7B951D3C779C007002E1 /* KDSocialShare.m */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -527,6 +581,7 @@
 				04C9C5A141EB4DF191FD425F /* RCTFBSDK.xcodeproj */,
 				5B976BC25A2841FEA131E736 /* RCTCamera.xcodeproj */,
 				9ACF055112E148B087FECC76 /* RNGL.xcodeproj */,
+				02FB84E9FB7D40809FFEB03E /* ReactNativeSocialShare.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -542,6 +597,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6817E59B1D3D92C90065D18A /* FileUpload.m */,
 				4263CCF61D2F7F7C00E65EEF /* Avenir-Black.ttf */,
 				4263CCF71D2F7F7C00E65EEF /* Avenir-BlackOblique.ttf */,
 				4263CCF81D2F7F7C00E65EEF /* Avenir-Book.ttf */,
@@ -719,6 +775,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 425F7B791D3C755C007002E1 /* Products */;
+					ProjectRef = 02FB84E9FB7D40809FFEB03E /* ReactNativeSocialShare.xcodeproj */;
+				},
+				{
 					ProductGroup = 429623D11D29C19C0017903F /* Products */;
 					ProjectRef = 01C814E6FC5A469B88E0A3FF /* RNBlur.xcodeproj */;
 				},
@@ -729,6 +789,10 @@
 				{
 					ProductGroup = 429623DB1D29C19C0017903F /* Products */;
 					ProjectRef = B170CE8BE8A84E4096BE6552 /* RNImagePicker.xcodeproj */;
+				},
+				{
+					ProductGroup = 6817E59E1D3DC4870065D18A /* Products */;
+					ProjectRef = 6817E59D1D3DC4870065D18A /* RNUploader.xcodeproj */;
 				},
 				{
 					ProductGroup = 429623DD1D29C19C0017903F /* Products */;
@@ -807,6 +871,20 @@
 			remoteRef = 4238D24B1D2D884200CB94BE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		425F7B8D1D3C755C007002E1 /* ReactNativeSocialShare.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = ReactNativeSocialShare.app;
+			remoteRef = 425F7B8C1D3C755C007002E1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		425F7B8F1D3C755C007002E1 /* ReactNativeSocialShareTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ReactNativeSocialShareTests.xctest;
+			remoteRef = 425F7B8E1D3C755C007002E1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		429623E11D29C19C0017903F /* libAirMaps.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -861,6 +939,13 @@
 			fileType = archive.ar;
 			path = libRNGL.a;
 			remoteRef = 42A13A771D3B0D6100B9A1D0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		6817E5A21D3DC4870065D18A /* libRNUploader.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNUploader.a;
+			remoteRef = 6817E5A11D3DC4870065D18A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -951,7 +1036,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6817E59C1D3D92C90065D18A /* FileUpload.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				425F7B961D3C779C007002E1 /* KDSocialShare.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -993,18 +1080,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eyespot.app/Eyespot";
@@ -1021,18 +1096,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1062,6 +1125,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/gl-react-native/ios",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
 				);
 				INFOPLIST_FILE = Eyespot/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1095,6 +1159,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/gl-react-native/ios",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
 				);
 				INFOPLIST_FILE = Eyespot/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1158,6 +1223,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/gl-react-native/ios",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1211,6 +1277,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/gl-react-native/ios",
+					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
