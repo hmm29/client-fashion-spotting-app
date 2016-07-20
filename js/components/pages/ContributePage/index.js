@@ -31,6 +31,8 @@ import Footer from '../../partials/Footer';
 import Header from '../../partials/Header';
 import ProductAndLocationView from './swiperViews/ProductAndLocationView';
 import Swiper from 'react-native-swiper';
+import Firebase from 'firebase';
+import uploadNewProduct from './helpers/upload.js';
 
 var NUMBER_OF_SWIPER_VIEWS = 3;
 var SWIPER_REF = 'ContributePageSwiper'
@@ -49,9 +51,9 @@ var ContributePage = React.createClass({
         return {
           currentSwiperPageIndex: 0,
           showNextButton: false,
-          imageViewData: "",
-          productAndLocationViewData: "",
-          finalizeAndContributeViewData: ""
+          imageData: "",
+          productAndLocationData: "",
+          finalizeAndContributeData: ""
         }
     },
 
@@ -59,10 +61,14 @@ var ContributePage = React.createClass({
 
       switch (type) {
         case "imageView":
-          this.setState({ imageViewData :  data });
+          this.setState({ imageData :  data });
+          break;
+        case "productAndLocationView":
+          console.log(data);
+          this.setState({ productAndLocationData :  data });
           break;
         case "finalizeAndContributeView":
-          this.setState({ finalizeAndContributeViewData :  data });
+          this.setState({ finalizeAndContributeData :  data });
           break;
         default:
           break;
@@ -99,9 +105,34 @@ var ContributePage = React.createClass({
      * render(): returns JSX that declaratively specifies page UI
      */
 
+  upload(){
+
+    uploadNewProduct(
+      this.state.imageData,
+      this.state.productAndLocationData,
+      this.state.finalizeAndContributeData
+    );
+  },
+
 	render() {
 
-    console.log(this.state);
+    // console.log(this.state);
+
+    var confirmButton;
+
+    // FIXME: harrison you can change this to what how you wanted next button to work
+    if(this.state.currentSwiperPageIndex == 2){
+      confirmButton =
+        <TouchableOpacity
+          onPress={() => {
+            this.upload()
+          }}
+          style={[styles.footerContainer]}>
+            <View style={styles.footer}>
+            <Text style={styles.footerText}>{"CONTRIBUTE".toUpperCase()}</Text>
+            </View>
+        </TouchableOpacity>;
+    }
 
     const nextButton =
     <TouchableOpacity
@@ -138,14 +169,18 @@ var ContributePage = React.createClass({
               loop={false}>
               <View style={styles.slide}>
                 <AddImageView
-                  updateImageViewData={this.updateImageViewData}
+                  updateUploadData={this.updateUploadData}
                   handleShowNextButton={this.handleShowNextButton} />
               </View>
               <View style={styles.slide}>
-                <ProductAndLocationView handleShowNextButton={this.handleShowNextButton}/>
+                <ProductAndLocationView
+                  updateUploadData={this.updateUploadData}
+                  handleShowNextButton={this.handleShowNextButton}/>
               </View>
               <View style={styles.slide}>
-                <FinalizeAndContributeView handleShowNextButton={this.handleShowNextButton}/>
+                <FinalizeAndContributeView
+                  updateUploadData={this.updateUploadData}
+                  handleShowNextButton={this.handleShowNextButton}/>
               </View>
       </Swiper>
     )
@@ -163,6 +198,7 @@ var ContributePage = React.createClass({
          <View style={styles.fixedFooterSpacer} />
          <View style={styles.fixedFooterWrapper}>
             {this.state.showNextButton ? nextButton : null}
+            {confirmButton}
          </View>
        </View>
     );

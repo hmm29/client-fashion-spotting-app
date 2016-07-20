@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 
 import Autocomplete from 'react-native-autocomplete-input';
+import Categories from '../../../partials/categories';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -31,7 +32,7 @@ var ProductAndLocationView = React.createClass({
 		}
 	},
 
-	_categories: ['Top', 'Bottom', 'Accessory', 'Coverall', 'Shoe'],
+	_categories: Categories.categoryKeys, //replace with category names (men vs women?)
 
 	componentWillMount() {
 		this.getRecentStoreLocations();
@@ -68,6 +69,25 @@ var ProductAndLocationView = React.createClass({
 		})
 	},
 
+  updateParent(){
+    this.props.updateUploadData("productAndLocationView", {
+      category : this.state.selectedCategory,
+      store : this.state.query
+    });
+  },
+
+  selectedCategory(category){
+    this.setState({selectedCategory: category}, function(){
+      this.updateParent();
+    });
+  },
+  setStore(storeTag){
+    this.setState({query: storeTag}, function(){
+      this.updateParent();
+    });
+    this.props.handleShowNextButton(true);
+  },
+
 	render() {
 		const { query } = this.state;
 		const data = this._filterData(query);
@@ -91,8 +111,7 @@ var ProductAndLocationView = React.createClass({
 				              directionalLockEnabled={true}>
 							{this.state.storeTags && this.state.storeTags.map((storeTag, i) => (
 				                <TouchableOpacity key={i} onPress={() => {
-				                	this.setState({query: storeTag});
-				                	this.props.handleShowNextButton(true);
+                        this.setStore(storeTag);
 				                }} style={styles.storeTag}><Text
 				                  style={styles.storeTagText}>{storeTag && storeTag.toUpperCase()}</Text></TouchableOpacity>
 				              ))}
@@ -140,7 +159,7 @@ var ProductAndLocationView = React.createClass({
 		              showsVerticalScrollIndicator={false}
 		              directionalLockEnabled={true}>
 						{this._categories && this._categories.map((category, i) =>
-							<TouchableOpacity key={i} onPress={() => this.setState({selectedCategory: category})} style={[styles.category, (this.state.selectedCategory === category ? {} : {borderColor: 'rgba(4,22,43,0.45)'})]} >
+							<TouchableOpacity key={i} onPress={() => this.selectedCategory(category)} style={[styles.category, (this.state.selectedCategory === category ? {} : {borderColor: 'rgba(4,22,43,0.45)'})]} >
 								<Text style={[styles.categoryText, (this.state.selectedCategory === category ? {} : {opacity: 0.4})]}>{category}</Text>
 							</TouchableOpacity>
 						)}
