@@ -8,16 +8,16 @@
 
 'use strict'; /* enables JS strict mode for any ES5 code */
 
-/* 
- * import modules 
+/*
+ * import modules
  */
 
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import {
   Dimensions,
   Image,
   StyleSheet,
-  Text, 
+  Text,
   TextInput,
   TouchableOpacity,
   View
@@ -31,25 +31,49 @@ import Footer from '../../partials/Footer';
 import Header from '../../partials/Header';
 import ProductAndLocationView from './swiperViews/ProductAndLocationView';
 import Swiper from 'react-native-swiper';
+import Firebase from 'firebase';
+import uploadNewProduct from './helpers/upload.js';
 
 var NUMBER_OF_SWIPER_VIEWS = 3;
 var SWIPER_REF = 'ContributePageSwiper'
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
-/* 
- * defines the ContributePage class 
+/*
+ * defines the ContributePage class
  */
 
 var ContributePage = React.createClass({
-    /* 
+    /*
      * getInitialState(): returns object with initialized component state variables
      */
 
     getInitialState() {
         return {
           currentSwiperPageIndex: 0,
-          showNextButton: false
+          showNextButton: false,
+          imageData: "",
+          productAndLocationData: "",
+          finalizeAndContributeData: ""
         }
+    },
+
+    updateUploadData(type, data) {
+
+      switch (type) {
+        case "imageView":
+          this.setState({ imageData :  data });
+          break;
+        case "productAndLocationView":
+          console.log(data);
+          this.setState({ productAndLocationData :  data });
+          break;
+        case "finalizeAndContributeView":
+          this.setState({ finalizeAndContributeData :  data });
+          break;
+        default:
+          break;
+      }
+
     },
 
    /*
@@ -58,7 +82,7 @@ var ContributePage = React.createClass({
     */
 
     handleShowNextButton(showNextButton, buttonText=null, func=null) {
-      this.setState({showNextButton: !!showNextButton}); 
+      this.setState({showNextButton: !!showNextButton});
       if(buttonText) this.setState({buttonText});
       if(func) this.setState({onPressButton: func});
     },
@@ -77,20 +101,47 @@ var ContributePage = React.createClass({
        );
    },
 
-    /* 
-     * render(): returns JSX that declaratively specifies page UI 
+    /*
+     * render(): returns JSX that declaratively specifies page UI
      */
+
+  upload(){
+
+    uploadNewProduct(
+      this.state.imageData,
+      this.state.productAndLocationData,
+      this.state.finalizeAndContributeData
+    );
+  },
 
 	render() {
 
-    const nextButton = 
-    <TouchableOpacity 
+    // console.log(this.state);
+
+    var confirmButton;
+
+    // FIXME: harrison you can change this to what how you wanted next button to work
+    if(this.state.currentSwiperPageIndex == 2){
+      confirmButton =
+        <TouchableOpacity
+          onPress={() => {
+            this.upload()
+          }}
+          style={[styles.footerContainer]}>
+            <View style={styles.footer}>
+            <Text style={styles.footerText}>{"CONTRIBUTE".toUpperCase()}</Text>
+            </View>
+        </TouchableOpacity>;
+    }
+
+    const nextButton =
+    <TouchableOpacity
       onPress={() => {
         // check current index or page number in swiper
         if (this.state.currentSwiperPageIndex < NUMBER_OF_SWIPER_VIEWS-1) {
           this.refs[SWIPER_REF].scrollBy(1);
           this.setState({
-            currentSwiperPageIndex: this.state.currentSwiperPageIndex+1, 
+            currentSwiperPageIndex: this.state.currentSwiperPageIndex+1,
             showNextButton: false
           });
         } else if (this.state.currentSwiperPageIndex === NUMBER_OF_SWIPER_VIEWS-1) {
@@ -117,13 +168,19 @@ var ContributePage = React.createClass({
               paginationStyle={{top: -(height/1.02)}}
               loop={false}>
               <View style={styles.slide}>
-                <AddImageView handleShowNextButton={this.handleShowNextButton} />
+                <AddImageView
+                  updateUploadData={this.updateUploadData}
+                  handleShowNextButton={this.handleShowNextButton} />
               </View>
               <View style={styles.slide}>
-                <ProductAndLocationView handleShowNextButton={this.handleShowNextButton}/>
+                <ProductAndLocationView
+                  updateUploadData={this.updateUploadData}
+                  handleShowNextButton={this.handleShowNextButton}/>
               </View>
               <View style={styles.slide}>
-                <FinalizeAndContributeView handleShowNextButton={this.handleShowNextButton}/>
+                <FinalizeAndContributeView
+                  updateUploadData={this.updateUploadData}
+                  handleShowNextButton={this.handleShowNextButton}/>
               </View>
       </Swiper>
     )
@@ -141,6 +198,7 @@ var ContributePage = React.createClass({
          <View style={styles.fixedFooterSpacer} />
          <View style={styles.fixedFooterWrapper}>
             {this.state.showNextButton ? nextButton : null}
+            {confirmButton}
          </View>
        </View>
     );
@@ -214,6 +272,3 @@ const styles = StyleSheet.create({
 });
 
 module.exports = ContributePage;
-
-
-

@@ -6,19 +6,20 @@
  * @flow
  */
 
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import {
   Dimensions,
   Image,
   ScrollView,
   StyleSheet,
-  Text, 
+  Text,
   TextInput,
   TouchableOpacity,
   View
 } from 'react-native';
 
 import Autocomplete from 'react-native-autocomplete-input';
+import Categories from '../../../partials/categories';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -31,7 +32,7 @@ var ProductAndLocationView = React.createClass({
 		}
 	},
 
-	_categories: ['Top', 'Bottom', 'Accessory', 'Coverall', 'Shoe'],
+	_categories: Categories.categoryKeys, //replace with category names (men vs women?)
 
 	componentWillMount() {
 		this.getRecentStoreLocations();
@@ -68,9 +69,28 @@ var ProductAndLocationView = React.createClass({
 		})
 	},
 
+  updateParent(){
+    this.props.updateUploadData("productAndLocationView", {
+      category : this.state.selectedCategory,
+      store : this.state.query
+    });
+  },
+
+  selectedCategory(category){
+    this.setState({selectedCategory: category}, function(){
+      this.updateParent();
+    });
+  },
+  setStore(storeTag){
+    this.setState({query: storeTag}, function(){
+      this.updateParent();
+    });
+    this.props.handleShowNextButton(true);
+  },
+
 	render() {
 		const { query } = this.state;
-  		const data = this._filterData(query);
+		const data = this._filterData(query);
 
 		return (
 			<View style={styles.container}>
@@ -79,8 +99,8 @@ var ProductAndLocationView = React.createClass({
 					<Text style={styles.sectionTitle}>ARE YOU HERE?</Text>
 					<View style={styles.storeTagsBar}>
 						<TouchableOpacity onPress={this.getStoreLocations}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/reset-refresh-location-icon.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/reset-refresh-location-icon.png')}
 								style={styles.icon} />
 						</TouchableOpacity>
 						<ScrollView
@@ -91,8 +111,7 @@ var ProductAndLocationView = React.createClass({
 				              directionalLockEnabled={true}>
 							{this.state.storeTags && this.state.storeTags.map((storeTag, i) => (
 				                <TouchableOpacity key={i} onPress={() => {
-				                	this.setState({query: storeTag});
-				                	this.props.handleShowNextButton(true);
+                        this.setStore(storeTag);
 				                }} style={styles.storeTag}><Text
 				                  style={styles.storeTagText}>{storeTag && storeTag.toUpperCase()}</Text></TouchableOpacity>
 				              ))}
@@ -125,8 +144,8 @@ var ProductAndLocationView = React.createClass({
 				          style={styles.autocompleteInput}
 					  />
 					  <TouchableOpacity>
-							<Image 
-								source={require('../../../partials/icons/common/img/location-icon.png')} 
+							<Image
+								source={require('../../../partials/icons/common/img/location-icon.png')}
 								style={styles.icon} />
 					  </TouchableOpacity>
 				</View>
@@ -139,8 +158,8 @@ var ProductAndLocationView = React.createClass({
 					  automaticallyAdjustContentInsets={false}
 		              showsVerticalScrollIndicator={false}
 		              directionalLockEnabled={true}>
-						{this._categories && this._categories.map((category, i) => 
-							<TouchableOpacity key={i} onPress={() => this.setState({selectedCategory: category})} style={[styles.category, (this.state.selectedCategory === category ? {} : {borderColor: 'rgba(4,22,43,0.45)'})]} >
+						{this._categories && this._categories.map((category, i) =>
+							<TouchableOpacity key={i} onPress={() => this.selectedCategory(category)} style={[styles.category, (this.state.selectedCategory === category ? {} : {borderColor: 'rgba(4,22,43,0.45)'})]} >
 								<Text style={[styles.categoryText, (this.state.selectedCategory === category ? {} : {opacity: 0.4})]}>{category}</Text>
 							</TouchableOpacity>
 						)}
@@ -161,7 +180,7 @@ const border = {
 
 const styles = StyleSheet.create({
 	autocompleteContainer: {
-	},	
+	},
 	autocompleteInput: {
 		bottom: height/75,
 	},
@@ -184,12 +203,12 @@ const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
-		alignItems: 'center', 
-		height, 
+		alignItems: 'center',
+		height,
 		width,
 	},
 	icon: {
-		width: iconSize, 
+		width: iconSize,
 		height: iconSize,
 		resizeMode: Image.resizeMode.contain,
 		margin: width / 70

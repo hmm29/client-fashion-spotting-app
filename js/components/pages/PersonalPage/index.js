@@ -13,7 +13,7 @@
 * imports required modules
 */
 
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import {
  Dimensions,
  Image,
@@ -62,7 +62,7 @@ var ProfileContainer = React.createClass({
     return (
       <View>
         <Image
-          source={require('./profilePicture.jpg')}
+          source={{ uri : user.profilePicture }}
           style={styles.profilePicture} />
       </View>
     );
@@ -74,11 +74,20 @@ var ProfileContainer = React.createClass({
 var UserProducts = React.createClass({
 
   render() {
-    const { user } = this.props;
+    const { user, dataStore } = this.props;
 
     return (
       <View>
-        {user.products.map((product, i) => {
+        {user.products.map((product_id, i) => {
+
+
+         /*
+          * return Product component for each product
+          */
+
+          const product = dataStore.products[product_id];
+
+
           return (
             <Product key={i} product={product}/>
           );
@@ -94,28 +103,16 @@ var UserProducts = React.createClass({
 * defines the PersonalPage class
 */
 
-const user = {
-  username: 'lovelycarrie',
-  products: [
-    {
-      'name': 'none',
-      'imgUrl': './test.jpg',
-      likes: 42,
-      store: 'Adidas',
-      location: 'Beverly Center',
-      comment: 'I\'ve found this pair of cute beauties at Adidas Beverly Center. It\'s super comfy and looks amazing!',
-      user: {username: 'lovelycarrie'}
-    }
-  ]
-};
-
 var PersonalPage = React.createClass({
 
    /*
     * specifies types for properties that this component receives
     */
 
-   propTypes: {},
+   propTypes: {
+     dataStore: PropTypes.object,
+     user: PropTypes.object
+   },
 
    /*
     * _renderHeader(): renders the imported header component
@@ -139,6 +136,13 @@ var PersonalPage = React.createClass({
     */
 
    render() {
+
+     const { user, dataStore } = this.props;
+
+     if(!user){
+       return null //FIXME add loading
+     }
+
      return (
        <View style={styles.layeredPageContainer}>
          {this._renderHeader()}
@@ -153,7 +157,7 @@ var PersonalPage = React.createClass({
                    <Text style={styles.italic}>My</Text> CONTRIBUTIONS
                  </Text>
               </View>
-               <UserProducts user={user}/>
+               <UserProducts user={user} dataStore={dataStore}/>
              </View>
          </EyespotPageBase>
        </View>

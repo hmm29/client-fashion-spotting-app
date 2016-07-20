@@ -75,9 +75,9 @@ var TabBarLayout = React.createClass({
     * retrieve data from firebase data store
     */
 
-    var categoriesRef = new Firebase("https://eyespot-658a5.firebaseio.com");
+    var ref = new Firebase("https://eyespot-658a5.firebaseio.com");
     var dataStore = {};
-    categoriesRef.on('value', (snap) => {
+    ref.on('value', (snap) => {
       snap.forEach((child) => {
         dataStore[child.key()] = child.val();
       });
@@ -93,6 +93,7 @@ var TabBarLayout = React.createClass({
         loaded: true
       })
     });
+
 
    },
 
@@ -119,7 +120,13 @@ var TabBarLayout = React.createClass({
 	    }
 
 	    else if (title === 'personal') {
-	      return <PersonalPage navigator={this.props.navigator} />;
+        const user = this.state.users['user_1'] // HACK: replace with Firebase signin
+	      return (
+          <PersonalPage
+            dataStore={this.state.dataStore}
+            user={user}
+            navigator={this.props.navigator} />
+        )
 	    }
 
       // make Contribute page push onto route stack, instead of appear in tab layout

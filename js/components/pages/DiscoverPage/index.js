@@ -27,7 +27,7 @@ import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import SearchBar from '../../partials/SearchBar';
-import Categories from './components/Categories';
+import CategoryView from './components/CategoryView';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
@@ -45,21 +45,21 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
    render() {
 
+     /* }
+     <TouchableOpacity style={styles.featuredApplyBox}>
+        <View style={styles.textContainer}>
+          <Text style={styles.featuredPanelText}>apply to be a featured contributor</Text>
+        </View>
+     </TouchableOpacity>
+     */
 
      return (
        <View>
          <View style={styles.featuredPanel}>
-           <Image source={require('./test.jpg')} style={styles.featuredPanelImage}/>
+           <Image source={require('../../partials/img/test.jpg')} style={styles.featuredPanelImage}/>
            <View style={styles.textContainer}>
              <Text style={styles.panelText}>FEATURED CONTRIBUTOR</Text>
            </View>
-           {/* }
-           <TouchableOpacity style={styles.featuredApplyBox}>
-              <View style={styles.textContainer}>
-                <Text style={styles.featuredPanelText}>apply to be a featured contributor</Text>
-              </View>
-           </TouchableOpacity>
-           */}
          </View>
        </View>
      );
@@ -110,7 +110,7 @@ var DiscoverPage = React.createClass({
                 noScroll={false}>
                 <View style={styles.container}>
                   <Featured/>
-                  <Categories {...this.props} />
+                  <CategoryView {...this.props} />
                 </View>
             </EyespotPageBase>
             <SearchBar/>

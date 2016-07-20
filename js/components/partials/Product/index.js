@@ -59,7 +59,7 @@ var Product = React.createClass({
 
     return (
       <View style={styles.product}>
-        <Image source={{uri : product.img }} style={styles.productImage}/>
+        <Image source={{uri : product.image.url }} style={styles.productImage}/>
         <View style={styles.info}>
           <Contributor
             user={user}
