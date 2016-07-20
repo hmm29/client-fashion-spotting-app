@@ -148,14 +148,6 @@ var CategoryFeed = React.createClass({
                {...this.props}/>
            </View>
          </EyespotPageBase>
-         {/*
-
-           FIXME We need to make this footer work like Tab Layout Bar
-
-         <View style={styles.fixedFooterSpacer} />
-         <View style={styles.fixedFooterWrapper}>
-           {this._renderFooter()}
-         </View>*/}
        </View>
      );
    }
@@ -199,12 +191,6 @@ const styles = StyleSheet.create({
       fontSize: height / 40,
       fontFamily: 'BodoniSvtyTwoITCTT-Book'
     },
-    fixedFooterSpacer: {height: 60},
-    fixedFooterWrapper: {
-      position: 'absolute',
-      top: height * 1.27
-    }
-
 });
 
 /*

@@ -21,6 +21,7 @@ import {
 import LoginPage from './js/components/pages/LoginPage';
 import ContributePage from './js/components/pages/ContributePage';
 import TabBarLayout from './js/components/layouts/TabBarLayout';
+import MapPage from './js/components/pages/map/MapPage';
 
 /*
  * defines the Eyespot class

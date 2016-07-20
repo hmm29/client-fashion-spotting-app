@@ -102,6 +102,22 @@ var DiscoverPage = React.createClass({
 
     render() {
 
+      // FIXME:
+      const filters = [
+        {
+          'name' : 'Gender',
+          dropdown : ['female', 'male', 'all'],
+        },
+        {
+          'name' : 'Location',
+          dropdown: ['DC']
+        },
+        {
+          name: 'Store',
+          dropdown: ['a', 'b', 'c']
+        },
+      ]
+
         return (
           <View style={styles.layeredPageContainer}>
             {this._renderHeader()}
@@ -113,7 +129,7 @@ var DiscoverPage = React.createClass({
                   <CategoryView {...this.props} />
                 </View>
             </EyespotPageBase>
-            <SearchBar/>
+            <SearchBar filters={filters}/>
           </View>
         );
     }

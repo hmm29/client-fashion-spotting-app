@@ -17,7 +17,8 @@ import {
  Dimensions,
  StyleSheet,
  View,
- Text
+ Text,
+ Image
 } from 'react-native';
 
 var {width} = Dimensions.get('window'); /* gets screen dimensions */
@@ -28,6 +29,11 @@ var {width} = Dimensions.get('window'); /* gets screen dimensions */
 */
 
 var Location = React.createClass({
+
+  handlePress(){
+    console.log('here');
+  },
+
   render() {
 
     const { product } = this.props;
@@ -39,6 +45,10 @@ var Location = React.createClass({
       <View style={styles.container}>
         <Text><Text style={styles.italic}>at</Text> {store} /</Text>
         <Text> {location}</Text>
+        <Image
+          style={styles.location}
+          onPress={this.handlePress}
+          source={require('../img/location.png')}/>
       </View>
     );
   }
@@ -62,7 +72,13 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     transform: [{translateY: -20}]
   },
-  italic: {fontStyle: 'italic'}
+  italic: {fontStyle: 'italic'},
+  location: {
+    width: 15,
+    height:15,
+    resizeMode: 'contain',
+    marginLeft:10
+  }
 
 });
 

@@ -28,6 +28,14 @@ import BlankProfile from '../../img/profile.png';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
+
+
+/*
+* defines the Contributor class
+* this is the code for the contributor profile and name for each product
+*/
+
+
 var Contributor = React.createClass({
 
 
