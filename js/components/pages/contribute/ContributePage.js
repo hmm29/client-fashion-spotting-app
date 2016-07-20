@@ -24,6 +24,7 @@ import {
 } from 'react-native';
 
 import AddImageView from './swiperViews/AddImageView';
+import BackIcon from '../../partials/icons/navigation/BackIcon';
 import EyespotPageBase from '../EyespotPageBase';
 import FinalizeAndContributeView from './swiperViews/FinalizeAndContributeView';
 import Footer from '../../partials/Footer';
@@ -31,19 +32,9 @@ import Header from '../../partials/Header';
 import ProductAndLocationView from './swiperViews/ProductAndLocationView';
 import Swiper from 'react-native-swiper';
 
+var NUMBER_OF_SWIPER_VIEWS = 3;
+var SWIPER_REF = 'ContributePageSwiper'
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
-
-var BottomButton = React.createClass({
-     render() {
-     return (
-        <TouchableOpacity style={[styles.footerContainer]}>
-        <View style={styles.footer}>
-        <Text style={styles.footerText}>NEXT</Text>
-        </View>
-        </TouchableOpacity>
-     );
-   }
-})
 
 /* 
  * defines the ContributePage class 
@@ -56,8 +47,20 @@ var ContributePage = React.createClass({
 
     getInitialState() {
         return {
-
+          currentSwiperPageIndex: 0,
+          showNextButton: false
         }
+    },
+
+   /*
+    * handleShowNextButton(): shows the "NEXT" button depending on state in swiper views
+    * @param (Boolean) showNextButton: whether or not to show the "NEXT" button
+    */
+
+    handleShowNextButton(showNextButton, buttonText=null, func=null) {
+      this.setState({showNextButton: !!showNextButton}); 
+      if(buttonText) this.setState({buttonText});
+      if(func) this.setState({onPressButton: func});
     },
 
    /*
@@ -67,7 +70,7 @@ var ContributePage = React.createClass({
    _renderHeader() {
        return (
            <Header containerStyle={styles.headerContainer}>
-           	 <View />
+           	 <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
 	           <Text style={styles.pageTitleText}>CONTRIBUTE</Text>
              <View />
            </Header>
@@ -79,24 +82,50 @@ var ContributePage = React.createClass({
      */
 
 	render() {
+
+    const nextButton = 
+    <TouchableOpacity 
+      onPress={() => {
+        // check current index or page number in swiper
+        if (this.state.currentSwiperPageIndex < NUMBER_OF_SWIPER_VIEWS-1) {
+          this.refs[SWIPER_REF].scrollBy(1);
+          this.setState({
+            currentSwiperPageIndex: this.state.currentSwiperPageIndex+1, 
+            showNextButton: false
+          });
+        } else if (this.state.currentSwiperPageIndex === NUMBER_OF_SWIPER_VIEWS-1) {
+          // call function passed to final button
+          this.state.onPressButton && this.state.onPressButton();
+        }
+      }}
+      style={[styles.footerContainer]}>
+        <View style={styles.footer}>
+        <Text style={styles.footerText}>{(this.state.buttonText || "NEXT").toUpperCase()}</Text>
+        </View>
+    </TouchableOpacity>;
+
     const swiper = (
-      <Swiper style={styles.wrapper}
-                      dot={<View style={{backgroundColor:'#ccc', width: 13,
-                                height: 13,borderRadius: 7, top: height / 30, marginLeft: 7, marginRight: 7}} />}
-                      activeDot={<View style={{backgroundColor: '#000', width: 13, height: 13,
-                                borderRadius: 7, top: height / 30, marginLeft: 7, marginRight: 7}} />}
-                      paginationStyle={{top: -(height/1.02)}}
-                      loop={false}>
-                <View style={styles.slide}>
-                  <AddImageView />
-                </View>
-                <View style={styles.slide}>
-                  <ProductAndLocationView />
-                </View>
-                <View style={styles.slide}>
-                  <FinalizeAndContributeView />
-                </View>
-              </Swiper>
+      <Swiper ref={SWIPER_REF}
+              // index={1}
+              style={styles.wrapper}
+              bounces={false}
+              scrollEnabled={false} // prevent touch scrolling
+              dot={<View style={{backgroundColor:'#ccc', width: 13,
+                        height: 13,borderRadius: 7, top: height / 30, marginLeft: 7, marginRight: 7}} />}
+              activeDot={<View style={{backgroundColor: '#000', width: 13, height: 13,
+                        borderRadius: 7, top: height / 30, marginLeft: 7, marginRight: 7}} />}
+              paginationStyle={{top: -(height/1.02)}}
+              loop={false}>
+              <View style={styles.slide}>
+                <AddImageView handleShowNextButton={this.handleShowNextButton} />
+              </View>
+              <View style={styles.slide}>
+                <ProductAndLocationView handleShowNextButton={this.handleShowNextButton}/>
+              </View>
+              <View style={styles.slide}>
+                <FinalizeAndContributeView handleShowNextButton={this.handleShowNextButton}/>
+              </View>
+      </Swiper>
     )
 
 		return (
@@ -111,7 +140,7 @@ var ContributePage = React.createClass({
          </EyespotPageBase>
          <View style={styles.fixedFooterSpacer} />
          <View style={styles.fixedFooterWrapper}>
-            <BottomButton />
+            {this.state.showNextButton ? nextButton : null}
          </View>
        </View>
     );
@@ -164,23 +193,24 @@ const styles = StyleSheet.create({
    letterSpacing: 2
  },
 	headerContainer: {
-      backgroundColor: '#000',
-      top: -10
-    },
-   image: {
-    },
-    layeredPageContainer: {flex: 1},
-  	pageTitleText: {
-        color: '#fff',
-        fontSize: height / 40,
-        fontFamily: 'BodoniSvtyTwoITCTT-Book'
-    },
-    slide: {
-      backgroundColor: 'transparent'
-    },
-    wrapper: {
-      backgroundColor: '#fff'
-    }
+    backgroundColor: '#000',
+    top: -10
+  },
+ image: {
+  },
+  layeredPageContainer: {flex: 1},
+	pageTitleText: {
+      color: '#fff',
+      fontSize: height / 36,
+      fontFamily: 'BodoniSvtyTwoITCTT-Book'
+  },
+  slide: {
+    backgroundColor: 'transparent',
+    paddingTop: height/19
+  },
+  wrapper: {
+    backgroundColor: '#fff'
+  }
 });
 
 module.exports = ContributePage;

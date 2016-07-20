@@ -27,6 +27,10 @@ import CategoryFeed from '../categoryFeed/CategoryFeed';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
+String.prototype.capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
+
 function productsInCategory(category, dataStore){
 
   const categories = dataStore.categories;
@@ -75,6 +79,7 @@ var Panel = React.createClass({
           passProps: {
               products: catProducts,
               dataStore : dataStore,
+              categoryKey: category.key && category.key.capitalize()
           }
         })}
         >

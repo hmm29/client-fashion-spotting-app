@@ -14,6 +14,7 @@
 
 import React, { Component } from 'react';
 import {
+ ActivityIndicator,
  Dimensions,
  Image,
  StyleSheet,
@@ -102,7 +103,12 @@ var TabBarLayout = React.createClass({
 
       // FIXME: loading screen
       if(!this.state.loaded){
-        return <Text>loading</Text>
+        return (
+          <View style={styles.centering}>
+            <ActivityIndicator animating={true} size='large' style={{padding: 5}} />
+            <Text>Loading...</Text>
+          </View>
+        )
       }
 
 	    if (title === 'discover') {
@@ -117,9 +123,12 @@ var TabBarLayout = React.createClass({
 	      return <PersonalPage navigator={this.props.navigator} />;
 	    }
 
-	    else if (title === 'contribute') {
-	    	return <ContributePage navigator={this.props.navigator} />;
-	    }
+      // make Contribute page push onto route stack, instead of appear in tab layout
+      // or else footer blocks the next button
+
+	    // else if (title === 'contribute') {
+	    // 	return <ContributePage navigator={this.props.navigator} />;
+	    // }
 
 	    else {
 	     	return <View />;
@@ -180,7 +189,14 @@ var TabBarLayout = React.createClass({
 	        {this._renderContent()}
       		<Tabs selected={this.state.selected} style={styles.footer}
 	          selectedStyle={{}} onSelect={(el) => {
-	          	el.props.component && this.setState({selected: el.props.component});
+              if(!el.props.component) return;
+              
+              // push route for ContributePage
+              if(el.props.component === 'contribute') this.props.navigator.push({
+                title: 'ContributePage',
+                component: ContributePage
+              })
+	          	else this.setState({selected: el.props.component});
 	          }}
 	          pressOpacity={1}>
   		      {LeftIcon}
@@ -197,8 +213,13 @@ const footerHeight = 60;
 const iconWidth = height/28;
 const iconEmblemWidth = height/18;
 const iconEmblemHeight = iconEmblemWidth * 2;
+const loadingTextFontSize = 12;
 
 const styles = StyleSheet.create({
+  centering: {
+    alignSelf: 'center',
+    top: height/2.5
+  },
 	container: {
 		flex: 1,
 	    backgroundColor: '#F5FCFF',
@@ -243,6 +264,11 @@ const styles = StyleSheet.create({
    resizeMode: 'contain',
    position: 'absolute',
    top: -(height/25)
+ },
+ loadingContent: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
  },
  activeContainer:{
     position: 'absolute',
