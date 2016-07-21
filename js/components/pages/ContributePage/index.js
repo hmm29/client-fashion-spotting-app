@@ -54,7 +54,9 @@ var ContributePage = React.createClass({
 
    /*
     * handleShowNextButton(): shows the "NEXT" button depending on state in swiper views
-    * @param (Boolean) showNextButton: whether or not to show the "NEXT" button
+    * @param (Boolean) showNextButton: whether or not to show the button to proceed
+    * @param (String) buttonText: text on the bottom button
+    * @param (Function) func: callback function
     */
 
     handleShowNextButton(showNextButton, buttonText=null, func=null) {

@@ -27,6 +27,7 @@
     "react-native-blur": "^1.0.0",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-code-push": "^1.13.2-beta",
+    "react-native-communications": "^2.0.0",
     "react-native-fbsdk": "^0.2.2",
     "react-native-gifted-listview": "0.0.15",
     "react-native-image-picker": "^0.20.0",
