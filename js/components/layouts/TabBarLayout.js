@@ -25,8 +25,8 @@ import {
 
 import Firebase from 'firebase';
 import ContributePage from '../pages/ContributePage';
-// import DiscoverPage from '../pages/DiscoverPage';
-import DiscoverPage from '../pages/LocationPage';
+import DiscoverPage from '../pages/DiscoverPage';
+import LocationPage from '../pages/LocationPage';
 import PersonalPage from '../pages/PersonalPage';
 import Tabs from 'react-native-tabs';
 
