@@ -6,13 +6,13 @@
  * @flow
  */
 
-import React, { Component } from 'react'; 
+import React, { Component } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
   Image,
   StyleSheet,
-  Text, 
+  Text,
   TextInput,
   TouchableOpacity,
   View
@@ -46,7 +46,7 @@ var AddImageView = React.createClass({
 			// store icon states together
 			// as only one icon will be active at a time
 			effectIconStates: {
-				
+
 			},
 			imageSource: null,
 		}
@@ -54,7 +54,9 @@ var AddImageView = React.createClass({
 	},
 
 	propTypes: {
-		handleShowNextButton: React.PropTypes.func.isRequired
+		handleShowNextButton: React.PropTypes.func.isRequired,
+    updateUploadData: React.PropTypes.func.isRequired
+
 	},
 
 	getIconStyle(expression) {
@@ -107,6 +109,8 @@ var AddImageView = React.createClass({
 	          imgSource: source
 	        });
 	        this.props.handleShowNextButton(true);
+          this.props.updateUploadData("imageView", this.state);
+
 	      }
 	    })
 	},
@@ -117,6 +121,7 @@ var AddImageView = React.createClass({
 	      	const source = {uri: 'data:image/jpeg;base64,' + data, isStatic: true};
 	      	this.setState({imageSource: source});
 	      	this.props.handleShowNextButton(true);
+          this.props.updateUploadData("imageView", this.state);
 	      })
 	      .catch(err => console.error(err));
   	},
@@ -125,7 +130,7 @@ var AddImageView = React.createClass({
   		const effectIconStates = this.state.effectIconStates;
 
   		if(effectIconStates.brightnessIconState === 'active') {
-  			const brightnessControls = 
+  			const brightnessControls =
   				<View style={styles.bottomContentContainer}>
   					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
   						<Text style={styles.bottomContentLabel}>Brightness</Text>
@@ -164,7 +169,7 @@ var AddImageView = React.createClass({
 
   		} else if(effectIconStates.colorTemperatureIconState === 'active') {
 
-  			const colorTemperatureControls = 
+  			const colorTemperatureControls =
   				<View style={styles.bottomContentContainer}>
   					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
   						<Text style={styles.bottomContentLabel}>Color Temperature</Text>
@@ -201,7 +206,7 @@ var AddImageView = React.createClass({
   			return colorTemperatureControls;
 
   		} else if(effectIconStates.contrastIconState === 'active') {
-  			const contrastControls = 
+  			const contrastControls =
   				<View style={styles.bottomContentContainer}>
   					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
   						<Text style={styles.bottomContentLabel}>Contrast</Text>
@@ -239,7 +244,7 @@ var AddImageView = React.createClass({
 
   		} else if(effectIconStates.sharpenIconState === 'active') {
 
-  			const sharpenControls = 
+  			const sharpenControls =
   						<View style={styles.bottomContentContainer}>
   					<View style={[styles.bottomContentSection, {width: width * 2/3}]}>
   						<Text style={styles.bottomContentLabel}>Sharpen</Text>
@@ -277,15 +282,15 @@ var AddImageView = React.createClass({
 
   		} else {
 
-  			const effectIconsContainer = 
+  			const effectIconsContainer =
   				<View style={styles.bottomContentContainer}>
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
 							// update effectIconStates object to reflect currently active effect
 							this.setState({currentContrastValue: this.state.contrastValue, effectIconStates: {contrastIconState: 'active'}})
 						}}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/contrast-effect-icon.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/contrast-effect-icon.png')}
 								style={this.getIconStyle(this.state.contrastValue === INITIAL_CONTRAST_VALUE)} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
@@ -293,8 +298,8 @@ var AddImageView = React.createClass({
 							// update effectIconStates object to reflect currently active effect
 							this.setState({currentBrightnessValue: this.state.brightnessValue, effectIconStates: {brightnessIconState: 'active'}})
 						}}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/brightness-effect-icon.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/brightness-effect-icon.png')}
 								style={this.getIconStyle(this.state.brightnessValue === INITIAL_BRIGHTNESS_VALUE)} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
@@ -302,8 +307,8 @@ var AddImageView = React.createClass({
 							// update effectIconStates object to reflect currently active effect
 							this.setState({currentColorTemperatureValue: this.state.colorTemperatureValue, effectIconStates: {colorTemperatureIconState: 'active'}})
 						}}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/color-temperature-effect-icon.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/color-temperature-effect-icon.png')}
 								style={this.getIconStyle(this.state.colorTemperatureValue === INITIAL_COLOR_TEMPERATURE_VALUE)} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
@@ -311,18 +316,18 @@ var AddImageView = React.createClass({
 							// update effectIconStates object to reflect currently active effect
 							this.setState({currentSharpenValue: this.state.sharpenValue, effectIconStates: {sharpenIconState: 'active'}})
 						}}>
-							<Image 
-								source={require('../../../partials/icons/contribute/img/sharpen-effect-icon.png')} 
+							<Image
+								source={require('../../../partials/icons/contribute/img/sharpen-effect-icon.png')}
 								style={this.getIconStyle(this.state.sharpenValue === INITIAL_SHARPEN_VALUE)} />
 						</TouchableOpacity>
 				</View>
-  				
+
   			return effectIconsContainer;
   		}
   	},
 
 	render() {
-		const camera = 
+		const camera =
 			<Camera
 	          ref={(cam) => {
 	            this.camera = cam;
@@ -347,9 +352,9 @@ var AddImageView = React.createClass({
         const viewport = (this.state.imgSource ?
         	<View style={styles.cameraView}>
         		<Surface ref="surface" width={height/2.2} height={height/2.2}>
-		          <ImageEffects 
-		          	width={height/2.2} 
-		          	height={height/2.2} 
+		          <ImageEffects
+		          	width={height/2.2}
+		          	height={height/2.2}
 		          	brightness={this.state.brightnessValue}
 					saturation={this.state.colorTemperatureValue}
 					contrast={this.state.contrastValue}
@@ -430,8 +435,8 @@ const styles = StyleSheet.create({
 	container: {
 		flexDirection: 'column',
 		justifyContent: 'flex-start',
-		alignItems: 'center', 
-		height, 
+		alignItems: 'center',
+		height,
 		width,
 	},
 	galleryTextIcon: {
@@ -440,12 +445,12 @@ const styles = StyleSheet.create({
 		resizeMode: Image.resizeMode.contain
 	},
 	icon: {
-		width: iconSize, 
+		width: iconSize,
 		height: iconSize,
 		resizeMode: Image.resizeMode.contain
 	},
 	rightCameraIcon: {
-		width: height/8, 
+		width: height/8,
 		height: height/25,
 		// TODO: add "resizeMode: Image.resizeMode.contain" once Image component for this icon is added
 	},
@@ -461,7 +466,7 @@ const styles = StyleSheet.create({
 		bottom: -5
 	},
 	spacer: {
-		height: height/10	
+		height: height/10
 	},
 	text: {
 		fontFamily: 'Avenir-Roman',

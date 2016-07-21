@@ -106,8 +106,6 @@ var styles = StyleSheet.create({
  footerContainer: {
    width,
    height: footerHeight,
-   position: 'absolute',
-   bottom: 200
  },
  footer: {
    flexDirection: 'row',
@@ -116,7 +114,6 @@ var styles = StyleSheet.create({
    backgroundColor: 'black',
    width,
    height: footerHeight
-
  },
  footerText: {
    color: '#fff',

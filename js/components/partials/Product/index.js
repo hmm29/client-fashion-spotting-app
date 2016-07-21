@@ -35,19 +35,17 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
 * defines the Product class
-* this is the code for each Product in the Discover Feed
+* this is the code for each Product in the Category Feed
 */
 
 
 var Product = React.createClass({
-
 
   propTypes: {
     product: PropTypes.object,
     navigator: PropTypes.object,
     user: PropTypes.object
   },
-
 
  /*
   * render(): returns JSX that declaratively specifies page UI
@@ -59,7 +57,7 @@ var Product = React.createClass({
 
     return (
       <View style={styles.product}>
-        <Image source={{uri : product.img }} style={styles.productImage}/>
+        <Image source={{uri : product.image.url }} style={styles.productImage}/>
         <View style={styles.info}>
           <Contributor
             user={user}

@@ -41,7 +41,7 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 var Products = React.createClass({
 
   propTypes: {
-    products: PropTypes.array,
+    product_keys: PropTypes.array,
     navigator: PropTypes.object,
     dataStore: PropTypes.object
   },
@@ -52,18 +52,26 @@ var Products = React.createClass({
 
  render() {
 
-   const { navigator, products, dataStore } = this.props;
+   const { navigator, product_keys, dataStore } = this.props;
+   console.log(product_keys);
+
 
 
    return (
      <View style ={styles.products}>
-       {products.map((product, i) => {
+       {product_keys.map((product_key, i) => {
 
+        var product = dataStore.products[product_key];
+        console.log('key', product_key)
+        console.log('datastore products', dataStore.products)
+        console.log(product)
        /*
         * return Product component for each product
         */
 
-        const user = dataStore.users[product.user.id];
+        // const user = dataStore.users[product.user.id]; // FIXME: use real user
+
+        const user = product.user;
 
         return (
           <Product
@@ -116,7 +124,7 @@ var CategoryFeed = React.createClass({
            <View style={styles.pageTitle}>
              <Image source={EyespotNegativeLogo}
                              style={styles.pageTitleLogo} />
-                           <Text style={styles.pageTitleText}>{this.props.categoryKey}</Text>
+                           <Text style={styles.pageTitleText}>{this.props.categoryName.toUpperCase()}</Text>
            </View>
            <View />
          </Header>
@@ -140,14 +148,6 @@ var CategoryFeed = React.createClass({
                {...this.props}/>
            </View>
          </EyespotPageBase>
-         {/*
-
-           FIXME We need to make this footer work like Tab Layout Bar
-
-         <View style={styles.fixedFooterSpacer} />
-         <View style={styles.fixedFooterWrapper}>
-           {this._renderFooter()}
-         </View>*/}
        </View>
      );
    }
@@ -160,13 +160,13 @@ var CategoryFeed = React.createClass({
 const sideMargin = 20;
 
 
-// FIXME: put header and footer styles in seperate file
 const styles = StyleSheet.create({
-    container: {},
+    container: {
+    },
     products: {
       flexDirection: 'column',
       justifyContent: 'flex-start',
-      paddingHorizontal: sideMargin
+      paddingHorizontal: sideMargin,
     },
     headerContainer: {
       backgroundColor: '#000',
@@ -191,12 +191,6 @@ const styles = StyleSheet.create({
       fontSize: height / 40,
       fontFamily: 'BodoniSvtyTwoITCTT-Book'
     },
-    fixedFooterSpacer: {height: 60},
-    fixedFooterWrapper: {
-      position: 'absolute',
-      top: height * 1.27
-    }
-
 });
 
 /*
