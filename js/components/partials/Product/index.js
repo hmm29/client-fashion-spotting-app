@@ -42,7 +42,7 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 var Product = React.createClass({
 
   propTypes: {
-    product: PropTypes.object,
+    product: PropTypes.object.isRequired,
     navigator: PropTypes.object,
     user: PropTypes.object
   },
@@ -63,7 +63,9 @@ var Product = React.createClass({
             user={user}
             navigator={navigator}
             product={product}/>
-          <Location product={product}/>
+          <Location
+            navigator={navigator}
+            product={product}/>
           <Comment product={product}/>
           <Controls product={product}/>
         </View>

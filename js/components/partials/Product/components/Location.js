@@ -18,8 +18,11 @@ import {
  StyleSheet,
  View,
  Text,
- Image
+ Image,
+ TouchableOpacity
 } from 'react-native';
+import MapPage from '../../../pages/MapPage';
+
 
 var {width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -30,8 +33,16 @@ var {width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var Location = React.createClass({
 
+  componentDidMount(){
+    console.log('here')
+  },
   handlePress(){
-    console.log('here');
+    this.props.navigator.push({
+      title: 'MapPage',
+      component: MapPage,
+      passProps: {
+      }
+    });
   },
 
   render() {
@@ -42,13 +53,16 @@ var Location = React.createClass({
     const location = product.location;
 
     return (
-      <View style={styles.container}>
+      <View style={styles.container} onPress={this.handlePress}>
         <Text><Text style={styles.italic}>at</Text> {store} /</Text>
         <Text> {location}</Text>
-        <Image
-          style={styles.location}
-          onPress={this.handlePress}
-          source={require('../img/location.png')}/>
+          <TouchableOpacity onPress={this.handlePress}>
+          <Image
+            style={styles.location}
+            onPress={()=>{ this.handlePress()}}
+            source={require('../img/location.png')}/>
+          </TouchableOpacity>
+
       </View>
     );
   }
@@ -70,14 +84,14 @@ const styles = StyleSheet.create({
     borderRightWidth: 0,
     borderLeftWidth: 0,
     borderColor: 'black',
-    transform: [{translateY: -20}]
+    transform: [{translateY: -20}],
   },
   italic: {fontStyle: 'italic'},
   location: {
     width: 15,
     height:15,
     resizeMode: 'contain',
-    marginLeft:10
+    marginLeft:10,
   }
 
 });

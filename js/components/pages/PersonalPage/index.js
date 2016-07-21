@@ -89,7 +89,7 @@ var UserProducts = React.createClass({
 
 
           return (
-            <Product key={i} product={product}/>
+            <Product key={i} product={product} user={product.user}/>
           );
         })}
       </View>
