@@ -1,6 +1,7 @@
 package com.eyespot;
 
 import com.facebook.react.ReactActivity;
+import com.yoloci.fileupload.FileUploadPackage;
 import com.projectseptember.RNGL.RNGLPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.cmcewen.blurview.BlurViewPackage;
@@ -46,6 +47,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new FileUploadPackage(),
             new RNGLPackage(),
             new RCTCameraPackage(),
             new BlurViewPackage(),

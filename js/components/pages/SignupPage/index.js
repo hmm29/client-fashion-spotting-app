@@ -14,6 +14,8 @@
 
 import React from 'react';
 import {
+  Alert,
+  AsyncStorage,
   Dimensions,
   Image,
   Text,
@@ -132,6 +134,31 @@ var SignUpPage = React.createClass({
                     </View>
                     <View style={styles.section}>
                         <TouchableOpacity onPress={() => {
+                            var ref = new Firebase("https://eyespot-658a5.firebaseio.com");
+                            ref.createUser({
+                              email    : this.state.emailAddressText,
+                              password : this.state.passwordText
+                            }, function(error, userData) {
+                              if (error) {
+                                switch (error.code) {
+                                  case "EMAIL_TAKEN":
+                                    Alert.alert("The new user account cannot be created because the email is already in use.");
+                                    break;
+                                  case "INVALID_EMAIL":
+                                    Alert.alert("The specified email is not a valid email.");
+                                    break;
+                                  default:
+                                    Alert.alert("Error creating user", error);
+                                }
+                              } else {
+                                // HACK: store the email in the local data store, for now
+
+                                AsyncStorage.setItem(`EMAIL_FOR_UNAME_${this.state.nameText}`, this.state.emailAddressText)
+                                    .catch(error => console.log(error.message))
+                                    .done();
+                                console.log("Successfully created user account with uid:", userData.uid);
+                              }
+                            });
                           }}>
                             <Image
                               source={require('../../partials/img/sign-up.png')}

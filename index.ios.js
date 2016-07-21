@@ -11,8 +11,10 @@
 
 import React, { Component } from 'react';
 import {
+  Alert,
   AppRegistry,
   NavigatorIOS,
+  NetInfo,
   StatusBar,
   StyleSheet,
   View
@@ -28,6 +30,34 @@ import MapPage from './js/components/pages/map/MapPage';
  */
 
 class Eyespot extends Component {
+
+  componentDidMount() {
+
+    // Fail-Safe: check Network connectivity on load
+    NetInfo.isConnected.fetch().then(isConnected => {
+      console.log('First, is ' + (isConnected ? 'online' : 'offline'));
+    });
+
+    // Fail-Safe: set up network connectivity event handler
+    NetInfo.isConnected.addEventListener(
+      'change',
+      this.handleConnectivityChange
+    );
+
+  };
+
+  componentWillUnmount() {
+    NetInfo.isConnected.removeEventListener(
+      'change',
+      this.handleConnectivityChange
+    );
+  };
+
+  handleConnectivityChange(isConnected) {
+    Alert.alert('Connectivity Change',
+      (isConnected ? 'You are now online.' : 'You are now offline. Please restore connectivity (Settings > Wi-Fi) before continuing.'),
+    );
+  };
 
   /*
    * render(): returns JSX that declaratively specifies overall app UI

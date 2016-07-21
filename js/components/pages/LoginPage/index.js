@@ -14,6 +14,8 @@
 
 import React from 'react';
 import {
+  Alert,
+  AsyncStorage,
   Dimensions,
   Image,
   StyleSheet,
@@ -97,14 +99,51 @@ var LoginPage = React.createClass({
                     <View style={styles.section}>
                            <TouchableOpacity onPress={() => {
 
-                            /*
-                             * TODO: remove this temp shortcut to Discover page
-                             */
-                            this.props.navigator.replace({
-                                    title: 'TabBarLayout',
-                                    component: TabBarLayout,
-                                    passProps: {}
-                            });
+
+                            var ref = new Firebase("https://eyespot-658a5.firebaseio.com");
+
+                            // in local data store, fetch email using username key
+                            // Firebase authWithPassword() doesn't accept username param so must fetch email first from local data store
+
+                            AsyncStorage.getItem(`EMAIL_FOR_UNAME_${this.state.usernameText}`)
+                                .then((email) => {
+
+                                    // if no email value stored, then direct user to SignUp
+                                    if(!email) {
+                                        Alert.alert(
+                                            'Login Error', 
+                                            'We could not find an account with that email or password',
+                                            [{text: 'Sign Up', onPress: () => {
+                                                 this.props.navigator.push({
+                                                    title: 'SignUpPage',
+                                                    component: SignUpPage,
+                                                    passProps: {}
+                                                });
+                                            }}, 
+                                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
+                                            ]
+                                        );
+                                        return;
+                                    }
+
+                                    ref.authWithPassword({
+                                      email,
+                                      password : this.state.passwordText
+                                    }, function(error, authData) {
+                                      if (error) {
+                                        Alert.alert("Login Failed", error);
+                                      } else {
+                                         this.props.navigator.push({
+                                            title: 'TabBarLayout',
+                                            component: TabBarLayout,
+                                            passProps: {}
+                                        });
+                                        console.log("Authenticated successfully with payload:", authData);
+                                      }
+                                    });
+                                })
+                                .catch((error) => console.log(error.message))
+                                .done(() => ref.off());
                           }}>
                             <Image
                               source={require('../../partials/img/login-with-email.png')}
@@ -114,7 +153,7 @@ var LoginPage = React.createClass({
                         <TouchableOpacity
                           onPress={() => {
                             LoginManager.logInWithReadPermissions(['public_profile']).then(
-                              function(result) {
+                              result => {
                                 if (result.isCancelled) {
                                   alert('Login cancelled');
                                 } else {
@@ -127,7 +166,7 @@ var LoginPage = React.createClass({
                                   });
                                 }
                               },
-                              function(error) {
+                              error => {
                                 alert('Login fail with error: ' + error);
                               }
                             );

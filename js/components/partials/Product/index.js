@@ -16,7 +16,6 @@
 import React, { PropTypes } from 'react';
 import {
  Dimensions,
- Image,
  StyleSheet,
  Text,
  TextInput,
@@ -26,6 +25,7 @@ import {
 
 
 import Controls from './components/Controls';
+import Image from 'react-native-image-progress';
 import Location from './components/Location';
 import Contributor from './components/Contributor';
 import Comment from './components/Comment';
