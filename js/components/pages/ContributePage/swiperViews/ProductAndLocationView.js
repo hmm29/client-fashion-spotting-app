@@ -18,8 +18,10 @@ import {
   View
 } from 'react-native';
 
-import Autocomplete from 'react-native-autocomplete-input';
 import Categories from '../../../partials/categories';
+import LocalPlaces from '../../../partials/LocalPlaces';
+import Autocomplete from 'react-native-autocomplete-input';
+
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -119,41 +121,39 @@ var ProductAndLocationView = React.createClass({
 					</View>
 				</View>
 
-				<View style={styles.section}>
-				<Text style={styles.sectionTitle}>IF NOT, SEARCH FOR THE STORE</Text>
-				<View style={styles.storeSearchBar}>
-					<Autocomplete
-						autoCapitalize="none"
-			            autoCorrect={false}
-			            containerStyle={styles.autocompleteContainer}
-					    data={data}
-					    defaultValue={query}
-					    inputContainerStyle={styles.autocompleteInputContainer}
-					    listStyle={{}}
-					    onChangeText={text => this.setState({query: text})}
-					    renderItem={({ storeName, distance }) => (
-				            <TouchableOpacity onPress={() => this.setState({ query: title })}>
-				              <Text style={styles.itemText}>
-				                {storeName}
-				              </Text>
-				              <Text>
-				              	{distance}
-				              </Text>
-				            </TouchableOpacity>
-				          )}
-				          style={styles.autocompleteInput}
-					  />
-					  <TouchableOpacity>
-							<Image
-								source={require('../../../partials/icons/common/img/location-icon.png')}
-								style={styles.icon} />
-					  </TouchableOpacity>
-				</View>
 
-				</View>
+
+        <View style={styles.storeSearchBar}>
+          <Autocomplete
+            autoCapitalize="none"
+                  autoCorrect={false}
+                  containerStyle={styles.autocompleteContainer}
+              data={data}
+              defaultValue={query}
+              inputContainerStyle={styles.autocompleteInputContainer}
+              listStyle={{}}
+              onChangeText={text => this.setState({query: text})}
+              renderItem={({ storeName, distance }) => (
+                    <TouchableOpacity onPress={() => this.setState({ query: title })}>
+                      <Text style={styles.itemText}>
+                        {storeName}
+                      </Text>
+                      <Text>
+                        {distance}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  style={styles.autocompleteInput}
+            />
+            <TouchableOpacity>
+              <Image
+                source={require('../../../partials/icons/common/img/location-icon.png')}
+                style={styles.icon} />
+            </TouchableOpacity>
+        </View>
 
 				<View style={styles.section}>
-				<Text style={styles.sectionTitle}>SPOTTED WHAT:</Text>
+				      <Text style={styles.sectionTitle}>SPOTTED WHAT:</Text>
 					<ScrollView
 					  automaticallyAdjustContentInsets={false}
 		              showsVerticalScrollIndicator={false}

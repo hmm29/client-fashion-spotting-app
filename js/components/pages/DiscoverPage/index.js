@@ -106,7 +106,7 @@ var DiscoverPage = React.createClass({
       const filters = [
         {
           'name' : 'Gender',
-          dropdown : ['female', 'male', 'all'],
+          dropdown : ['Women', 'Men', 'All'],
         },
         {
           'name' : 'Location',
@@ -114,7 +114,7 @@ var DiscoverPage = React.createClass({
         },
         {
           name: 'Store',
-          dropdown: ['a', 'b', 'c']
+          dropdown: ['Zara', 'Addidas', 'J Crew']
         },
       ]
 

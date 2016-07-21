@@ -53,8 +53,6 @@ var Products = React.createClass({
  render() {
 
    const { navigator, product_keys, dataStore } = this.props;
-   console.log(product_keys);
-
 
 
    return (
@@ -62,9 +60,6 @@ var Products = React.createClass({
        {product_keys.map((product_key, i) => {
 
         var product = dataStore.products[product_key];
-        console.log('key', product_key)
-        console.log('datastore products', dataStore.products)
-        console.log(product)
        /*
         * return Product component for each product
         */

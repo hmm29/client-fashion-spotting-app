@@ -40,8 +40,6 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 * this code is for the two-column category component
 */
 
-
-
 var MapPage = React.createClass({
 
    /*
