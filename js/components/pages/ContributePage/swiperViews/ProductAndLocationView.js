@@ -19,7 +19,6 @@ import {
 } from 'react-native';
 
 import Categories from '../../../partials/categories';
-import LocalPlaces from '../../../partials/LocalPlaces';
 import Autocomplete from 'react-native-autocomplete-input';
 
 

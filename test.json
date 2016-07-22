@@ -1,0 +1,101 @@
+Attached is an export of our database currently.
+
+  category
+    bags_w
+    pants_w
+    pants_m
+    shirts_m
+    ...
+  products
+    product_id_1
+      ...
+    product_id_2
+      category
+      commen
+      image" : {
+        "brightnessValue" : 1,
+        "cloudinary" : {
+          "bytes" : 22857,
+          "created_at" : "2016-07-21T20:44:22Z",
+          "etag" : "94995a7bb4ff56d680a8b2c0e7a9408b",
+          "format" : "jpg",
+          "height" : 248,
+          "original_filename" : "testpic",
+          "public_id" : "ktgodj1fzp9zkexwqa0z",
+          "resource_type" : "image",
+          "secure_url" : "https://res.cloudinary.com/celena/image/upload/v1469133862/ktgodj1fzp9zkexwqa0z.jpg",
+          "signature" : "097b4dca8e3f1bfd27f64ccf49c6a241d0ff4810",
+          "type" : "upload",
+          "url" : "http://res.cloudinary.com/celena/image/upload/v1469133862/ktgodj1fzp9zkexwqa0z.jpg",
+          "version" : 1469133862,
+          "width" : 375
+        },
+        "colorTemperatureValue" : 1,
+        "contrastValue" : 1,
+        "sharpenValue" : 0,
+        "url" : "https://res.cloudinary.com/celena/image/upload/v1469133862/ktgodj1fzp9zkexwqa0z.jpg"
+      },
+      "item" : "blouse",
+      "likes" : 0,
+      "location" : "Beverly Center, Los Angeles, CA",
+      "store" : "Banana Republic",
+      "tags" : [ "Sale", "New" ],
+      "user" : {
+        "id" : "user_1",
+        "profilePicture" : "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png",
+        "username" : "lovelycarrie"
+      }
+    },
+    "-KNEL2L8A6FHH_mlecYZ" : {
+      "category" : "pants_w",
+      "comment" : "Anthropologie made my day today!",
+      "image" : {
+        "brightnessValue" : 1,
+        "cloudinary" : {
+          "bytes" : 20125,
+          "created_at" : "2016-07-21T21:24:14Z",
+          "etag" : "8135202004e5e90220d700c395a3a000",
+          "format" : "jpg",
+          "height" : 250,
+          "original_filename" : "testpic",
+          "public_id" : "owiqwydfzxgrjw8wyqyn",
+          "resource_type" : "image",
+          "secure_url" : "https://res.cloudinary.com/celena/image/upload/v1469136254/owiqwydfzxgrjw8wyqyn.jpg",
+          "signature" : "667f8e989e96be4a9222beb3f8f2b7f078452b11",
+          "type" : "upload",
+          "url" : "http://res.cloudinary.com/celena/image/upload/v1469136254/owiqwydfzxgrjw8wyqyn.jpg",
+          "version" : 1469136254,
+          "width" : 375
+        },
+        "colorTemperatureValue" : 1,
+        "contrastValue" : 1,
+        "sharpenValue" : 0,
+        "url" : "https://res.cloudinary.com/celena/image/upload/v1469136254/owiqwydfzxgrjw8wyqyn.jpg"
+      },
+      "item" : "blouse",
+      "likes" : 0,
+      "location" : "Beverly Center, Los Angeles, CA",
+      "store" : "Forever 21",
+      "tags" : [ "Wow!", "Sale", "New" ],
+      "user" : {
+        "id" : "user_1",
+        "profilePicture" : "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png",
+        "username" : "lovelycarrie"
+      }
+    }
+  },
+  "users" : {
+    "user_1" : {
+      "products" : {
+        "-KNEBvKu1a3GwMhPMine" : "-KNEBvKfvNrv4L2MXRsT",
+        "-KNEL2LMUGK7f0qjRvlM" : "-KNEL2L8A6FHH_mlecYZ"
+      },
+      "profilePicture" : "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png",
+      "username" : "LovelyCarrie"
+    },
+    "user_2" : {
+      "profilePicture" : "https://res.cloudinary.com/celena/image/upload/v1468553910/kevin_ypaaif.jpg",
+      "username" : "JonDoe"
+    }
+  }
+}
