@@ -64,7 +64,6 @@ var ContributePage = React.createClass({
           this.setState({ imageData :  data });
           break;
         case "productAndLocationView":
-          console.log(data);
           this.setState({ productAndLocationData :  data });
           break;
         case "finalizeAndContributeView":

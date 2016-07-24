@@ -36,7 +36,6 @@ function uploadNewProduct(imageData, productAndLocationData, finalizeAndContribu
         cloudinary: response,
         url: response.secure_url
       },
-      location: finalizeAndContribute.contributeSummary.location,
       store: productAndLocationData.store,
       item: finalizeAndContribute.contributeSummary.item,
       category: productAndLocationData.category,

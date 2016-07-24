@@ -26,6 +26,11 @@ import Emblem from '../img/marker.png';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
+const washingtonDC = {
+  lat: 38.9072,
+  lng: -77.0369
+}
+
 
 /*
  * defines the MapView class
@@ -40,37 +45,12 @@ var Map = React.createClass({
     getInitialState() {
       return {
         region: {
-          latitude: 37.78825,
-          longitude: -122.4324,
+          latitude: washingtonDC.lat,
+          longitude: washingtonDC.lng,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         },
-        markers: [
-          {
-            latlng: {
-              latitude: 37.78825,
-              longitude: -122.4434,
-            },
-            title: 'title',
-            description: 'description'
-          },
-          {
-            latlng: {
-              latitude: 37.78825,
-              longitude: -122.4324,
-            },
-            title: 'title',
-            description: 'description'
-          },
-          {
-            latlng: {
-              latitude: 37.79825,
-              longitude: -122.4324,
-            },
-            title: 'title',
-            description: 'description'
-          }
-        ]
+        markers: []
       };
     },
 
@@ -84,8 +64,8 @@ var Map = React.createClass({
           style={styles.map}
           region={this.state.region}
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: washingtonDC.lat,
+            longitude: washingtonDC.lng,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}

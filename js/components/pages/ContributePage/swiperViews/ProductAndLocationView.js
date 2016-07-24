@@ -42,11 +42,15 @@ var ProductAndLocationView = React.createClass({
   updateParent(){
     var storeObject = {};
     if(this.state.storeSelected.name){
+      console.log(this.state.storeSelected);
+      var vicinity = this.state.storeSelected.vicinity;
+      vicinity = vicinity.replace("#", "");
       storeObject = {
         id: this.state.storeSelected.id,
         name: this.state.storeSelected.name,
         location: this.state.storeSelected.geometry.location,
         place_id: this.state.storeSelected.place_id,
+        vicinity: vicinity
       }
     }
     this.props.updateUploadData("productAndLocationView", {

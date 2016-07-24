@@ -49,13 +49,16 @@ var Location = React.createClass({
 
     const { product } = this.props;
 
-    const store = product.store;
-    const location = product.location;
+    const store = product.store.name;
+    var vicinity = product.store.vicinity;
+    if(vicinity.length > 12){
+      vicinity = vicinity.slice(0,18) + "..";
+    }
 
     return (
       <View style={styles.container} onPress={this.handlePress}>
         <Text><Text style={styles.italic}>at</Text> {store} /</Text>
-        <Text> {location}</Text>
+        <Text> {vicinity}</Text>
           <TouchableOpacity onPress={this.handlePress}>
           <Image
             style={styles.location}

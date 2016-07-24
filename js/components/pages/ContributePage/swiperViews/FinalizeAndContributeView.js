@@ -44,8 +44,6 @@ var FinalizeAndContributeView = React.createClass({
 	getContributeSummary() {
 		this.setState({contributeSummary: {
 			item: 'blouse',
-			store: 'Anthropologie',
-			location: 'Beverly Center, Los Angeles, CA'
 		}}, function(){
       this.props.updateUploadData("finalizeAndContributeView", this.state);
     });
