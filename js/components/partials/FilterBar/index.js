@@ -1,8 +1,8 @@
 /**
- * SearchBar.js
+ * FilterBar.js
  * Reusable search bar with dropdown & autocomplete
  *
- * @providesModule SearchBar
+ * @providesModule FilterBar
  * @flow
  */
 
@@ -99,10 +99,10 @@ var Navs = React.createClass({
 
 
 /*
-* SearchBar - reusable component for different searchbar dropdowns
+* FilterBar - reusable component for different searchbar dropdowns
 */
 
-var SearchBar = React.createClass({
+var FilterBar = React.createClass({
 
   propTypes: {
     filters: PropTypes.array,
@@ -264,4 +264,4 @@ const styles = StyleSheet.create({
 
 });
 
-module.exports = SearchBar;
+module.exports = FilterBar;

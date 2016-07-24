@@ -27,7 +27,7 @@ import {
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
-import SearchBar from '../../partials/SearchBar';
+import FilterBar from '../../partials/FilterBar';
 import Product from '../../partials/Product';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 
@@ -76,14 +76,21 @@ var UserProducts = React.createClass({
   render() {
     const { user, dataStore } = this.props;
 
+    if(!user.products){
+      return null
+    }
+
+
+
     return (
       <View>
-        {user.products.map((product_id, i) => {
+        {Object.keys(user.products).map((key, i) => {
 
 
          /*
           * return Product component for each product
           */
+          const product_id = user.products[key];
 
           const product = dataStore.products[product_id];
 

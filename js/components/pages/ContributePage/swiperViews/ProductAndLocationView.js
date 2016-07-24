@@ -18,153 +18,100 @@ import {
   View
 } from 'react-native';
 
-import Categories from '../../../partials/categories';
-import LocalPlaces from '../../../partials/LocalPlaces';
 import Autocomplete from 'react-native-autocomplete-input';
+import PlacesNearby from '../../../partials/PlacesNearby';
+import LocationPage from '../../LocationPage';
+import SelectCategory from '../../../partials/SelectCategory';
 
+const washingtonDC = {
+  lat: 38.9072,
+  lng: -77.0369
+}
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+
 
 var ProductAndLocationView = React.createClass({
 	getInitialState() {
 		return {
-			storeTags: [],
-			stores: [],
-      		query: ''
+  		storeSelected: {},
+      categorySelected: {}
 		}
 	},
 
-	_categories: Categories.categoryKeys, //replace with category names (men vs women?)
-
-	componentWillMount() {
-		this.getRecentStoreLocations();
-		this.getStoreList();
-	},
-
-	componentDidMount() {
-
-	},
-
-	_filterData(data) {
-
-	},
-
-	_findStore(query) {
-	    if (query === '') {
-	      return [];
-	    }
-
-	    const { stores } = this.state;
-	    const regex = new RegExp(`${query.trim()}`, 'i');
-	    return stores.filter(store => store.name.search(regex) >= 0);
-	  },
-
-	getRecentStoreLocations() {
-		this.setState({
-			storeTags: ['Zara', 'Forever 21', 'Banana Republic', 'GAP', 'Bloomingdales']
-		})
-	},
-
-	getStoreList() {
-		this.setState({
-			stores: []
-		})
-	},
-
   updateParent(){
+    var storeObject = {};
+    if(this.state.storeSelected.name){
+      storeObject = {
+        id: this.state.storeSelected.id,
+        name: this.state.storeSelected.name,
+        location: this.state.storeSelected.geometry.location,
+        place_id: this.state.storeSelected.place_id,
+      }
+    }
     this.props.updateUploadData("productAndLocationView", {
-      category : this.state.selectedCategory,
-      store : this.state.query
+      category : this.state.categorySelected.key,
+      store : storeObject
     });
   },
 
-  selectedCategory(category){
-    this.setState({selectedCategory: category}, function(){
+  selectCategory(category){
+    this.setState({categorySelected: category}, function(){
       this.updateParent();
+      if(this.state.categorySelected.name && this.state.storeSelected.name){
+        this.props.handleShowNextButton(true);
+      }
     });
   },
-  setStore(storeTag){
-    this.setState({query: storeTag}, function(){
+  setStore(store){
+    this.setState({storeSelected: store}, function(){
       this.updateParent();
+      if(this.state.categorySelected.name && this.state.storeSelected.name){
+        this.props.handleShowNextButton(true);
+      }
     });
-    this.props.handleShowNextButton(true);
+
+  },
+
+  searchForStore(){
+    this.props.navigator.push({
+      title: 'Search For Store',
+      component: LocationPage,
+      passProps:{
+        location: washingtonDC,
+        setStore: this.setStore
+      }
+    });
   },
 
 	render() {
-		const { query } = this.state;
-		const data = this._filterData(query);
-
+		const { storeSelected } = this.state;
 		return (
 			<View style={styles.container}>
 				<Text style={styles.text}>PRODUCT AND LOCATION</Text>
 				<View style={styles.section}>
 					<Text style={styles.sectionTitle}>ARE YOU HERE?</Text>
-					<View style={styles.storeTagsBar}>
-						<TouchableOpacity onPress={this.getStoreLocations}>
-							<Image
-								source={require('../../../partials/icons/contribute/img/reset-refresh-location-icon.png')}
-								style={styles.icon} />
-						</TouchableOpacity>
-						<ScrollView
-							  automaticallyAdjustContentInsets={false}
-				              contentContainerStyle={styles.scrollView}
-				              showsHorizontalScrollIndicator={false}
-				              horizontal={true}
-				              directionalLockEnabled={true}>
-							{this.state.storeTags && this.state.storeTags.map((storeTag, i) => (
-				                <TouchableOpacity key={i} onPress={() => {
-                        this.setStore(storeTag);
-				                }} style={styles.storeTag}><Text
-				                  style={styles.storeTagText}>{storeTag && storeTag.toUpperCase()}</Text></TouchableOpacity>
-				              ))}
-			             </ScrollView>
-					</View>
+					<PlacesNearby
+            setStore={this.setStore}
+            storeSelected={storeSelected}
+            location={washingtonDC}/>
 				</View>
 
-
-
-        <View style={styles.storeSearchBar}>
-          <Autocomplete
-            autoCapitalize="none"
-                  autoCorrect={false}
-                  containerStyle={styles.autocompleteContainer}
-              data={data}
-              defaultValue={query}
-              inputContainerStyle={styles.autocompleteInputContainer}
-              listStyle={{}}
-              onChangeText={text => this.setState({query: text})}
-              renderItem={({ storeName, distance }) => (
-                    <TouchableOpacity onPress={() => this.setState({ query: title })}>
-                      <Text style={styles.itemText}>
-                        {storeName}
-                      </Text>
-                      <Text>
-                        {distance}
-                      </Text>
-                    </TouchableOpacity>
-                  )}
-                  style={styles.autocompleteInput}
-            />
-            <TouchableOpacity>
+        <TouchableOpacity
+          style={styles.storeFilterBar}
+          onPress={this.searchForStore}>
+            <View style={styles.autocompleteContainer}>
+              <Text style={styles.autocompleteText}>{storeSelected.name}</Text>
+            </View>
+            <View>
               <Image
                 source={require('../../../partials/icons/common/img/location-icon.png')}
                 style={styles.icon} />
-            </TouchableOpacity>
-        </View>
-
-				<View style={styles.section}>
-				      <Text style={styles.sectionTitle}>SPOTTED WHAT:</Text>
-					<ScrollView
-					  automaticallyAdjustContentInsets={false}
-		              showsVerticalScrollIndicator={false}
-		              directionalLockEnabled={true}>
-						{this._categories && this._categories.map((category, i) =>
-							<TouchableOpacity key={i} onPress={() => this.selectedCategory(category)} style={[styles.category, (this.state.selectedCategory === category ? {} : {borderColor: 'rgba(4,22,43,0.45)'})]} >
-								<Text style={[styles.categoryText, (this.state.selectedCategory === category ? {} : {opacity: 0.4})]}>{category}</Text>
-							</TouchableOpacity>
-						)}
-					</ScrollView>
-				</View>
+            </View>
+        </TouchableOpacity>
+        <SelectCategory
+          selectCategory={this.selectCategory}
+          categorySelected={this.state.categorySelected}/>
 			</View>
 		);
 	}
@@ -178,27 +125,26 @@ const border = {
   borderWidth: 1
 };
 
+const footerHeight = 60;
+
 const styles = StyleSheet.create({
+  storeFilterBar: {
+    ...border,
+    width: width/1.3,
+    height: height/15,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 	autocompleteContainer: {
+    height: height/15,
+    flex: 7,
+    justifyContent: 'center',
 	},
-	autocompleteInput: {
-		bottom: height/75,
-	},
-	autocompleteInputContainer: {
-		borderWidth: 0,
-	},
-	category: {
-		width: width/1.3,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		marginBottom: height/85,
-		borderBottomWidth: 1,
-		borderColor: '#000',
-		paddingBottom: height/85
-	},
-	categoryText: {
-		fontWeight: 'bold'
+	autocompleteText: {
+    fontFamily: 'Avenir-Roman',
+    fontSize: 18,
+    marginLeft: 10
 	},
 	container: {
 		flexDirection: 'column',
@@ -217,9 +163,6 @@ const styles = StyleSheet.create({
 		width: iconSize/2,
 		height: iconSize/2
 	},
-	scrollView: {
-
-	},
 	section: {
 		width: width/1.3,
 		marginVertical: height/45,
@@ -230,29 +173,7 @@ const styles = StyleSheet.create({
 		marginBottom: height/45,
 		fontSize: height/55
 	},
-	storeTagsBar: {
-		flex: 1,
-		flexDirection: 'row',
-		justifyContent: 'flex-start',
-		alignItems: 'center'
-	},
-	storeTagText: {
-		fontFamily: 'Avenir-Roman',
-		color: '#fff'
-	},
-	storeTag: {
-		backgroundColor: 'rgba(4,22,43,0.25)',
-		padding: height/80,
-		marginHorizontal: width / 70,
-	},
-	storeSearchBar: {
-		...border,
-		width: width/1.3,
-		height: height/15,
-		flexDirection: 'row',
-		justifyContent: 'center',
-		alignItems: 'center',
-	},
+
 	text: {
 		fontFamily: 'Avenir-Roman',
 		marginBottom: height/45,

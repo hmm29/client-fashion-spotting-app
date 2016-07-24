@@ -1,0 +1,41 @@
+category
+  bags_w
+    product_id_1
+    product_id_5
+  pants_w
+    ...
+  pants_m
+    ...
+  shirts_m
+  ...
+products
+  product_id_1
+    category
+    comment
+    image
+      url
+    item
+    location
+    likes
+    store
+    tags
+    user_id
+    filters_data
+      contrastValue
+      temperatureValue
+      sharpenValue
+      contrastValue
+  product_id_2
+  ...
+
+users
+  user_id_1
+    profilePictureUrl
+    username
+    email
+    products
+      product_id_1
+      product_id_2
+      ...
+  user_id_2
+  ....
