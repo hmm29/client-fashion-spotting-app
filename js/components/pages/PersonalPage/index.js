@@ -93,6 +93,9 @@ var UserProducts = React.createClass({
           const product_id = user.products[key];
 
           const product = dataStore.products[product_id];
+          if(!product){
+            return null
+          }
 
 
           return (
