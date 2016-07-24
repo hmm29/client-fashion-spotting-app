@@ -12,7 +12,7 @@
  * imports required modules
  */
 
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -31,12 +31,24 @@ const washingtonDC = {
   lng: -77.0369
 }
 
+const Delta = {
+  lat: 0.0922,
+  lng: 0.0421,
+}
 
 /*
  * defines the MapView class
  */
 
 var Map = React.createClass({
+
+  /*
+   * specifies types for properties that this component receives
+   */
+
+  propTypes: {
+    products: PropTypes.array
+  },
 
    /*
     * render(): returns JSX that declaratively specifies photo gallery UI
@@ -47,11 +59,26 @@ var Map = React.createClass({
         region: {
           latitude: washingtonDC.lat,
           longitude: washingtonDC.lng,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitudeDelta: Delta.lat,
+          longitudeDelta: Delta.lng,
         },
         markers: []
       };
+    },
+
+    componentDidMount(){
+      // create markers from products' location data
+      var markers = this.props.products.map(function(product){
+
+        return {
+          latlng: {
+            latitude: product.store.location.lat,
+            longitude: product.store.location.lng,
+            title: product.store.name
+          }
+        }
+      })
+      this.setState({ markers : markers });
     },
 
     onRegionChange(region) {
@@ -66,8 +93,8 @@ var Map = React.createClass({
           initialRegion={{
             latitude: washingtonDC.lat,
             longitude: washingtonDC.lng,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta: Delta.lat,
+            longitudeDelta: Delta.lng,
           }}
           onRegionChange={this.onRegionChange}>
           {this.state.markers.map((marker, i) => {
@@ -96,9 +123,8 @@ const styles = StyleSheet.create({
     height: height
   },
   marker:{
-    width: 30,
-    height: 30,
-    // resizeMode:'contain'
+    width: 10,
+    height: 10,
   }
 });
 

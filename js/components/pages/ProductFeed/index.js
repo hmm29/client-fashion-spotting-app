@@ -1,8 +1,8 @@
 /**
-* CategoryFeed.js
+* ProductFeed.js
 * See Product info
 *
-* @providesModule CategoryFeed
+* @providesModule ProductFeed
 * @flow
 */
 
@@ -34,7 +34,7 @@ import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
-* defines the CategoryFeed class
+* defines the ProductFeed class
 * this is the code for the feed of products after tapping a panel
 */
 
@@ -52,14 +52,13 @@ var Products = React.createClass({
 
  render() {
 
-   const { navigator, product_keys, dataStore } = this.props;
+   const { navigator, products, dataStore } = this.props;
 
 
    return (
      <View style ={styles.products}>
-       {product_keys.map((product_key, i) => {
+       {products.map((product, i) => {
 
-        var product = dataStore.products[product_key];
        /*
         * return Product component for each product
         */
@@ -83,10 +82,10 @@ var Products = React.createClass({
 });
 
 /*
-* defines the CategoryFeed class
+* defines the ProductFeed class
 */
 
-var CategoryFeed = React.createClass({
+var ProductFeed = React.createClass({
 
    /*
     * specifies types for properties that this component receives
@@ -192,4 +191,4 @@ const styles = StyleSheet.create({
 * exports this component as a module so it can be imported into other modules
 */
 
-module.exports = CategoryFeed;
+module.exports = ProductFeed;

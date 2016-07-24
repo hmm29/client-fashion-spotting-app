@@ -13,7 +13,7 @@
 * imports required modules
 */
 
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import {
  Dimensions,
  Image,
@@ -46,7 +46,9 @@ var MapPage = React.createClass({
     * specifies types for properties that this component receives
     */
 
-   propTypes: {},
+   propTypes: {
+     products: PropTypes.array
+   },
 
    /*
     * _renderHeader(): renders the imported header component
@@ -85,11 +87,11 @@ var MapPage = React.createClass({
      const filters = [
        {
          'name' : 'Last Month',
-         dropdown : ['female', 'male', 'all'],
+         dropdown : ['Last Week', 'Last Month', 'Last Year'],
        },
        {
-         'name' : 'Beverly Hills, CA',
-         dropdown: ['DC']
+         'name' : 'Washington DC',
+         dropdown: []
        },
      ]
      return (
@@ -98,7 +100,7 @@ var MapPage = React.createClass({
          <EyespotPageBase
              keyboardShouldPersistTaps={false}
              noScroll={true}>
-             <Map/>
+             <Map {...this.props}/>
          </EyespotPageBase>
          <FilterBar filters={filters}/>
          {this._renderFooter()}

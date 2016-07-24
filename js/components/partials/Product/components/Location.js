@@ -34,20 +34,20 @@ var {width} = Dimensions.get('window'); /* gets screen dimensions */
 var Location = React.createClass({
 
   componentDidMount(){
-    console.log('here')
   },
   handlePress(){
     this.props.navigator.push({
       title: 'MapPage',
       component: MapPage,
       passProps: {
+        products : [this.props.product]
       }
     });
   },
 
   render() {
 
-    const { product } = this.props;
+    const { product, products } = this.props;
 
     const store = product.store.name;
     var vicinity = product.store.vicinity;

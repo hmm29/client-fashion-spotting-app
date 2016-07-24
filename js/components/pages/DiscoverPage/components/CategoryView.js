@@ -35,9 +35,6 @@ String.prototype.capitalize = function () {
 function productsInCategory(category_key, dataStore){
 
   const categories = dataStore.category || {};
-  const products = dataStore.products;
-
-  var productsArr = [];
 
   return categories[category_key] ? Object.values(categories[category_key]) : []
 }
@@ -58,8 +55,12 @@ var Panel = React.createClass({
     const thumbImg = category.thumb;
     const name = category.name;
 
+
     // get products in this panel's category
-    const catProducts = productsInCategory(category_key, dataStore);
+    const product_keys = productsInCategory(category_key, dataStore);
+    const products = product_keys.map(function(key){
+      return dataStore.products[key]
+    });
 
     return (
       <TouchableOpacity
@@ -69,7 +70,8 @@ var Panel = React.createClass({
           title: 'ProductFeed',
           component: ProductFeed,
           passProps: {
-              product_keys: catProducts,
+              product_keys: product_keys,
+              products: products,
               dataStore : dataStore,
               categoryKey: category_key && category_key.capitalize(),
               categoryName: name
