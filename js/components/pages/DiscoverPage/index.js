@@ -26,7 +26,7 @@ import {
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
-import SearchBar from '../../partials/SearchBar';
+import FilterBar from '../../partials/FilterBar';
 import CategoryView from './components/CategoryView';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 
@@ -129,7 +129,7 @@ var DiscoverPage = React.createClass({
                   <CategoryView {...this.props} />
                 </View>
             </EyespotPageBase>
-            <SearchBar filters={filters}/>
+            <FilterBar filters={filters}/>
           </View>
         );
     }

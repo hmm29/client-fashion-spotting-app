@@ -74,9 +74,9 @@ var Contributor = React.createClass({
 
           if (this.props.navigator) { // ensure navigator has been passed as prop
             this.props.navigator.push({
-                title: 'Personal Page',
-                component: PersonalPage
-              });
+              title: 'Personal Page',
+              component: PersonalPage
+            });
           }
         }} style={styles.profileContainer}>
           {ProfileImage}

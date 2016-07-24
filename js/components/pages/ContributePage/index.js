@@ -176,6 +176,7 @@ var ContributePage = React.createClass({
               </View>
               <View style={styles.slide}>
                 <ProductAndLocationView
+                  navigator={this.props.navigator}
                   updateUploadData={this.updateUploadData}
                   handleShowNextButton={this.handleShowNextButton}/>
               </View>
@@ -231,7 +232,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: height * 1.27
   },
-   footerContainer: {
+ footerContainer: {
    width,
    height: footerHeight,
    position: 'absolute',

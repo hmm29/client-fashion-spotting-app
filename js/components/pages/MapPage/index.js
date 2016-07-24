@@ -28,7 +28,7 @@ import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import Footer from '../../partials/Footer';
-import SearchBar from '../../partials/SearchBar';
+import FilterBar from '../../partials/FilterBar';
 import Product from '../../partials/Product';
 import Map from '../../partials/Map';
 import EyespotLogoNegative from '../../partials/img/eyespot-logo-negative.png';
@@ -100,7 +100,7 @@ var MapPage = React.createClass({
              noScroll={true}>
              <Map/>
          </EyespotPageBase>
-         <SearchBar filters={filters}/>
+         <FilterBar filters={filters}/>
          {this._renderFooter()}
        </View>
      );

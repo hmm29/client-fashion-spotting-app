@@ -33,16 +33,16 @@ class Eyespot extends Component {
 
   componentDidMount() {
 
-    // Fail-Safe: check Network connectivity on load
-    NetInfo.isConnected.fetch().then(isConnected => {
-      console.log('First, is ' + (isConnected ? 'online' : 'offline'));
-    });
-
-    // Fail-Safe: set up network connectivity event handler
-    NetInfo.isConnected.addEventListener(
-      'change',
-      this.handleConnectivityChange
-    );
+    // // Fail-Safe: check Network connectivity on load
+    // NetInfo.isConnected.fetch().then(isConnected => {
+    //   console.log('First, is ' + (isConnected ? 'online' : 'offline'));
+    // });
+    //
+    // // Fail-Safe: set up network connectivity event handler
+    // NetInfo.isConnected.addEventListener(
+    //   'change',
+    //   this.handleConnectivityChange
+    // );
 
   };
 

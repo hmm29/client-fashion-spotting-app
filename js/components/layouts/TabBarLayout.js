@@ -26,7 +26,6 @@ import {
 import Firebase from 'firebase';
 import ContributePage from '../pages/ContributePage';
 import DiscoverPage from '../pages/DiscoverPage';
-import LocationPage from '../pages/LocationPage';
 import PersonalPage from '../pages/PersonalPage';
 import Tabs from 'react-native-tabs';
 
@@ -113,7 +112,7 @@ var TabBarLayout = React.createClass({
       }
 
 	    if (title === 'discover') {
-	      return (
+        return (
           <DiscoverPage
             dataStore={this.state.dataStore}
             navigator={this.props.navigator} />
@@ -229,7 +228,7 @@ const styles = StyleSheet.create({
   },
 	container: {
 		flex: 1,
-	    backgroundColor: '#F5FCFF',
+    backgroundColor: 'white',
 	},
   footer: {
     position: 'absolute',

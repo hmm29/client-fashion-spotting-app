@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: '#ccc'
 	},
-	storeSearchBar: {
+	storeFilterBar: {
 		...border,
 		width: width/1.3,
 		height: height/15,
