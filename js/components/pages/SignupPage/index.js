@@ -15,7 +15,6 @@
 import React from 'react';
 import {
   Alert,
-  AsyncStorage,
   Dimensions,
   Image,
   Text,
@@ -150,13 +149,6 @@ var SignUpPage = React.createClass({
                                   default:
                                     Alert.alert("Error creating user", error);
                                 }
-                              } else {
-                                // HACK: store the email in the local data store, for now
-
-                                AsyncStorage.setItem(`EMAIL_FOR_UNAME_${this.state.nameText}`, this.state.emailAddressText)
-                                    .catch(error => console.log(error.message))
-                                    .done();
-                                console.log("Successfully created user account with uid:", userData.uid);
                               }
                             });
                           }}>

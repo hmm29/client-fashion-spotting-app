@@ -15,7 +15,6 @@
 import React from 'react';
 import {
   Alert,
-  AsyncStorage,
   Dimensions,
   Image,
   StyleSheet,
@@ -99,51 +98,24 @@ var LoginPage = React.createClass({
                     <View style={styles.section}>
                            <TouchableOpacity onPress={() => {
 
-
                             var ref = new Firebase("https://eyespot-658a5.firebaseio.com");
 
-                            // in local data store, fetch email using username key
-                            // Firebase authWithPassword() doesn't accept username param so must fetch email first from local data store
-
-                            AsyncStorage.getItem(`EMAIL_FOR_UNAME_${this.state.usernameText}`)
-                                .then((email) => {
-
-                                    // if no email value stored, then direct user to SignUp
-                                    if(!email) {
-                                        Alert.alert(
-                                            'Login Error', 
-                                            'We could not find an account with that email or password',
-                                            [{text: 'Sign Up', onPress: () => {
-                                                 this.props.navigator.push({
-                                                    title: 'SignUpPage',
-                                                    component: SignUpPage,
-                                                    passProps: {}
-                                                });
-                                            }}, 
-                                            {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'}
-                                            ]
-                                        );
-                                        return;
-                                    }
-
-                                    ref.authWithPassword({
-                                      email,
-                                      password : this.state.passwordText
-                                    }, function(error, authData) {
-                                      if (error) {
-                                        Alert.alert("Login Failed", error);
-                                      } else {
-                                         this.props.navigator.push({
-                                            title: 'TabBarLayout',
-                                            component: TabBarLayout,
-                                            passProps: {}
-                                        });
-                                        console.log("Authenticated successfully with payload:", authData);
-                                      }
-                                    });
-                                })
-                                .catch((error) => console.log(error.message))
-                                .done(() => ref.off());
+                            ref.authWithPassword({
+                              email: this.state.usernameText,
+                              password : this.state.passwordText
+                            }, function(error, authData) {
+                              if (error) {
+                                Alert.alert("Login Failed", error);
+                              } else {
+                                 this.props.navigator.push({
+                                    title: 'TabBarLayout',
+                                    component: TabBarLayout,
+                                    passProps: {}
+                                });
+                                console.log("Authenticated successfully with payload:", authData);
+                              }
+                            });
+              
                           }}>
                             <Image
                               source={require('../../partials/img/login-with-email.png')}
