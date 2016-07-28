@@ -48,7 +48,7 @@ var LoginPage = React.createClass({
     getInitialState() {
         return {
             passwordText: '',
-            usernameText: ''
+            emailText: ''
         };
     },
 
@@ -76,12 +76,12 @@ var LoginPage = React.createClass({
                         <TextInput
                             autocapitalize="none"
                             autocorrect={false}
-                            onChangeText={(usernameText) => this.setState({usernameText})}
+                            onChangeText={(emailText) => this.setState({emailText})}
                             maxLength={30}
-                            placeholder="USER NAME"
+                            placeholder="EMAIL"
                             placeholderTextColor="#777"
                             style={[styles.input, styles.username]}
-                            value={this.state.usernameText} />
+                            value={this.state.emailText} />
                             <View style={styles.underline} />
                         <TextInput
                             autocapitalize="none"
@@ -101,11 +101,11 @@ var LoginPage = React.createClass({
                             var ref = new Firebase("https://eyespot-658a5.firebaseio.com");
 
                             ref.authWithPassword({
-                              email: this.state.usernameText,
+                              email: this.state.emailText,
                               password : this.state.passwordText
                             }, function(error, authData) {
                               if (error) {
-                                Alert.alert("Login Failed", error);
+                                Alert.alert("Login Failed", error.message);
                               } else {
                                  this.props.navigator.push({
                                     title: 'TabBarLayout',
