@@ -32,6 +32,8 @@ import SignUpPage from '../SignupPage';
 import TabBarLayout from '../../layouts/TabBarLayout';
 import DiscoverPage from '../DiscoverPage';
 
+const firebaseApp = require('../../firebase');
+
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -74,8 +76,8 @@ var LoginPage = React.createClass({
                     </View>
                     <View style={styles.section}>
                         <TextInput
-                            autocapitalize="none"
-                            autocorrect={false}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             onChangeText={(usernameText) => this.setState({usernameText})}
                             maxLength={30}
                             placeholder="USER NAME"
@@ -84,8 +86,8 @@ var LoginPage = React.createClass({
                             value={this.state.usernameText} />
                             <View style={styles.underline} />
                         <TextInput
-                            autocapitalize="none"
-                            autocorrect={false}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             onChangeText={(passwordText) => this.setState({passwordText})}
                             maxLength={16}
                             placeholder="PASSWORD"
@@ -98,24 +100,18 @@ var LoginPage = React.createClass({
                     <View style={styles.section}>
                            <TouchableOpacity onPress={() => {
 
-                            var ref = new Firebase("https://eyespot-658a5.firebaseio.com");
-
-                            ref.authWithPassword({
-                              email: this.state.usernameText,
-                              password : this.state.passwordText
-                            }, function(error, authData) {
-                              if (error) {
-                                Alert.alert("Login Failed", error);
-                              } else {
+                            firebaseApp.auth().signInWithEmailAndPassword(this.state.usernameText, this.state.passwordText)
+                            .then((user) => {
                                  this.props.navigator.push({
                                     title: 'TabBarLayout',
                                     component: TabBarLayout,
                                     passProps: {}
                                 });
                                 console.log("Authenticated successfully with payload:", authData);
-                              }
-                            });
-              
+                            }).catch((error) =>{
+                              Alert.alert("Login Failed", error);
+                            })
+
                           }}>
                             <Image
                               source={require('../../partials/img/login-with-email.png')}

@@ -31,6 +31,9 @@ import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import { LoginManager } from 'react-native-fbsdk';
 
+const firebaseApp = require('../../firebase');
+
+
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
@@ -88,30 +91,30 @@ var SignUpPage = React.createClass({
                     </View>
                     <View style={styles.section}>
                          <TextInput
-                            autocapitalize="none"
-                            autocorrect={false}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             onChangeText={(nameText) => this.setState({nameText})}
                             maxLength={25}
                             placeholder="NAME"
                             placeholderTextColor="#777"
-                            secureTextEntry={true}
+                            secureTextEntry={false}
                             style={[styles.input, styles.name]}
                             value={this.state.nameText} />
                             <View style={styles.underline} />
                         <TextInput
-                            autocapitalize="none"
-                            autocorrect={false}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             onChangeText={(nicknameText) => this.setState({nicknameText})}
                             maxLength={25}
                             placeholder="NICKNAME"
                             placeholderTextColor="#777"
-                            secureTextEntry={true}
+                            secureTextEntry={false}
                             style={[styles.input, styles.nickname]}
                             value={this.state.nicknameText} />
                             <View style={styles.underline} />
                         <TextInput
-                            autocapitalize="none"
-                            autocorrect={false}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             onChangeText={(emailAddressText) => this.setState({emailAddressText})}
                             maxLength={30}
                             placeholder="EMAIL ADDRESS"
@@ -120,8 +123,8 @@ var SignUpPage = React.createClass({
                             value={this.state.emailAddressText} />
                             <View style={styles.underline} />
                         <TextInput
-                            autocapitalize="none"
-                            autocorrect={false}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             onChangeText={(passwordText) => this.setState({passwordText})}
                             maxLength={16}
                             placeholder="PASSWORD"
@@ -133,22 +136,19 @@ var SignUpPage = React.createClass({
                     </View>
                     <View style={styles.section}>
                         <TouchableOpacity onPress={() => {
-                            var ref = new Firebase("https://eyespot-658a5.firebaseio.com");
-                            ref.createUser({
-                              email    : this.state.emailAddressText,
-                              password : this.state.passwordText
-                            }, function(error, userData) {
-                              if (error) {
-                                switch (error.code) {
-                                  case "EMAIL_TAKEN":
-                                    Alert.alert("The new user account cannot be created because the email is already in use.");
-                                    break;
-                                  case "INVALID_EMAIL":
-                                    Alert.alert("The specified email is not a valid email.");
-                                    break;
-                                  default:
-                                    Alert.alert("Error creating user", error);
-                                }
+                            firebaseApp.auth().createUserWithEmailAndPassword(this.state.emailAddressText, this.state.passwordText)
+                            .then((user) => {
+                              Alert.alert("Successfully created user account with uid:", user.uid);
+                            }).catch((error) => {
+                              switch (error.code) {
+                                case "EMAIL_TAKEN":
+                                  Alert.alert("The new user account cannot be created because the email is already in use.");
+                                  break;
+                                case "INVALID_EMAIL":
+                                  Alert.alert("The specified email is not a valid email.");
+                                  break;
+                                default:
+                                  Alert.alert("Error creating user", error.message);
                               }
                             });
                           }}>

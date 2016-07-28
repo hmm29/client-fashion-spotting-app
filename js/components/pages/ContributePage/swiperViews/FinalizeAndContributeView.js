@@ -32,7 +32,7 @@ var FinalizeAndContributeView = React.createClass({
 		return {
 			activeExcitingTags: ['Wow!'],
 			excitingTags: [],
-			input: 'I literally fell in love with this orangy shirt. Anthropologie made my day today!'
+			input: ''
 		}
 	},
 
@@ -104,6 +104,7 @@ var FinalizeAndContributeView = React.createClass({
 	},
 
 	render() {
+    console.log(this.props.imageData);
 		const { item, store, location } = this.state.contributeSummary;
 
 		return (
@@ -111,10 +112,11 @@ var FinalizeAndContributeView = React.createClass({
 				<Text style={styles.text}>FINALIZE AND CONTRIBUTE</Text>
 				<View style={[styles.section, {left: -(width/10)}]}>
 					<View style={styles.contributeSummary}>
-						<Image source={require('../../../partials/icons/contribute/img/contribute-summary-test-photo.png')} style={styles.contributeSummaryPhoto} />
+						<Image source={{uri:this.props.imageData.imgSource.uri}} style={styles.contributeSummaryPhoto} />
 						<View style={styles.rightContainer}>
 							<Text style={styles.contributeSummaryText}>
-								This <Text style={styles.underline}>{item}</Text> was spotted at <Text style={styles.underline}>{store}</Text> in <Text style={styles.underline}>{location}</Text>.
+								This <Text style={styles.underline}>{item}
+              </Text> was spotted at <Text style={styles.underline}>{this.props.productAndLocationData.store.name}</Text> in <Text style={styles.underline}>{this.props.productAndLocationData.store.vicinity}</Text>.
 							</Text>
 						</View>
 					</View>

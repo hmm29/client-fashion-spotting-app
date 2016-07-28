@@ -97,7 +97,6 @@ var UserProducts = React.createClass({
             return null
           }
 
-
           return (
             <Product key={i} product={product} user={product.user}/>
           );
