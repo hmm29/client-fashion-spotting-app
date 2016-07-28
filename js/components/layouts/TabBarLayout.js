@@ -23,11 +23,12 @@ import {
  View
 } from 'react-native';
 
-import Firebase from 'firebase';
 import ContributePage from '../pages/ContributePage';
 import DiscoverPage from '../pages/DiscoverPage';
 import PersonalPage from '../pages/PersonalPage';
 import Tabs from 'react-native-tabs';
+
+const firebaseApp = require('../firebase');
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 const iconOffset = 40;
@@ -75,12 +76,11 @@ var TabBarLayout = React.createClass({
     * retrieve data from firebase data store
     */
 
-    var ref = new Firebase("https://eyespot-658a5.firebaseio.com");
+    var ref = firebaseApp.database().ref();
     var dataStore = {};
+
     ref.on('value', (snap) => {
-      snap.forEach((child) => {
-        dataStore[child.key()] = child.val();
-      });
+      dataStore = snap.val();
 
       /*
        * set firebase data to component's state

@@ -20,6 +20,7 @@ import {
   Text,
   TextInput,
   View,
+  AsyncStorage,
   TouchableOpacity
 } from 'react-native';
 
@@ -101,6 +102,7 @@ var DiscoverPage = React.createClass({
      */
 
     render() {
+
 
       // FIXME:
       const filters = [

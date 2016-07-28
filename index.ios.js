@@ -13,6 +13,7 @@ import React, { Component } from 'react';
 import {
   Alert,
   AppRegistry,
+  AsyncStorage,
   NavigatorIOS,
   NetInfo,
   StatusBar,
@@ -24,6 +25,9 @@ import LoginPage from './js/components/pages/LoginPage';
 import ContributePage from './js/components/pages/ContributePage';
 import TabBarLayout from './js/components/layouts/TabBarLayout';
 import MapPage from './js/components/pages/MapPage';
+
+const firebaseApp = require('./js/components/firebase');
+
 
 /*
  * defines the Eyespot class
@@ -65,6 +69,9 @@ class Eyespot extends Component {
 
   render() {
 
+    firebaseApp.auth().onAuthStateChanged(function(user){
+      AsyncStorage.setItem('@MyStore:uid', user.uid);
+    })
     /*
      * nextRouteProps: properties to pass to next route
      */

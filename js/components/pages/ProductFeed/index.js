@@ -63,9 +63,9 @@ var Products = React.createClass({
         * return Product component for each product
         */
 
-        // const user = dataStore.users[product.user.id]; // FIXME: use real user
 
-        const user = product.user;
+        const user = dataStore.users[product.userId];
+
 
         return (
           <Product
@@ -117,8 +117,8 @@ var ProductFeed = React.createClass({
            <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
            <View style={styles.pageTitle}>
              <Image source={EyespotNegativeLogo}
-                             style={styles.pageTitleLogo} />
-                           <Text style={styles.pageTitleText}>{this.props.categoryName.toUpperCase()}</Text>
+                   style={styles.pageTitleLogo} />
+             <Text style={styles.pageTitleText}>{this.props.categoryName.toUpperCase()}</Text>
            </View>
            <View />
          </Header>
