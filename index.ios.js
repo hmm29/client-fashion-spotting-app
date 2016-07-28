@@ -71,9 +71,7 @@ class Eyespot extends Component {
 
     firebaseApp.auth().onAuthStateChanged(function(user){
       AsyncStorage.setItem('@MyStore:uid', user.uid);
-      firebaseApp.database().ref(`users/${user.uid}`).update(true);
     })
-
     /*
      * nextRouteProps: properties to pass to next route
      */

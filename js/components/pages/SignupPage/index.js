@@ -139,6 +139,12 @@ var SignUpPage = React.createClass({
                             firebaseApp.auth().createUserWithEmailAndPassword(this.state.emailAddressText, this.state.passwordText)
                             .then((user) => {
                               Alert.alert("Successfully created user account with uid:", user.uid);
+                              firebaseApp.database().ref(`users/${user.uid}`).set({
+                                uid: user.uid,
+                                email: this.state.emailAddressText,
+                                name: this.state.nameText,
+                                username: this.state.nicknameText
+                              });
                             }).catch((error) => {
                               switch (error.code) {
                                 case "EMAIL_TAKEN":

@@ -34,7 +34,6 @@ function uploadNewProduct(imageData, productAndLocationData, finalizeAndContribu
           url: response.secure_url
         },
         store: productAndLocationData.store,
-        item: finalizeAndContribute.contributeSummary.item,
         category: productAndLocationData.category,
         tags: finalizeAndContribute.activeExcitingTags,
         comment: finalizeAndContribute.input,

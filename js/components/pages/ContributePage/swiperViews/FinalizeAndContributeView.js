@@ -42,11 +42,7 @@ var FinalizeAndContributeView = React.createClass({
 	},
 
 	getContributeSummary() {
-		this.setState({contributeSummary: {
-			item: 'blouse',
-		}}, function(){
-      this.props.updateUploadData("finalizeAndContributeView", this.state);
-    });
+    this.props.updateUploadData("finalizeAndContributeView", this.state);
 	},
 
 	getExcitingTags() {
@@ -104,8 +100,6 @@ var FinalizeAndContributeView = React.createClass({
 	},
 
 	render() {
-    console.log(this.props.imageData);
-		const { item, store, location } = this.state.contributeSummary;
 
 		return (
 			<View style={styles.container}>
@@ -115,8 +109,7 @@ var FinalizeAndContributeView = React.createClass({
 						<Image source={{uri:this.props.imageData.imgSource.uri}} style={styles.contributeSummaryPhoto} />
 						<View style={styles.rightContainer}>
 							<Text style={styles.contributeSummaryText}>
-								This <Text style={styles.underline}>{item}
-              </Text> was spotted at <Text style={styles.underline}>{this.props.productAndLocationData.store.name}</Text> in <Text style={styles.underline}>{this.props.productAndLocationData.store.vicinity}</Text>.
+								This was spotted at <Text style={styles.underline}>{this.props.productAndLocationData.store.name}</Text> in <Text style={styles.underline}>{this.props.productAndLocationData.store.vicinity}</Text>.
 							</Text>
 						</View>
 					</View>
