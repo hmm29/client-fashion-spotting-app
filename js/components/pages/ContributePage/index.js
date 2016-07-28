@@ -31,7 +31,6 @@ import Footer from '../../partials/Footer';
 import Header from '../../partials/Header';
 import ProductAndLocationView from './swiperViews/ProductAndLocationView';
 import Swiper from 'react-native-swiper';
-import Firebase from 'firebase';
 import uploadNewProduct from './helpers/upload.js';
 
 var NUMBER_OF_SWIPER_VIEWS = 3;
@@ -51,8 +50,8 @@ var ContributePage = React.createClass({
         return {
           currentSwiperPageIndex: 0,
           showNextButton: false,
-          imageData: "",
-          productAndLocationData: "",
+          imageData: {imgSource:{}},
+          productAndLocationData: {store:{}},
           finalizeAndContributeData: ""
         }
     },
@@ -181,6 +180,8 @@ var ContributePage = React.createClass({
               </View>
               <View style={styles.slide}>
                 <FinalizeAndContributeView
+                  imageData={this.state.imageData}
+                  productAndLocationData={this.state.productAndLocationData}
                   updateUploadData={this.updateUploadData}
                   handleShowNextButton={this.handleShowNextButton}/>
               </View>

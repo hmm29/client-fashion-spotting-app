@@ -42,7 +42,6 @@ var ProductAndLocationView = React.createClass({
   updateParent(){
     var storeObject = {};
     if(this.state.storeSelected.name){
-      console.log(this.state.storeSelected);
       var vicinity = this.state.storeSelected.vicinity;
       vicinity = vicinity.replace("#", "");
       storeObject = {
