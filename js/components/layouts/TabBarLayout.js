@@ -30,6 +30,15 @@ import Tabs from 'react-native-tabs';
 
 const firebaseApp = require('../firebase');
 
+function addKeyToProducts(dataStore){
+  var product_keys = Object.keys(dataStore.products);
+  var products = dataStore.products;
+  product_keys.map(function(key){
+    products[key]['.key'] = key;
+  })
+  return products
+}
+
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 const iconOffset = 40;
 
@@ -58,8 +67,6 @@ var TabBarLayout = React.createClass({
 		return {
 			selected: 'discover',
       loaded: false,
-      categories: "",
-      products: "",
       users: "",
       dataStore: ""
 
@@ -81,19 +88,15 @@ var TabBarLayout = React.createClass({
 
     ref.on('value', (snap) => {
       dataStore = snap.val();
-
       /*
        * set firebase data to component's state
        */
+
       this.setState({
         dataStore: dataStore,
-        categories: dataStore.categories,
-        products: dataStore.products,
-        users: dataStore.users,
         loaded: true
       })
     });
-
 
    },
 
@@ -101,7 +104,6 @@ var TabBarLayout = React.createClass({
   	_renderContent() {
 	 	   let title = this.state.selected;
 
-      // FIXME: loading screen
       if(!this.state.loaded){
         return (
           <View style={styles.centering}>
@@ -114,17 +116,14 @@ var TabBarLayout = React.createClass({
 	    if (title === 'discover') {
         return (
           <DiscoverPage
-            dataStore={this.state.dataStore}
             navigator={this.props.navigator} />
         )
 	    }
 
 	    else if (title === 'personal') {
-        const user = this.state.users['user_1'] // HACK: replace with Firebase signin
 	      return (
           <PersonalPage
             dataStore={this.state.dataStore}
-            user={user}
             navigator={this.props.navigator} />
         )
 	    }

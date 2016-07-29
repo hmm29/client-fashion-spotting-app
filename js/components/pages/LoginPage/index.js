@@ -106,7 +106,7 @@ var LoginPage = React.createClass({
                                     passProps: {}
                                 });
                                 console.log("Authenticated successfully with payload:", user);
-                            }).catch((error) =>{
+                            }).catch((error) => {
                               Alert.alert("Login Failed", error.message);
                             })
 

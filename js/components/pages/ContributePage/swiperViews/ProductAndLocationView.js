@@ -53,9 +53,31 @@ var ProductAndLocationView = React.createClass({
 	getInitialState() {
 		return {
   		storeSelected: {},
-      categorySelected: {}
+      categorySelected: {},
+      location: ""
 		}
 	},
+  componentDidMount(){
+    var self = this;
+    navigator.geolocation.getCurrentPosition((position) => {
+        var coords = position.coords;
+        self.setState({
+          location : {
+            lat: coords.latitude,
+            lng: coords.longitude
+          }
+        })
+      },
+      (error) => {
+        self.setState({
+          location : washingtonDC
+        })
+        alert(error.message);
+      },
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+
+  },
 
   updateParent(){
     var storeObject = {};
@@ -106,7 +128,11 @@ var ProductAndLocationView = React.createClass({
   },
 
 	render() {
-		const { storeSelected } = this.state;
+		const { storeSelected, categorySelected, location } = this.state;
+
+    if(!location){
+      return null
+    }
 		return (
 			<View style={styles.container}>
 				<Text style={styles.text}>PRODUCT AND LOCATION</Text>

@@ -102,8 +102,7 @@ var DiscoverPage = React.createClass({
      */
 
     render() {
-
-
+      
       // FIXME:
       const filters = [
         {
