@@ -56,6 +56,18 @@ var ContributePage = React.createClass({
         }
     },
 
+    navigateBack() {
+      if(this.state.currentSwiperPageIndex > 0) {
+        this.refs[SWIPER_REF].scrollBy(-1);
+        this.setState({
+            currentSwiperPageIndex: this.state.currentSwiperPageIndex-1,
+            showNextButton: true
+          });
+      } else {
+        this.props.navigator.pop();
+      }
+    },
+
     updateUploadData(type, data) {
 
       switch (type) {
@@ -94,7 +106,7 @@ var ContributePage = React.createClass({
    _renderHeader() {
        return (
            <Header containerStyle={styles.headerContainer}>
-           	 <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
+           	 <BackIcon color='white' onPress={this.navigateBack} />
 	           <Text style={styles.pageTitleText}>CONTRIBUTE</Text>
              <View />
            </Header>
@@ -116,20 +128,18 @@ var ContributePage = React.createClass({
 
 	render() {
 
-    // console.log(this.state);
-
     var confirmButton;
 
-    // FIXME: harrison you can change this to what how you wanted next button to work
     if(this.state.currentSwiperPageIndex == 2){
       confirmButton =
         <TouchableOpacity
           onPress={() => {
-            this.upload()
+            this.upload();
+            this.props.navigator.pop();
           }}
           style={[styles.footerContainer]}>
             <View style={styles.footer}>
-            <Text style={styles.footerText}>{"CONTRIBUTE".toUpperCase()}</Text>
+            <Text style={styles.footerText}>{"CONTRIBUTE"}</Text>
             </View>
         </TouchableOpacity>;
     }

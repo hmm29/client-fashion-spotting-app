@@ -50,7 +50,7 @@ var LoginPage = React.createClass({
     getInitialState() {
         return {
             passwordText: '',
-            usernameText: ''
+            emailText: ''
         };
     },
 
@@ -78,12 +78,12 @@ var LoginPage = React.createClass({
                         <TextInput
                             autoCapitalize="none"
                             autoCorrect={false}
-                            onChangeText={(usernameText) => this.setState({usernameText})}
+                            onChangeText={(emailText) => this.setState({emailText})}
                             maxLength={30}
-                            placeholder="USER NAME"
+                            placeholder="EMAIL"
                             placeholderTextColor="#777"
-                            style={[styles.input, styles.username]}
-                            value={this.state.usernameText} />
+                            style={styles.input}
+                            value={this.state.emailText} />
                             <View style={styles.underline} />
                         <TextInput
                             autoCapitalize="none"
@@ -99,8 +99,7 @@ var LoginPage = React.createClass({
                     </View>
                     <View style={styles.section}>
                            <TouchableOpacity onPress={() => {
-
-                            firebaseApp.auth().signInWithEmailAndPassword(this.state.usernameText, this.state.passwordText)
+                            firebaseApp.auth().signInWithEmailAndPassword(this.state.emailText, this.state.passwordText)
                             .then((user) => {
                                  this.props.navigator.push({
                                     title: 'TabBarLayout',
@@ -221,8 +220,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: height / 40,
         width: width
-    },
-    username: {}
+    }
 });
 
 /*

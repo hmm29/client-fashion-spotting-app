@@ -19,6 +19,8 @@ import {
   View
 } from 'react-native';
 
+import Communications from 'react-native-communications';
+
 var { KDSocialShare } = NativeModules;
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -70,8 +72,8 @@ var FinalizeAndContributeView = React.createClass({
       });
 	},
 
-	onShare(appName) {
-		switch(appName) {
+	onShare(app, contributeSummary=null) {
+		switch(app) {
 			case 'facebook':
 				KDSocialShare.shareOnFacebook({
 			        'text':'Global democratized marketplace for art',
@@ -96,6 +98,11 @@ var FinalizeAndContributeView = React.createClass({
 			        console.log(results);
 			      }
 			    );
+			case 'email':
+				if(contributeSummary) Communications.email(null, null, null, 'Checkout out my new post on Eyespot!', 'Look at the cool product I spotted.');
+				else Communications.email(null, null, null, 'Checkout out my new post on Eyespot!', 'Look at the cool product I spotted.');
+			case 'SMS':
+				Communications.text();
 		}
 	},
 
