@@ -106,8 +106,8 @@ var LoginPage = React.createClass({
                                     component: TabBarLayout,
                                     passProps: {}
                                 });
-                                console.log("Authenticated successfully with payload:", authData);
-                            }).catch((error) =>{
+                                console.log("Authenticated successfully with payload:", user);
+                            }).catch((error) => {
                               Alert.alert("Login Failed", error.message);
                             })
 

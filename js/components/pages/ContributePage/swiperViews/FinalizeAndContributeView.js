@@ -108,12 +108,14 @@ var FinalizeAndContributeView = React.createClass({
 
 	render() {
 
+    const uri = this.props.imageData.imgSource ? this.props.imageData.imgSource.uri : ""
+
 		return (
 			<View style={styles.container}>
 				<Text style={styles.text}>FINALIZE AND CONTRIBUTE</Text>
 				<View style={[styles.section, {left: -(width/10)}]}>
 					<View style={styles.contributeSummary}>
-						<Image source={{uri:this.props.imageData.imgSource.uri}} style={styles.contributeSummaryPhoto} />
+						<Image source={{uri: uri}} style={styles.contributeSummaryPhoto} />
 						<View style={styles.rightContainer}>
 							<Text style={styles.contributeSummaryText}>
 								This was spotted at <Text style={styles.underline}>{this.props.productAndLocationData.store.name}</Text> in <Text style={styles.underline}>{this.props.productAndLocationData.store.vicinity}</Text>.
