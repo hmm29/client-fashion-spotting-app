@@ -30,7 +30,6 @@ import FormValidator from 'validate.js';
 import { LoginManager } from 'react-native-fbsdk';
 import SignUpPage from '../SignupPage';
 import TabBarLayout from '../../layouts/TabBarLayout';
-import DiscoverPage from '../DiscoverPage';
 
 const firebaseApp = require('../../firebase');
 
@@ -106,9 +105,9 @@ var LoginPage = React.createClass({
                                     component: TabBarLayout,
                                     passProps: {}
                                 });
-                                console.log("Authenticated successfully with payload:", authData);
+                                console.log("Authenticated successfully with payload:", user);
                             }).catch((error) =>{
-                              Alert.alert("Login Failed", error);
+                              Alert.alert("Login Failed", error.message);
                             })
 
                           }}>
@@ -127,8 +126,8 @@ var LoginPage = React.createClass({
                                   alert('Login success with permissions: '
                                     + result.grantedPermissions.toString());
                                   this.props.navigator.replace({
-                                    title: 'DiscoverPage',
-                                    component: DiscoverPage,
+                                    title: 'TabBarLayout',
+                                    component: TabBarLayout,
                                     passProps: {}
                                   });
                                 }

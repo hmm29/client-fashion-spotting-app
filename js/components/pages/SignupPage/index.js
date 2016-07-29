@@ -24,15 +24,12 @@ import {
   StyleSheet
 } from 'react-native';
 
-import DiscoverPage from '../DiscoverPage';
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import { LoginManager } from 'react-native-fbsdk';
-
-const firebaseApp = require('../../firebase');
-
+import TabBarLayout from '../../layouts/TabBarLayout';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -91,30 +88,30 @@ var SignUpPage = React.createClass({
                     </View>
                     <View style={styles.section}>
                          <TextInput
-                            autoCapitalize="none"
-                            autoCorrect={false}
+                            autocapitalize="none"
+                            autocorrect={false}
                             onChangeText={(nameText) => this.setState({nameText})}
                             maxLength={25}
                             placeholder="NAME"
                             placeholderTextColor="#777"
-                            secureTextEntry={false}
+                            secureTextEntry={true}
                             style={[styles.input, styles.name]}
                             value={this.state.nameText} />
                             <View style={styles.underline} />
                         <TextInput
-                            autoCapitalize="none"
-                            autoCorrect={false}
+                            autocapitalize="none"
+                            autocorrect={false}
                             onChangeText={(nicknameText) => this.setState({nicknameText})}
                             maxLength={25}
                             placeholder="NICKNAME"
                             placeholderTextColor="#777"
-                            secureTextEntry={false}
+                            secureTextEntry={true}
                             style={[styles.input, styles.nickname]}
                             value={this.state.nicknameText} />
                             <View style={styles.underline} />
                         <TextInput
-                            autoCapitalize="none"
-                            autoCorrect={false}
+                            autocapitalize="none"
+                            autocorrect={false}
                             onChangeText={(emailAddressText) => this.setState({emailAddressText})}
                             maxLength={30}
                             placeholder="EMAIL ADDRESS"
@@ -123,8 +120,8 @@ var SignUpPage = React.createClass({
                             value={this.state.emailAddressText} />
                             <View style={styles.underline} />
                         <TextInput
-                            autoCapitalize="none"
-                            autoCorrect={false}
+                            autocapitalize="none"
+                            autocorrect={false}
                             onChangeText={(passwordText) => this.setState({passwordText})}
                             maxLength={16}
                             placeholder="PASSWORD"
@@ -136,25 +133,22 @@ var SignUpPage = React.createClass({
                     </View>
                     <View style={styles.section}>
                         <TouchableOpacity onPress={() => {
-                            firebaseApp.auth().createUserWithEmailAndPassword(this.state.emailAddressText, this.state.passwordText)
-                            .then((user) => {
-                              Alert.alert("Successfully created user account with uid:", user.uid);
-                              firebaseApp.database().ref(`users/${user.uid}`).set({
-                                uid: user.uid,
-                                email: this.state.emailAddressText,
-                                name: this.state.nameText,
-                                username: this.state.nicknameText
-                              });
-                            }).catch((error) => {
-                              switch (error.code) {
-                                case "EMAIL_TAKEN":
-                                  Alert.alert("The new user account cannot be created because the email is already in use.");
-                                  break;
-                                case "INVALID_EMAIL":
-                                  Alert.alert("The specified email is not a valid email.");
-                                  break;
-                                default:
-                                  Alert.alert("Error creating user", error.message);
+                            var ref = new Firebase("https://eyespot-658a5.firebaseio.com");
+                            ref.createUser({
+                              email    : this.state.emailAddressText,
+                              password : this.state.passwordText
+                            }, function(error, userData) {
+                              if (error) {
+                                switch (error.code) {
+                                  case "EMAIL_TAKEN":
+                                    Alert.alert("The new user account cannot be created because the email is already in use.");
+                                    break;
+                                  case "INVALID_EMAIL":
+                                    Alert.alert("The specified email is not a valid email.");
+                                    break;
+                                  default:
+                                    Alert.alert("Error creating user", error);
+                                }
                               }
                             });
                           }}>
@@ -173,8 +167,8 @@ var SignUpPage = React.createClass({
                                   alert('Login success with permissions: '
                                     + result.grantedPermissions.toString());
                                   this.props.navigator.replace({
-                                    title: 'DiscoverPage',
-                                    component: DiscoverPage,
+                                    title: 'TabBarLayout',
+                                    component: TabBarLayout,
                                     passProps: {}
                                   });
                                 }
