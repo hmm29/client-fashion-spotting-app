@@ -15,6 +15,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import {
+ AsyncStorage,
  Dimensions,
  Image,
  StyleSheet,
@@ -81,7 +82,6 @@ var UserProducts = React.createClass({
     }
 
 
-
     return (
       <View>
         {Object.keys(user.products).map((key, i) => {
@@ -118,9 +118,26 @@ var PersonalPage = React.createClass({
     * specifies types for properties that this component receives
     */
 
+   getInitialState(){
+
+      return {
+        user : "",
+        userId : ""
+      }
+   },
+
+
    propTypes: {
      dataStore: PropTypes.object,
-     user: PropTypes.object
+   },
+
+   componentDidMount(){
+     var self = this;
+     AsyncStorage.getItem('@MyStore:uid').then((userId) => {
+       self.setState({ userId : userId });
+     })
+
+
    },
 
    /*
@@ -146,10 +163,13 @@ var PersonalPage = React.createClass({
 
    render() {
 
-     const { user, dataStore } = this.props;
+     const { dataStore } = this.props;
 
+     var user = this.props.dataStore.users[this.state.userId];
+     console.log(user);
+     console.log(dataStore)
      if(!user){
-       return null //FIXME add loading
+       return null
      }
 
      return (

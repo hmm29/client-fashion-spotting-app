@@ -14,12 +14,28 @@
 
 import React from 'react';
 import {
+ AsyncStorage,
  Dimensions,
  StyleSheet,
  View,
  Image,
- Text
+ Text,
+ TouchableOpacity
 } from 'react-native';
+
+const firebaseApp = require('../../../firebase');
+
+function getNumLikes(likes){
+  var likeKeys = Object.keys(likes);
+  let ret = 0;
+  likeKeys.map(function(key){
+    if(likes[key]){
+      ret += 1;
+    }
+  })
+  return ret
+
+}
 
 
 var Share = React.createClass({
@@ -34,16 +50,49 @@ var Share = React.createClass({
 
 
 var Likes = React.createClass({
+  likedByUser(userId){
+    if(this.props.product.likes[userId]){
+      return true
+    }
+    else{
+      return false
+    }
+  },
+  addLike(userId, productId){
+    console.log(`products/${productId}/likes/${userId}`)
+    firebaseApp.database().ref(`products/${productId}/likes/${userId}`).set(true);
+  },
+  removeLike(userId, productId){
+    firebaseApp.database().ref(`products/${productId}/likes/${userId}`).set(false);
+  },
+  handlePress(){
+    var self = this;
+    const productId = this.props.product['.key'];
+
+    AsyncStorage.getItem('@MyStore:uid').then(function(userId){
+      if(self.likedByUser(userId)){
+        console.log('remove like')
+        self.removeLike(userId, productId);
+      }
+      else{
+        console.log('add like')
+        self.addLike(userId, productId);
+      }
+    })
+  },
+
   render() {
 
-    const { product } = this.props;
-    const likes = product.likes;
-
+    let { product } = this.props;
+    let likes = product.likes;
+    let numLikes = getNumLikes(likes);
 
     return (
       <View style={styles.control}>
-        <Image source={require('../img/like.png')} style={styles.icon}/>
-        <Text style={styles.bodoni}>{likes}</Text>
+        <TouchableOpacity onPress={this.handlePress}>
+          <Image source={require('../img/like.png')} style={styles.icon}/>
+        </TouchableOpacity>
+        <Text style={styles.bodoni}>{numLikes}</Text>
       </View>
     );
   }

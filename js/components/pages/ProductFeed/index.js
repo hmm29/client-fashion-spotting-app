@@ -30,6 +30,8 @@ import FilterBar from '../../partials/FilterBar';
 import Product from '../../partials/Product';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 
+import firebaseApp from '../../firebase';
+
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -38,13 +40,59 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 * this is the code for the feed of products after tapping a panel
 */
 
+
+function addKeyToProducts(allProducts){
+  var product_keys = Object.keys(allProducts);
+  var products = allProducts;
+  product_keys.map(function(key){
+    products[key]['.key'] = key;
+  })
+  return products
+}
+
+
 var Products = React.createClass({
 
-  propTypes: {
-    product_keys: PropTypes.array,
-    navigator: PropTypes.object,
-    dataStore: PropTypes.object
+  getInitialState(){
+    return {
+      dataStore: ""
+    }
   },
+
+  propTypes: {
+    navigator: PropTypes.object,
+    categoryKey: PropTypes.string,
+  },
+
+  componentDidMount(){
+    var products = {};
+    var ref = firebaseApp.database().ref();
+    ref.on('value', (snap) => {
+      if(snap.val()){
+        this.setState({
+          dataStore : snap.val(),
+        })
+      }
+    });
+  },
+
+  filterProductsByCategory(){
+    var dataStore = this.state.dataStore;
+    if(!dataStore){ return null };
+
+    const categories = dataStore.category || {};
+    var productKeys = categories[this.props.categoryKey] ?
+      Object.values(categories[this.props.categoryKey]) : [];
+
+    var allProducts = addKeyToProducts(dataStore.products);
+    var filteredProducts = productKeys.map((productKey) => {
+      return allProducts[productKey];
+    })
+
+    return filteredProducts
+
+  },
+
 
  /*
   * render(): returns JSX that declaratively specifies page UI
@@ -52,19 +100,21 @@ var Products = React.createClass({
 
  render() {
 
-   const { navigator, products, dataStore } = this.props;
+   var { categoryKey, navigator } = this.props;
+
+   var filteredProducts = this.filterProductsByCategory();
+   if(!filteredProducts){ return null }
 
 
    return (
      <View style ={styles.products}>
-       {products.map((product, i) => {
+       {filteredProducts.map((product, i) => {
 
        /*
         * return Product component for each product
         */
 
-
-        const user = dataStore.users[product.userId];
+        const user = this.state.dataStore.users[product.userId];
 
 
         return (
@@ -74,12 +124,14 @@ var Products = React.createClass({
             product={product}
             user={user}/>
         );
-       })}
+      },this)}
 
      </View>
    );
  }
 });
+
+
 
 /*
 * defines the ProductFeed class
@@ -92,12 +144,17 @@ var ProductFeed = React.createClass({
     */
 
    propTypes: {
-     products: PropTypes.array,
      navigator: PropTypes.object,
-     dataStore: PropTypes.object
+     categoryName: PropTypes.string
    },
 
-   /*
+   getInitialState(){
+     return {
+     }
+   },
+
+
+    /*
     * _renderFooter(): renders the imported footer component
     */
 
@@ -131,6 +188,7 @@ var ProductFeed = React.createClass({
 
    render() {
 
+
      return (
        <View style={styles.layeredPageContainer}>
          {this._renderHeader()}
@@ -139,7 +197,9 @@ var ProductFeed = React.createClass({
            noScroll={false}>
            <View style={styles.container}>
              <Products
-               {...this.props}/>
+               navigator={this.props.navigator}
+               categoryKey={this.props.categoryKey}
+               />
            </View>
          </EyespotPageBase>
        </View>

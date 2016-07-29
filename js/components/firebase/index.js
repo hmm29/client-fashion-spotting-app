@@ -13,4 +13,5 @@ var config = {
 
 const firebaseApp = firebase.initializeApp(config);
 
+
 module.exports = firebaseApp;

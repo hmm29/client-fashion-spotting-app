@@ -32,12 +32,6 @@ String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
 
-function productsInCategory(category_key, dataStore){
-
-  const categories = dataStore.category || {};
-
-  return categories[category_key] ? Object.values(categories[category_key]) : []
-}
 
 var Panel = React.createClass({
 
@@ -49,18 +43,13 @@ var Panel = React.createClass({
 
   render(){
 
-
     let { navigator, category_key, dataStore } = this.props;
+
+
     const category = Categories.categoryThumbMap[category_key];
     const thumbImg = category.thumb;
     const name = category.name;
 
-
-    // get products in this panel's category
-    const product_keys = productsInCategory(category_key, dataStore);
-    const products = product_keys.map(function(key){
-      return dataStore.products[key]
-    });
 
     return (
       <TouchableOpacity
@@ -70,15 +59,10 @@ var Panel = React.createClass({
           title: 'ProductFeed',
           component: ProductFeed,
           passProps: {
-              product_keys: product_keys,
-              products: products,
-              dataStore : dataStore,
-              categoryKey: category_key && category_key.capitalize(),
+              categoryKey: category_key,
               categoryName: name
           }
-        })}
-
-        >
+        })}>
         <Image source={thumbImg} style={styles.panelImage}/>
       </TouchableOpacity>
     );
