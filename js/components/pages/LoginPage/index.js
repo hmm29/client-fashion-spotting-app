@@ -108,7 +108,7 @@ var LoginPage = React.createClass({
                                 });
                                 console.log("Authenticated successfully with payload:", authData);
                             }).catch((error) =>{
-                              Alert.alert("Login Failed", error);
+                              Alert.alert("Login Failed", error.message);
                             })
 
                           }}>
