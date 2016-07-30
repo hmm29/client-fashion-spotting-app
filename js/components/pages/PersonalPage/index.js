@@ -30,7 +30,10 @@ import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import FilterBar from '../../partials/FilterBar';
 import Product from '../../partials/Product';
+import Notifications from '../../partials/Notifications';
+import NotificationsPage from '../NotificationsPage';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
+
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -157,6 +160,19 @@ var PersonalPage = React.createClass({
        );
    },
 
+   showNotifications(){
+     var user = this.props.dataStore.users[this.state.userId];
+
+     this.props.navigator.push({
+       title: 'Notifications',
+       component: NotificationsPage,
+       passProps:{
+         user: user,
+         dataStore: this.props.dataStore
+       }
+     });
+   },
+
    /*
     * render(): returns JSX that declaratively specifies page UI
     */
@@ -166,8 +182,6 @@ var PersonalPage = React.createClass({
      const { dataStore } = this.props;
 
      var user = this.props.dataStore.users[this.state.userId];
-     console.log(user);
-     console.log(dataStore)
      if(!user){
        return null
      }
@@ -189,6 +203,8 @@ var PersonalPage = React.createClass({
                <UserProducts user={user} dataStore={dataStore}/>
              </View>
          </EyespotPageBase>
+         <Notifications user={user} dataStore={dataStore} showNotifications={this.showNotifications}/>
+
        </View>
      );
    }

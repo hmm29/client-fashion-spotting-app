@@ -1,8 +1,8 @@
 /**
-* NotificationsPage.js
-* See NotificationsPage info
+* Notifications.js
+* See Notifications info
 *
-* @providesModule NotificationsPage
+* @providesModule Notifications
 * @flow
 */
 
@@ -22,13 +22,11 @@ import {
  View,
  ListView,
  Image,
- TouchableHighlight
+ TouchableOpacity
 } from 'react-native';
 
-import notification from '../../partials/img/notification.png';
+import notification from '../img/notification.png';
 import helpers from '../../helpers';
-import firebaseApp from '../../firebase';
-
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -115,7 +113,6 @@ var NotificationsList = React.createClass({
       <View style={styles.notificationsList}>
         <Text style={styles.listHeader}>Notifications</Text>
         <ListView
-          automaticallyAdjustContentInsets={false}
           enableEmptySections={true}
           style={styles.listView}
           dataSource={this.state.dataSource}
@@ -138,12 +135,12 @@ var NotificationsList = React.createClass({
 
 
 /*
-* defines the NotificationsPage class
-* this is the code for each NotificationsPage in the Category Feed
+* defines the Notifications class
+* this is the code for each Notifications in the Category Feed
 */
 
 
-var NotificationsPage = React.createClass({
+var Notifications = React.createClass({
 
   propTypes: {
     navigator: PropTypes.object,
@@ -153,21 +150,6 @@ var NotificationsPage = React.createClass({
  /*
   * render(): returns JSX that declaratively specifies page UI
   */
-
-  componentDidMount(){
-    var products = {};
-    var self = this;
-    //not immediately
-    setTimeout(function(){
-      var notifications = self.props.user.notifications;
-      for(var key in notifications){
-        notifications[key].read = true;
-      }
-      console.log(notifications);
-      var ref = firebaseApp.database().ref(`users/${self.props.user.uid}/notifications`).set(notifications);
-
-    }, 1000);
-  },
 
   getNewNotifications(){
     if(!this.props.user){
@@ -193,24 +175,15 @@ var NotificationsPage = React.createClass({
     const numNotifcations = this.getNewNotifications();
 
     return (
-      <View style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={()=>this.props.showNotifications()}>
         <View style={styles.tab}>
           <View style={{flex:1}}>
             <Image style={styles.notificationIcon} source={notification}/>
           </View>
           <Text style={styles.notificationNum}>{numNotifcations}</Text>
         </View>
-        <NotificationsList notifications={notificationsArray.reverse()} dataStore={dataStore}/>
-        <TouchableHighlight
-          onPress={() => {
-            this.props.navigator.pop();
-          }}
-          style={[styles.footerContainer]}>
-            <View style={styles.footer}>
-            <Text style={styles.footerText}>BACK</Text>
-            </View>
-        </TouchableHighlight>
-      </View>
+        {/*}<NotificationsList notifications={notificationsArray.reverse()} dataStore={dataStore}/>*/}
+      </TouchableOpacity>
     );
 
   }
@@ -223,18 +196,13 @@ var NotificationsPage = React.createClass({
 */
 const notificationTabWidth = 35;
 const rowImageRadius = 25;
-const rowHeight = 80;
+const rowHeight = 100;
 const red = '#D43F4A';
-const topBarHeight = 50;
-const footerHeight = 60;
-const statusBar = 20;
-
 
 const styles = StyleSheet.create({
   container:{
     position: 'absolute',
     flex:1,
-    backgroundColor:'black',
     width: width,
     height:height,
     top:0,
@@ -279,18 +247,15 @@ const styles = StyleSheet.create({
     fontSize : 24,
     fontWeight: 'bold',
     fontFamily: 'Avenir-Roman',
-    padding:10,
-    height: topBarHeight,
-    flexDirection:'row',
-    alignItems:'center',
+    padding:10
 
   },
   listView:{
     position: 'absolute',
     width: (width - notificationTabWidth),
-    height: height - topBarHeight
   },
   userText:{
+    color: red,
     fontWeight: 'bold'
   },
   row:{
@@ -304,6 +269,7 @@ const styles = StyleSheet.create({
     borderRightWidth:0,
     borderColor: 'gray',
     paddingLeft: 10,
+    backgroundColor:'red'
   },
   rowImage:{
     width: rowImageRadius * 2,
@@ -335,28 +301,7 @@ const styles = StyleSheet.create({
     width: 12,
     backgroundColor: 'gray',
     opacity: .3,
-  },
-  footerContainer: {
-    width,
-    height: footerHeight,
-    position: 'absolute',
-    bottom: statusBar,
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-    width,
-    height: footerHeight,
-
-  },
-  footerText: {
-    color: '#fff',
-    fontSize: height / 40,
-    fontFamily: 'Avenir-Roman',
-    letterSpacing: 2
-  },
+  }
 
 });
 
@@ -364,4 +309,4 @@ const styles = StyleSheet.create({
 * exports this component as a module so it can be imported into other modules
 */
 
-module.exports = NotificationsPage;
+module.exports = Notifications;

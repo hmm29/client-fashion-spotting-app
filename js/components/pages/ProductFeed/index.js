@@ -78,13 +78,14 @@ var Products = React.createClass({
 
   filterProductsByCategory(){
     var dataStore = this.state.dataStore;
+    const products = dataStore.products || [];
     if(!dataStore){ return null };
 
     const categories = dataStore.category || {};
     var productKeys = categories[this.props.categoryKey] ?
       Object.values(categories[this.props.categoryKey]) : [];
 
-    var allProducts = addKeyToProducts(dataStore.products);
+    var allProducts = addKeyToProducts(products);
     var filteredProducts = productKeys.map((productKey) => {
       return allProducts[productKey];
     })
@@ -212,7 +213,6 @@ var ProductFeed = React.createClass({
 */
 
 const sideMargin = 20;
-
 
 const styles = StyleSheet.create({
     container: {
