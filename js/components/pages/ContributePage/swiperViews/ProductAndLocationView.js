@@ -23,6 +23,24 @@ import PlacesNearby from '../../../partials/PlacesNearby';
 import LocationPage from '../../LocationPage';
 import SelectCategory from '../../../partials/SelectCategory';
 
+/* 
+ get current user location
+
+ navigator.geolocation.getCurrentPosition(
+      (position) => {
+        let coords = position.coords;
+        let washingtonDC = {
+          lat: coords.latitude,
+          lng: coords.longitude
+        }
+      },
+      (error) => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+
+
+*/
+
 const washingtonDC = {
   lat: 38.9072,
   lng: -77.0369

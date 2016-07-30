@@ -30,10 +30,8 @@ import FormValidator from 'validate.js';
 import { LoginManager } from 'react-native-fbsdk';
 import SignUpPage from '../SignupPage';
 import TabBarLayout from '../../layouts/TabBarLayout';
-import DiscoverPage from '../DiscoverPage';
 
 const firebaseApp = require('../../firebase');
-
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -122,19 +120,19 @@ var LoginPage = React.createClass({
                             LoginManager.logInWithReadPermissions(['public_profile']).then(
                               result => {
                                 if (result.isCancelled) {
-                                  alert('Login cancelled');
+                                  Alert.alert('Login cancelled');
                                 } else {
-                                  alert('Login success with permissions: '
+                                  console.log('Login success with permissions: '
                                     + result.grantedPermissions.toString());
-                                  this.props.navigator.replace({
-                                    title: 'DiscoverPage',
-                                    component: DiscoverPage,
+                                  this.props.navigator.push({
+                                    title: 'TabBarLayout',
+                                    component: TabBarLayout,
                                     passProps: {}
                                   });
                                 }
                               },
                               error => {
-                                alert('Login fail with error: ' + error);
+                                Alert.alert('Login fail with error:', error);
                               }
                             );
                           }}>
