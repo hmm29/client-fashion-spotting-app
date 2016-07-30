@@ -31,6 +31,8 @@ import Header from '../../partials/Header';
 import { LoginManager } from 'react-native-fbsdk';
 import TabBarLayout from '../../layouts/TabBarLayout';
 
+const firebaseApp = require('../../firebase');
+
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
@@ -133,23 +135,19 @@ var SignUpPage = React.createClass({
                     </View>
                     <View style={styles.section}>
                         <TouchableOpacity onPress={() => {
-                            var ref = new Firebase("https://eyespot-658a5.firebaseio.com");
-                            ref.createUser({
-                              email    : this.state.emailAddressText,
-                              password : this.state.passwordText
-                            }, function(error, userData) {
-                              if (error) {
-                                switch (error.code) {
-                                  case "EMAIL_TAKEN":
-                                    Alert.alert("The new user account cannot be created because the email is already in use.");
-                                    break;
-                                  case "INVALID_EMAIL":
-                                    Alert.alert("The specified email is not a valid email.");
-                                    break;
-                                  default:
-                                    Alert.alert("Error creating user", error);
-                                }
-                              }
+                            firebase.auth().createUserWithEmailAndPassword(this.state.emailAddressText, this.state.passwordText)
+                            .then(() => {
+                                  this.props.navigator.push({
+                                    title: 'TabBarLayout',
+                                    component: TabBarLayout,
+                                    passProps: {}
+                                  });
+                            })
+                            .catch((error) => {
+                              // Handle Errors here.
+                              var errorCode = error.code;
+                              var errorMessage = error.message;
+                              Alert.alert('Error creating user:', errorMessage);
                             });
                           }}>
                             <Image
@@ -162,19 +160,19 @@ var SignUpPage = React.createClass({
                             LoginManager.logInWithReadPermissions(['public_profile']).then(
                               function(result) {
                                 if (result.isCancelled) {
-                                  alert('Login cancelled');
+                                  Alert.alert('Login cancelled');
                                 } else {
-                                  alert('Login success with permissions: '
+                                  console.log('Login success with permissions: '
                                     + result.grantedPermissions.toString());
-                                  this.props.navigator.replace({
+                                  this.props.navigator.push({
                                     title: 'TabBarLayout',
                                     component: TabBarLayout,
                                     passProps: {}
                                   });
                                 }
                               },
-                              function(error) {
-                                alert('Login fail with error: ' + error);
+                              error => {
+                                Alert.alert('Login fail with error:', error);
                               }
                             );
                           }}>
