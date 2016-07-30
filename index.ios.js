@@ -22,12 +22,9 @@ import {
 } from 'react-native';
 
 import LoginPage from './js/components/pages/LoginPage';
-import ContributePage from './js/components/pages/ContributePage';
 import TabBarLayout from './js/components/layouts/TabBarLayout';
-import MapPage from './js/components/pages/MapPage';
 
 const firebaseApp = require('./js/components/firebase');
-
 
 /*
  * defines the Eyespot class
@@ -38,15 +35,30 @@ class Eyespot extends Component {
   componentDidMount() {
 
     // // Fail-Safe: check Network connectivity on load
-    // NetInfo.isConnected.fetch().then(isConnected => {
-    //   console.log('First, is ' + (isConnected ? 'online' : 'offline'));
-    // });
-    //
-    // // Fail-Safe: set up network connectivity event handler
-    // NetInfo.isConnected.addEventListener(
-    //   'change',
-    //   this.handleConnectivityChange
-    // );
+    NetInfo.isConnected.fetch().then(isConnected => {
+      console.log('First, is ' + (isConnected ? 'online' : 'offline'));
+    });
+    
+    // Fail-Safe: set up network connectivity event handler
+    NetInfo.isConnected.addEventListener(
+      'change',
+      this.handleConnectivityChange
+    );
+
+    firebaseApp.auth().onAuthStateChanged(function(user){
+      if(user) {
+        // if user is signed in
+        // store user id in async storage
+        AsyncStorage.setItem('@MyStore:uid', user.uid);
+      } else {
+         // No user is signed in
+         // make them login
+         this.refs.nav.push({
+            title: 'LoginPage',
+            component: LoginPage,
+         })
+      }
+    })
 
   };
 
@@ -58,9 +70,7 @@ class Eyespot extends Component {
   };
 
   handleConnectivityChange(isConnected) {
-    Alert.alert('Connectivity Change',
-      (isConnected ? 'You are now online.' : 'You are now offline. Please restore connectivity (Settings > Wi-Fi) before continuing.'),
-    );
+    if(!isConnected) Alert.alert('You are offline.', 'Please restore connectivity (Settings > Wi-Fi) before continuing.');
   };
 
   /*
@@ -68,10 +78,6 @@ class Eyespot extends Component {
    */
 
   render() {
-
-    firebaseApp.auth().onAuthStateChanged(function(user){
-      AsyncStorage.setItem('@MyStore:uid', user.uid);
-    })
     /*
      * nextRouteProps: properties to pass to next route
      */
@@ -84,9 +90,10 @@ class Eyespot extends Component {
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <NavigatorIOS
+          ref='nav'
           navigationBarHidden={true}    /* hide navigation bar */
           initialRoute={{               /* initial route in navigator */
-            title: 'LoginPage',
+            title: 'TabBarLayout',
             component: TabBarLayout,
           }}
           itemWrapperStyle={styles.itemWrapper} /* styles for nav background */
