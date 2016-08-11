@@ -26,7 +26,6 @@ import {
 
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
-import FormValidator from 'validate.js';
 import { LoginManager } from 'react-native-fbsdk';
 import SignUpPage from '../SignupPage';
 import TabBarLayout from '../../layouts/TabBarLayout';
