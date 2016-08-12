@@ -15,6 +15,7 @@
 import React, { Component } from 'react';
 import {
  ActivityIndicator,
+ AsyncStorage,
  Dimensions,
  Image,
  StyleSheet,
@@ -25,6 +26,7 @@ import {
 
 import ContributePage from '../pages/ContributePage';
 import DiscoverPage from '../pages/DiscoverPage';
+import helpers from '../helpers';
 import PersonalPage from '../pages/PersonalPage';
 import Tabs from 'react-native-tabs';
 
@@ -72,6 +74,24 @@ var TabBarLayout = React.createClass({
 
 		}
 	},
+
+  /*
+   * componentWillMount(): Invoked once, before the initial rendering occurs.
+   */
+
+  componentWillMount() {
+    AsyncStorage.getItem('@MyStore:uid')
+    .then((userId) => {
+      var ref = firebaseApp.database().ref();
+      var self = this;
+      ref.on('value', (snap) => {
+          const users = snap.val() && snap.val().users;
+          self.setState({
+            user : users[userId],
+          });
+      });
+    })
+  },
 
   /*
    * componentDidMount(): Invoked once, only on the client (not on the server), immediately after the initial rendering occurs.
@@ -124,7 +144,8 @@ var TabBarLayout = React.createClass({
 	      return (
           <PersonalPage
             dataStore={this.state.dataStore}
-            navigator={this.props.navigator} />
+            navigator={this.props.navigator}
+            user={this.state.user} />
         )
 	    }
 

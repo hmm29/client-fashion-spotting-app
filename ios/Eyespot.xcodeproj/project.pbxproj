@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -47,6 +48,7 @@
 		4263CD111D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4263CD021D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Bold.ttf */; };
 		4263CD121D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4263CD031D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Book.ttf */; };
 		4263CD131D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-BookIta.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4263CD041D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-BookIta.ttf */; };
+		42E706C21D5E874E0093F401 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42E706C11D5E874E0093F401 /* Default-568h@2x.png */; };
 		479A7554302A4FAABD5C3BAD /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C9587EFE2CB408B9B122137 /* Octicons.ttf */; };
 		48C2C0BD626A4BC9AF53ACE7 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C258D0298C44AE91454EEC /* libCodePush.a */; };
 		6817E59C1D3D92C90065D18A /* FileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 6817E59B1D3D92C90065D18A /* FileUpload.m */; };
@@ -279,6 +281,7 @@
 		4263CD021D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BodoniSvtyTwoITCTT-Bold.ttf"; sourceTree = "<group>"; };
 		4263CD031D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BodoniSvtyTwoITCTT-Book.ttf"; sourceTree = "<group>"; };
 		4263CD041D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-BookIta.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BodoniSvtyTwoITCTT-BookIta.ttf"; sourceTree = "<group>"; };
+		42E706C11D5E874E0093F401 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5B976BC25A2841FEA131E736 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		6817E59B1D3D92C90065D18A /* FileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FileUpload.m; path = "../node_modules/react-native-fileupload/FileUpload.m"; sourceTree = "<group>"; };
 		6817E59D1D3DC4870065D18A /* RNUploader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNUploader.xcodeproj; path = "../node_modules/react-native-uploader/RNUploader/RNUploader.xcodeproj"; sourceTree = "<group>"; };
@@ -596,6 +599,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				42E706C11D5E874E0093F401 /* Default-568h@2x.png */,
 				6817E59B1D3D92C90065D18A /* FileUpload.m */,
 				4263CCF61D2F7F7C00E65EEF /* Avenir-Black.ttf */,
 				4263CCF71D2F7F7C00E65EEF /* Avenir-BlackOblique.ttf */,
@@ -698,6 +702,9 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = VNX473GA4A;
 					};
 				};
 			};
@@ -984,6 +991,7 @@
 				D2ED9F6C6C6D4B07B8212432 /* EvilIcons.ttf in Resources */,
 				4263CD051D2F7F7C00E65EEF /* Avenir-Black.ttf in Resources */,
 				4263CD111D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Bold.ttf in Resources */,
+				42E706C21D5E874E0093F401 /* Default-568h@2x.png in Resources */,
 				A9215A4AB5BA4861BC5CC50C /* FontAwesome.ttf in Resources */,
 				4263CD131D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-BookIta.ttf in Resources */,
 				4263CD071D2F7F7C00E65EEF /* Avenir-Book.ttf in Resources */,
@@ -1106,6 +1114,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1133,7 +1144,9 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.app.Eyespot;
 				PRODUCT_NAME = Eyespot;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1141,6 +1154,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1167,7 +1183,9 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.app.Eyespot;
 				PRODUCT_NAME = Eyespot;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

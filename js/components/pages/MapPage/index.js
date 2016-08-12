@@ -94,6 +94,7 @@ var MapPage = React.createClass({
          dropdown: []
        },
      ]
+     
      return (
        <View style={styles.container}>
          {this._renderHeader()}

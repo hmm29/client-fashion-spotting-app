@@ -76,11 +76,9 @@ var FinalizeAndContributeView = React.createClass({
 		switch(app) {
 			case 'facebook':
 				KDSocialShare.shareOnFacebook({
-			        'text':'Global democratized marketplace for art',
-			        'link':'https://artboost.com/',
-			        'imagelink':'https://artboost.com/apple-touch-icon-144x144.png',
-			        //or use image
-			        'image': 'artboost-icon',
+			        'text':'// Spotted with Eyespot app. Download yours for free!',
+			        'link':'https://eyes.pt/',
+			        'imagelink': this.props.imageData.imgSource.uri,
 			      },
 			      (results) => {
 			        console.log(results);
@@ -88,11 +86,9 @@ var FinalizeAndContributeView = React.createClass({
 			    );
 			case 'twitter':
 				KDSocialShare.tweet({
-			        'text':'Global democratized marketplace for art',
-			        'link':'https://artboost.com/',
-			        'imagelink':'https://artboost.com/apple-touch-icon-144x144.png',
-			        //or use image
-			        'image': 'artboost-icon',
+              'text':'// Spotted with Eyespot app. Download yours for free!',
+              'link':'https://eyes.pt/',
+              'imagelink': this.props.imageData.imgSource.uri,
 			      },
 			      (results) => {
 			        console.log(results);

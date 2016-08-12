@@ -203,8 +203,8 @@ const styles = StyleSheet.create({
   container:{
     position: 'absolute',
     flex:1,
-    width: width,
-    height:height,
+    width: notificationTabWidth,
+    height,
     top:0,
     left:0
   },

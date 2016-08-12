@@ -6,11 +6,9 @@
 * @flow
 */
 
-
-'use strict';
-
 import React from 'react';
 import {
+ AsyncStorage,
  Dimensions,
  StyleSheet,
  Image,
@@ -19,6 +17,11 @@ import {
  View
  } from 'react-native';
 
+ import ContributePage from '../pages/ContributePage';
+ import firebaseApp from '../firebase';
+ import helpers from '../helpers';
+ import PersonalPage from '../pages/PersonalPage';
+
 var {width} = Dimensions.get('window');
 const iconOffset = 40;
 
@@ -26,6 +29,41 @@ var Footer = React.createClass({
 
   propTypes: {
     navigator: React.PropTypes.object
+  },
+
+  componentWillMount() {
+    AsyncStorage.getItem('@MyStore:uid')
+    .then((userId) => {
+      var ref = firebaseApp.database().ref();
+      var self = this;
+      ref.on('value', (snap) => {
+          const users = snap.val() && snap.val().users;
+          self.setState({
+            user : users[userId],
+          });
+      });
+    })
+  },
+
+  onPressLeft() {
+    this.props.navigator.popToTop();
+  },
+
+  onPressMiddle() {
+    this.props.navigator.replace({
+      title: 'ContributePage',
+      component: ContributePage
+    });
+  },
+
+  onPressRight() {
+    this.props.navigator.push({
+      title: 'PersonalPage',
+      component: PersonalPage,
+      passProps: {
+        user: this.state.user
+      }
+    });
   },
 
  render() {
@@ -62,11 +100,11 @@ var Footer = React.createClass({
     */
 
     var EmblemIcon =
-     <View style={styles.iconContainer}>
+     <TouchableOpacity onPress={this.onPressMiddle} style={styles.iconContainer}>
        <View style={styles.iconEmblemContainer}>
          <Image source={require('./img/emblem.png')} style={styles.iconEmblem}/>
        </View>
-     </View>;
+     </TouchableOpacity>;
 
    /*
     * right icon - profile icon, goes to personal profile

@@ -25,6 +25,7 @@ import {
  TouchableOpacity
 } from 'react-native';
 
+import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
@@ -34,6 +35,7 @@ import Notifications from '../../partials/Notifications';
 import NotificationsPage from '../NotificationsPage';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 
+import firebaseApp from '../../firebase';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -134,12 +136,22 @@ var PersonalPage = React.createClass({
      dataStore: PropTypes.object,
    },
 
-   componentDidMount(){
-     var self = this;
-     AsyncStorage.getItem('@MyStore:uid').then((userId) => {
-       self.setState({ userId : userId });
-     })
+   // componentWillMount lets you call functions before anything renders
+   // This is important: you can check userId and fetch dataStore before render
 
+   componentWillMount(){
+     AsyncStorage.getItem('@MyStore:uid').then((userId) => {
+       this.setState({ userId : userId });
+     });
+
+     var ref = firebaseApp.database().ref();
+     ref.on('value', (snap) => {
+       if(snap.val()){
+         this.setState({
+           dataStore : snap.val(),
+         })
+       }
+     });
 
    },
 
@@ -148,9 +160,14 @@ var PersonalPage = React.createClass({
     */
 
    _renderHeader() {
+       const backIcon = (
+         <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
+       );
+       const currentRoute = this.props.navigator.navigationContext.currentRoute.title;
+
        return (
            <Header containerStyle={styles.headerContainer}>
-               <View />
+               {currentRoute !== 'TabBarLayout' ? backIcon : null}
                <View style={styles.pageTitle}>
                  <Image source={EyespotNegativeLogo}
                                  style={styles.pageTitleLogo} />
@@ -161,14 +178,12 @@ var PersonalPage = React.createClass({
    },
 
    showNotifications(){
-     var user = this.props.dataStore.users[this.state.userId];
-
      this.props.navigator.push({
        title: 'Notifications',
        component: NotificationsPage,
        passProps:{
-         user: user,
-         dataStore: this.props.dataStore
+         user: this.props.user,
+         dataStore: this.state.dataStore
        }
      });
    },
@@ -179,12 +194,9 @@ var PersonalPage = React.createClass({
 
    render() {
 
-     const { dataStore } = this.props;
-
-     var user = this.props.dataStore.users[this.state.userId];
-     if(!user){
-       return null
-     }
+     const dataStore = this.state.dataStore;
+     const { user } = this.props;
+     if(!user) return null
 
      return (
        <View style={styles.layeredPageContainer}>

@@ -32,18 +32,10 @@ const firebaseApp = require('./js/components/firebase');
 
 class Eyespot extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
+    var self = this;
 
-    // // Fail-Safe: check Network connectivity on load
-    NetInfo.isConnected.fetch().then(isConnected => {
-      console.log('First, is ' + (isConnected ? 'online' : 'offline'));
-    });
-
-    // Fail-Safe: set up network connectivity event handler
-    NetInfo.isConnected.addEventListener(
-      'change',
-      this.handleConnectivityChange
-    );
+    // Login check
 
     firebaseApp.auth().onAuthStateChanged(function(user){
       if(user) {
@@ -53,12 +45,24 @@ class Eyespot extends Component {
       } else {
          // No user is signed in
          // make them login
-         this.refs.nav.push({
+         self.refs['nav'] && self.refs['nav'].push({
             title: 'LoginPage',
             component: LoginPage,
          })
+
       }
     })
+
+    // Fail-Safe: check Network connectivity on load
+    NetInfo.isConnected.fetch().then(isConnected => {
+      console.log('First, is ' + (isConnected ? 'online' : 'offline'));
+    });
+
+    // Fail-Safe: set up network connectivity event handler
+    NetInfo.isConnected.addEventListener(
+      'change',
+      this.handleConnectivityChange
+    );
 
   };
 

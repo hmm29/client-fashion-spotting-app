@@ -23,10 +23,13 @@ import {
 
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
+import CatalogViewIcon from '../../partials/icons/product/CatalogViewIcon';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import Footer from '../../partials/Footer';
 import FilterBar from '../../partials/FilterBar';
+import Map from '../../partials/Map';
+import MapsViewIcon from '../../partials/icons/product/MapsViewIcon';
 import Product from '../../partials/Product';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 
@@ -65,7 +68,6 @@ var Products = React.createClass({
   },
 
   componentDidMount(){
-    var products = {};
     var ref = firebaseApp.database().ref();
     ref.on('value', (snap) => {
       if(snap.val()){
@@ -151,9 +153,10 @@ var ProductFeed = React.createClass({
 
    getInitialState(){
      return {
+       catalogViewIconActive: true,
+       mapsViewIconActive: false,
      }
    },
-
 
     /*
     * _renderFooter(): renders the imported footer component
@@ -178,7 +181,10 @@ var ProductFeed = React.createClass({
                    style={styles.pageTitleLogo} />
              <Text style={styles.pageTitleText}>{this.props.categoryName.toUpperCase()}</Text>
            </View>
-           <View />
+           <View style={{width: width/6, left: width/9, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
+               <CatalogViewIcon isActive={this.state.catalogViewIconActive} onPress={() => this.setState({catalogViewIconActive: true, mapsViewIconActive: false})} />
+               <MapsViewIcon isActive={this.state.mapsViewIconActive} onPress={() => this.setState({catalogViewIconActive: false, mapsViewIconActive: true})} />
+           </View>
          </Header>
        );
    },
@@ -189,6 +195,16 @@ var ProductFeed = React.createClass({
 
    render() {
 
+     const filters = [
+       {
+         'name' : 'Last Month',
+         dropdown : ['Last Week', 'Last Month', 'Last Year'],
+       },
+       {
+         'name' : 'Washington DC',
+         dropdown: []
+       },
+     ]
 
      return (
        <View style={styles.layeredPageContainer}>
@@ -197,12 +213,17 @@ var ProductFeed = React.createClass({
            keyboardShouldPersistTaps={false}
            noScroll={false}>
            <View style={styles.container}>
+            {this.state.catalogViewIconActive ?
              <Products
                navigator={this.props.navigator}
                categoryKey={this.props.categoryKey}
-               />
+               /> :
+               <Map products={[]} />
+             }
            </View>
          </EyespotPageBase>
+         {this.state.mapsViewIconActive ? <FilterBar filters={filters} /> : <View/>}
+         {this._renderFooter()}
        </View>
      );
    }
@@ -242,7 +263,7 @@ const styles = StyleSheet.create({
     },
     pageTitleText: {
       color: '#fff',
-      fontSize: height / 40,
+      fontSize: height / 42,
       fontFamily: 'BodoniSvtyTwoITCTT-Book'
     },
 });
