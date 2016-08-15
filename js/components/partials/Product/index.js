@@ -61,8 +61,7 @@ var Product = React.createClass({
         <View style={styles.info}>
           <Contributor
             user={user}
-            navigator={navigator}
-            product={product}/>
+            navigator={navigator}/>
           <Location
             navigator={navigator}
             product={product}/>

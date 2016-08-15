@@ -163,11 +163,11 @@ var PersonalPage = React.createClass({
        const backIcon = (
          <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
        );
-       const currentRoute = this.props.navigator.navigationContext.currentRoute.title;
+       const currentRoute = this.props.navigator.navigationContext.currentRoute;
 
        return (
            <Header containerStyle={styles.headerContainer}>
-               {currentRoute !== 'TabBarLayout' ? backIcon : null}
+               {currentRoute.title !== 'TabBarLayout' ? backIcon : null}
                <View style={styles.pageTitle}>
                  <Image source={EyespotNegativeLogo}
                                  style={styles.pageTitleLogo} />

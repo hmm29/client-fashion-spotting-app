@@ -32,10 +32,11 @@ var Footer = React.createClass({
   },
 
   componentWillMount() {
+    var self = this;
+
     AsyncStorage.getItem('@MyStore:uid')
     .then((userId) => {
       var ref = firebaseApp.database().ref();
-      var self = this;
       ref.on('value', (snap) => {
           const users = snap.val() && snap.val().users;
           self.setState({
