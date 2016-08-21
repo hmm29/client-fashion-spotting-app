@@ -60,7 +60,7 @@ var NotificationRow = React.createClass({
       <View style={styles.row}>
         <UnreadBar notification={notification}/>
         <View style={{flex:1, alignItems:'center'}}>
-          <Image style={styles.rowImage} source={{uri : dataStore.users[notification.userId].profilePicture}}/>
+          <Image style={styles.rowImage} source={{uri : dataStore && dataStore.users && dataStore.users[notification.userId] && dataStore.users[notification.userId].profilePicture}}/>
         </View>
         <View style={styles.rowText}>
           <Text><Text style={styles.userText}>{dataStore.users[notification.userId].username}</Text> liked your contribution</Text>

@@ -17,10 +17,8 @@ import {
  View
  } from 'react-native';
 
- import ContributePage from '../pages/ContributePage';
  import firebaseApp from '../firebase';
  import helpers from '../helpers';
- import PersonalPage from '../pages/PersonalPage';
 
 var {width} = Dimensions.get('window');
 const iconOffset = 40;
@@ -51,6 +49,8 @@ var Footer = React.createClass({
   },
 
   onPressMiddle() {
+    const ContributePage = require('../pages/ContributePage');
+
     this.props.navigator.replace({
       title: 'ContributePage',
       component: ContributePage
@@ -58,6 +58,8 @@ var Footer = React.createClass({
   },
 
   onPressRight() {
+    const PersonalPage = require('../pages/PersonalPage');
+    
     this.props.navigator.push({
       title: 'PersonalPage',
       component: PersonalPage,

@@ -24,6 +24,7 @@ import {
  TouchableOpacity
 } from 'react-native';
 
+import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
@@ -57,7 +58,7 @@ var MapPage = React.createClass({
    _renderHeader() {
        return (
            <Header containerStyle={styles.headerContainer}>
-               <View />
+               <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
                <View style={styles.pageTitle}>
                  <Image source={EyespotLogoNegative}
                                  style={styles.pageTitleLogo} />
@@ -94,7 +95,7 @@ var MapPage = React.createClass({
          dropdown: []
        },
      ]
-     
+
      return (
        <View style={styles.container}>
          {this._renderHeader()}

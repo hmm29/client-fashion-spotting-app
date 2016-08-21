@@ -27,9 +27,12 @@ import {
 
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
+import CatalogViewIcon from '../../partials/icons/product/CatalogViewIcon';
+import MapsViewIcon from '../../partials/icons/product/MapsViewIcon';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import FilterBar from '../../partials/FilterBar';
+import Map from '../../partials/Map';
 import Product from '../../partials/Product';
 import Notifications from '../../partials/Notifications';
 import NotificationsPage from '../NotificationsPage';
@@ -126,6 +129,8 @@ var PersonalPage = React.createClass({
    getInitialState(){
 
       return {
+        catalogViewIconActive: true,
+        mapsViewIconActive: false,
         user : "",
         userId : ""
       }
@@ -172,7 +177,10 @@ var PersonalPage = React.createClass({
                  <Image source={EyespotNegativeLogo}
                                  style={styles.pageTitleLogo} />
                </View>
-               <View />
+               <View style={{width: width/6, left: width/9, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
+                   <CatalogViewIcon isActive={this.state.catalogViewIconActive} onPress={() => this.setState({catalogViewIconActive: true, mapsViewIconActive: false})} />
+                   <MapsViewIcon isActive={this.state.mapsViewIconActive} onPress={() => this.setState({catalogViewIconActive: false, mapsViewIconActive: true})} />
+               </View>
            </Header>
        );
    },
@@ -205,6 +213,20 @@ var PersonalPage = React.createClass({
              keyboardShouldPersistTaps={false}
              noScroll={false}>
              <View style={styles.container}>
+             {this.state.catalogViewIconActive ?
+              <View>
+                <Title user={user}/>
+                <ProfileContainer user={user}/>
+                <View style={styles.myContributions}>
+                  <Text style={styles.bodoni}>
+                    <Text style={styles.italic}>My</Text> CONTRIBUTIONS
+                  </Text>
+               </View>
+                <UserProducts user={user} dataStore={dataStore}/>
+              </View>
+              :
+                <Map products={[]} />
+              }
                <Title user={user}/>
                <ProfileContainer user={user}/>
                <View style={styles.myContributions}>

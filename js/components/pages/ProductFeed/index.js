@@ -158,6 +158,35 @@ var ProductFeed = React.createClass({
      }
    },
 
+   componentWillMount(){
+     var ref = firebaseApp.database().ref();
+     ref.on('value', (snap) => {
+       if(snap.val()){
+         this.setState({
+           dataStore : snap.val(),
+         })
+       }
+     });
+   },
+
+   filterProductsByCategory(){
+     var dataStore = this.state.dataStore;
+     const products = dataStore.products || [];
+     if(!dataStore){ return null };
+
+     const categories = dataStore.category || {};
+     var productKeys = categories[this.props.categoryKey] ?
+       Object.values(categories[this.props.categoryKey]) : [];
+
+     var allProducts = addKeyToProducts(products);
+     var filteredProducts = productKeys.map((productKey) => {
+       return allProducts[productKey];
+     })
+
+     return filteredProducts
+
+   },
+
     /*
     * _renderFooter(): renders the imported footer component
     */
@@ -206,6 +235,9 @@ var ProductFeed = React.createClass({
        },
      ]
 
+     var filteredProducts = this.filterProductsByCategory();
+     if(!filteredProducts){ return null }
+
      return (
        <View style={styles.layeredPageContainer}>
          {this._renderHeader()}
@@ -218,7 +250,7 @@ var ProductFeed = React.createClass({
                navigator={this.props.navigator}
                categoryKey={this.props.categoryKey}
                /> :
-               <Map products={[]} />
+               <Map products={filteredProducts} />
              }
            </View>
          </EyespotPageBase>

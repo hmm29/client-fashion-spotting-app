@@ -21,8 +21,6 @@ import {
  Image,
  TouchableOpacity
 } from 'react-native';
-import MapPage from '../../../pages/MapPage';
-
 
 var {width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -36,6 +34,9 @@ var Location = React.createClass({
   componentDidMount(){
   },
   handlePress(){
+    // lazy load
+    const MapPage = require('../../../pages/MapPage');
+
     this.props.navigator.push({
       title: 'MapPage',
       component: MapPage,

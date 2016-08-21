@@ -30,7 +30,7 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 var INITIAL_BRIGHTNESS_VALUE = 1;
 var INITIAL_COLOR_TEMPERATURE_VALUE = 1;
 var INITIAL_CONTRAST_VALUE = 1;
-var INITIAL_SHARPEN_VALUE = 0;
+var INITIAL_SHARPEN_VALUE = 0.1;
 
 var AddImageView = React.createClass({
 	getInitialState() {

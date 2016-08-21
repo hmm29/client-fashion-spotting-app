@@ -102,7 +102,7 @@ var DiscoverPage = React.createClass({
      */
 
     render() {
-      
+
       // FIXME:
       const filters = [
         {
@@ -115,7 +115,7 @@ var DiscoverPage = React.createClass({
         },
         {
           name: 'Store',
-          dropdown: ['Zara', 'Addidas', 'J Crew']
+          dropdown: ['Zara', 'Adidas', 'J Crew']
         },
       ]
 

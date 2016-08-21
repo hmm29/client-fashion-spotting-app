@@ -32,7 +32,7 @@ var FinalizeAndContributeView = React.createClass({
 
 	getInitialState() {
 		return {
-			activeExcitingTags: ['Wow!'],
+			activeExcitingTag: "",
 			excitingTags: [],
 			input: ''
 		}
@@ -55,21 +55,11 @@ var FinalizeAndContributeView = React.createClass({
 
 
 	getButtonColor(buttonText) {
-		return (this.state.activeExcitingTags.indexOf(buttonText) > -1 ? styles.activeButton : styles.inactiveButton)
+		return (this.state.activeExcitingTag === buttonText ? styles.activeButton : styles.inactiveButton)
 	},
 
 	handleToggleButtonState(buttonText) {
-		var activeExcitingTagsArr = this.state.activeExcitingTags,
-	    idx = activeExcitingTagsArr.indexOf(buttonText);
-
-	    if (idx > -1) activeExcitingTagsArr.splice(idx, 1);
-	    else activeExcitingTagsArr.push(buttonText);
-
-	    this.setState({
-	      activeExcitingTags: activeExcitingTagsArr
-	    }, function(){
-        this.props.updateUploadData("finalizeAndContributeView", this.state);
-      });
+		this.setState({activeExcitingTag: buttonText});
 	},
 
 	onShare(app, contributeSummary=null) {

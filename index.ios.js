@@ -37,21 +37,22 @@ class Eyespot extends Component {
 
     // Login check
 
-    // firebaseApp.auth().onAuthStateChanged(function(user){
-    //   if(user) {
-    //     // if user is signed in
-    //     // store user id in async storage
-    //     AsyncStorage.setItem('@MyStore:uid', user.uid);
-    //   } else {
-    //      // No user is signed in
-    //      // make them login
-    //      self.refs['nav'] && self.refs['nav'].push({
-    //         title: 'LoginPage',
-    //         component: LoginPage,
-    //      })
-    //
-    //   }
-    // })
+    firebaseApp.auth().onAuthStateChanged(function(user){
+      if(user) {
+        // if user is signed in
+        // store user id in async storage
+        AsyncStorage.setItem('@MyStore:uid', user.uid);
+      } else {
+         // No user is signed in
+         // make them login
+         setTimeout(() => {
+           self.refs.nav.push({
+              title: 'LoginPage',
+              component: LoginPage,
+           })
+         }, 2000);
+      }
+    })
 
     // Fail-Safe: check Network connectivity on load
     NetInfo.isConnected.fetch().then(isConnected => {

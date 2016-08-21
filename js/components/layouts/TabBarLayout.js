@@ -24,11 +24,12 @@ import {
  View
 } from 'react-native';
 
-import ContributePage from '../pages/ContributePage';
-import DiscoverPage from '../pages/DiscoverPage';
 import helpers from '../helpers';
-import PersonalPage from '../pages/PersonalPage';
 import Tabs from 'react-native-tabs';
+
+let ContributePage = require('../pages/ContributePage');
+let DiscoverPage = require('../pages/DiscoverPage');
+let PersonalPage = require('../pages/PersonalPage');
 
 const firebaseApp = require('../firebase');
 
@@ -84,6 +85,8 @@ var TabBarLayout = React.createClass({
 
     AsyncStorage.getItem('@MyStore:uid')
     .then((userId) => {
+      if(!userId) return;
+      
       var ref = firebaseApp.database().ref();
       ref.on('value', (snap) => {
           const users = snap.val() && snap.val().users;

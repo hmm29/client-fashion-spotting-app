@@ -35,7 +35,7 @@ function uploadNewProduct(imageData, productAndLocationData, finalizeAndContribu
         },
         store: productAndLocationData.store,
         category: productAndLocationData.category,
-        tags: finalizeAndContribute.activeExcitingTags,
+        tag: finalizeAndContribute.activeExcitingTag,
         comment: finalizeAndContribute.input,
         likes: 0,
         userId : userId

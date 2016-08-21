@@ -27,7 +27,13 @@
 
 var Dropdowns = React.createClass({
  getInitialState() {
-     return {};
+     return {
+       selected: null
+     };
+ },
+
+ selectDropdownItem(d) {
+   this.setState({selected: d});
  },
 
  render() {
@@ -46,7 +52,7 @@ var Dropdowns = React.createClass({
                  <View key={i} style={styles.dropdownActive}>
                    {filter.dropdown.map(function(d, i) {
                      return (
-                       <Text style={styles.dropdownText} key={i}>{d}</Text>
+                       <TouchableOpacity key={i} onPress={() => this.selectDropdownItem(d)}><Text style={[styles.dropdownText, (this.state.selected === d ? {color: 'red'} : {})]} key={i}>{d}</Text></TouchableOpacity>
                      );
                    }, this)}
                  </View>
