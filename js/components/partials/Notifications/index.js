@@ -54,6 +54,9 @@ var NotificationRow = React.createClass({
 
   render(){
     const { notification, dataStore } = this.props;
+    if(!dataStore.users[notification.userId]){
+      return null
+    }
     return (
       <View style={styles.row}>
         <UnreadBar notification={notification}/>

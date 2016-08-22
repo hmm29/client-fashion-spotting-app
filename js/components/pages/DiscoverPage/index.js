@@ -78,6 +78,13 @@ var DiscoverPage = React.createClass({
       navigator: PropTypes.object
     },
 
+    getInitialState() {
+      return {
+        genderFilter : "All",
+        locationFilter : "DC"
+      }
+    },
+
 
     /*
      * _renderHeader(): renders the imported header component
@@ -95,6 +102,12 @@ var DiscoverPage = React.createClass({
                 <View />
             </Header>
         );
+    },
+
+    setFilter(type, filterName){
+      if(type == "Gender"){
+        this.setState({ genderFilter : filterName });
+      }
     },
 
     /*
@@ -115,7 +128,7 @@ var DiscoverPage = React.createClass({
         },
         {
           name: 'Store',
-          dropdown: ['Zara', 'Adidas', 'J Crew']
+          dropdown: ['All']
         },
       ]
 
@@ -127,10 +140,14 @@ var DiscoverPage = React.createClass({
                 noScroll={false}>
                 <View style={styles.container}>
                   <Featured/>
-                  <CategoryView {...this.props} />
+                  <CategoryView
+                    genderFilter={this.state.genderFilter}
+                    {...this.props} />
                 </View>
             </EyespotPageBase>
-            <FilterBar filters={filters}/>
+            <FilterBar
+              filters={filters}
+              setFilter={this.setFilter}/>
           </View>
         );
     }

@@ -43,12 +43,17 @@ var Panel = React.createClass({
 
   render(){
 
-    let { navigator, category_key, dataStore } = this.props;
+    let { navigator, category_key, dataStore, genderFilter } = this.props;
 
 
     const category = Categories.categoryThumbMap[category_key];
     const thumbImg = category.thumb;
     const name = category.name;
+    if(genderFilter.toLowerCase() != category.gender){
+      if(genderFilter != "All"){
+        return null
+      }
+    }
 
 
     return (
@@ -98,9 +103,13 @@ var CategoryView = React.createClass({
       <View style={styles.categories}>
         {Categories.categoryKeys.map(function(category_key, i) {
           return (
-            <Panel key={i} category_key={category_key} {...this.props}/>
+            <Panel
+              key={i}
+              category_key={category_key}
+              genderFilter={this.props.genderFilter}
+              {...this.props}/>
           )
-        },this)}
+        }, this)}
       </View>
     );
   }
