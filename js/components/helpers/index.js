@@ -1,5 +1,5 @@
 exports.getTimePassed = function(date){
-  
+
     var seconds = Math.floor((new Date() - date) / 1000);
 
     var interval = Math.floor(seconds / 31536000);
@@ -27,6 +27,9 @@ exports.getTimePassed = function(date){
 }
 
 exports.objectToArray = function(obj){
+  if(!obj){
+    return []
+  }
   const keys = Object.keys(obj);
   var ret = keys.map(function(key, i){
     return obj[key];

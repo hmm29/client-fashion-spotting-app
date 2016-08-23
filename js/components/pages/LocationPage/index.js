@@ -19,7 +19,6 @@ import {
 
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import PlacesAutocomplete from '../../partials/PlacesAutocomplete';
-import PlacesNearby from '../../partials/PlacesNearby';
 import Header from '../../partials/Header';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 import EyespotPageBase from '../EyespotPageBase';

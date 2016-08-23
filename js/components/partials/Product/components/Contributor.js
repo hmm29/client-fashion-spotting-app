@@ -50,7 +50,7 @@ var Contributor = React.createClass({
     const { user } = this.props;
     let username;
 
-    if(user){
+    if(user && user.username){
       username = user.username.toUpperCase();
     }
     else {

@@ -50,10 +50,13 @@ var Location = React.createClass({
 
     const { product, products } = this.props;
 
-    const store = product.store.name;
+    var store = product.store.name;
     var vicinity = product.store.vicinity;
     if(vicinity.length > 12){
       vicinity = vicinity.slice(0,18) + "..";
+    }
+    if(store.length > 12){
+      store = store.slice(0,18) + "..";
     }
 
     return (

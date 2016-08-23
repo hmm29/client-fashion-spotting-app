@@ -73,6 +73,22 @@ var SignUpPage = React.createClass({
         );
     },
 
+    updateUser(){
+      var userRef = firebaseApp.database().ref(`users/${userId}/products`);
+      var self = this;
+      AsyncStorage.getItem('@MyStore:uid')
+      .then((userId) => {
+        if(!userId){ return };
+        userRef.set({
+          email: self.state.emailAddressText,
+          name: self.state.nameText,
+          profilePicture: "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png",
+          username: self.state.nicknameText
+        });
+
+      })
+    },
+
     /*
      * render(): returns JSX that declaratively specifies page UI
      */
