@@ -61,7 +61,7 @@ var SelectCategory = React.createClass({
   _categoriesKeys: Categories.categoryKeys, //replace with category names (men vs women?)
 
   getInitialState(){
-    return{
+    return {
       gender: "women"
     }
   },

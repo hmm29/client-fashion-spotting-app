@@ -32,8 +32,10 @@ var Dropdowns = React.createClass({
      };
  },
 
- selectDropdownItem(d) {
-   this.setState({selected: d});
+ selectDropdownItem(d, type, i) {
+   this.setState({selected : d });
+   this.props.setFilter(type, d);
+   this.props._setNav(i);
  },
 
  render() {
@@ -50,9 +52,11 @@ var Dropdowns = React.createClass({
              else {
                return (
                  <View key={i} style={styles.dropdownActive}>
-                   {filter.dropdown.map(function(d, i) {
+                   {filter.dropdown.map(function(d, j) {
                      return (
-                       <TouchableOpacity key={i} onPress={() => this.selectDropdownItem(d)}><Text style={[styles.dropdownText, (this.state.selected === d ? {color: 'red'} : {})]} key={i}>{d}</Text></TouchableOpacity>
+                       <TouchableOpacity key={j} onPress={() => this.selectDropdownItem(d, filter.name, i)}>
+                         <Text style={[styles.dropdownText, (this.state.selected === d ? {color: 'red'} : {})]}>{d}</Text>
+                       </TouchableOpacity>
                      );
                    }, this)}
                  </View>
@@ -152,7 +156,9 @@ var FilterBar = React.createClass({
    return (
      <View style={styles.searchBar}>
        <Dropdowns
+         setFilter={this.props.setFilter}
          nav={this.state.nav}
+         _setNav={this._setNav}
          filters={filters}/>
        <Navs
          nav={this.state.nav}

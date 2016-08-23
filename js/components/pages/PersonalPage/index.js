@@ -52,7 +52,9 @@ var Title = React.createClass({
 
   render() {
     const { user } = this.props;
-
+    if(!user.username){
+      return null
+    }
     return (
       <View style={styles.titleContainer}>
         <Text style={[styles.italic, styles.bodoni]}>by</Text>
@@ -204,8 +206,9 @@ var PersonalPage = React.createClass({
 
      const dataStore = this.state.dataStore;
      const { user } = this.props;
-     if(!user) return null
-
+     if(!user){
+       return null
+     }
      return (
        <View style={styles.layeredPageContainer}>
          {this._renderHeader()}
@@ -214,7 +217,7 @@ var PersonalPage = React.createClass({
              noScroll={false}>
              <View style={styles.container}>
              {this.state.catalogViewIconActive ?
-              <View>
+              <View style={styles.container}>
                 <Title user={user}/>
                 <ProfileContainer user={user}/>
                 <View style={styles.myContributions}>
@@ -227,14 +230,6 @@ var PersonalPage = React.createClass({
               :
                 <Map products={[]} />
               }
-               <Title user={user}/>
-               <ProfileContainer user={user}/>
-               <View style={styles.myContributions}>
-                 <Text style={styles.bodoni}>
-                   <Text style={styles.italic}>My</Text> CONTRIBUTIONS
-                 </Text>
-              </View>
-               <UserProducts user={user} dataStore={dataStore}/>
              </View>
          </EyespotPageBase>
          <Notifications user={user} dataStore={dataStore} showNotifications={this.showNotifications}/>
