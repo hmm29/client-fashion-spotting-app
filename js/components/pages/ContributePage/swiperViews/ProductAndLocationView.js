@@ -23,28 +23,24 @@ import PlacesNearby from '../../../partials/PlacesNearby';
 import LocationPage from '../../LocationPage';
 import SelectCategory from '../../../partials/SelectCategory';
 
-/* 
- get current user location
 
- navigator.geolocation.getCurrentPosition(
-      (position) => {
-        let coords = position.coords;
-        let washingtonDC = {
-          lat: coords.latitude,
-          lng: coords.longitude
-        }
-      },
-      (error) => alert(error.message),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-    );
-
-
-*/
-
-const washingtonDC = {
+var location = {
   lat: 38.9072,
   lng: -77.0369
 }
+
+ navigator.geolocation.getCurrentPosition(
+  (position) => {
+    let coords = position.coords;
+    let location = {
+      lat: coords.latitude,
+      lng: coords.longitude
+    }
+  },
+  (error) => alert(error.message),
+  {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+);
+
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -70,7 +66,7 @@ var ProductAndLocationView = React.createClass({
       },
       (error) => {
         self.setState({
-          location : washingtonDC
+          location : location
         })
         alert(error.message);
       },
@@ -121,7 +117,7 @@ var ProductAndLocationView = React.createClass({
       title: 'Search For Store',
       component: LocationPage,
       passProps:{
-        location: washingtonDC,
+        location: this.state.location,
         setStore: this.setStore
       }
     });
@@ -141,7 +137,7 @@ var ProductAndLocationView = React.createClass({
 					<PlacesNearby
             setStore={this.setStore}
             storeSelected={storeSelected}
-            location={washingtonDC}/>
+            location={location}/>
 				</View>
 
         <TouchableOpacity
