@@ -15,6 +15,7 @@
 import React from 'react';
 import {
   Alert,
+  AsyncStorage,
   Dimensions,
   Image,
   Text,
@@ -74,19 +75,29 @@ var SignUpPage = React.createClass({
     },
 
     updateUser(){
-      var userRef = firebaseApp.database().ref(`users/${userId}/products`);
       var self = this;
-      AsyncStorage.getItem('@MyStore:uid')
-      .then((userId) => {
-        if(!userId){ return };
-        userRef.set({
-          email: self.state.emailAddressText,
-          name: self.state.nameText,
-          profilePicture: "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png",
-          username: self.state.nicknameText
-        });
 
-      })
+      firebaseApp.auth().onAuthStateChanged(function(user){
+        if(user) {
+          // if user is signed in
+          // store user id in async storage
+          var userId = user.uid;
+          console.log('updateUser()');
+          console.log('userId', userId);
+          if(!userId){ return };
+          if(!self.state.emailAddressText){ return };
+          var userRef = firebaseApp.database().ref(`users/${userId}`);
+          console.log(self.state.emailAddressText, self.state.nameText);
+          userRef.set({
+            email: self.state.emailAddressText.toLowerCase(),
+            name: self.state.nameText,
+            profilePicture: "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png",
+            username: self.state.nicknameText
+          });
+        }
+      });
+
+
     },
 
     /*
@@ -150,12 +161,13 @@ var SignUpPage = React.createClass({
                     <View style={styles.section}>
                         <TouchableOpacity onPress={() => {
                             firebase.auth().createUserWithEmailAndPassword(this.state.emailAddressText, this.state.passwordText)
-                            .then(() => {
-                                  this.props.navigator.push({
-                                    title: 'TabBarLayout',
-                                    component: TabBarLayout,
-                                    passProps: {}
-                                  });
+                            .then((user) => {
+                              this.updateUser();
+                              this.props.navigator.push({
+                                title: 'TabBarLayout',
+                                component: TabBarLayout,
+                                passProps: {}
+                              });
                             })
                             .catch((error) => {
                               // Handle Errors here.
