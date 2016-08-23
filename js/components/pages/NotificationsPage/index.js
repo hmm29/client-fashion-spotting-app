@@ -6,7 +6,6 @@
 * @flow
 */
 
-
 'use strict'; /* enables JS strict mode for any ES5 code */
 
 /*
@@ -28,7 +27,6 @@ import {
 import notification from '../../partials/img/notification.png';
 import helpers from '../../helpers';
 import firebaseApp from '../../firebase';
-
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
