@@ -24,6 +24,7 @@ import {
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import CatalogViewIcon from '../../partials/icons/product/CatalogViewIcon';
+import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import Footer from '../../partials/Footer';
@@ -31,12 +32,13 @@ import FilterBar from '../../partials/FilterBar';
 import Map from '../../partials/Map';
 import MapsViewIcon from '../../partials/icons/product/MapsViewIcon';
 import Product from '../../partials/Product';
-import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
+import Swiper from 'react-native-swiper';
 
 import firebaseApp from '../../firebase';
 
-
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+var SWIPER_REF = 'ProductFeedSwiper';
+var SIZE_OF_PRODUCT_ITEM = height * 0.9;
 
 /*
 * defines the ProductFeed class
@@ -53,89 +55,6 @@ function addKeyToProducts(allProducts){
   return products
 }
 
-
-var Products = React.createClass({
-
-  getInitialState(){
-    return {
-      dataStore: ""
-    }
-  },
-
-  propTypes: {
-    navigator: PropTypes.object,
-    categoryKey: PropTypes.string,
-  },
-
-  componentDidMount(){
-    var ref = firebaseApp.database().ref();
-    ref.on('value', (snap) => {
-      if(snap.val()){
-        this.setState({
-          dataStore : snap.val(),
-        })
-      }
-    });
-  },
-
-  filterProductsByCategory(){
-    var dataStore = this.state.dataStore;
-    const products = dataStore.products || [];
-    if(!dataStore){ return null };
-
-    const categories = dataStore.category || {};
-    var productKeys = categories[this.props.categoryKey] ?
-      Object.values(categories[this.props.categoryKey]) : [];
-
-    var allProducts = addKeyToProducts(products);
-    var filteredProducts = productKeys.map((productKey) => {
-      return allProducts[productKey];
-    })
-
-    return filteredProducts
-
-  },
-
-
- /*
-  * render(): returns JSX that declaratively specifies page UI
-  */
-
- render() {
-
-   var { categoryKey, navigator } = this.props;
-
-   var filteredProducts = this.filterProductsByCategory();
-   if(!filteredProducts){ return null }
-
-
-   return (
-     <View style ={styles.products}>
-       {filteredProducts.map((product, i) => {
-
-       /*
-        * return Product component for each product
-        */
-
-        const user = this.state.dataStore.users[product.userId];
-
-
-        return (
-          <Product
-            key={i}
-            navigator={navigator}
-            product={product}
-            user={user}/>
-        );
-      },this)}
-
-     </View>
-   );
- }
-});
-
-
-
 /*
 * defines the ProductFeed class
 */
@@ -148,15 +67,19 @@ var ProductFeed = React.createClass({
 
    propTypes: {
      navigator: PropTypes.object,
-     categoryName: PropTypes.string
+     categoryKey: PropTypes.string
    },
 
    getInitialState(){
      return {
        catalogViewIconActive: true,
+       currentProductSwiperPageIndex: 0,
+       dataStore: "",
        mapsViewIconActive: false,
      }
    },
+
+   offset: 0,
 
    componentWillMount(){
      var ref = firebaseApp.database().ref();
@@ -187,6 +110,31 @@ var ProductFeed = React.createClass({
 
    },
 
+   /* navigateBack(): navigate back in product feed between products
+   and back to discover page if already at top of list */
+
+   navigateBack() {
+     if(this.state.catalogViewIconActive && this.state.currentProductSwiperPageIndex > 0) {
+       this.refs[SWIPER_REF].scrollBy(-1);
+     } else {
+       this.props.navigator.pop();
+     }
+   },
+
+   onScroll(event) {
+      var currentOffset = event.nativeEvent.contentOffset.y;
+      var direction = currentOffset > this.offset ? 'down' : 'up';
+      var hasChangedItem = Math.abs(currentOffset-this.offset) > SIZE_OF_PRODUCT_ITEM;
+      this.offset = currentOffset;
+
+      if(direction == 'down' && hasChangedItem) {
+        this.setState({currentProductSwiperPageIndex: this.state.currentProductSwiperPageIndex+1})
+      }
+      else if (direction === 'up' && hasChangedItem) {
+        this.setState({currentProductSwiperPageIndex: this.state.currentProductSwiperPageIndex-1})
+      }
+  },
+
     /*
     * _renderFooter(): renders the imported footer component
     */
@@ -204,7 +152,7 @@ var ProductFeed = React.createClass({
    _renderHeader() {
        return (
          <Header containerStyle={styles.headerContainer}>
-           <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
+           <BackIcon color='white' onPress={this.navigateBack} />
            <View style={styles.pageTitle}>
              <Image source={EyespotNegativeLogo}
                    style={styles.pageTitleLogo} />
@@ -223,6 +171,10 @@ var ProductFeed = React.createClass({
     */
 
    render() {
+     var { categoryKey, navigator } = this.props;
+
+     var filteredProducts = this.filterProductsByCategory();
+     if(!filteredProducts){ return null }
 
      const filters = [
        {
@@ -235,22 +187,51 @@ var ProductFeed = React.createClass({
        },
      ]
 
-     var filteredProducts = this.filterProductsByCategory();
-     if(!filteredProducts){ return null }
+     const products = (
+       <View style ={styles.products}>
+         <Swiper ref={SWIPER_REF}
+                 horizontal={false} /* make vertical */
+                 bounces={false}
+                 loop={false}
+                 // onMomentumScrollEnd={this._onMomentumScrollEnd}
+                 snapToAlignment='start'
+                 onScroll={this.onScroll}
+                 scrollEnabled={true}
+                 scrollEventThrottle={-1000}
+                 showsPagination={false}
+                 style={styles.wrapper}>
+                 {filteredProducts.map((product, i) => {
+
+                 /*
+                  * return Product component for each product
+                  */
+
+                  const user = this.state.dataStore.users[product.userId];
+
+                  return (
+                    <View style={styles.slide}>
+                      <Product
+                        key={i}
+                        navigator={navigator}
+                        product={product}
+                        user={user}/>
+                    </View>
+                  );
+                },this)}
+         </Swiper>
+       </View>
+     )
 
      return (
        <View style={styles.layeredPageContainer}>
          {this._renderHeader()}
          <EyespotPageBase
            keyboardShouldPersistTaps={false}
-           noScroll={false}>
+           noScroll={true}>
            <View style={styles.container}>
             {this.state.catalogViewIconActive ?
-             <Products
-               navigator={this.props.navigator}
-               categoryKey={this.props.categoryKey}
-               /> :
-               <Map products={filteredProducts} />
+             products :
+               <Map products={[filteredProducts[this.state.currentProductSwiperPageIndex]]} />
              }
            </View>
          </EyespotPageBase>
@@ -298,6 +279,13 @@ const styles = StyleSheet.create({
       fontSize: height / 42,
       fontFamily: 'BodoniSvtyTwoITCTT-Book'
     },
+    slide: {
+      backgroundColor: 'transparent',
+      paddingTop: height/19
+    },
+    wrapper: {
+      backgroundColor: '#fff'
+    }
 });
 
 /*

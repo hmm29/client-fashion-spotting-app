@@ -56,6 +56,9 @@ var ContributePage = React.createClass({
         }
     },
 
+    /* navigateBack(): navigate back in product feed between products
+    and back to discover page if already at top of list */
+
     navigateBack() {
       if(this.state.currentSwiperPageIndex > 0) {
         this.refs[SWIPER_REF].scrollBy(-1);

@@ -148,7 +148,8 @@ const styles = StyleSheet.create({
   scrollView:{
     // borderTopWidth:1,
     // borderTopColor:'black',
-    paddingTop: 10
+    paddingTop: 10,
+    height: height/2.9 /* specify height so that scrollview doesn't stick */
   },
   genderTabContainer:{
     flexDirection:'row',

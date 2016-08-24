@@ -119,7 +119,7 @@ var AddImageView = React.createClass({
 	    this.camera.capture()
 	      .then((data) => {
 	      	const source = {uri: 'data:image/jpeg;base64,' + data, isStatic: true};
-	      	this.setState({imageSource: source});
+	      	this.setState({imgSource: source});
 	      	this.props.handleShowNextButton(true);
           this.props.updateUploadData("imageView", this.state);
 	      })
