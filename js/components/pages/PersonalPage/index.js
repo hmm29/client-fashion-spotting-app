@@ -209,6 +209,7 @@ var PersonalPage = React.createClass({
      if(!user){
        return null
      }
+
      return (
        <View style={styles.layeredPageContainer}>
          {this._renderHeader()}
@@ -232,7 +233,7 @@ var PersonalPage = React.createClass({
               }
              </View>
          </EyespotPageBase>
-         <Notifications user={user} dataStore={dataStore} showNotifications={this.showNotifications}/>
+         {user.uid === this.state.userId ? <Notifications user={user} dataStore={dataStore} showNotifications={this.showNotifications}/> : null}
 
        </View>
      );

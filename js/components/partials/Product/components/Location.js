@@ -12,7 +12,7 @@
 * imports required modules
 */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
  Dimensions,
  StyleSheet,
@@ -31,8 +31,12 @@ var {width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var Location = React.createClass({
 
-  componentDidMount(){
+  propTypes: {
+    navigator: PropTypes.object,
+    onPressMapEmblem: PropTypes.func,
+    product: PropTypes.object
   },
+
   handlePress(){
     // lazy load
     const MapPage = require('../../../pages/MapPage');
@@ -41,6 +45,7 @@ var Location = React.createClass({
       title: 'MapPage',
       component: MapPage,
       passProps: {
+        onPressMapEmblem: this.props.onPressMapEmblem,
         products : [this.props.product]
       }
     });

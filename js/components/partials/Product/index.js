@@ -44,6 +44,7 @@ var Product = React.createClass({
   propTypes: {
     product: PropTypes.object.isRequired,
     navigator: PropTypes.object,
+    onPressMapEmblem: PropTypes.func,
     user: PropTypes.object
   },
 
@@ -64,6 +65,7 @@ var Product = React.createClass({
             navigator={navigator}/>
           <Location
             navigator={navigator}
+            onPressMapEmblem={this.props.onPressMapEmblem}
             product={product}/>
           <Comment product={product}/>
           <Controls product={product}/>

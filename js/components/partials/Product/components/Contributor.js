@@ -72,7 +72,7 @@ var Contributor = React.createClass({
 
           const PersonalPage = require('../../../pages/PersonalPage');
 
-          if (this.props.navigator) { // ensure navigator has been passed as prop
+          if (this.props.navigator && this.props.user) { // ensure navigator has been passed as prop
             this.props.navigator.push({
               title: 'Personal Page',
               component: PersonalPage,

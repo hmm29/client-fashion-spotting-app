@@ -38,7 +38,7 @@ import firebaseApp from '../../firebase';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 var SWIPER_REF = 'ProductFeedSwiper';
-var SIZE_OF_PRODUCT_ITEM = height * 0.9;
+var SIZE_OF_PRODUCT_ITEM = width * 0.9;
 
 /*
 * defines the ProductFeed class
@@ -73,12 +73,14 @@ var ProductFeed = React.createClass({
    getInitialState(){
      return {
        catalogViewIconActive: true,
-       currentProductSwiperPageIndex: 0,
        dataStore: "",
        mapsViewIconActive: false,
      }
    },
 
+   // HACK: keep track of currentProductSwiper item index here in instance variable
+   // doing so in state object will cause unwanted rerenders when index updated
+   currentProductSwiperPageIndex: 0,
    offset: 0,
 
    componentWillMount(){
@@ -110,28 +112,41 @@ var ProductFeed = React.createClass({
 
    },
 
-   /* navigateBack(): navigate back in product feed between products
-   and back to discover page if already at top of list */
+   /*
+    * navigateBack(): navigate back in product feed between products
+    * and back to discover page if already at top of list
+    */
 
    navigateBack() {
-     if(this.state.catalogViewIconActive && this.state.currentProductSwiperPageIndex > 0) {
+     if(this.state.catalogViewIconActive && this.currentProductSwiperPageIndex > 0) {
        this.refs[SWIPER_REF].scrollBy(-1);
      } else {
        this.props.navigator.pop();
      }
    },
 
+   onPressMapEmblem() {
+     this.setState({catalogViewIconActive: true, mapsViewIconActive: false});
+   },
+
+   /*
+    * onScroll(): keep track of product flipboard item index and direction of swiping
+    */
+
    onScroll(event) {
-      var currentOffset = event.nativeEvent.contentOffset.y;
-      var direction = currentOffset > this.offset ? 'down' : 'up';
+      var currentOffset = event.nativeEvent.contentOffset.x;
+      var direction = currentOffset > this.offset ? 'right' : 'left';
       var hasChangedItem = Math.abs(currentOffset-this.offset) > SIZE_OF_PRODUCT_ITEM;
       this.offset = currentOffset;
 
-      if(direction == 'down' && hasChangedItem) {
-        this.setState({currentProductSwiperPageIndex: this.state.currentProductSwiperPageIndex+1})
+      console.log(hasChangedItem)
+
+
+      if(direction == 'right' && hasChangedItem) {
+        this.currentProductSwiperPageIndex = this.currentProductSwiperPageIndex+1;
       }
-      else if (direction === 'up' && hasChangedItem) {
-        this.setState({currentProductSwiperPageIndex: this.state.currentProductSwiperPageIndex-1})
+      else if (direction === 'left' && hasChangedItem) {
+        this.currentProductSwiperPageIndex = this.currentProductSwiperPageIndex-1;
       }
   },
 
@@ -190,11 +205,9 @@ var ProductFeed = React.createClass({
      const products = (
        <View style ={styles.products}>
          <Swiper ref={SWIPER_REF}
-                 horizontal={false} /* make vertical */
+                 index={this.currentProductSwiperPageIndex}
                  bounces={false}
                  loop={false}
-                 // onMomentumScrollEnd={this._onMomentumScrollEnd}
-                 snapToAlignment='start'
                  onScroll={this.onScroll}
                  scrollEnabled={true}
                  scrollEventThrottle={-1000}
@@ -213,6 +226,7 @@ var ProductFeed = React.createClass({
                       <Product
                         key={i}
                         navigator={navigator}
+                        onPressMapEmblem={() => {navigator.pop(); this.onPressMapEmblem()}}
                         product={product}
                         user={user}/>
                     </View>
@@ -231,7 +245,7 @@ var ProductFeed = React.createClass({
            <View style={styles.container}>
             {this.state.catalogViewIconActive ?
              products :
-               <Map products={[filteredProducts[this.state.currentProductSwiperPageIndex]]} />
+               <Map onPressMapEmblem={this.onPressMapEmblem} products={[filteredProducts[this.currentProductSwiperPageIndex]]} />
              }
            </View>
          </EyespotPageBase>

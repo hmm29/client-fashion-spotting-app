@@ -54,17 +54,18 @@ var NotificationRow = React.createClass({
 
   render(){
     const { notification, dataStore } = this.props;
-    if(!dataStore.users[notification.userId]){
+    if(!(dataStore && dataStore.users && dataStore.users[notification.userId])){
       return null
     }
+
     return (
       <View style={styles.row}>
         <UnreadBar notification={notification}/>
         <View style={{flex:1, alignItems:'center'}}>
-          <Image style={styles.rowImage} source={{uri : dataStore.users[notification.userId].profilePicture}}/>
+          <Image style={styles.rowImage} source={{uri : dataStore && dataStore.users && dataStore.users[notification.userId].profilePicture}}/>
         </View>
         <View style={styles.rowText}>
-          <Text><Text style={styles.userText}>{dataStore.users[notification.userId].username}</Text> liked your contribution</Text>
+          <Text><Text style={styles.userText}>{dataStore && dataStore.users && dataStore.users[notification.userId].username}</Text> liked your contribution</Text>
           <Text style={styles.timePassed}>{helpers.getTimePassed(notification.date)}</Text>
         </View>
         <View style={{flex:1, alignItems:'center'}}>
@@ -158,7 +159,7 @@ var Notifications = React.createClass({
     if(!this.props.user){
       return 0
     }
-    var notifications = this.props.user.notifications || [];
+    var notifications = this.props.user && this.props.user.notifications || [];
     var arr = helpers.objectToArray(notifications);
     var unread = 0;
 
@@ -173,7 +174,7 @@ var Notifications = React.createClass({
   render() {
 
     const { navigator, user, dataStore } = this.props;
-    var notificationsArray = helpers.objectToArray(user.notifications);
+    var notificationsArray = helpers.objectToArray(user && user.notifications);
 
     const numNotifcations = this.getNewNotifications();
 

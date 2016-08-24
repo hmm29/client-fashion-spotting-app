@@ -23,7 +23,6 @@ import {
 import MapView from 'react-native-maps';
 import Emblem from '../img/marker.png';
 
-
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 const washingtonDC = {
@@ -47,6 +46,7 @@ var Map = React.createClass({
    */
 
   propTypes: {
+    onPressMapEmblem: PropTypes.func,
     products: PropTypes.array
   },
 
@@ -105,6 +105,7 @@ var Map = React.createClass({
                 title={marker.title}
                 description={marker.description}
                 image={Emblem}
+                onPress={this.props.onPressMapEmblem}
               />
             )
           })}
