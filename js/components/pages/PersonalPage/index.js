@@ -229,7 +229,11 @@ var PersonalPage = React.createClass({
                 <UserProducts user={user} dataStore={dataStore}/>
               </View>
               :
-                <Map products={[]} />
+                <Map products={Object.keys(user.products).map((key, i) => {
+                  const product_id = user.products[key];
+                  const product = dataStore.products[product_id];
+                  return product;
+                })} />
               }
              </View>
          </EyespotPageBase>
