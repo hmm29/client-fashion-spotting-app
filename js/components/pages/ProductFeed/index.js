@@ -73,7 +73,8 @@ var ProductFeed = React.createClass({
    getInitialState(){
      return {
        catalogViewIconActive: true,
-       dataStore: "",
+       dataStore: '',
+       historyFilter: 'Last Month',
        mapsViewIconActive: false,
      }
    },
@@ -181,6 +182,12 @@ var ProductFeed = React.createClass({
        );
    },
 
+   setFilter(type, filterName){
+     if(type == "History"){
+       this.setState({ historyFilter : filterName });
+     }
+   },
+
    /*
     * render(): returns JSX that declaratively specifies page UI
     */
@@ -249,7 +256,7 @@ var ProductFeed = React.createClass({
              }
            </View>
          </EyespotPageBase>
-         {this.state.mapsViewIconActive ? <FilterBar filters={filters} /> : <View/>}
+         {this.state.mapsViewIconActive ? <FilterBar setFilter={this.setFilter} filters={filters} /> : <View/>}
          {this._renderFooter()}
        </View>
      );

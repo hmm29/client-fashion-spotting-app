@@ -37,6 +37,7 @@ const google_places_api_key = "AIzaSyBYm4q-9VEPYNT_aSsq7YU1LwHFA5H2TTo";
 var PlacesNearby = React.createClass({
 
   propTypes: {
+    location: PropTypes.object,
     places: PropTypes.array,
     storeSelected : PropTypes.object
   },

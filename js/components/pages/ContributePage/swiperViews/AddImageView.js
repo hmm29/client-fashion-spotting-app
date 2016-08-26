@@ -35,6 +35,10 @@ var INITIAL_SHARPEN_VALUE = 0.1;
 var AddImageView = React.createClass({
 	getInitialState() {
 		return {
+      camera: {
+        type: Camera.constants.Type.back,
+        flashMode: Camera.constants.FlashMode.auto,
+      },
 			// store effect values separately to avoid
 			// continuously copying and updated a shared object with values
 
@@ -48,7 +52,7 @@ var AddImageView = React.createClass({
 			effectIconStates: {
 
 			},
-			imageSource: null,
+			imgSource: null,
 		}
 
 	},
@@ -56,8 +60,41 @@ var AddImageView = React.createClass({
 	propTypes: {
 		handleShowNextButton: React.PropTypes.func.isRequired,
     updateUploadData: React.PropTypes.func.isRequired
-
 	},
+
+  changeFlashMode() {
+    let newFlashMode;
+    const { auto, on, off } = Camera.constants.FlashMode;
+
+    if (this.state.camera.flashMode === auto) {
+      newFlashMode = on;
+    } else if (this.state.camera.flashMode === on) {
+      newFlashMode = off;
+    } else if (this.state.camera.flashMode === off) {
+      newFlashMode = auto;
+    }
+
+    this.setState({
+      camera: {
+        ...this.state.camera,
+        flashMode: newFlashMode,
+      },
+    });
+  },
+
+  getFlashModeIcon() {
+    let iconSource;
+
+    if(this.state.camera.flashMode === Camera.constants.FlashMode.on) {
+      iconSource = require('../../../partials/icons/contribute/img/flash-on.png');
+    } else if (this.state.camera.flashMode === Camera.constants.FlashMode.off) {
+      iconSource = require('../../../partials/icons/contribute/img/flash-off.png');
+    } else {
+      iconSource = require('../../../partials/icons/contribute/img/flash-auto.png');
+    }
+
+    return iconSource;
+  },
 
 	getIconStyle(expression) {
 		if (expression) return [styles.icon, {opacity: 0.3}];
@@ -115,10 +152,29 @@ var AddImageView = React.createClass({
 	    })
 	},
 
+  switchCameraType() {
+    let newType;
+    const { back, front } = Camera.constants.Type;
+
+    if (this.state.camera.type === back) {
+      newType = front;
+    } else if (this.state.camera.type === front) {
+      newType = back;
+    }
+
+    this.setState({
+      camera: {
+        ...this.state.camera,
+        type: newType,
+      },
+    });
+  },
+
 	takePicture() {
 	    this.camera.capture()
-	      .then((data) => {
-	      	const source = {uri: 'data:image/jpeg;base64,' + data, isStatic: true};
+	      .then((response) => {
+	      	const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
+
 	      	this.setState({imgSource: source});
 	      	this.props.handleShowNextButton(true);
           this.props.updateUploadData("imageView", this.state);
@@ -332,8 +388,24 @@ var AddImageView = React.createClass({
 	          ref={(cam) => {
 	            this.camera = cam;
 	          }}
-	          style={styles.cameraView}
-	          aspect={Camera.constants.Aspect.fill}>
+            captureAudio={false}
+            captureTarget={Camera.constants.CaptureTarget.memory}
+            type={this.state.camera.type}
+            flashMode={this.state.camera.flashMode}
+            style={styles.cameraView}>
+            <View style={[styles.cameraIconsContainer, {bottom: height/2.75}]}>
+	          	  <TouchableOpacity onPress={this.changeFlashMode}>
+                  <Image
+                    source={this.getFlashModeIcon()}
+                    style={[styles.icon, {right: width/12}]} />
+		          </TouchableOpacity>
+		      	  <View/>
+              <TouchableOpacity onPress={this.switchCameraType}>
+		          	<Image
+		          		source={require('../../../partials/icons/contribute/img/camera-switch.png')}
+		          		style={[styles.icon, {left: width/14}]} />
+		          </TouchableOpacity>
+	          </View>
 	          <View style={styles.cameraIconsContainer}>
 	          	  <TouchableOpacity onPress={this.launchImageLibrary}>
 		          	<Image
@@ -361,7 +433,7 @@ var AddImageView = React.createClass({
 					blur={this.state.sharpenValue}>
 					<GLImage
 					  source={this.state.imgSource}
-					  imageSize={{ width: 200, height: 200 }}
+					  imageSize={{ width: height/2.2, height: height/2.2 }}
 					  resizeMode="contain"
 					/>
 		          </ImageEffects>

@@ -43,6 +43,12 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var MapPage = React.createClass({
 
+  getInitialState() {
+    return {
+      historyFilter: 'Last Month'
+    }
+  },
+
    /*
     * specifies types for properties that this component receives
     */
@@ -78,6 +84,12 @@ var MapPage = React.createClass({
      );
    },
 
+   setFilter(type, filterName){
+     if(type == "History"){
+       this.setState({ historyFilter : filterName });
+     }
+   },
+
 
    /*
     * render(): returns JSX that declaratively specifies page UI
@@ -104,7 +116,7 @@ var MapPage = React.createClass({
              noScroll={true}>
              <Map {...this.props}/>
          </EyespotPageBase>
-         <FilterBar filters={filters}/>
+         <FilterBar filters={filters} setFilter={this.setFilter}/>
          {this._renderFooter()}
        </View>
      );

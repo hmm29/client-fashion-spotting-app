@@ -73,7 +73,7 @@ var ProfileContainer = React.createClass({
     return (
       <View>
         <Image
-          source={{ uri : user.profilePicture }}
+          source={{ uri : user.profilePicture || "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png"}}
           style={styles.profilePicture} />
       </View>
     );
@@ -85,7 +85,7 @@ var ProfileContainer = React.createClass({
 var UserProducts = React.createClass({
 
   render() {
-    const { user, dataStore } = this.props;
+    const { user, dataStore, onPressMapEmblem, navigator } = this.props;
 
     if(!user.products){
       return null
@@ -94,13 +94,13 @@ var UserProducts = React.createClass({
 
     return (
       <View>
-        {Object.keys(user.products).map((key, i) => {
+        {user && user.products && Object.keys(user && user.products).map((key, i) => {
 
 
          /*
           * return Product component for each product
           */
-          const product_id = user.products[key];
+          const product_id = user && user.products && user.products[key];
 
           const product = dataStore.products[product_id];
           if(!product){
@@ -108,9 +108,14 @@ var UserProducts = React.createClass({
           }
 
           return (
-            <Product key={i} product={product} user={product.user}/>
+            <Product
+              key={i}
+              navigator={navigator}
+              onPressMapEmblem={() => {navigator.pop(); onPressMapEmblem()}}
+              product={product}
+              user={product.user}/>
           );
-        })}
+        }) || []}
       </View>
     );
   }
@@ -162,6 +167,10 @@ var PersonalPage = React.createClass({
 
    },
 
+   onPressMapEmblem() {
+     this.setState({catalogViewIconActive: true, mapsViewIconActive: false});
+   },
+
    /*
     * _renderHeader(): renders the imported header component
     */
@@ -205,7 +214,7 @@ var PersonalPage = React.createClass({
    render() {
 
      const dataStore = this.state.dataStore;
-     const { user } = this.props;
+     const { navigator, user } = this.props;
      if(!user){
        return null
      }
@@ -226,14 +235,14 @@ var PersonalPage = React.createClass({
                     <Text style={styles.italic}>My</Text> CONTRIBUTIONS
                   </Text>
                </View>
-                <UserProducts user={user} dataStore={dataStore}/>
+                <UserProducts onPressMapEmblem={this.onPressMapEmblem} user={user} navigator={navigator} dataStore={dataStore}/>
               </View>
               :
-                <Map products={Object.keys(user.products).map((key, i) => {
-                  const product_id = user.products[key];
+                <Map onPressMapEmblem={this.onPressMapEmblem} products={user && user.products && Object.keys(user.products).map((key, i) => {
+                  const product_id = user && user.products && user.products[key];
                   const product = dataStore.products[product_id];
                   return product;
-                })} />
+                }) || []} />
               }
              </View>
          </EyespotPageBase>

@@ -67,14 +67,34 @@ var Map = React.createClass({
     },
 
     componentDidMount(){
+      var self = this;
+      navigator.geolocation.getCurrentPosition((position) => {
+          var coords = position.coords;
+          self.setState({
+            location : {
+              lat: coords.latitude,
+              lng: coords.longitude
+            }
+          })
+        },
+        (error) => {
+          self.setState({
+            location : washingtonDC
+          })
+          alert(error.message);
+        },
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      );
+
       // create markers from products' location data
-      var markers = this.props.products.map(function(product){
+      var markers = this.props.products.map((product) => {
 
         return {
           latlng: {
-            latitude: product.store.location.lat,
-            longitude: product.store.location.lng,
-            title: product.store.name
+            // (&& chaining lets me ensure all properties in nested objects are there)
+            latitude: product && product.store && product.store.location && product.store.location.lat,
+            longitude: product && product.store && product.store.location && product.store.location.lng,
+            title: product && product.store && product.store.name
           }
         }
       })
@@ -86,13 +106,15 @@ var Map = React.createClass({
     },
 
     render() {
+      const { products } = this.props;
+
       return (
         <MapView
           style={styles.map}
           region={this.state.region}
           initialRegion={{
-            latitude: washingtonDC.lat,
-            longitude: washingtonDC.lng,
+            latitude: products && products[0] && products[0].store && products[0].store.location && products[0].store.location.lat || washingtonDC.lat,
+            longitude: products && products[0] && products[0].store && products[0].store.location && products[0].store.location.lat || washingtonDC.lng,
             latitudeDelta: Delta.lat,
             longitudeDelta: Delta.lng,
           }}

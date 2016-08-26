@@ -23,24 +23,10 @@ import PlacesNearby from '../../../partials/PlacesNearby';
 import LocationPage from '../../LocationPage';
 import SelectCategory from '../../../partials/SelectCategory';
 
-
-var location = {
+const washingtonDC = {
   lat: 38.9072,
   lng: -77.0369
 }
-
- navigator.geolocation.getCurrentPosition(
-  (position) => {
-    let coords = position.coords;
-    let location = {
-      lat: coords.latitude,
-      lng: coords.longitude
-    }
-  },
-  (error) => alert(error.message),
-  {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
-);
-
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -50,7 +36,7 @@ var ProductAndLocationView = React.createClass({
 		return {
   		storeSelected: {},
       categorySelected: {},
-      location: ""
+      location: washingtonDC
 		}
 	},
   componentDidMount(){
@@ -66,7 +52,7 @@ var ProductAndLocationView = React.createClass({
       },
       (error) => {
         self.setState({
-          location : location
+          location : washingtonDC
         })
         alert(error.message);
       },
