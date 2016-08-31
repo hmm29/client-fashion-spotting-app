@@ -91,6 +91,7 @@ var SignUpPage = React.createClass({
           userRef.set({
             email: self.state.emailAddressText.toLowerCase(),
             name: self.state.nameText,
+            password: self.state.passwordText,
             profilePicture: "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png",
             username: self.state.nicknameText,
             uid: user.uid
@@ -188,6 +189,7 @@ var SignUpPage = React.createClass({
                                 if (result.isCancelled) {
                                   Alert.alert('Login cancelled');
                                 } else {
+                                  console.log(result);
                                   console.log('Login success with permissions: '
                                     + result.grantedPermissions.toString());
                                   this.props.navigator.push({

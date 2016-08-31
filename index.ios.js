@@ -21,6 +21,7 @@ import {
   View
 } from 'react-native';
 
+import Orientation from 'react-native-orientation';
 import LoginPage from './js/components/pages/LoginPage';
 import TabBarLayout from './js/components/layouts/TabBarLayout';
 
@@ -34,6 +35,9 @@ class Eyespot extends Component {
 
   componentWillMount() {
     var self = this;
+
+    // Lock to portrait mode
+    Orientation.lockToPortrait();
 
     // Login check
 

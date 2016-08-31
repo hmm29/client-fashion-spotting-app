@@ -20,7 +20,6 @@ import {
   Text,
   TextInput,
   View,
-  AsyncStorage,
   TouchableOpacity
 } from 'react-native';
 

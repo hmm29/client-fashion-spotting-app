@@ -204,8 +204,8 @@ const styles = StyleSheet.create({
 	},
 
 	text: {
-		fontFamily: 'Avenir-Roman',
-		marginBottom: height/45,
+    fontFamily: 'Avenir-Medium',
+    fontSize: height/50,
 	},
 });
 

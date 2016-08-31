@@ -14,6 +14,7 @@
 
 import React, { Component } from 'react';
 import {
+  AsyncStorage,
   Dimensions,
   Image,
   StyleSheet,
@@ -32,6 +33,8 @@ import Header from '../../partials/Header';
 import ProductAndLocationView from './swiperViews/ProductAndLocationView';
 import Swiper from 'react-native-swiper';
 import uploadNewProduct from './helpers/upload.js';
+
+const firebaseApp = require('../../firebase');
 
 var NUMBER_OF_SWIPER_VIEWS = 3;
 var SWIPER_REF = 'ContributePageSwiper'
@@ -54,6 +57,13 @@ var ContributePage = React.createClass({
           productAndLocationData: {store:{}},
           finalizeAndContributeData: ""
         }
+    },
+
+    componentWillMount() {
+      var self = this;
+      AsyncStorage.getItem('@MyStore:uid').then((userId) => {
+        self.setState({userId});
+      });
     },
 
     /* navigateBack(): navigate back in product feed between products
@@ -102,6 +112,23 @@ var ContributePage = React.createClass({
       if(func) this.setState({onPressButton: func});
     },
 
+
+       /*
+        * incrementContributionCount(): increment the number of contributions by 1
+        */
+
+    incrementContributionCount() {
+      var ref = firebaseApp.database().ref('users');
+      var { userId } = this.state;
+      ref.on('value', (snap) => {
+        if(snap.val() && snap.val()[userId] && snap.val()[userId][contributionCount]){
+          ref.ref(userId + '/contributionCount').set(snap.val()[userId][contributionCount]+1)
+        } else {
+          ref.ref(userId + '/contributionCount').set(0);
+        }
+      });
+    },
+
    /*
     * _renderHeader(): renders the imported header component
     */
@@ -116,9 +143,9 @@ var ContributePage = React.createClass({
        );
    },
 
-    /*
-     * render(): returns JSX that declaratively specifies page UI
-     */
+  /*
+   * upload(): upload product data to database
+   */
 
   upload(){
 
@@ -129,6 +156,10 @@ var ContributePage = React.createClass({
     );
   },
 
+  /*
+   * render(): returns JSX that declaratively specifies page UI
+   */
+
 	render() {
 
     var confirmButton;
@@ -138,6 +169,7 @@ var ContributePage = React.createClass({
         <TouchableOpacity
           onPress={() => {
             this.upload();
+            this.incrementContributionCount();
             this.props.navigator.pop();
           }}
           style={[styles.footerContainer]}>

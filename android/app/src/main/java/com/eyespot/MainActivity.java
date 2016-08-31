@@ -1,6 +1,7 @@
 package com.eyespot;
 
 import com.facebook.react.ReactActivity;
+import com.github.yamill.orientation.OrientationPackage;
 import com.yoloci.fileupload.FileUploadPackage;
 import com.projectseptember.RNGL.RNGLPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
@@ -47,6 +48,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new OrientationPackage(this),
             new FileUploadPackage(),
             new RNGLPackage(),
             new RCTCameraPackage(),

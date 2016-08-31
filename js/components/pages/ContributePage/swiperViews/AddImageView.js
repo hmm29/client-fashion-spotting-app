@@ -392,7 +392,7 @@ var AddImageView = React.createClass({
             captureTarget={Camera.constants.CaptureTarget.memory}
             type={this.state.camera.type}
             flashMode={this.state.camera.flashMode}
-            style={styles.cameraView}>
+            style={styles.view}>
             <View style={[styles.cameraIconsContainer, {bottom: height/2.75}]}>
 	          	  <TouchableOpacity onPress={this.changeFlashMode}>
                   <Image
@@ -406,23 +406,23 @@ var AddImageView = React.createClass({
 		          		style={[styles.icon, {left: width/14}]} />
 		          </TouchableOpacity>
 	          </View>
-	          <View style={styles.cameraIconsContainer}>
+	          <View style={[styles.cameraIconsContainer, {bottom: height/68}]}>
 	          	  <TouchableOpacity onPress={this.launchImageLibrary}>
 		          	<Image
 		          		source={require('../../../partials/icons/contribute/img/gallery-text.png')}
-		          		style={styles.galleryTextIcon} />
+		          		style={styles.textIcon} />
 		          </TouchableOpacity>
 		          <TouchableOpacity style={styles.captureButton} onPress={this.takePicture}>
 		          	<Image
 		          		source={require('../../../partials/icons/contribute/img/camera-icon.png')}
 		          		style={styles.icon} />
 		          </TouchableOpacity>
-		      	  <View style={styles.rightCameraIcon} />
+              <View style={styles.textIcon}/>
 	          </View>
 	        </Camera>;
 
         const viewport = (this.state.imgSource ?
-        	<View style={styles.cameraView}>
+        	<View style={styles.view}>
         		<Surface ref="surface" width={height/2.2} height={height/2.2}>
 		          <ImageEffects
 		          	width={height/2.2}
@@ -438,6 +438,23 @@ var AddImageView = React.createClass({
 					/>
 		          </ImageEffects>
 		        </Surface>
+            <View style={[styles.cameraIconsContainer, {position: 'absolute', top: height/2.5}]}>
+                <TouchableOpacity onPress={this.launchImageLibrary}>
+                <Image
+                  source={require('../../../partials/icons/contribute/img/gallery-text.png')}
+                  style={styles.textIcon} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.captureButton} onPress={this.takePicture}>
+                <Image
+                  source={require('../../../partials/icons/contribute/img/camera-icon.png')}
+                  style={styles.icon} />
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => this.setState({imgSource: ''})}>
+              <Image
+                source={require('../../../partials/icons/contribute/img/retake-text.png')}
+                style={styles.textIcon} />
+            </TouchableOpacity>
+            </View>
         	</View> : camera);
 
 		return (
@@ -496,7 +513,7 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		width: height/2.2 // same as camera view height
 	},
-	cameraView: {
+	view: {
 		flex: 1,
 	    justifyContent: 'flex-end',
 	    alignItems: 'center',
@@ -511,7 +528,7 @@ const styles = StyleSheet.create({
 		height,
 		width,
 	},
-	galleryTextIcon: {
+	textIcon: {
 		height: iconSize,
 		width: height/8,
 		resizeMode: Image.resizeMode.contain
@@ -541,7 +558,8 @@ const styles = StyleSheet.create({
 		height: height/10
 	},
 	text: {
-		fontFamily: 'Avenir-Roman',
+    fontFamily: 'Avenir-Medium',
+    fontSize: height/50,
 	},
 	trackStyle: {
 		height: 18,

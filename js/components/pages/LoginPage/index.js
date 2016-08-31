@@ -15,6 +15,7 @@
 import React from 'react';
 import {
   Alert,
+  AsyncStorage,
   Dimensions,
   Image,
   StyleSheet,
@@ -25,6 +26,7 @@ import {
 } from 'react-native';
 
 import Button from 'apsl-react-native-button';
+import Communications from 'react-native-communications';
 import EyespotPageBase from '../EyespotPageBase';
 import { LoginManager } from 'react-native-fbsdk';
 import SignUpPage from '../SignupPage';
@@ -158,7 +160,20 @@ var LoginPage = React.createClass({
                             style={[styles.loginOption, {bottom: 20}]}
                             textStyle={styles.loginOptionText}
                             onPress={() => {
-
+                              // FIXME: Needs to be revised,
+                              // This password recovery is super primitive because
+                              // React Native doesn't offer open-source tools for password resets at the time
+                              AsyncStorage.getItem('@MyStore:uid').then((userId) => {
+                                var ref = firebaseApp.database().ref('users');
+                                ref.on('value', (snap) => {
+                                  if(snap.val() && snap.val()[userId] && snap.val()[userId][email] && snap.val()[userId][password]){
+                                    Communications.email([].concat(snap.val()[userId][email]), null, null, 'Eyespot: Recovered Password.', `Hi! Your recovered password is ${snap.val()[userId][password]}. Thanks for using Eyespot!`);
+                                    Alert.alert('Email Success', 'Your recovered password has been sent to your email!');
+                                  } else {
+                                    Alert.alert('Email Send Error', 'We could not send a password recovery email to your address. Please try again.');
+                                  }
+                                });
+                              });
                             }}>
                             Forgot Password?
                         </Button>

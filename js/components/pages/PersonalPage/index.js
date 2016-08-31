@@ -33,6 +33,7 @@ import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import FilterBar from '../../partials/FilterBar';
 import Map from '../../partials/Map';
+import MoreIcon from '../../partials/icons/navigation/MoreIcon'
 import Product from '../../partials/Product';
 import Notifications from '../../partials/Notifications';
 import NotificationsPage from '../NotificationsPage';
@@ -52,13 +53,13 @@ var Title = React.createClass({
 
   render() {
     const { user } = this.props;
-    if(!user.username){
+    if(!(user && user.username)){
       return null
     }
     return (
       <View style={styles.titleContainer}>
         <Text style={[styles.italic, styles.bodoni]}>by</Text>
-        <Text style={[styles.username, styles.bodoni]}>{user.username.toUpperCase()}</Text>
+        <Text style={[styles.username, styles.bodoni]}>{user.username && user.username.toUpperCase()}</Text>
       </View>
     );
   }
@@ -167,6 +168,13 @@ var PersonalPage = React.createClass({
 
    },
 
+   componentDidMount() {
+     let { dataStore, userId } = this.state;
+     this.setState({
+       contributionCount: dataStore && dataStore.users && dataStore.users[userId] && dataStore.users[userId][contributionCount]
+     })
+   },
+
    onPressMapEmblem() {
      this.setState({catalogViewIconActive: true, mapsViewIconActive: false});
    },
@@ -183,7 +191,7 @@ var PersonalPage = React.createClass({
 
        return (
            <Header containerStyle={styles.headerContainer}>
-               {currentRoute.title !== 'TabBarLayout' ? backIcon : null}
+               <MoreIcon onPress={() => {}} />
                <View style={styles.pageTitle}>
                  <Image source={EyespotNegativeLogo}
                                  style={styles.pageTitleLogo} />
@@ -213,7 +221,7 @@ var PersonalPage = React.createClass({
 
    render() {
 
-     const dataStore = this.state.dataStore;
+     const { contributionCount, dataStore } = this.state;
      const { navigator, user } = this.props;
      if(!user){
        return null
@@ -233,6 +241,7 @@ var PersonalPage = React.createClass({
                 <View style={styles.myContributions}>
                   <Text style={styles.bodoni}>
                     <Text style={styles.italic}>My</Text> CONTRIBUTIONS
+                    <Text style={styles.num}>  {contributionCount || 1}</Text>
                   </Text>
                </View>
                 <UserProducts onPressMapEmblem={this.onPressMapEmblem} user={user} navigator={navigator} dataStore={dataStore}/>
@@ -269,6 +278,10 @@ const styles = StyleSheet.create({
    },
    italic: {fontStyle: 'italic'},
    bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book'},
+   num: {
+     color: 'red',
+     fontFamily: 'Avenir-Roman',
+   },
    username: {fontSize: 30 },
    profilePicture: {
      width,

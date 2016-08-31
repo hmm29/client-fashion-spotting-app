@@ -48,7 +48,7 @@ var FinalizeAndContributeView = React.createClass({
 	},
 
 	getExcitingTags() {
-		this.setState({excitingTags: ['New', 'Sale', 'Wow!', 'Unique']}, function(){
+		this.setState({excitingTags: ['New', 'Fall', 'Wow!', 'Unique']}, function(){
       this.props.updateUploadData("finalizeAndContributeView", this.state);
     });
 	},
@@ -85,10 +85,10 @@ var FinalizeAndContributeView = React.createClass({
 			      }
 			    );
 			case 'email':
-				if(contributeSummary) Communications.email(null, null, null, 'Checkout out my new post on Eyespot!', 'Look at the cool product I spotted.');
+				if(contributeSummary) Communications.email(null, null, null, 'Checkout out my new post on Eyespot!', contributeSummary);
 				else Communications.email(null, null, null, 'Checkout out my new post on Eyespot!', 'Look at the cool product I spotted.');
 			case 'SMS':
-				Communications.text();
+				Communications.text(null, '// Spotted with Eyespot app. Download yours for free!\nhttps://eyes.pt/');
 		}
 	},
 
@@ -104,7 +104,7 @@ var FinalizeAndContributeView = React.createClass({
 						<Image source={{uri: uri}} style={styles.contributeSummaryPhoto} />
 						<View style={styles.rightContainer}>
 							<Text style={styles.contributeSummaryText}>
-								This was spotted at <Text style={styles.underline}>{this.props.productAndLocationData.store.name}</Text> in <Text style={styles.underline}>{this.props.productAndLocationData.store.vicinity}</Text>.
+								This was spotted at <Text style={styles.underline}>{this.props.productAndLocationData.store.name}</Text>, <Text style={styles.underline}>{this.props.productAndLocationData.store.vicinity}</Text>.
 							</Text>
 						</View>
 					</View>
@@ -115,7 +115,7 @@ var FinalizeAndContributeView = React.createClass({
 				<TextInput
 			        multiline = {true}
 			        editable = {true}
-			        maxLength = {40}
+			        maxLength = {100}
 			        onChangeText={(input) => this.setState({input})}
         			value={this.state.input}
 			        style={styles.multilineTextInput}
@@ -199,7 +199,7 @@ const border = {
   borderRadius: 1,
   borderWidth: 1
 };
-const photoSize = height/8;
+const photoSize = height/7;
 
 const styles = StyleSheet.create({
 	activeButton: {
@@ -296,7 +296,7 @@ const styles = StyleSheet.create({
 	},
 	section: {
 		width: width/1.3,
-		marginVertical: height/45,
+		marginVertical: height/65,
 		flexDirection: 'column',
 		alignItems: 'flex-start'
 	},
@@ -331,8 +331,9 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	text: {
-		fontFamily: 'Avenir-Roman',
-		marginBottom: height/45,
+		fontFamily: 'Avenir-Medium',
+    fontSize: height/50,
+		marginBottom: height/100,
 	},
 	underline: {
 		textDecorationLine: 'underline'
