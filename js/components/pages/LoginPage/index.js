@@ -199,7 +199,9 @@ const styles = StyleSheet.create({
     container: {
         marginTop: height / 15,
         flexDirection: 'column',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        width,
+        height
     },
     input: {
         alignSelf: 'center',

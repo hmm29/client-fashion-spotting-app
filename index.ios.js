@@ -21,8 +21,8 @@ import {
   View
 } from 'react-native';
 
+import OnboardingPage from './js/components/pages/OnboardingPage';
 import Orientation from 'react-native-orientation';
-import LoginPage from './js/components/pages/LoginPage';
 import TabBarLayout from './js/components/layouts/TabBarLayout';
 
 const firebaseApp = require('./js/components/firebase');
@@ -51,8 +51,8 @@ class Eyespot extends Component {
          // make them login
          setTimeout(() => {
            self.refs.nav.push({
-              title: 'LoginPage',
-              component: LoginPage,
+              title: 'OnboardingPage',
+              component: OnboardingPage,
            })
          }, 2000);
       }
@@ -103,7 +103,7 @@ class Eyespot extends Component {
           navigationBarHidden={true}    /* hide navigation bar */
           initialRoute={{               /* initial route in navigator */
             title: 'TabBarLayout',
-            component: TabBarLayout,
+            component: OnboardingPage,
           }}
           itemWrapperStyle={styles.itemWrapper} /* styles for nav background */
           style={{flex: 1}} />

@@ -23,10 +23,11 @@
    View
  } from 'react-native';
 
-
+ import EyespotPageBase from '../EyespotPageBase';
+ import LoginPage from '../LoginPage';
  import Swiper from 'react-native-swiper';
 
- var NUMBER_OF_SWIPER_VIEWS = 5;
+ var NUMBER_OF_SWIPER_VIEWS = 4;
  var SWIPER_REF = 'OnboardingPageSwiper'
  var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -54,24 +55,25 @@
      const swiper = (
        <Swiper ref={SWIPER_REF}
                //index={2}
+               snapToAlignment='center'
                style={styles.wrapper}
                bounces={false}
                showsPagination={false}
                loop={false}>
                <View style={styles.slide}>
-                 <Image source={require('./img/onboarding-1.jpg')} style={styles.img} />
+                 <Image source={require('./img/onboarding-1.png')} style={styles.img} />
                </View>
                <View style={styles.slide}>
-                 <Image source={require('./img/onboarding-2.jpg')} style={styles.img} />
+                 <Image source={require('./img/onboarding-2.png')} style={styles.img} />
                </View>
                <View style={styles.slide}>
-                 <Image source={require('./img/onboarding-3.jpg')} style={styles.img} />
+                 <Image source={require('./img/onboarding-3.png')} style={styles.img} />
                </View>
                <View style={styles.slide}>
-                 <Image source={require('./img/onboarding-4.jpg')} style={styles.img} />
+                 <Image source={require('./img/onboarding-4.png')} style={styles.img} />
                </View>
                <View style={styles.slide}>
-                 <Image source={require('./img/onboarding-5.jpg')} style={styles.img} />
+                 <LoginPage/>
                </View>
        </Swiper>
      )
@@ -100,16 +102,19 @@
       alignItems: 'center',
     },
     img: {
-      flex: 1,
       height,
-      width
+      width,
+      resizeMode: Image.resizeMode.cover,
     },
    slide: {
      backgroundColor: 'transparent',
-     paddingTop: height/19
+     paddingTop: height/19,
+     width,
+     height,
    },
    wrapper: {
-     backgroundColor: '#fff'
+     backgroundColor: '#fff',
+     bottom: height/32.5,
    }
  });
 
