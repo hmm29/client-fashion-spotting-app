@@ -40,14 +40,13 @@ String.prototype.capitalize = function () {
 var Panel = React.createClass({
 
   propTypes: {
-    dataStore: PropTypes.object,
     navigator: PropTypes.object,
     category_key: PropTypes.string
   },
 
   render(){
 
-    let { navigator, category_key, dataStore, genderFilter } = this.props;
+    let { navigator, category_key, genderFilter } = this.props;
 
 
     const category = Categories.categoryThumbMap[category_key];
@@ -93,7 +92,6 @@ var CategoryView = React.createClass({
 
   propTypes: {
     genderFilter: PropTypes.string,
-    dataStore: PropTypes.object,
     navigator: PropTypes.object
   },
 

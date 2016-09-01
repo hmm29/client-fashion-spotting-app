@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
    num: {
      color: 'red',
      fontFamily: 'Avenir-Roman',
-     fontSize: height/60
+     fontSize: height/58
    },
    username: {fontSize: 30 },
    profilePicture: {

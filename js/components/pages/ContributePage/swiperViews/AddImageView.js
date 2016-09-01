@@ -96,8 +96,10 @@ var AddImageView = React.createClass({
     return iconSource;
   },
 
-	getIconStyle(expression) {
-		if (expression) return [styles.icon, {opacity: 0.3}];
+	getIconStyle() {
+    // make icons grey if no picture chosen
+		if (!this.state.imgSource) return [styles.icon, {opacity: 0.3}];
+    // but make normal black if picture has been uploaded/taken
 		else return styles.icon;
 	},
 
@@ -347,7 +349,7 @@ var AddImageView = React.createClass({
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/contrast-effect-icon.png')}
-								style={this.getIconStyle(this.state.contrastValue === INITIAL_CONTRAST_VALUE)} />
+								style={this.getIconStyle()} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
@@ -356,7 +358,7 @@ var AddImageView = React.createClass({
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/brightness-effect-icon.png')}
-								style={this.getIconStyle(this.state.brightnessValue === INITIAL_BRIGHTNESS_VALUE)} />
+								style={this.getIconStyle()} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
@@ -365,7 +367,7 @@ var AddImageView = React.createClass({
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/color-temperature-effect-icon.png')}
-								style={this.getIconStyle(this.state.colorTemperatureValue === INITIAL_COLOR_TEMPERATURE_VALUE)} />
+								style={this.getIconStyle()} />
 						</TouchableOpacity>
 						<TouchableOpacity onPress={() => {
 							// save the current effect value to revert back to if the user cancels changes to the effect
@@ -374,7 +376,7 @@ var AddImageView = React.createClass({
 						}}>
 							<Image
 								source={require('../../../partials/icons/contribute/img/sharpen-effect-icon.png')}
-								style={this.getIconStyle(this.state.sharpenValue === INITIAL_SHARPEN_VALUE)} />
+								style={this.getIconStyle()} />
 						</TouchableOpacity>
 				</View>
 
@@ -444,7 +446,7 @@ var AddImageView = React.createClass({
                   source={require('../../../partials/icons/contribute/img/gallery-text.png')}
                   style={styles.textIcon} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.captureButton} onPress={this.takePicture}>
+              <TouchableOpacity style={styles.captureButton} onPress={() => this.setState({imgSource: ''})}>
                 <Image
                   source={require('../../../partials/icons/contribute/img/camera-icon.png')}
                   style={styles.icon} />
@@ -480,7 +482,8 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
-		width: width
+		width: width,
+    top: height/50
 	},
 	bottomContentIcons: {
 		flexDirection: 'row',
@@ -559,7 +562,7 @@ const styles = StyleSheet.create({
 	},
 	text: {
     fontFamily: 'Avenir-Medium',
-    fontSize: height/50,
+    fontSize: height/55,
 	},
 	trackStyle: {
 		height: 18,

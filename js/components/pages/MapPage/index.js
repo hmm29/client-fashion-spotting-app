@@ -57,6 +57,15 @@ var MapPage = React.createClass({
      products: PropTypes.array
    },
 
+   componentWillMount() {
+     var vicinity = this.props.products && this.props.products[0] && this.props.products[0].store
+     && this.props.products[0].store.vicinity;
+     var lastCommaInVicinity = vicinity.lastIndexOf(',');
+     var city = vicinity.slice(lastCommaInVicinity+1);
+     if(city === 'Washington') city = 'Washington, D.C.'
+     this.setState({city, locationFilter: city});
+   },
+
    /*
     * _renderHeader(): renders the imported header component
     */
@@ -103,8 +112,8 @@ var MapPage = React.createClass({
          dropdown : ['Last Week', 'Last Month', 'Last Year'],
        },
        {
-         'name' : 'Washington DC',
-         dropdown: []
+         'name' : 'Location',
+         dropdown: [this.state.city]
        },
      ]
 
@@ -116,7 +125,7 @@ var MapPage = React.createClass({
              noScroll={true}>
              <Map {...this.props}/>
          </EyespotPageBase>
-         <FilterBar filters={filters} setFilter={this.setFilter}/>
+         <FilterBar filters={filters} historyFilter={this.state.historyFilter} locationFilter={this.state.locationFilter} setFilter={this.setFilter}/>
          {this._renderFooter()}
        </View>
      );
@@ -141,6 +150,7 @@ const styles = StyleSheet.create({
    bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book'},
    headerContainer: {
      backgroundColor: '#000',
+     bottom: height/45
    },
    pageTitle: {
      flexDirection: 'row',

@@ -205,7 +205,7 @@ const styles = StyleSheet.create({
 
 	text: {
     fontFamily: 'Avenir-Medium',
-    fontSize: height/50,
+    fontSize: height/55,
 	},
 });
 

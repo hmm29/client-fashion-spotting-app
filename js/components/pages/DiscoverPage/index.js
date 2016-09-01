@@ -23,6 +23,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import _ from 'lodash';
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
@@ -30,6 +31,8 @@ import FilterBar from '../../partials/FilterBar';
 import CategoryView from './components/CategoryView';
 import ProductFeed from '../ProductFeed';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
+
+import firebaseApp from '../../firebase';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -82,6 +85,19 @@ var DiscoverPage = React.createClass({
       }
     },
 
+    componentWillMount() {
+      let { dataStore } = this.props;
+      let results = [];
+      let topFiveStores = dataStore && dataStore.products && Object.values(dataStore.products) && Object.values(dataStore.products).map(product => {
+        if(product.store && product.store.name && product.store.name.length && results.indexOf(product.store.name) < 0) { // dont duplicate store names in Store dropdown
+          results.push(product.store.name);
+          return product.store.name;
+        }
+      }).slice(0,5);
+      _.pull(topFiveStores, null);
+      this.setState({topFiveStores});
+    },
+
     navigateToFallCollection() {
       let { navigator } = this.props;
       let { genderFilter } = this.state;
@@ -127,7 +143,6 @@ var DiscoverPage = React.createClass({
      */
 
     render() {
-
       // FIXME:
       const filters = [
         {
@@ -140,7 +155,7 @@ var DiscoverPage = React.createClass({
         },
         {
           name: 'Store',
-          dropdown: ['All']
+          dropdown: ['All'].concat(this.state.topFiveStores) // show top 5 stores in addition to All
         },
       ]
 

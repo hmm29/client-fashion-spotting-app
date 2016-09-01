@@ -107,6 +107,8 @@ var TabBarLayout = React.createClass({
     * retrieve data from firebase data store
     */
 
+    // must fetch data after rendering!!
+    // important to put this data call in componentDidMount
     var ref = firebaseApp.database().ref();
     var dataStore = {};
 
@@ -121,7 +123,6 @@ var TabBarLayout = React.createClass({
         loaded: true
       })
     });
-
    },
 
 
@@ -140,6 +141,7 @@ var TabBarLayout = React.createClass({
 	    if (title === 'discover') {
         return (
           <DiscoverPage
+            dataStore={this.state.dataStore}
             navigator={this.props.navigator} />
         )
 	    }

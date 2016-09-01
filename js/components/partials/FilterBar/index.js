@@ -33,9 +33,9 @@ var Dropdowns = React.createClass({
  },
 
  componentWillMount() {
-   let { genderFilter, locationFilter } = this.props;
+   let { genderFilter, historyFilter, locationFilter } = this.props;
    this.setState({
-     selected: [genderFilter, locationFilter]
+     selected: [genderFilter, historyFilter, locationFilter]
    })
  },
 
@@ -62,7 +62,7 @@ var Dropdowns = React.createClass({
                    {filter.dropdown.map(function(d, j) {
                      return (
                        <TouchableOpacity key={j} onPress={() => this.selectDropdownItem(d, filter.name, i)}>
-                         <Text style={[styles.dropdownText, (this.state.selected.indexOf(d) > -1 ? {color: 'red'} : {}), (d.length > 10 ? {fontSize: height/55} : {})]}>{d}</Text>
+                         <Text style={[styles.dropdownText, (this.state.selected.indexOf(d) > -1 ? {color: 'red'} : {}), (d && d.length > 10 ? {fontSize: height/55} : {})]}>{d}</Text>
                        </TouchableOpacity>
                      );
                    }, this)}
@@ -161,12 +161,13 @@ var FilterBar = React.createClass({
  },
 
  render() {
-   const  { genderFilter, locationFilter, filters } = this.props;
+   const  { genderFilter, historyFilter, locationFilter, filters } = this.props;
 
    return (
      <View style={styles.searchBar}>
        <Dropdowns
          genderFilter={genderFilter}
+         historyFilter={historyFilter}
          locationFilter={locationFilter}
          setFilter={this.props.setFilter}
          nav={this.state.nav}

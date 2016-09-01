@@ -124,7 +124,7 @@ var ContributePage = React.createClass({
         if(snap.val() && snap.val()[userId] && snap.val()[userId].contributionCount){
           firebaseApp.database().ref('users/' + userId + '/contributionCount').set(snap.val()[userId].contributionCount+1)
         } else {
-          firebaseApp.database().ref('users/' + userId + '/contributionCount').set(0);
+          firebaseApp.database().ref('users/' + userId + '/contributionCount').set(1);
         }
       });
     },
