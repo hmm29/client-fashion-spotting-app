@@ -28,6 +28,7 @@ import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import FilterBar from '../../partials/FilterBar';
 import CategoryView from './components/CategoryView';
+import ProductFeed from '../ProductFeed';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
@@ -45,7 +46,7 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
    render() {
 
-     /* }
+     /*
      <TouchableOpacity style={styles.featuredApplyBox}>
         <View style={styles.textContainer}>
           <Text style={styles.featuredPanelText}>apply to be a featured contributor</Text>
@@ -55,12 +56,9 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
      return (
        <View>
-         <View style={styles.featuredPanel}>
-           <Image source={require('../../partials/img/test.jpg')} style={styles.featuredPanelImage}/>
-           <View style={styles.textContainer}>
-             <Text style={styles.panelText}>FEATURED CONTRIBUTOR</Text>
-           </View>
-         </View>
+         <TouchableOpacity onPress={this.props.onPress} style={styles.featuredPanel}>
+           <Image source={require('../../partials/img/fall-collection.png')} style={styles.featuredPanelImage}/>
+         </TouchableOpacity>
        </View>
      );
    }
@@ -80,10 +78,25 @@ var DiscoverPage = React.createClass({
     getInitialState() {
       return {
         genderFilter : "All",
-        locationFilter : "DC"
+        locationFilter : "Washington, D.C."
       }
     },
 
+    navigateToFallCollection() {
+      let { navigator } = this.props;
+      let { genderFilter } = this.state;
+
+        navigator.push({
+          title: 'ProductFeed',
+          component: ProductFeed,
+          passProps: {
+              // control items to display for fall collection here
+              categoryKey: 'dresses_w',
+              categoryName: 'Dresses',
+          }
+        });
+
+    },
 
     /*
      * _renderHeader(): renders the imported header component
@@ -123,7 +136,7 @@ var DiscoverPage = React.createClass({
         },
         {
           'name' : 'Location',
-          dropdown: ['DC']
+          dropdown: ['Washington, D.C.']
         },
         {
           name: 'Store',
@@ -138,13 +151,15 @@ var DiscoverPage = React.createClass({
                 keyboardShouldPersistTaps={false}
                 noScroll={false}>
                 <View style={styles.container}>
-                  <Featured/>
+                  <Featured onPress={this.navigateToFallCollection}/>
                   <CategoryView
                     genderFilter={this.state.genderFilter}
                     {...this.props} />
                 </View>
             </EyespotPageBase>
             <FilterBar
+              genderFilter={this.state.genderFilter}
+              locationFilter={this.state.locationFilter}
               filters={filters}
               setFilter={this.setFilter}/>
           </View>
@@ -156,7 +171,7 @@ var DiscoverPage = React.createClass({
  * CSS stylings
  */
 
-const headerHeight = height / 10
+const headerHeight = height / 14
 const panelMargin = 5;
 const sideMargin = 20;
 const panelWidth = (width - panelMargin * 4 - sideMargin * 2) / 2;
@@ -196,7 +211,7 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
       backgroundColor: '#000',
-      top: -10
+      bottom: height / 45
     },
     layeredPageContainer: {flex: 1},
     pageTitle: {
@@ -208,8 +223,8 @@ const styles = StyleSheet.create({
     pageTitleLogo: {
       alignSelf: 'center',
       backgroundColor: 'transparent',
-      width: width / 3.2,
-      height: height / 24,
+      width: width / 3.9,
+      height: height / 30,
       resizeMode: Image.resizeMode.contain
     },
     pageTitleText: {

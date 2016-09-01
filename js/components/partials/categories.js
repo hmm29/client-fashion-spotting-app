@@ -1,5 +1,6 @@
 exports.categoryKeys =
   [
+    "all_m",
     "all_w",
     "bags_w",
     "dresses_w",
@@ -10,7 +11,6 @@ exports.categoryKeys =
     "skirts_w",
     "suits_w",
     "sweaterscardigan_w",
-    "all_m",
     "other_m",
     "outerwear_m",
     "pants_m",
@@ -22,9 +22,15 @@ exports.categoryKeys =
  ]
 
 exports.categoryThumbMap = {
+    all_m: {
+      thumb: require("./img/category-thumbnails/female-all.jpg"),
+      name: "All Men",
+      gender: "men",
+      key: "all_m"
+    },
    all_w: {
      thumb: require("./img/category-thumbnails/female-all.jpg"),
-     name: "All",
+     name: "All Women",
      gender: "women",
      key: "all_w"
    },
@@ -54,7 +60,7 @@ exports.categoryThumbMap = {
    },
    shirts_and_top_w: {
      thumb: require("./img/category-thumbnails/female-shirts-and-top.jpg"),
-     name:"Shirts and Top",
+     name:"Shirts & Top",
      gender: "women",
      key: "shirts_and_top_w"
    },
@@ -81,12 +87,6 @@ exports.categoryThumbMap = {
      name: "Sweaters & Cardigan",
      gender: "women",
      key: "sweaterscardigan_w"
-   },
-   all_m: {
-     thumb: require("./img/category-thumbnails/female-all.jpg"),
-     name: "All",
-     gender: "men",
-     key: "all_m"
    },
    other_m: {
      thumb: require("./img/category-thumbnails/male-other.jpg"),
@@ -120,7 +120,7 @@ exports.categoryThumbMap = {
    },
    suits_and_sportcoats_m: {
      thumb: require("./img/category-thumbnails/male-suits-and-sportcoats.jpg"),
-     name: "Suits and Sportcoats",
+     name: "Suits & Sportcoats",
      gender: "men",
      key: "suits_and_sportcoats_m"
    },
@@ -140,6 +140,7 @@ exports.categoryThumbMap = {
 
 exports.categoryGender = {
    men: [
+     "all_m",
      "other_m",
      "outerwear_m",
      "pants_m",

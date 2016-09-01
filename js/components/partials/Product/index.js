@@ -25,6 +25,7 @@ import {
 
 
 import Controls from './components/Controls';
+import helpers from '../../helpers';
 import Image from 'react-native-image-progress';
 import Location from './components/Location';
 import Contributor from './components/Contributor';
@@ -58,7 +59,7 @@ var Product = React.createClass({
 
     return (
       <View style={styles.product}>
-        <Image source={{uri : product.image.url }} style={styles.productImage}/>
+        <Image source={{uri : product && product.image && product.image.url }} style={styles.productImage}/>
         <View style={styles.info}>
           <Contributor
             user={user}
@@ -69,6 +70,7 @@ var Product = React.createClass({
             product={product}/>
           <Comment product={product}/>
           <Controls product={product}/>
+          <Text style={styles.timestamp}>{product && product.timestamp ? helpers.getTimePassed(Date.parse(product.timestamp)) + ' ago' : '36m ago'}</Text>
         </View>
       </View>
     );
@@ -83,7 +85,7 @@ var Product = React.createClass({
 */
 
 const panelMargin = 5;
-const sideMargin = 20;
+const sideMargin = 18;
 const panelWidth = (width - panelMargin * 4 - sideMargin * 2) / 2;
 const featuredPanelWidth = panelWidth * 2 + panelMargin * 2;
 
@@ -92,12 +94,13 @@ const styles = StyleSheet.create({
        flex: 1,
        flexDirection: 'column',
        alignItems: 'center',
-       width: featuredPanelWidth,
-       marginBottom: 50
+       width,
+       bottom: height/28,
     },
     productImage: {
+      alignSelf: 'center',
       width: featuredPanelWidth,
-      height: height * 5 / 12,
+      height: height * 5.2 / 12,
       resizeMode: 'cover',
       flex: 1
     },
@@ -106,6 +109,17 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center'
+    },
+    timestamp: {
+      flexDirection: 'row',
+      position: 'absolute',
+      top: 0,
+      right: -(width/35),
+      padding: 10,
+      width: width/4,
+      textAlign: 'right',
+      fontFamily: 'Avenir-BookOblique',
+      color: '#aaa'
     }
 });
 

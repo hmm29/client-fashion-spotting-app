@@ -87,18 +87,18 @@ var styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   headerContainer: {
     width,
-    height: height / 10,
+    height: height / 11,
     backgroundColor: 'transparent',
     paddingHorizontal: 20,
     paddingVertical: height / 25
   },
   headerText: {
     color: '#fff',
-    fontSize: 22,
+    fontSize: height/30,
     fontFamily: 'AvenirNextCondensed-Regular'
   }
 });

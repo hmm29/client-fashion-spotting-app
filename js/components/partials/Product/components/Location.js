@@ -55,12 +55,12 @@ var Location = React.createClass({
 
     const { product, products } = this.props;
 
-    var store = product.store.name;
-    var vicinity = product.store.vicinity;
-    if(vicinity.length > 12){
+    var store = product && product.store && product.store.name;
+    var vicinity = product && product.store && product.store.vicinity;
+    if(vicinity && vicinity.length > 12){
       vicinity = vicinity.slice(0,18) + "..";
     }
-    if(store.length > 12){
+    if(store && store.length > 12){
       store = store.slice(0,18) + "..";
     }
 
@@ -70,7 +70,7 @@ var Location = React.createClass({
         <Text> {vicinity}</Text>
           <TouchableOpacity onPress={this.handlePress}>
           <Image
-            style={styles.location}
+            style={styles.locationIcon}
             onPress={()=>{ this.handlePress()}}
             source={require('../img/location.png')}/>
           </TouchableOpacity>
@@ -92,18 +92,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 1,
+    borderWidth: 1.5,
     borderRightWidth: 0,
     borderLeftWidth: 0,
     borderColor: 'black',
     transform: [{translateY: -20}],
   },
   italic: {fontStyle: 'italic'},
-  location: {
+  locationIcon: {
     width: 15,
-    height:15,
+    height: 15,
     resizeMode: 'contain',
     marginLeft:10,
+    left: width/30
   }
 
 });

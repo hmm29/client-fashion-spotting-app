@@ -37,7 +37,6 @@ var Comments = React.createClass({
     const comment = product.comment;
     return (
       <View style={styles.container}>
-        <Image source={require('../img/quotes.png')} style={styles.icon}/>
         <Text style={styles.commentText}>{comment}</Text>
       </View>
     );

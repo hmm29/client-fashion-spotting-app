@@ -14,6 +14,7 @@
 
 import React, { PropTypes, Component } from 'react';
 import {
+  Dimensions,
   Image,
   StyleSheet,
   Text,
@@ -21,7 +22,8 @@ import {
   View
 } from 'react-native';
 
-const SIZE = 20; /* icon font size */
+var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+const SIZE = height/40; /* icon font size */
 
 /*
  * specifies types for properties that this component receives
@@ -74,7 +76,7 @@ class BackIcon extends Component {
         activeOpacity={0.1}
         onPress={this.props.onPress}
         style={[this.props.style,{width: (this.props.size || SIZE) * 3.88,
-                height: (this.props.size || SIZE) * 3.88, alignItems: 'flex-start'}]}>
+                height: (this.props.size || SIZE) * 3.88, alignItems: 'flex-start', right: width/40, top: width/600}]}>
         <Image
           source={this.getIconSource()}
           style={[styles.icon]} />

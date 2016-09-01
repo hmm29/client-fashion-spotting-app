@@ -28,8 +28,15 @@
 var Dropdowns = React.createClass({
  getInitialState() {
      return {
-       selected: null
+       selected: []
      };
+ },
+
+ componentWillMount() {
+   let { genderFilter, locationFilter } = this.props;
+   this.setState({
+     selected: [genderFilter, locationFilter]
+   })
  },
 
  selectDropdownItem(d, type, i) {
@@ -55,7 +62,7 @@ var Dropdowns = React.createClass({
                    {filter.dropdown.map(function(d, j) {
                      return (
                        <TouchableOpacity key={j} onPress={() => this.selectDropdownItem(d, filter.name, i)}>
-                         <Text style={[styles.dropdownText, (this.state.selected === d ? {color: 'red'} : {})]}>{d}</Text>
+                         <Text style={[styles.dropdownText, (this.state.selected.indexOf(d) > -1 ? {color: 'red'} : {}), (d.length > 10 ? {fontSize: height/55} : {})]}>{d}</Text>
                        </TouchableOpacity>
                      );
                    }, this)}
@@ -115,7 +122,10 @@ var Navs = React.createClass({
 var FilterBar = React.createClass({
 
   propTypes: {
+    genderFilter: PropTypes.string,
+    locationFilter: PropTypes.string,
     filters: PropTypes.array,
+    setFilter: PropTypes.function
   },
 
 
@@ -151,11 +161,13 @@ var FilterBar = React.createClass({
  },
 
  render() {
-   const  { filters } = this.props;
+   const  { genderFilter, locationFilter, filters } = this.props;
 
    return (
      <View style={styles.searchBar}>
        <Dropdowns
+         genderFilter={genderFilter}
+         locationFilter={locationFilter}
          setFilter={this.props.setFilter}
          nav={this.state.nav}
          _setNav={this._setNav}
@@ -183,12 +195,12 @@ const styles = StyleSheet.create({
    },
    searchBarContainer: {
        position: 'absolute',
-       height: height / 80,
+       height: height / 120,
    },
    searchBar: {
      position: 'absolute',
      height: height / 80,
-     top: headerHeight,
+     top: height / 18,
    },
    navsContainer: {
      position: 'absolute',

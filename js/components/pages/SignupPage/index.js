@@ -29,7 +29,7 @@ import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
-import { LoginManager } from 'react-native-fbsdk';
+import { FBLoginManager } from 'react-native-facebook-login';
 import TabBarLayout from '../../layouts/TabBarLayout';
 
 const firebaseApp = require('../../firebase');

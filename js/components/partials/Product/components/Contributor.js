@@ -83,7 +83,7 @@ var Contributor = React.createClass({
           {ProfileImage}
         </TouchableOpacity>
         <Text style={[styles.bodoni, {fontStyle: 'italic'}]}>spotted by</Text>
-        <Text style={[styles.name, styles.bodoni]}>{username}</Text>
+        <Text style={[styles.name, styles.bodoni, {bottom: height/140}]}>{username}</Text>
       </View>
     );
   }
@@ -93,7 +93,7 @@ var Contributor = React.createClass({
 * CSS stylings
 */
 
-const profileRadius = 30;
+const profileRadius = width/14;
 const borderWidth = 4;
 const innerProfileRadius = profileRadius - borderWidth;
 const profileDiameter = profileRadius * 2;
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
  bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book' },
  name: {
    color: 'red',
-   fontSize: 25
+   fontSize: height/25
  }
 });
 

@@ -28,6 +28,10 @@ import Categories from '../../../partials/categories';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
+var move = function(array, from, to) {
+    array.splice(to, 0, array.splice(from, 1)[0]);
+};
+
 String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
 };
@@ -88,8 +92,24 @@ var CategoryView = React.createClass({
    */
 
   propTypes: {
+    genderFilter: PropTypes.string,
     dataStore: PropTypes.object,
     navigator: PropTypes.object
+  },
+
+  orderCategoryKeys(categoryKeys) {
+    let { genderFilter } = this.props;
+    if(genderFilter === 'Men') {
+      // move others category to the end
+      move(categoryKeys, categoryKeys.indexOf('other_m'), categoryKeys.length-1)
+    }
+
+    if(genderFilter === 'Women') {
+      // move bags to the end
+      move(categoryKeys, categoryKeys.indexOf('bags_w'), categoryKeys.length-1)
+    }
+
+    return categoryKeys;
   },
 
 
@@ -99,9 +119,11 @@ var CategoryView = React.createClass({
 
   render() {
 
+    var orderedCategoryKeys = this.orderCategoryKeys(Categories.categoryKeys);
+
     return (
       <View style={styles.categories}>
-        {Categories.categoryKeys.map(function(category_key, i) {
+        {orderedCategoryKeys && orderedCategoryKeys.map(function(category_key, i) {
           return (
             <Panel
               key={i}

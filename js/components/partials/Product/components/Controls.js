@@ -25,6 +25,8 @@ import {
 
 const firebaseApp = require('../../../firebase');
 
+var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+
 function getNumLikes(likes){
   var likeKeys = Object.keys(likes);
   let ret = 0;
@@ -50,6 +52,13 @@ var Share = React.createClass({
 
 
 var Likes = React.createClass({
+  componentWillMount() {
+    var self = this;
+    AsyncStorage.getItem('@MyStore:uid').then(function(userId){
+      self.setState({userId});
+    });
+
+  },
   likedByUser(userId){
     if(this.props.product.likes[userId]){
       return true
@@ -78,18 +87,43 @@ var Likes = React.createClass({
       productId : productId
     });
   },
+
+  getImageSource() {
+      let { product } = this.props;
+
+      if(this.state && this.state.userId && product && product.likes && product.likes && product.likes[this.state.userId]) {
+        return require('../img/like-active.png')
+      } else {
+        return require('../img/like.png');
+      }
+  },
+
+  getNumLikesColor() {
+    let { product } = this.props;
+
+    if(this.state && this.state.userId && product && product.likes && product.likes && product.likes[this.state.userId]) {
+      return {color: 'red'}
+    }
+  },
+
   handlePress(){
     var self = this;
     const productId = this.props.product['.key'];
 
-    AsyncStorage.getItem('@MyStore:uid').then(function(userId){
-      if(self.likedByUser(userId)){
-        self.removeLike(userId, productId);
-      }
-      else{
-        self.addLike(userId, productId);
-      }
-    })
+    if(!(self.state && self.state.userId)) {
+      AsyncStorage.getItem('@MyStore:uid').then(function(userId){
+        self.setState({userId});
+      });
+    }
+
+    let userId = self.state.userId;
+
+    if(self.likedByUser(userId)){
+      self.removeLike(userId, productId);
+    }
+    else{
+      self.addLike(userId, productId);
+    }
   },
 
   render() {
@@ -101,9 +135,9 @@ var Likes = React.createClass({
     return (
       <View style={styles.control}>
         <TouchableOpacity onPress={this.handlePress}>
-          <Image source={require('../img/like.png')} style={styles.icon}/>
+          <Image source={this.getImageSource()} style={styles.icon}/>
         </TouchableOpacity>
-        <Text style={styles.bodoni}>{numLikes}</Text>
+        <Text style={[styles.bodoni, this.getNumLikesColor()]}>{numLikes}</Text>
       </View>
     );
   }
@@ -151,7 +185,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     top: 0,
-    left: 0,
+    left: -(width/40),
     padding: 10
   },
   icon: {
@@ -163,7 +197,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10
+    marginRight: width/25
   },
   bodoni: {
     color: 'gray',

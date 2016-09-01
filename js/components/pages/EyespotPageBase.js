@@ -72,7 +72,8 @@ var EyespotPageBase = React.createClass({
 const styles = StyleSheet.create({
  container: {
     backgroundColor: '#fff',
-    flex: 1 // must have flex: 1 for page scrolling
+    flex: 1, // must have flex: 1 for page scrolling,
+    bottom: 0
   },
   wrapper: {
   }

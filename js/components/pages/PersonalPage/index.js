@@ -191,7 +191,7 @@ var PersonalPage = React.createClass({
 
        return (
            <Header containerStyle={styles.headerContainer}>
-               <MoreIcon onPress={() => {}} />
+               {currentRoute.title !== 'TabBarLayout' ? <BackIcon color='white' onPress={() => this.props.navigator.pop()} /> : <MoreIcon onPress={() => {}} />}
                <View style={styles.pageTitle}>
                  <Image source={EyespotNegativeLogo}
                                  style={styles.pageTitleLogo} />
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
    },
    headerContainer: {
      backgroundColor: '#000',
-     top: -10
+    bottom: height / 45
    },
    layeredPageContainer: {flex: 1},
    pageTitle: {
@@ -311,8 +311,8 @@ const styles = StyleSheet.create({
    pageTitleLogo: {
      alignSelf: 'center',
      backgroundColor: 'transparent',
-     width: width / 3.2,
-     height: height / 24,
+     width: width / 3.9,
+     height: height / 30,
      resizeMode: Image.resizeMode.contain
    },
    pageTitleText: {

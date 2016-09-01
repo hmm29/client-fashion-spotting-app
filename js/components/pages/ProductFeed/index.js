@@ -21,6 +21,7 @@ import {
  Text,
 } from 'react-native';
 
+import _ from 'lodash';
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import CatalogViewIcon from '../../partials/icons/product/CatalogViewIcon';
@@ -38,7 +39,11 @@ import firebaseApp from '../../firebase';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 var SWIPER_REF = 'ProductFeedSwiper';
-var SIZE_OF_PRODUCT_ITEM = width * 0.9;
+var SIZE_OF_PRODUCT_ITEM = height * 0.9;
+
+String.prototype.capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1);
+};
 
 /*
 * defines the ProductFeed class
@@ -101,15 +106,48 @@ var ProductFeed = React.createClass({
      if(!dataStore){ return null };
 
      const categories = dataStore.category || {};
+     var filteredProducts;
      var productKeys = categories[this.props.categoryKey] ?
        Object.values(categories[this.props.categoryKey]) : [];
 
      var allProducts = addKeyToProducts(products);
-     var filteredProducts = productKeys.map((productKey) => {
-       return allProducts[productKey];
-     })
 
-     return filteredProducts
+     if(this.props.categoryKey === 'all_m') {
+       // filter the category keys to ones for men only
+       let filteredCategoryKeys = Object.keys(categories).filter(key => {
+         return key.indexOf('_m') > -1
+       });
+
+       // collect the product keys for these categories
+       let allProductKeys = filteredCategoryKeys.map(key => {
+         return Object.values(categories[key]);
+       })
+
+       // flatten the nested array into a one-dimensional array of products
+       // of only men's items
+       productKeys = _.flatten(allProductKeys);
+
+     } else if (this.props.categoryKey === 'all_w') {
+       // filter the category keys to ones for men only
+       let filteredCategoryKeys = Object.keys(categories).filter(key => {
+         return key.indexOf('_w') > -1
+       });
+
+       // collect the product keys for these categories
+       let allProductKeys = filteredCategoryKeys.map(key => {
+         return Object.values(categories[key]);
+       })
+
+       // flatten the nested array into a one-dimensional array of products
+       // of only women's items
+       productKeys = _.flatten(allProductKeys);
+     }
+
+       filteredProducts = productKeys.map((productKey) => {
+         return allProducts[productKey];
+       });
+
+     return filteredProducts;
 
    },
 
@@ -140,9 +178,6 @@ var ProductFeed = React.createClass({
       var hasChangedItem = Math.abs(currentOffset-this.offset) > SIZE_OF_PRODUCT_ITEM;
       this.offset = currentOffset;
 
-      console.log(hasChangedItem)
-
-
       if(direction == 'right' && hasChangedItem) {
         this.currentProductSwiperPageIndex = this.currentProductSwiperPageIndex+1;
       }
@@ -166,13 +201,17 @@ var ProductFeed = React.createClass({
     */
 
    _renderHeader() {
+      let { categoryName } = this.props;
+      categoryName = categoryName.capitalize();
+      let ampersandIdx = categoryName.indexOf('&');
+
        return (
          <Header containerStyle={styles.headerContainer}>
            <BackIcon color='white' onPress={this.navigateBack} />
            <View style={styles.pageTitle}>
              <Image source={EyespotNegativeLogo}
                    style={styles.pageTitleLogo} />
-             <Text style={styles.pageTitleText}>{this.props.categoryName.toUpperCase()}</Text>
+             <Text style={styles.pageTitleText}>{(categoryName.length > 12 ? categoryName.substring(0,ampersandIdx+1) + ' ...' : categoryName)}</Text>
            </View>
            <View style={{width: width/6, left: width/9, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
                <CatalogViewIcon isActive={this.state.catalogViewIconActive} onPress={() => this.setState({catalogViewIconActive: true, mapsViewIconActive: false})} />
@@ -215,6 +254,7 @@ var ProductFeed = React.createClass({
                  index={this.currentProductSwiperPageIndex}
                  bounces={false}
                  loop={false}
+                 horizontal={false}
                  onScroll={this.onScroll}
                  scrollEnabled={true}
                  scrollEventThrottle={-1000}
@@ -267,7 +307,6 @@ var ProductFeed = React.createClass({
 * CSS stylings
 */
 
-const sideMargin = 20;
 
 const styles = StyleSheet.create({
     container: {
@@ -275,11 +314,10 @@ const styles = StyleSheet.create({
     products: {
       flexDirection: 'column',
       justifyContent: 'flex-start',
-      paddingHorizontal: sideMargin,
     },
     headerContainer: {
       backgroundColor: '#000',
-      top: -10
+      bottom: height/45
     },
     layeredPageContainer: {flex: 1},
     pageTitle: {
@@ -291,8 +329,8 @@ const styles = StyleSheet.create({
     pageTitleLogo: {
       alignSelf: 'center',
       backgroundColor: 'transparent',
-      width: width / 3.2,
-      height: height / 24,
+      width: width / 3.9,
+      height: height / 30,
       resizeMode: Image.resizeMode.contain
     },
     pageTitleText: {
@@ -302,10 +340,12 @@ const styles = StyleSheet.create({
     },
     slide: {
       backgroundColor: 'transparent',
-      paddingTop: height/19
+      paddingTop: height/19,
+      width
     },
     wrapper: {
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      width
     }
 });
 

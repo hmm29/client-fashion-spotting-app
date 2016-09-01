@@ -28,7 +28,7 @@ import {
 import Button from 'apsl-react-native-button';
 import Communications from 'react-native-communications';
 import EyespotPageBase from '../EyespotPageBase';
-import { LoginManager } from 'react-native-fbsdk';
+import { FBLoginManager } from 'react-native-facebook-login';
 import SignUpPage from '../SignupPage';
 import TabBarLayout from '../../layouts/TabBarLayout';
 
@@ -118,24 +118,13 @@ var LoginPage = React.createClass({
 
                         <TouchableOpacity
                           onPress={() => {
-                            LoginManager.logInWithReadPermissions(['public_profile']).then(
-                              result => {
-                                if (result.isCancelled) {
-                                  Alert.alert('Login cancelled');
-                                } else {
-                                  console.log('Login success with permissions: '
-                                    + result.grantedPermissions.toString());
-                                  this.props.navigator.push({
-                                    title: 'TabBarLayout',
-                                    component: TabBarLayout,
-                                    passProps: {}
-                                  });
-                                }
-                              },
-                              error => {
-                                Alert.alert('Login fail with error:', error);
+                            FBLoginManager.loginWithPermissions([], function(error, data){
+                              if (!error) {
+                                console.log("Login data: " + JSON.stringify(data));
+                              } else {
+                                Alert.alert("Login Error: ", error);
                               }
-                            );
+                            })
                           }}>
                             <Image
                                 source={require('../../partials/img/login-with-facebook.png')}

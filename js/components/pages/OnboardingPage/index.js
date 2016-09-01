@@ -73,7 +73,7 @@
                  <Image source={require('./img/onboarding-4.png')} style={styles.img} />
                </View>
                <View style={styles.slide}>
-                 <LoginPage/>
+                 <LoginPage navigator={this.props.navigator} />
                </View>
        </Swiper>
      )

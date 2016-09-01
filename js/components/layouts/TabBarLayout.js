@@ -86,7 +86,7 @@ var TabBarLayout = React.createClass({
     AsyncStorage.getItem('@MyStore:uid')
     .then((userId) => {
       if(!userId) return;
-      
+
       var ref = firebaseApp.database().ref();
       ref.on('value', (snap) => {
           const users = snap.val() && snap.val().users;
@@ -239,8 +239,8 @@ var TabBarLayout = React.createClass({
   }
 });
 
-const footerHeight = 60;
-const iconWidth = height/28;
+const footerHeight = height / 13;
+const iconWidth = height/32;
 const iconEmblemWidth = height/18;
 const iconEmblemHeight = iconEmblemWidth * 2;
 const loadingTextFontSize = 12;
@@ -280,6 +280,7 @@ const styles = StyleSheet.create({
    width: iconWidth,
    height: iconWidth,
    resizeMode: 'contain',
+   bottom: height/180
  },
  iconEmblemContainer: {
    width: iconEmblemWidth,
@@ -294,6 +295,12 @@ const styles = StyleSheet.create({
    resizeMode: 'contain',
    position: 'absolute',
    top: -(height/25)
+ },
+ iconRight: {
+   right: width/220
+ },
+ iconLeft: {
+   left: width/150
  },
  loadingContent: {
     flexDirection: 'column',
