@@ -20,6 +20,7 @@ import {
   Dimensions
 } from 'react-native';
 
+import _ from 'lodash';
 import MapView from 'react-native-maps';
 import Emblem from '../img/marker.png';
 
@@ -33,6 +34,29 @@ const washingtonDC = {
 const Delta = {
   lat: 0.0922,
   lng: 0.0421,
+}
+
+// Harrison: this function checks for products with the same store
+// locations and spaces out their marker coordinates so that
+// they dont all appear as one product
+var spaceOutNearbyProducts = (products) => {
+  var locations = [];
+  var spacedOutProducts = [];
+  products.forEach((product) => {
+      // Harrison: if the location of this product already belongs
+      // to a previously checked one, then make slight edits to the coordinates
+      // for display purposes (does not affect data in database)
+       if(product && product.store && _.find(locations, product.store.location)) {
+          product.store.location.lat = product.store.location.lat + _.random(0.001, 0.003);
+          product.store.location.lng = product.store.location.lng + _.random(0.001, 0.003);
+       } else if (product && product.store && product.store.location) {
+          locations.push(product.store.location);
+       }
+
+       spacedOutProducts.push(product);
+  });
+
+  return spacedOutProducts;
 }
 
 /*
@@ -67,6 +91,9 @@ var Map = React.createClass({
     },
 
     componentDidMount(){
+      // prevent overlapping product icons by slightly spacing out markers to
+      // give appearance of a cluster
+
       var self = this;
       navigator.geolocation.getCurrentPosition((position) => {
           var coords = position.coords;
@@ -87,7 +114,7 @@ var Map = React.createClass({
       );
 
       // create markers from products' location data
-      var markers = this.props.products.map((product) => {
+      var markers = spaceOutNearbyProducts(this.props.products).map((product) => {
 
         return {
           latlng: {
@@ -99,6 +126,7 @@ var Map = React.createClass({
         }
       })
       this.setState({ markers : markers });
+      alert(JSON.stringify(markers));
     },
 
     onRegionChange(region) {
@@ -106,15 +134,15 @@ var Map = React.createClass({
     },
 
     render() {
-      const { products } = this.props;
+      var products = spaceOutNearbyProducts(this.props.products);
 
       return (
         <MapView
           style={styles.map}
           region={this.state.region}
           initialRegion={{
-            latitude: products && products[0] && products[0].store && products[0].store.location && products[0].store.location.lat || washingtonDC.lat,
-            longitude: products && products[0] && products[0].store && products[0].store.location && products[0].store.location.lat || washingtonDC.lng,
+            latitude: products && products[0] && products[0].store && products[0].store.location && products[0].store.location.lat,
+            longitude: products && products[0] && products[0].store && products[0].store.location && products[0].store.location.lng,
             latitudeDelta: Delta.lat,
             longitudeDelta: Delta.lng,
           }}
@@ -143,7 +171,7 @@ var Map = React.createClass({
 const styles = StyleSheet.create({
   map:{
     width: width,
-    height: height
+    height: height,
   },
   marker:{
     width: 10,

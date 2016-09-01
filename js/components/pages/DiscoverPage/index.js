@@ -171,7 +171,7 @@ var DiscoverPage = React.createClass({
  * CSS stylings
  */
 
-const headerHeight = height / 14
+const headerHeight = height / 11
 const panelMargin = 5;
 const sideMargin = 20;
 const panelWidth = (width - panelMargin * 4 - sideMargin * 2) / 2;

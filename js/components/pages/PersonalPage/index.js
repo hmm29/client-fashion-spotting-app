@@ -274,13 +274,14 @@ const styles = StyleSheet.create({
    titleContainer: {
      flexDirection: 'column',
      alignItems: 'center',
-     paddingBottom: 15
+     paddingVertical: height/80
    },
    italic: {fontStyle: 'italic'},
    bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book'},
    num: {
      color: 'red',
      fontFamily: 'Avenir-Roman',
+     fontSize: height/60
    },
    username: {fontSize: 30 },
    profilePicture: {
@@ -290,7 +291,8 @@ const styles = StyleSheet.create({
    },
    myContributions: {
      width,
-     padding: 20
+     padding: 20,
+     marginBottom: height/32
    },
    fixedFooterSpacer: {height: 60},
    fixedFooterWrapper: {

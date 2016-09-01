@@ -117,6 +117,7 @@ var FinalizeAndContributeView = React.createClass({
 			        editable = {true}
 			        maxLength = {100}
 			        onChangeText={(input) => this.setState({input})}
+              onEndEditing={() => this.props.updateUploadData("finalizeAndContributeView", this.state)}
         			value={this.state.input}
 			        style={styles.multilineTextInput}
 			      />

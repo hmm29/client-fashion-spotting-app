@@ -38,7 +38,7 @@ function uploadNewProduct(imageData, productAndLocationData, finalizeAndContribu
         tag: finalizeAndContribute.activeExcitingTag,
         comment: finalizeAndContribute.input,
         likes: 0,
-        timestamp: (Date.now() / 1000 | 0).toString(),
+        timestamp: (new Date()).getTime().toString(),
         userId : userId
       }
       var productId = firebaseApp.database().ref("products").push(uploadData).key;

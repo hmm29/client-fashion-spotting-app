@@ -14,10 +14,13 @@
 
 import React, { Component } from 'react';
 import {
+  Dimensions,
   ScrollView,
   StyleSheet,
   View
 } from 'react-native';
+
+var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
  * defines the EyespotPageBase class
@@ -51,7 +54,7 @@ var EyespotPageBase = React.createClass({
     }
 
     return (
-      <View style={styles.container}>
+      <View style={[styles.container, (!this.props.noScroll ? {paddingBottom: height/30, bottom: height/45} : {})]}>
         <ContentWrapper
           automaticallyAdjustContentInsets={false}
           scrollEnabled={!this.props.noScroll}
@@ -73,7 +76,6 @@ const styles = StyleSheet.create({
  container: {
     backgroundColor: '#fff',
     flex: 1, // must have flex: 1 for page scrolling,
-    bottom: 0
   },
   wrapper: {
   }
