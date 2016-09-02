@@ -239,7 +239,7 @@ var ProductFeed = React.createClass({
      else {
        var vicinity = filteredProducts[0] && filteredProducts[0].store
        && filteredProducts[0].store.vicinity;
-       var lastCommaInVicinity = vicinity.lastIndexOf(',');
+       var lastCommaInVicinity = vicinity && vicinity.lastIndexOf(',');
        var city = vicinity.slice(lastCommaInVicinity+1);
        if(city.indexOf('Washington') > -1) city = 'Washington, D.C.'
        else city = ''

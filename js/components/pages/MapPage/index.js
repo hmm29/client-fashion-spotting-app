@@ -72,6 +72,7 @@ var MapPage = React.createClass({
 
    _renderHeader() {
        let { categoryName } = this.props;
+       let ampersandIdx = categoryName.indexOf('&');
 
        return (
            <Header containerStyle={styles.headerContainer}>
