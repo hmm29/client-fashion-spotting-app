@@ -25,7 +25,7 @@ import _ from 'lodash';
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import CatalogViewIcon from '../../partials/icons/product/CatalogViewIcon';
-import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
+import EyespotLogoNegative from '../../partials/img/eyespot-logo-negative.png';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import Footer from '../../partials/Footer';
@@ -79,7 +79,7 @@ var ProductFeed = React.createClass({
      return {
        catalogViewIconActive: true,
        dataStore: '',
-       historyFilter: 'Last Month',
+       historyFilter: 'All',
        mapsViewIconActive: false,
      }
    },
@@ -209,7 +209,7 @@ var ProductFeed = React.createClass({
          <Header containerStyle={styles.headerContainer}>
            <BackIcon color='white' onPress={this.navigateBack} />
            <View style={styles.pageTitle}>
-             <Image source={EyespotNegativeLogo}
+             <Image source={EyespotLogoNegative}
                    style={styles.pageTitleLogo} />
              <Text style={styles.pageTitleText}>{(categoryName.length > 12 ? categoryName.substring(0,ampersandIdx+1) + ' ...' : categoryName)}</Text>
            </View>
@@ -248,7 +248,7 @@ var ProductFeed = React.createClass({
      const filters = [
        {
          'name' : 'Last Month',
-         dropdown : ['Last Week', 'Last Month', 'Last Year'],
+         dropdown : ['All', 'Last Week', 'Today'],
        },
        {
          'name' : 'Location',
@@ -280,6 +280,7 @@ var ProductFeed = React.createClass({
                     <View style={styles.slide}>
                       <Product
                         key={i}
+                        categoryName={this.props.categoryName}
                         navigator={navigator}
                         onPressMapEmblem={() => {navigator.pop(); this.onPressMapEmblem()}}
                         product={product}

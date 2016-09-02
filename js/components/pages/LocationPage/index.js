@@ -102,11 +102,13 @@ var LocationPage = React.createClass({
         <EyespotPageBase
           keyboardShouldPersistTaps={false}
           noScroll={false}>
+          <View style={{paddingTop: height/36}}>
           <PlacesAutocomplete
             myLocation={this.props.location}
             places={this.state.places}
             navigator={this.props.navigator}
             setStore={this.props.setStore}/>
+          </View>
         </EyespotPageBase>
         {/*}<View style={styles.fixedFooterWrapper}>
            {nextButton}

@@ -32,6 +32,7 @@ var {width} = Dimensions.get('window'); /* gets screen dimensions */
 var Location = React.createClass({
 
   propTypes: {
+    categoryName: PropTypes.string,
     navigator: PropTypes.object,
     onPressMapEmblem: PropTypes.func,
     product: PropTypes.object
@@ -40,12 +41,14 @@ var Location = React.createClass({
   handlePress(){
     // lazy load
     const MapPage = require('../../../pages/MapPage');
+    let { categoryName, onPressMapEmblem, product } = this.props;
 
     this.props.navigator.push({
       title: 'MapPage',
       component: MapPage,
       passProps: {
-        onPressMapEmblem: this.props.onPressMapEmblem,
+        categoryName: categoryName,
+        onPressMapEmblem: onPressMapEmblem,
         products : [this.props.product]
       }
     });

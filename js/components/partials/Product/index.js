@@ -39,6 +39,7 @@ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 var Product = React.createClass({
 
   propTypes: {
+    categoryName: PropTypes.string,
     product: PropTypes.object.isRequired,
     navigator: PropTypes.object,
     onPressMapEmblem: PropTypes.func,
@@ -51,7 +52,7 @@ var Product = React.createClass({
 
   render() {
 
-    const { navigator, user, product } = this.props;
+    const { categoryName, navigator, user, product } = this.props;
 
     return (
       <View style={styles.product}>
@@ -64,6 +65,7 @@ var Product = React.createClass({
             user={user}
             navigator={navigator}/>
           <Location
+            categoryName={categoryName}
             navigator={navigator}
             onPressMapEmblem={this.props.onPressMapEmblem}
             product={product}/>

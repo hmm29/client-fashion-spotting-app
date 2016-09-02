@@ -26,40 +26,39 @@ import NextStepIcon from './img/next-step-icon.png';
 var SelectedRow = React.createClass({
   propTypes: {
     categorySelected: PropTypes.object,
-    selectCategory: PropTypes.func
+    selectCategory: PropTypes.func,
+    selected: PropTypes.string
   },
 
   getInitialState() {
     return {
-      selected: ""
+      selected: this.props.selected || ""
     }
   },
 
   render(){
-    const { selected } = this.state;
-    const { option, categorySelected, selectCategory } = this.props;
+    const { option, selected, selectCategory } = this.props;
     return (
       <TouchableOpacity
         onPress={() => {
           selectCategory(option, this.props.gender);
-          this.setState({selected: option})
         }}
         style={
           [
             styles.category,
-            (categorySelected === option || selected === option ? {borderColor: 'rgba(0,0,0,0.25)'} : {borderColor: 'rgba(0,0,0,0.65)'})
+            (selected === option ? {borderColor: 'rgba(0,0,0,0.25)'} : {borderColor: 'rgba(0,0,0,0.65)'})
           ]
         }>
         <Text
           style={
             [
               styles.categoryText,
-              (categorySelected === option || selected === option ? {opacity: 0.4} : {opacity: 1.0})
+              (selected === option ? {opacity: 0.55} : {opacity: 1.0})
             ]
           }>
           {option}
         </Text>
-        <Image source={NextStepIcon} style={[(categorySelected === option || selected === option ? {opacity: 0.2} : {opacity: 1.0}), styles.nextStepIcon]}/>
+        <Image source={NextStepIcon} style={[(selected === option ? {opacity: 0.2} : {opacity: 1.0}), styles.nextStepIcon]}/>
       </TouchableOpacity>
     )
   }
@@ -69,7 +68,8 @@ var SelectCategory = React.createClass({
 
   propTypes: {
     categorySelected: PropTypes.object,
-    selectCategory: PropTypes.func
+    selectCategory: PropTypes.func,
+    selected: PropTypes.string
   },
   _categoriesKeys: Categories.categoryKeys, //replace with category names (men vs women?)
 
@@ -131,6 +131,7 @@ var SelectCategory = React.createClass({
 						{options.map((option, i) =>
               (
                 <SelectedRow
+                  selected={this.props.selected}
                   key={i}
                   {...this.props}
                   gender={this.state.gender}

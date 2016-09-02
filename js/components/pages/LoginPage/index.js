@@ -187,14 +187,14 @@ var LoginPage = React.createClass({
                               // React Native doesn't offer open-source tools for password resets at the time
                               AsyncStorage.getItem('@MyStore:uid').then((userId) => {
                                 var ref = firebaseApp.database().ref('users');
-                                ref.on('value', (snap) => {
-                                  if(snap.val() && snap.val()[userId] && snap.val()[userId][email] && snap.val()[userId][password]){
-                                    Communications.email([].concat(snap.val()[userId][email]), null, null, 'Eyespot: Recovered Password.', `Hi! Your recovered password is ${snap.val()[userId][password]}. Thanks for using Eyespot!`);
+                                ref.once('value', (snap) => {
+                                  if(snap.val() && snap.val()[userId] && snap.val()[userId].email && snap.val()[userId].password){
+                                    Communications.email([].concat(snap.val()[userId].email), null, null, 'Eyespot: Recovered Password.', `Hi, ${snap.val()[userId].name}! Your recovered Eyespot password is ${snap.val()[userId].password}. Thanks for using Eyespot!`);
                                     Alert.alert('Email Success', 'Your recovered password has been sent to your email!');
-                                  } else if(snap.val() && snap.val()[userId] && !snap.val()[userId][email]) {
-                                    Alert.alert('Email Login Not Found', 'We did not find a password for your email. You may have signed up with Facebook.');
+                                  } else if(snap.val() && snap.val()[userId] && snap.val()[userId].email) {
+                                    Alert.alert('Email Login Not Found', 'We did not find a password for your email. You may have previously signed up with Facebook.');
                                   } else {
-                                    Alert.alert('Email Send Error', 'We could not send a password recovery email to your address. Please try again.');
+                                    Alert.alert('Email Send Error', 'We could not send a password recovery email to your address, as there is no email on file. Please log in with another method.');
                                   }
                                 });
                               });

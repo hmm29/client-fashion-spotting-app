@@ -45,7 +45,7 @@ var MapPage = React.createClass({
 
   getInitialState() {
     return {
-      historyFilter: 'Last Month'
+      historyFilter: 'All'
     }
   },
 
@@ -71,12 +71,15 @@ var MapPage = React.createClass({
     */
 
    _renderHeader() {
+       let { categoryName } = this.props;
+
        return (
            <Header containerStyle={styles.headerContainer}>
                <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
                <View style={styles.pageTitle}>
                  <Image source={EyespotLogoNegative}
-                                 style={styles.pageTitleLogo} />
+                       style={styles.pageTitleLogo} />
+                 <Text style={styles.pageTitleText}>{(categoryName.length > 12 ? categoryName.substring(0,ampersandIdx+1) + ' ...' : categoryName)}</Text>
                </View>
                <View />
            </Header>
@@ -109,7 +112,7 @@ var MapPage = React.createClass({
      const filters = [
        {
          'name' : 'Last Month',
-         dropdown : ['Last Week', 'Last Month', 'Last Year'],
+         dropdown : ['All', 'Last Week', 'Today'],
        },
        {
          'name' : 'Location',
@@ -161,15 +164,15 @@ const styles = StyleSheet.create({
    pageTitleLogo: {
      alignSelf: 'center',
      backgroundColor: 'transparent',
-     width: width / 3.2,
-     height: height / 24,
+     width: width / 3.9,
+     height: height / 30,
      resizeMode: Image.resizeMode.contain
    },
    pageTitleText: {
      color: '#fff',
-     fontSize: height / 40,
+     fontSize: height / 42,
      fontFamily: 'BodoniSvtyTwoITCTT-Book'
-   }
+   },
 });
 
 /*

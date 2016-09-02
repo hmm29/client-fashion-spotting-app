@@ -81,7 +81,8 @@
  		return (
           <EyespotPageBase
               keyboardShouldPersistTaps={false}
-              noScroll={true}>
+              noScroll={true}
+              style={{marginBottom: 0, paddingBottom: 0}}>
               <View style={styles.container}>
                {swiper}
                </View>
@@ -102,7 +103,7 @@
       alignItems: 'center',
     },
     img: {
-      height,
+      height: height / 1.01,
       width,
       resizeMode: Image.resizeMode.cover,
     },
@@ -113,6 +114,7 @@
      height,
    },
    wrapper: {
+     height: height * 1.01,
      backgroundColor: '#fff',
      bottom: height/32.5,
    }

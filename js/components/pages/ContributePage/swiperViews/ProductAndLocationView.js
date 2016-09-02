@@ -87,11 +87,14 @@ var ProductAndLocationView = React.createClass({
     });
   },
 
-  selectCategory(selectedStyle, gender){
+  selectCategory(selected, gender){
     let category, categoryThumbMap = Categories.categoryThumbMap;
 
+    // update selected to determine which option is highlighted in selectCategory
+    this.setState({selected});
+
     if(gender === 'women') {
-      switch(selectedStyle) {
+      switch(selected) {
         case 'Top':
             category = categoryThumbMap['shirts_and_top_w'];
             break;
@@ -112,7 +115,7 @@ var ProductAndLocationView = React.createClass({
       }
 
     if(gender === 'men') {
-      switch(selectedStyle) {
+      switch(selected) {
         case 'Top':
             category = categoryThumbMap['shirts_m'];
             break;
@@ -170,7 +173,7 @@ var ProductAndLocationView = React.createClass({
   },
 
 	render() {
-		const { storeSelected, categorySelected, location } = this.state;
+		const { storeSelected, categorySelected, selected, location } = this.state;
 
     if(!location){
       return null
@@ -199,6 +202,7 @@ var ProductAndLocationView = React.createClass({
             </View>
         </TouchableOpacity>
         <SelectCategory
+          selected={selected}
           selectCategory={this.selectCategory}
           categorySelected={this.state.categorySelected}/>
 			</View>

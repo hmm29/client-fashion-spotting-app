@@ -82,8 +82,8 @@ var Contributor = React.createClass({
         }} style={styles.profileContainer}>
           {ProfileImage}
         </TouchableOpacity>
-        <Text style={[styles.bodoni, {fontStyle: 'italic'}]}>spotted by</Text>
-        <Text style={[styles.name, styles.bodoni, {bottom: height/140}]}>{username}</Text>
+        <Text style={[styles.bodoni, {fontStyle: 'italic'},{bottom: height/180}]}>spotted by</Text>
+        <Text style={[styles.name, styles.bodoni, {bottom: height/180}]}>{username}</Text>
       </View>
     );
   }
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
  bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book' },
  name: {
    color: 'red',
-   fontSize: height/25
+   fontSize: height/27
  }
 });
 

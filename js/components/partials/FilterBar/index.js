@@ -73,6 +73,10 @@ var Dropdowns = React.createClass({
 
        if(findOne(selected, _.difference(dropdown, ['All'])) && dropdownItem === 'All') return {color: 'black'}
      }
+
+     if(filterName === 'Last Month' && selected.indexOf('Last Week') > -1 || selected.indexOf('Today') > -1) {
+       if(dropdownItem === 'All') return {color: 'black'}
+     }
    }
  },
 
