@@ -96,7 +96,6 @@ var ContributePage = React.createClass({
         default:
           break;
       }
-
     },
 
    /*
@@ -120,7 +119,7 @@ var ContributePage = React.createClass({
     incrementContributionCount() {
       var ref = firebaseApp.database().ref('users');
       var { userId } = this.state;
-      ref.on('value', (snap) => {
+      ref.once('value', (snap) => {
         if(snap.val() && snap.val()[userId] && snap.val()[userId].contributionCount){
           firebaseApp.database().ref('users/' + userId + '/contributionCount').set(snap.val()[userId].contributionCount+1)
         } else {

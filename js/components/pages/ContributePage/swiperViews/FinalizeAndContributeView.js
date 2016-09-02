@@ -48,7 +48,7 @@ var FinalizeAndContributeView = React.createClass({
 	},
 
 	getExcitingTags() {
-		this.setState({excitingTags: ['New', 'Fall', 'Wow!', 'Unique']}, function(){
+		this.setState({excitingTags: ['New!', 'Fall!', 'Wow!', 'Unique!']}, function(){
       this.props.updateUploadData("finalizeAndContributeView", this.state);
     });
 	},
@@ -84,11 +84,8 @@ var FinalizeAndContributeView = React.createClass({
 			        console.log(results);
 			      }
 			    );
-			case 'email':
-				if(contributeSummary) Communications.email(null, null, null, 'Checkout out my new post on Eyespot!', contributeSummary);
-				else Communications.email(null, null, null, 'Checkout out my new post on Eyespot!', 'Look at the cool product I spotted.');
 			case 'SMS':
-				Communications.text(null, '// Spotted with Eyespot app. Download yours for free!\nhttps://eyes.pt/');
+				Communications.text(null, '// Spotted with Eyespot app. Download yours for free!\n' + 'https://eyes.pt/'.link('https://eyes.pt/'));
 		}
 	},
 
@@ -133,10 +130,12 @@ var FinalizeAndContributeView = React.createClass({
 		              directionalLockEnabled={true}>
 					{this.state.excitingTags && this.state.excitingTags.map((excitingTag, i) => (
 		                <TouchableOpacity key={i} onPress={() => {
+                      // NOTE; update upload data in callback of setState to ensure new changes applied
+                      this.setState({activeExcitingTag: excitingTag}, function() {
+                        this.props.updateUploadData("finalizeAndContributeView", this.state);
+                      });
 		                	this.handleToggleButtonState(excitingTag);
-		                	this.props.handleShowNextButton(true, 'Contribute', () => {
-		                		alert('done');
-		                	});
+		                	this.props.handleShowNextButton(true, 'Contribute');
 		                }} style={[styles.excitingTag, this.getButtonColor(excitingTag)]}><Text
 		                  style={styles.excitingTagText}>{excitingTag && excitingTag.toUpperCase()}</Text>
 		                 </TouchableOpacity>

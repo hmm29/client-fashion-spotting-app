@@ -12,12 +12,10 @@ function uploadProductToCategory(newID, category){
   categoryRef.push(newID);
 }
 
-
 function uploadProductToUser(productId, category, userId){
   var userRef = firebaseApp.database().ref(`users/${userId}/products`);
   userRef.push(productId);
 }
-
 
 function uploadNewProduct(imageData, productAndLocationData, finalizeAndContribute){
 
@@ -38,7 +36,7 @@ function uploadNewProduct(imageData, productAndLocationData, finalizeAndContribu
         tag: finalizeAndContribute.activeExcitingTag,
         comment: finalizeAndContribute.input,
         likes: 0,
-        timestamp: (new Date()).getTime().toString(),
+        timestamp: (new Date()).toString(),
         userId : userId
       }
       var productId = firebaseApp.database().ref("products").push(uploadData).key;

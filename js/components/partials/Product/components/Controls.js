@@ -84,7 +84,7 @@ var Likes = React.createClass({
       userId: userId,
       date: time,
       type: "like",
-      productId : productId
+      productId : productId || ''
     });
   },
 

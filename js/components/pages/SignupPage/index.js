@@ -74,7 +74,11 @@ var SignUpPage = React.createClass({
         );
     },
 
-    updateUser(){
+    /*
+     * updateUserWithEmailSignInData(): create user profile with Firebase email/password login data
+     */
+
+    updateUserWithEmailSignInData(){
       var self = this;
 
       firebaseApp.auth().onAuthStateChanged(function(user){
@@ -82,7 +86,7 @@ var SignUpPage = React.createClass({
           // if user is signed in
           // store user id in async storage
           var userId = user.uid;
-          console.log('updateUser()');
+          console.log('updateUserWithEmailSignInData()');
           console.log('userId', userId);
           if(!userId){ return };
           if(!self.state.emailAddressText){ return };
@@ -102,6 +106,24 @@ var SignUpPage = React.createClass({
     },
 
     /*
+     * updateUserWithFacebookSignInData(): create user profile with Facebook login data
+     */
+
+    updateUserWithFacebookSignInData(userId, responseData) {
+      var userRef = firebaseApp.database().ref(`users/${userId}`);
+      userRef.update({
+        name: responseData.name,
+        gender: responseData.gender,
+        profilePicture: `https://res.cloudinary.com/celena/image/facebook/q_90/${userId}.jpg`,
+        username: responseData.name,
+        uid: userId
+      });
+
+      // set userId in local storage
+      AsyncStorage.setItem('@MyStore:uid', userId);
+    },
+
+    /*
      * render(): returns JSX that declaratively specifies page UI
      */
 
@@ -118,8 +140,8 @@ var SignUpPage = React.createClass({
                     </View>
                     <View style={styles.section}>
                          <TextInput
-                            autocapitalize="none"
-                            autocorrect={false}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             onChangeText={(nameText) => this.setState({nameText})}
                             maxLength={25}
                             placeholder="NAME"
@@ -128,8 +150,8 @@ var SignUpPage = React.createClass({
                             value={this.state.nameText} />
                             <View style={styles.underline} />
                         <TextInput
-                            autocapitalize="none"
-                            autocorrect={false}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             onChangeText={(nicknameText) => this.setState({nicknameText})}
                             maxLength={25}
                             placeholder="NICKNAME"
@@ -138,8 +160,8 @@ var SignUpPage = React.createClass({
                             value={this.state.nicknameText} />
                             <View style={styles.underline} />
                         <TextInput
-                            autocapitalize="none"
-                            autocorrect={false}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             onChangeText={(emailAddressText) => this.setState({emailAddressText})}
                             maxLength={30}
                             placeholder="EMAIL ADDRESS"
@@ -148,8 +170,8 @@ var SignUpPage = React.createClass({
                             value={this.state.emailAddressText} />
                             <View style={styles.underline} />
                         <TextInput
-                            autocapitalize="none"
-                            autocorrect={false}
+                            autoCapitalize="none"
+                            autoCorrect={false}
                             onChangeText={(passwordText) => this.setState({passwordText})}
                             maxLength={16}
                             placeholder="PASSWORD"
@@ -163,7 +185,7 @@ var SignUpPage = React.createClass({
                         <TouchableOpacity onPress={() => {
                             firebase.auth().createUserWithEmailAndPassword(this.state.emailAddressText, this.state.passwordText)
                             .then((user) => {
-                              this.updateUser();
+                              this.updateUserWithEmailSignInData();
                               this.props.navigator.push({
                                 title: 'TabBarLayout',
                                 component: TabBarLayout,
@@ -184,25 +206,28 @@ var SignUpPage = React.createClass({
 
                         <TouchableOpacity
                           onPress={() => {
-                            LoginManager.logInWithReadPermissions(['public_profile']).then(
-                              function(result) {
-                                if (result.isCancelled) {
-                                  Alert.alert('Login cancelled');
-                                } else {
-                                  console.log(result);
-                                  console.log('Login success with permissions: '
-                                    + result.grantedPermissions.toString());
-                                  this.props.navigator.push({
-                                    title: 'TabBarLayout',
-                                    component: TabBarLayout,
-                                    passProps: {}
-                                  });
-                                }
-                              },
-                              error => {
-                                Alert.alert('Login fail with error:', error);
+                            var self = this;
+                            FBLoginManager.loginWithPermissions([], function(error, data){
+                              if (!error && data) {
+                                let { credentials } = data;
+                                let api = `https://graph.facebook.com/v2.3/${credentials.userId}?fields=name,email,gender,age_range&access_token=${credentials.token}`;
+                                fetch(api)
+                                      .then(response => response.json())
+                                      .then(responseData => {
+                                        self.updateUserWithFacebookSignInData(credentials.userId, responseData);
+                                      })
+                                      .done(() => {
+                                        self.props.navigator.push({
+                                           title: 'TabBarLayout',
+                                           component: TabBarLayout,
+                                           passProps: {}
+                                       });
+                                      })
+
+                              } else {
+                                Alert.alert("Login Error: ", error);
                               }
-                            );
+                            })
                           }}>
                             <Image
                                 source={require('../../partials/img/login-with-facebook.png')}

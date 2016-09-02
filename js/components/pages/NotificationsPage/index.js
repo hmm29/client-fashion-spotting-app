@@ -161,12 +161,17 @@ var NotificationsPage = React.createClass({
     //not immediately
     setTimeout(function(){
       var notifications = self.props.user.notifications;
-      for(var key in notifications){
-        notifications[key].read = true;
-      }
-      var ref = firebaseApp.database().ref(`users/${self.props.user.uid}/notifications`).set(notifications);
+      if(notifications && notifications.length > 0) { // if there are notifications
+        // mark them as read
+        for(var key in notifications){
+          notifications[key].read = true;
+        }
 
-    }, 1000);
+      // update them in the database
+      var ref = self.props.user.uid && firebaseApp.database().ref(`users/${self.props.user.uid}`).update({notifications});
+      }
+
+    }, 2000); // wait 2000 ms (2 seconds) before showing notifications
   },
 
   getNewNotifications(){

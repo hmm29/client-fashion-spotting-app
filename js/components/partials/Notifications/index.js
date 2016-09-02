@@ -208,15 +208,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flex:1,
     width: notificationTabWidth,
-    height,
-    top:0,
-    left:0
+    height: height/13.5,
+    top:height/6,
+    left:0,
+    backgroundColor: 'red'
   },
   tab:{
     position: 'absolute',
-    width:notificationTabWidth,
-    left:0,
-    top: 100,
+    width: notificationTabWidth,
+    left: 0,
+    top: 0,
     backgroundColor: 'white',
     flexDirection:'column',
     alignItems:'center',

@@ -21,32 +21,45 @@ import {
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 import Categories from '../categories';
+import NextStepIcon from './img/next-step-icon.png';
 
 var SelectedRow = React.createClass({
   propTypes: {
     categorySelected: PropTypes.object,
     selectCategory: PropTypes.func
   },
+
+  getInitialState() {
+    return {
+      selected: ""
+    }
+  },
+
   render(){
-    const { category, categorySelected, selectCategory } = this.props;
+    const { selected } = this.state;
+    const { option, categorySelected, selectCategory } = this.props;
     return (
       <TouchableOpacity
-        onPress={() => selectCategory(category)}
+        onPress={() => {
+          selectCategory(option, this.props.gender);
+          this.setState({selected: option})
+        }}
         style={
           [
             styles.category,
-            (categorySelected.key === category.key ? {} : {borderColor: 'rgba(4,22,43,0.45)'})
+            (categorySelected === option || selected === option ? {borderColor: 'rgba(0,0,0,0.25)'} : {borderColor: 'rgba(0,0,0,0.65)'})
           ]
         }>
         <Text
           style={
             [
               styles.categoryText,
-              (categorySelected.key === category.key ? {} : {opacity: 0.4})
+              (categorySelected === option || selected === option ? {opacity: 0.4} : {opacity: 1.0})
             ]
           }>
-          {category.name}
+          {option}
         </Text>
+        <Image source={NextStepIcon} style={[(categorySelected === option || selected === option ? {opacity: 0.2} : {opacity: 1.0}), styles.nextStepIcon]}/>
       </TouchableOpacity>
     )
   }
@@ -66,34 +79,32 @@ var SelectCategory = React.createClass({
     }
   },
 	render() {
-
-    var categoriesGender = [];
-    this._categoriesKeys.map(function(category_key,i){
-      var category = Categories.categoryThumbMap[category_key];
-      if(category.gender == this.state.gender){
-        categoriesGender.push(category);
-      }
-    }, this);
+    var options = [
+      'Top',
+      'Bottom',
+      'Accessory',
+      'Coverall',
+      'Shoe',
+    ]
 
     const selectedStyle = {
-      backgroundColor : 'black',
+      borderBottomColor : 'white',
     }
+
 		return (
 				<View style={styles.section}>
 		      <Text style={styles.sectionTitle}>SPOTTED WHAT:</Text>
-          <View style={styles.genderTabContainer}>
+            <View style={styles.genderTabContainer}>
             <TouchableOpacity
               onPress={()=>this.setState({ gender: "women" })}
               style={
                 [
-                  styles.genderTab,
+                  styles.genderTab, styles.genderWomen,
                   (this.state.gender == "women" ? selectedStyle : {})
                 ]
               }>
               <Text
-                style={
-                  (this.state.gender == "women" ? {color: 'white'} : {})
-              }>
+                style={{}}>
                 FEMALE
               </Text>
             </TouchableOpacity>
@@ -101,30 +112,29 @@ var SelectCategory = React.createClass({
               onPress={()=>this.setState({ gender: "men" })}
               style={
                 [
-                  styles.genderTab,
+                  styles.genderTab, styles.genderMen,
                   (this.state.gender == "men" ? selectedStyle : {})
                 ]
               }>
               <Text
-                style={
-                  (this.state.gender == "men" ? {color: 'white'} : {})
-              }>
+                style={{}}>
                 MALE
               </Text>
             </TouchableOpacity>
 
           </View>
 					<ScrollView
-            style={styles.scrollView}
+            style={[styles.scrollView, {bottom: height/150}]}
 					    automaticallyAdjustContentInsets={false}
               showsVerticalScrollIndicator={false}
               directionalLockEnabled={true}>
-						{categoriesGender.map((category, i) =>
+						{options.map((option, i) =>
               (
                 <SelectedRow
                   key={i}
                   {...this.props}
-                  category={category}
+                  gender={this.state.gender}
+                  option={option}
                 />
               )
 						)}
@@ -142,33 +152,38 @@ const border = {
   borderWidth: 1
 };
 
+const categoryTextSize = height/30;
 const footerHeight = 60;
 
 const styles = StyleSheet.create({
   scrollView:{
     // borderTopWidth:1,
     // borderTopColor:'black',
-    paddingTop: 10,
-    height: height/2.9 /* specify height so that scrollview doesn't stick */
+    paddingTop: height/80,
+    bottom: -(height/80),
   },
   genderTabContainer:{
     flexDirection:'row',
-    marginBottom: 10
+    borderBottomWidth: 1,
+    borderColor: '#000',
+    width: width/1.3
   },
   genderTab:{
-    paddingVertical: 5,
+    paddingVertical: height/100,
     paddingHorizontal: 20,
     borderColor: 'black',
     borderRadius: 1,
     borderWidth: 1,
     backgroundColor:'white',
-    marginRight: 15
+    marginRight: width/10,
+    left: width/6
+
   },
   genderWomen:{
-    // left:width/5
+    top: height/600,
   },
   genderMen:{
-    // left: width*3/5
+    top: height/600
   },
 	category: {
 		width: width/1.3,
@@ -178,11 +193,12 @@ const styles = StyleSheet.create({
 		marginBottom: height/85,
 		borderBottomWidth: 1,
 		borderColor: '#000',
-		paddingBottom: height/85
+		paddingBottom: height/85,
+    paddingVertical: height/140
 	},
 	categoryText: {
-		fontWeight: 'bold',
-    fontSize: 18
+		fontWeight: '700',
+    fontSize: categoryTextSize
 	},
 	container: {
 		flexDirection: 'column',
@@ -191,18 +207,22 @@ const styles = StyleSheet.create({
 		height,
 		width,
 	},
-
 	icon: {
 		width: iconSize,
 		height: iconSize,
 		resizeMode: Image.resizeMode.contain,
 		margin: width / 70
 	},
+  nextStepIcon: {
+    height: categoryTextSize * 2/3,
+    resizeMode: Image.resizeMode.contain,
+    alignSelf: 'center'
+  },
 	section: {
 		width: width/1.3,
 		marginVertical: height/45,
 		flexDirection: 'column',
-		alignItems: 'flex-start'
+		alignItems: 'flex-start',
 	},
 	sectionTitle: {
 		marginBottom: height/45,

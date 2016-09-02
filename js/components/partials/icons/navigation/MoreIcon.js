@@ -53,7 +53,7 @@ class MoreIcon extends Component {
       <TouchableOpacity
         activeOpacity={0.1}
         onPress={this.props.onPress}
-        style={[this.props.style,{width: (this.props.size || SIZE) * 3.88,
+        style={[this.props.style,{width: (this.props.size || SIZE) * 6.88,
                 height: (this.props.size || SIZE) * 3.88, alignItems: 'flex-start'}]}>
         <Image
           source={require('./img/more-icon.png')}

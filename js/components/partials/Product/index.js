@@ -6,7 +6,6 @@
 * @flow
 */
 
-
 'use strict'; /* enables JS strict mode for any ES5 code */
 
 /*
@@ -23,7 +22,6 @@ import {
  TouchableOpacity
 } from 'react-native';
 
-
 import Controls from './components/Controls';
 import helpers from '../../helpers';
 import Image from 'react-native-image-progress';
@@ -33,12 +31,10 @@ import Comment from './components/Comment';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
-
 /*
 * defines the Product class
 * this is the code for each Product in the Category Feed
 */
-
 
 var Product = React.createClass({
 
@@ -59,7 +55,10 @@ var Product = React.createClass({
 
     return (
       <View style={styles.product}>
+        <View style={styles.productImageContainer}>
         <Image source={{uri : product && product.image && product.image.url }} style={styles.productImage}/>
+        {product.tag ? <View style={styles.tag}><Text style={styles.tagText}>{product.tag && product.tag.toUpperCase()}</Text></View> : null}
+        </View>
         <View style={styles.info}>
           <Contributor
             user={user}
@@ -104,11 +103,34 @@ const styles = StyleSheet.create({
       resizeMode: 'cover',
       flex: 1
     },
+    productImageContainer: {
+      width: featuredPanelWidth,
+      height: height * 5.2 / 12
+    },
     info: {
       width: featuredPanelWidth,
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center'
+    },
+    tag: {
+      transform: [{rotate: '-90deg'}],
+      padding: height/80,
+      backgroundColor: 'red',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'absolute',
+      width: width/4.8, // fixed width for now to allow for text changes without disturbing tag rotation
+      top: height/40,
+      left: -(height/40),
+    },
+    tagText: {
+      color: 'white',
+      fontSize: height/36,
+      fontFamily: 'Avenir-Medium',
+      marginHorizontal: height/200,
+      marginVertical: height/400
     },
     timestamp: {
       flexDirection: 'row',
@@ -116,7 +138,7 @@ const styles = StyleSheet.create({
       top: 0,
       right: -(width/35),
       padding: 10,
-      width: width/4,
+      width: width/2.6,
       textAlign: 'right',
       fontFamily: 'Avenir-BookOblique',
       color: '#aaa'

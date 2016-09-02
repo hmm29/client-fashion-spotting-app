@@ -226,7 +226,10 @@ var TabBarLayout = React.createClass({
               // push route for ContributePage
               if(el.props.component === 'contribute') this.props.navigator.push({
                 title: 'ContributePage',
-                component: ContributePage
+                component: ContributePage,
+                passProps: {
+                  navigator: this.props.navigator
+                }
               })
 	          	else this.setState({selected: el.props.component});
 	          }}

@@ -62,7 +62,7 @@ var MapPage = React.createClass({
      && this.props.products[0].store.vicinity;
      var lastCommaInVicinity = vicinity.lastIndexOf(',');
      var city = vicinity.slice(lastCommaInVicinity+1);
-     if(city === 'Washington') city = 'Washington, D.C.'
+     if(city.indexOf('Washington') > -1) city = 'Washington, D.C.'
      this.setState({city, locationFilter: city});
    },
 

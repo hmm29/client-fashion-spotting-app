@@ -34,7 +34,8 @@ var EyespotPageBase = React.createClass({
 
   propTypes: {
       keyboardShouldPersistTaps: React.PropTypes.bool,
-      noScroll: React.PropTypes.bool
+      noScroll: React.PropTypes.bool,
+      style: React.PropTypes.object
   },
 
   /*
@@ -54,7 +55,7 @@ var EyespotPageBase = React.createClass({
     }
 
     return (
-      <View style={[styles.container, (!this.props.noScroll ? {paddingBottom: height/30, bottom: height/45} : {})]}>
+      <View style={[styles.container, this.props.style, (!this.props.noScroll ? {paddingBottom: height/30, bottom: height/45} : {})]}>
         <ContentWrapper
           automaticallyAdjustContentInsets={false}
           scrollEnabled={!this.props.noScroll}

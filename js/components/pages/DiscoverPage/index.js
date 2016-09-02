@@ -81,21 +81,22 @@ var DiscoverPage = React.createClass({
     getInitialState() {
       return {
         genderFilter : "All",
-        locationFilter : "Washington, D.C."
+        locationFilter : "Washington, D.C.",
+        storeFilter: "All"
       }
     },
 
     componentWillMount() {
       let { dataStore } = this.props;
       let results = [];
-      let topFiveStores = dataStore && dataStore.products && Object.values(dataStore.products) && Object.values(dataStore.products).map(product => {
+      let topFiveStores = [];
+      dataStore && dataStore.products && Object.values(dataStore.products) && Object.values(dataStore.products).forEach(product => {
         if(product.store && product.store.name && product.store.name.length && results.indexOf(product.store.name) < 0) { // dont duplicate store names in Store dropdown
           results.push(product.store.name);
-          return product.store.name;
+          topFiveStores.push(product.store.name);
         }
-      }).slice(0,5);
-      _.pull(topFiveStores, null);
-      this.setState({topFiveStores});
+      });
+      this.setState({topFiveStores: topFiveStores.slice(0,5)});
     },
 
     navigateToFallCollection() {
@@ -176,7 +177,8 @@ var DiscoverPage = React.createClass({
               genderFilter={this.state.genderFilter}
               locationFilter={this.state.locationFilter}
               filters={filters}
-              setFilter={this.setFilter}/>
+              setFilter={this.setFilter}
+              storeFilter={this.state.storeFilter}/>
           </View>
         );
     }

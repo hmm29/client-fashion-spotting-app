@@ -236,6 +236,14 @@ var ProductFeed = React.createClass({
 
      var filteredProducts = this.filterProductsByCategory();
      if(!filteredProducts){ return null }
+     else {
+       var vicinity = filteredProducts[0] && filteredProducts[0].store
+       && filteredProducts[0].store.vicinity;
+       var lastCommaInVicinity = vicinity.lastIndexOf(',');
+       var city = vicinity.slice(lastCommaInVicinity+1);
+       if(city.indexOf('Washington') > -1) city = 'Washington, D.C.'
+       else city = ''
+     }
 
      const filters = [
        {
@@ -243,8 +251,8 @@ var ProductFeed = React.createClass({
          dropdown : ['Last Week', 'Last Month', 'Last Year'],
        },
        {
-         'name' : 'Washington DC',
-         dropdown: []
+         'name' : 'Location',
+         dropdown: [city]
        },
      ]
 
@@ -266,7 +274,7 @@ var ProductFeed = React.createClass({
                   * return Product component for each product
                   */
 
-                  const user = this.state.dataStore.users[product.userId];
+                  const user = product && this.state.dataStore.users[product.userId];
 
                   return (
                     <View style={styles.slide}>
@@ -296,7 +304,7 @@ var ProductFeed = React.createClass({
              }
            </View>
          </EyespotPageBase>
-         {this.state.mapsViewIconActive ? <FilterBar setFilter={this.setFilter} filters={filters} /> : <View/>}
+         {this.state.mapsViewIconActive ? <FilterBar setFilter={this.setFilter} historyFilter={this.state.historyFilter} locationFilter={city} filters={filters} /> : <View/>}
          {this._renderFooter()}
        </View>
      );

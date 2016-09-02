@@ -60,6 +60,24 @@ var LoginPage = React.createClass({
     propTypes: {},
 
     /*
+     * updateUserWithFacebookSignInData(): create user profile with Facebook login data
+     */
+
+    updateUserWithFacebookSignInData(userId, responseData) {
+      var userRef = firebaseApp.database().ref(`users/${userId}`);
+      userRef.update({
+        name: responseData.name,
+        gender: responseData.gender,
+        profilePicture: `https://res.cloudinary.com/celena/image/facebook/q_90/${userId}.jpg`,
+        username: responseData.name,
+        uid: userId
+      });
+
+      // set userId in local storage
+      AsyncStorage.setItem('@MyStore:uid', userId);
+    },
+
+    /*
      * render(): returns JSX that declaratively specifies page UI
      */
 
@@ -118,9 +136,24 @@ var LoginPage = React.createClass({
 
                         <TouchableOpacity
                           onPress={() => {
+                            var self = this;
                             FBLoginManager.loginWithPermissions([], function(error, data){
-                              if (!error) {
-                                console.log("Login data: " + JSON.stringify(data));
+                              if (!error && data) {
+                                let { credentials } = data;
+                                let api = `https://graph.facebook.com/v2.3/${credentials.userId}?fields=name,email,gender,age_range&access_token=${credentials.token}`;
+                                fetch(api)
+                                      .then(response => response.json())
+                                      .then(responseData => {
+                                        self.updateUserWithFacebookSignInData(credentials.userId, responseData);
+                                      })
+                                      .done(() => {
+                                        self.props.navigator.push({
+                                           title: 'TabBarLayout',
+                                           component: TabBarLayout,
+                                           passProps: {}
+                                       });
+                                      })
+
                               } else {
                                 Alert.alert("Login Error: ", error);
                               }
@@ -158,6 +191,8 @@ var LoginPage = React.createClass({
                                   if(snap.val() && snap.val()[userId] && snap.val()[userId][email] && snap.val()[userId][password]){
                                     Communications.email([].concat(snap.val()[userId][email]), null, null, 'Eyespot: Recovered Password.', `Hi! Your recovered password is ${snap.val()[userId][password]}. Thanks for using Eyespot!`);
                                     Alert.alert('Email Success', 'Your recovered password has been sent to your email!');
+                                  } else if(snap.val() && snap.val()[userId] && !snap.val()[userId][email]) {
+                                    Alert.alert('Email Login Not Found', 'We did not find a password for your email. You may have signed up with Facebook.');
                                   } else {
                                     Alert.alert('Email Send Error', 'We could not send a password recovery email to your address. Please try again.');
                                   }

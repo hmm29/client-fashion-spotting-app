@@ -11,7 +11,6 @@ import com.airbnb.android.react.maps.MapsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.evollu.react.fa.FIRAnalyticsPackage;
-import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.magus.fblogin.FacebookLoginPackage;
 import com.microsoft.codepush.react.CodePush;
 import com.facebook.react.ReactPackage;
@@ -58,7 +57,6 @@ public class MainActivity extends ReactActivity {
             new LinearGradientPackage(),
             new ImagePickerPackage(),
             new FIRAnalyticsPackage(),
-            new FBSDKPackage(),
             new FacebookLoginPackage(),
             new CodePush(null, this, BuildConfig.DEBUG)
         );

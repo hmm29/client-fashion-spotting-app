@@ -25,9 +25,11 @@ import {
  TouchableOpacity
 } from 'react-native';
 
+import _ from 'lodash';
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import CatalogViewIcon from '../../partials/icons/product/CatalogViewIcon';
+import EditProfilePage from '../EditProfilePage';
 import MapsViewIcon from '../../partials/icons/product/MapsViewIcon';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
@@ -74,7 +76,7 @@ var ProfileContainer = React.createClass({
     return (
       <View>
         <Image
-          source={{ uri : user.profilePicture || "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png"}}
+          source={{ uri : user.profilePicture}}
           style={styles.profilePicture} />
       </View>
     );
@@ -104,6 +106,8 @@ var UserProducts = React.createClass({
           const product_id = user && user.products && user.products[key];
 
           const product = dataStore.products[product_id];
+          _.assign(product, {'.key': product_id})
+
           if(!product){
             return null
           }
@@ -114,7 +118,7 @@ var UserProducts = React.createClass({
               navigator={navigator}
               onPressMapEmblem={() => {navigator.pop(); onPressMapEmblem()}}
               product={product}
-              user={product.user}/>
+              user={user}/>
           );
         }) || []}
       </View>
@@ -153,25 +157,34 @@ var PersonalPage = React.createClass({
    // This is important: you can check userId and fetch dataStore before render
 
    componentWillMount(){
-     AsyncStorage.getItem('@MyStore:uid').then((userId) => {
-       this.setState({ userId : userId });
-     });
-
+     var self = this;
      var ref = firebaseApp.database().ref();
      ref.on('value', (snap) => {
        if(snap.val()){
          this.setState({
            dataStore : snap.val(),
          })
+
+         AsyncStorage.getItem('@MyStore:uid').then((userId) => {
+           self.setState({userId});
+
+           let { dataStore } = self.state;
+           self.setState({
+             contributionCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].contributionCount
+           })
+
+         });
        }
      });
-
    },
 
-   componentDidMount() {
-     let { dataStore, userId } = this.state;
-     this.setState({
-       contributionCount: dataStore && dataStore.users && dataStore.users[userId] && dataStore.users[userId][contributionCount]
+   navigateToEditProfilePage(user) {
+     this.props.navigator.push({
+       title: 'Edit Profile Page',
+       component: EditProfilePage,
+       passProps: {
+         user
+       }
      })
    },
 
@@ -191,7 +204,7 @@ var PersonalPage = React.createClass({
 
        return (
            <Header containerStyle={styles.headerContainer}>
-               {currentRoute.title !== 'TabBarLayout' ? <BackIcon color='white' onPress={() => this.props.navigator.pop()} /> : <MoreIcon onPress={() => {}} />}
+               {currentRoute.title !== 'TabBarLayout' ? <BackIcon color='white' onPress={() => this.props.navigator.pop()} /> : <MoreIcon onPress={() => this.navigateToEditProfilePage(this.props.user)} />}
                <View style={styles.pageTitle}>
                  <Image source={EyespotNegativeLogo}
                                  style={styles.pageTitleLogo} />
@@ -232,7 +245,9 @@ var PersonalPage = React.createClass({
          {this._renderHeader()}
          <EyespotPageBase
              keyboardShouldPersistTaps={false}
-             noScroll={false}>
+             noScroll={false}
+             style={(this.state.mapsViewIconActive ? {height, bottom: height/45} : {})}
+             >
              <View style={styles.container}>
              {this.state.catalogViewIconActive ?
               <View style={styles.container}>
@@ -241,7 +256,7 @@ var PersonalPage = React.createClass({
                 <View style={styles.myContributions}>
                   <Text style={styles.bodoni}>
                     <Text style={styles.italic}>My</Text> CONTRIBUTIONS
-                    <Text style={styles.num}>  {contributionCount || 1}</Text>
+                    <Text style={styles.num}>  {contributionCount}</Text>
                   </Text>
                </View>
                 <UserProducts onPressMapEmblem={this.onPressMapEmblem} user={user} navigator={navigator} dataStore={dataStore}/>

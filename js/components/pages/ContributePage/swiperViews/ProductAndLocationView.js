@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 
 import Autocomplete from 'react-native-autocomplete-input';
+import Categories from '../../../partials/categories';
 import PlacesNearby from '../../../partials/PlacesNearby';
 import LocationPage from '../../LocationPage';
 import SelectCategory from '../../../partials/SelectCategory';
@@ -36,19 +37,18 @@ var ProductAndLocationView = React.createClass({
 		return {
   		storeSelected: {},
       categorySelected: {},
-      location: washingtonDC
 		}
 	},
-  componentDidMount(){
+  componentWillMount(){
     var self = this;
     navigator.geolocation.getCurrentPosition((position) => {
         var coords = position.coords;
         self.setState({
           location : {
-            lat: coords.latitude,
-            lng: coords.longitude
+            lat: coords.latitude.toFixed(5),
+            lng: coords.longitude.toFixed(5)
           }
-        })
+        });
       },
       (error) => {
         self.setState({
@@ -59,6 +59,12 @@ var ProductAndLocationView = React.createClass({
       {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
     );
 
+  },
+
+  componentDidMount() {
+    if(this.state.categorySelected && this.state.storeSelected.name){
+      this.props.handleShowNextButton(true);
+    }
   },
 
   updateParent(){
@@ -74,23 +80,72 @@ var ProductAndLocationView = React.createClass({
         vicinity: vicinity
       }
     }
+
     this.props.updateUploadData("productAndLocationView", {
       category : this.state.categorySelected.key,
       store : storeObject
     });
   },
 
-  selectCategory(category){
-    this.setState({categorySelected: category}, function(){
+  selectCategory(selectedStyle, gender){
+    let category, categoryThumbMap = Categories.categoryThumbMap;
+
+    if(gender === 'women') {
+      switch(selectedStyle) {
+        case 'Top':
+            category = categoryThumbMap['shirts_and_top_w'];
+            break;
+        case 'Bottom':
+            category = categoryThumbMap['pants_w'];
+            break;
+        case 'Accessory':
+            category = categoryThumbMap['bags_w'];
+            break;
+        case 'Coverall':
+            category = categoryThumbMap['outerwear_w'];
+            break;
+        case 'Shoe':
+            category = categoryThumbMap['shoes_w'];
+            break;
+        }
+
+      }
+
+    if(gender === 'men') {
+      switch(selectedStyle) {
+        case 'Top':
+            category = categoryThumbMap['shirts_m'];
+            break;
+        case 'Bottom':
+            category = categoryThumbMap['pants_m'];
+            break;
+        case 'Accessory':
+            category = categoryThumbMap['other_m'];
+            break;
+        case 'Coverall':
+            category = categoryThumbMap['outerwear_m'];
+            break;
+        case 'Shoe':
+            category = categoryThumbMap['shoes_m'];
+            break;
+        }
+      }
+
+      // NOTE: for this to work, always update parents in CALLBACK after setting new state
+    this.setState({categorySelected: category}, function() {
       this.updateParent();
+      // only show next button if both store and category have been selected
       if(this.state.categorySelected.name && this.state.storeSelected.name){
         this.props.handleShowNextButton(true);
       }
     });
   },
+
   setStore(store){
+    // NOTE: for this to work, always update parents in CALLBACK after setting new state
     this.setState({storeSelected: store}, function(){
       this.updateParent();
+      // only show next button if both store and category have been selected
       if(this.state.categorySelected.name && this.state.storeSelected.name){
         this.props.handleShowNextButton(true);
       }
@@ -99,11 +154,16 @@ var ProductAndLocationView = React.createClass({
   },
 
   searchForStore(){
+    var self = this;
+
     this.props.navigator.push({
       title: 'Search For Store',
       component: LocationPage,
       passProps:{
-        location: this.state.location,
+        location: {
+          lat: self.state.location && self.state.location.lat,
+          lng: self.state.location && self.state.location.lng
+        },
         setStore: this.setStore
       }
     });
@@ -147,7 +207,7 @@ var ProductAndLocationView = React.createClass({
 
 });
 
-const iconSize = height/25;
+const iconSize = height/30;
 const border = {
   borderColor: '#b9b9b9',
   borderRadius: 1,
@@ -200,7 +260,8 @@ const styles = StyleSheet.create({
 	},
 	sectionTitle: {
 		marginBottom: height/45,
-		fontSize: height/55
+		fontSize: height/65,
+    bottom: height/200
 	},
 
 	text: {

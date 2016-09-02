@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -24,7 +23,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		1724C04581374F428DBF9F00 /* libRCTFBSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DABD637AED28475BB095D78E /* libRCTFBSDK.a */; };
 		1BFF6E94FF6240F09A056916 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 010A1B2E9B614ABAA3222504 /* MaterialIcons.ttf */; };
 		31E2AC0FD00E4EBDB01D6959 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0E381FA11044CCE9BD5F718 /* libRNBlur.a */; };
 		4238D2601D2D8F7900CB94BE /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4238D25F1D2D8F7900CB94BE /* Bolts.framework */; };
@@ -45,9 +43,9 @@
 		4263CD111D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4263CD021D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Bold.ttf */; };
 		4263CD121D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4263CD031D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Book.ttf */; };
 		4263CD131D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-BookIta.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4263CD041D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-BookIta.ttf */; };
-		42DA92681D779CED0071B270 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DA92651D779CED0071B270 /* FBSDKCoreKit.framework */; };
-		42DA92691D779CED0071B270 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DA92661D779CED0071B270 /* FBSDKLoginKit.framework */; };
-		42DA926A1D779CED0071B270 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DA92671D779CED0071B270 /* FBSDKShareKit.framework */; };
+		42DA92861D792EAD0071B270 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DA92831D792EAD0071B270 /* FBSDKCoreKit.framework */; };
+		42DA92871D792EAD0071B270 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DA92841D792EAD0071B270 /* FBSDKLoginKit.framework */; };
+		42DA92881D792EAD0071B270 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42DA92851D792EAD0071B270 /* FBSDKShareKit.framework */; };
 		42E706C21D5E874E0093F401 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 42E706C11D5E874E0093F401 /* Default-568h@2x.png */; };
 		479A7554302A4FAABD5C3BAD /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C9587EFE2CB408B9B122137 /* Octicons.ttf */; };
 		48C2C0BD626A4BC9AF53ACE7 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C258D0298C44AE91454EEC /* libCodePush.a */; };
@@ -146,13 +144,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTOrientation;
-		};
-		4238D24B1D2D884200CB94BE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 04C9C5A141EB4DF191FD425F /* RCTFBSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9350E0F11CE3B0920041D815;
-			remoteInfo = RCTFBSDK;
 		};
 		425F7B8C1D3C755C007002E1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -260,7 +251,6 @@
 		010A1B2E9B614ABAA3222504 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		01C814E6FC5A469B88E0A3FF /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
 		02FB84E9FB7D40809FFEB03E /* ReactNativeSocialShare.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeSocialShare.xcodeproj; path = "../node_modules/react-native-social-share/ReactNativeSocialShare.xcodeproj"; sourceTree = "<group>"; };
-		04C9C5A141EB4DF191FD425F /* RCTFBSDK.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBSDK.xcodeproj; path = "../node_modules/react-native-fbsdk/iOS/RCTFBSDK.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Eyespot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eyespot.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -294,9 +284,9 @@
 		4263CD021D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BodoniSvtyTwoITCTT-Bold.ttf"; sourceTree = "<group>"; };
 		4263CD031D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BodoniSvtyTwoITCTT-Book.ttf"; sourceTree = "<group>"; };
 		4263CD041D2F7F7C00E65EEF /* BodoniSvtyTwoITCTT-BookIta.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BodoniSvtyTwoITCTT-BookIta.ttf"; sourceTree = "<group>"; };
-		42DA92651D779CED0071B270 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		42DA92661D779CED0071B270 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		42DA92671D779CED0071B270 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		42DA92831D792EAD0071B270 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		42DA92841D792EAD0071B270 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		42DA92851D792EAD0071B270 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		42E706C11D5E874E0093F401 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		447794F780224316905140FA /* RCTFBLogin.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTFBLogin.xcodeproj; path = "../node_modules/react-native-facebook-login/RCTFBLogin.xcodeproj"; sourceTree = "<group>"; };
 		5B976BC25A2841FEA131E736 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
@@ -318,7 +308,6 @@
 		B170CE8BE8A84E4096BE6552 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
 		C5BDB8B0C49E400C9FABBD11 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		D696CD759ADE4A7A9693A487 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
-		DABD637AED28475BB095D78E /* libRCTFBSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTFBSDK.a; sourceTree = "<group>"; };
 		DF918BB23C26441BB6881916 /* RCTOrientation.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTOrientation.xcodeproj; path = "../node_modules/react-native-orientation/iOS/RCTOrientation.xcodeproj"; sourceTree = "<group>"; };
 		EE6F733EF5C1413EA30E7388 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		EF44CB5817B544C6A3C2ED49 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
@@ -352,7 +341,7 @@
 				139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */,
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
-				42DA92691D779CED0071B270 /* FBSDKLoginKit.framework in Frameworks */,
+				42DA92871D792EAD0071B270 /* FBSDKLoginKit.framework in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				31E2AC0FD00E4EBDB01D6959 /* libRNBlur.a in Frameworks */,
 				48C2C0BD626A4BC9AF53ACE7 /* libCodePush.a in Frameworks */,
@@ -362,10 +351,9 @@
 				A293E8C68C6845048B6278FF /* libAirMaps.a in Frameworks */,
 				4238D2601D2D8F7900CB94BE /* Bolts.framework in Frameworks */,
 				E7EFA6CE543247079D780E4F /* libRNVectorIcons.a in Frameworks */,
-				1724C04581374F428DBF9F00 /* libRCTFBSDK.a in Frameworks */,
-				42DA92681D779CED0071B270 /* FBSDKCoreKit.framework in Frameworks */,
+				42DA92861D792EAD0071B270 /* FBSDKCoreKit.framework in Frameworks */,
 				E2E8383D4BD74185A872837E /* libRCTCamera.a in Frameworks */,
-				42DA926A1D779CED0071B270 /* FBSDKShareKit.framework in Frameworks */,
+				42DA92881D792EAD0071B270 /* FBSDKShareKit.framework in Frameworks */,
 				9A41BE18C7BF4B04AF20C092 /* libRNGL.a in Frameworks */,
 				4EC6E9C77F37473693298FAA /* libRCTOrientation.a in Frameworks */,
 				C92104C331B54243A328ED35 /* libRCTFBLogin.a in Frameworks */,
@@ -473,9 +461,9 @@
 		3D5D77404F7048BB8603AD5E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				42DA92651D779CED0071B270 /* FBSDKCoreKit.framework */,
-				42DA92661D779CED0071B270 /* FBSDKLoginKit.framework */,
-				42DA92671D779CED0071B270 /* FBSDKShareKit.framework */,
+				42DA92831D792EAD0071B270 /* FBSDKCoreKit.framework */,
+				42DA92841D792EAD0071B270 /* FBSDKLoginKit.framework */,
+				42DA92851D792EAD0071B270 /* FBSDKShareKit.framework */,
 				425F7B971D3C77C7007002E1 /* Social.framework */,
 				4238D25F1D2D8F7900CB94BE /* Bolts.framework */,
 				C5BDB8B0C49E400C9FABBD11 /* libz.tbd */,
@@ -495,14 +483,6 @@
 			isa = PBXGroup;
 			children = (
 				4220B4ED1D76C0B9007971D3 /* libRCTOrientation.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		4238D2441D2D884000CB94BE /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				4238D24C1D2D884200CB94BE /* libRCTFBSDK.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -618,7 +598,6 @@
 				819E502178C84B76A7F401D9 /* BVLinearGradient.xcodeproj */,
 				4214318D52164433AF7ABF58 /* AirMaps.xcodeproj */,
 				37DBC857DC814425824FEB6A /* RNVectorIcons.xcodeproj */,
-				04C9C5A141EB4DF191FD425F /* RCTFBSDK.xcodeproj */,
 				5B976BC25A2841FEA131E736 /* RCTCamera.xcodeproj */,
 				9ACF055112E148B087FECC76 /* RNGL.xcodeproj */,
 				02FB84E9FB7D40809FFEB03E /* ReactNativeSocialShare.xcodeproj */,
@@ -785,10 +764,6 @@
 					ProjectRef = 447794F780224316905140FA /* RCTFBLogin.xcodeproj */;
 				},
 				{
-					ProductGroup = 4238D2441D2D884000CB94BE /* Products */;
-					ProjectRef = 04C9C5A141EB4DF191FD425F /* RCTFBSDK.xcodeproj */;
-				},
-				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
 					ProjectRef = 00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */;
 				},
@@ -930,13 +905,6 @@
 			fileType = archive.ar;
 			path = libRCTOrientation.a;
 			remoteRef = 4220B4EC1D76C0B9007971D3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		4238D24C1D2D884200CB94BE /* libRCTFBSDK.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRCTFBSDK.a;
-			remoteRef = 4238D24B1D2D884200CB94BE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		425F7B8D1D3C755C007002E1 /* ReactNativeSocialShare.app */ = {
@@ -1148,9 +1116,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eyespot.app/Eyespot";
@@ -1167,9 +1132,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Eyespot.app/Eyespot";
@@ -1186,7 +1148,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"~/Documents/FacebookSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-login/FacebookSDK\n$(SRCROOT)/../node_modules/react-native-facebook-login/FacebookSDK/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1198,7 +1160,6 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/gl-react-native/ios",
 					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
@@ -1227,7 +1188,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"~/Documents/FacebookSDK/**",
+					"$(SRCROOT)/../node_modules/react-native-facebook-login/FacebookSDK\n$(SRCROOT)/../node_modules/react-native-facebook-login/FacebookSDK/**",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1239,7 +1200,6 @@
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/gl-react-native/ios",
 					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
@@ -1300,14 +1260,12 @@
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-facebook-login/RCTFBLogin/**",
-					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase-analytics/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 					"$(SRCROOT)/../node_modules/react-native-share",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/gl-react-native/ios",
 					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",
@@ -1356,14 +1314,12 @@
 					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 					"$(SRCROOT)/../node_modules/react-native-code-push/ios/CodePush/**",
 					"$(SRCROOT)/../node_modules/react-native-facebook-login/RCTFBLogin/**",
-					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-firebase-analytics/ios",
 					"$(SRCROOT)/../node_modules/react-native-image-picker/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-linear-gradient/BVLinearGradient",
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/AirMaps/**",
 					"$(SRCROOT)/../node_modules/react-native-share",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
-					"$(SRCROOT)/../node_modules/react-native-fbsdk/iOS/RCTFBSDK/**",
 					"$(SRCROOT)/../node_modules/react-native-camera/ios/**",
 					"$(SRCROOT)/../node_modules/gl-react-native/ios",
 					"$(SRCROOT)/../node_modules/react-native-social-share/iOS",

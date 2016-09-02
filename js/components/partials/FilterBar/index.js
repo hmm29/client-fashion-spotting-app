@@ -17,8 +17,22 @@
    Image
  } from 'react-native';
 
+import _ from 'lodash';
 
  var {height, width} = Dimensions.get('window');
+
+ /*
+ * @description determine if an array contains one or more items from another array.
+ * @param {array} haystack the array to search.
+ * @param {array} arr the array providing items to check for in the haystack.
+ * @return {boolean} true|false if haystack contains at least one item from arr.
+ */
+
+var findOne = function (haystack, arr) {
+    return arr.some(function (v) {
+        return haystack.indexOf(v) >= 0;
+    });
+};
 
 
 /*
@@ -32,15 +46,43 @@ var Dropdowns = React.createClass({
      };
  },
 
- componentWillMount() {
-   let { genderFilter, historyFilter, locationFilter } = this.props;
+ componentDidMount() {
+   let { genderFilter, historyFilter, locationFilter, storeFilter } = this.props;
    this.setState({
-     selected: [genderFilter, historyFilter, locationFilter]
+     selected: [genderFilter, historyFilter, locationFilter, storeFilter]
    })
  },
 
+ /*
+  * preventDuplicateDropdownHighlighting(): because both Gender and Store categories have an 'All' option,
+  * you want to prevent confusion between the dropdowns and don't want both Men and All highlighted in Gender dropdown, for example
+  * FIXME: it works for now but can be fixed through better organization of the this.state.selected variable,
+  * which keeeps track of active filter dropdown items
+  */
+
+ preventDuplicateDropdownHighlighting(dropdownItem, filterName) {
+   let { selected } = this.state;
+   if(_.countBy(selected)['All'] >= 1) {
+     if(filterName === 'Gender' && selected.indexOf('Men') > -1 || selected.indexOf('Women') > -1) {
+       if(dropdownItem === 'All') return {color: 'black'}
+     }
+
+     if(filterName === 'Store') {
+       let storeFilter = _.find(this.props.filters, ['name', filterName]);
+       let dropdown = storeFilter.dropdown;
+
+       if(findOne(selected, _.difference(dropdown, ['All'])) && dropdownItem === 'All') return {color: 'black'}
+     }
+   }
+ },
+
  selectDropdownItem(d, type, i) {
-   this.setState({selected : d });
+   // remove any other filters in the same nav CategoryView, then push d to array of selected filters
+   var currentSelected = this.state.selected;
+   var filter = _.find(this.props.filters, ['name', type]);
+   _.pull(currentSelected, ..._.difference(filter.dropdown, ['All'])); // ignore 'All' values bc there might be more than one
+   currentSelected.push(d);
+   this.setState({selected : currentSelected });
    this.props.setFilter(type, d);
    this.props._setNav(i);
  },
@@ -62,7 +104,7 @@ var Dropdowns = React.createClass({
                    {filter.dropdown.map(function(d, j) {
                      return (
                        <TouchableOpacity key={j} onPress={() => this.selectDropdownItem(d, filter.name, i)}>
-                         <Text style={[styles.dropdownText, (this.state.selected.indexOf(d) > -1 ? {color: 'red'} : {}), (d && d.length > 10 ? {fontSize: height/55} : {})]}>{d}</Text>
+                         <Text style={[styles.dropdownText, (this.state.selected.indexOf(d) > -1 ? {color: 'red'} : {}), (d && d.length > 10 ? {fontSize: height/55} : {}), this.preventDuplicateDropdownHighlighting(d, filter.name)]}>{d}</Text>
                        </TouchableOpacity>
                      );
                    }, this)}
@@ -125,28 +167,15 @@ var FilterBar = React.createClass({
     genderFilter: PropTypes.string,
     locationFilter: PropTypes.string,
     filters: PropTypes.array,
-    setFilter: PropTypes.function
+    setFilter: PropTypes.function,
+    storeFilter: PropTypes.string
   },
 
 
  getInitialState() {
    return {
      nav: null,
-     navs: [
-       {
-           name: 'GENDER',
-           dropdown: ['female', 'male', 'all'],
-           store: ['z', 'b', 'c']
-       },
-       {
-           name: 'LOCATION',
-           dropdown: ['DC']
-       },
-       {
-           name: 'STORE',
-           dropdown: ['a', 'b', 'c']
-       }
-     ]
+     navs: []
    };
  },
 
@@ -161,7 +190,7 @@ var FilterBar = React.createClass({
  },
 
  render() {
-   const  { genderFilter, historyFilter, locationFilter, filters } = this.props;
+   const  { genderFilter, historyFilter, locationFilter, storeFilter, filters } = this.props;
 
    return (
      <View style={styles.searchBar}>
@@ -201,7 +230,7 @@ const styles = StyleSheet.create({
    searchBar: {
      position: 'absolute',
      height: height / 80,
-     top: height / 18,
+     top: height / 16.5,
    },
    navsContainer: {
      position: 'absolute',
