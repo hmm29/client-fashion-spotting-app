@@ -227,13 +227,9 @@ const styles = StyleSheet.create({
        marginVertical: height / 40,
        flex: 1
    },
-   searchBarContainer: {
-       position: 'absolute',
-       height: height / 120,
-   },
    searchBar: {
      position: 'absolute',
-     height: height / 80,
+     height: height / 100,
      top: height / 16.5,
    },
    navsContainer: {
@@ -274,8 +270,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
    },
-   navText: {},
-
+   navText: {
+     fontSize: height/50,
+   },
    dropdownIcon: {
      width: 15,
      resizeMode: 'contain',

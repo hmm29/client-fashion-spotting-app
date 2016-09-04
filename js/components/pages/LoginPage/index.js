@@ -189,7 +189,7 @@ var LoginPage = React.createClass({
                                 var ref = firebaseApp.database().ref('users');
                                 ref.once('value', (snap) => {
                                   if(snap.val() && snap.val()[userId] && snap.val()[userId].email && snap.val()[userId].password){
-                                    Communications.email([].concat(snap.val()[userId].email), null, null, 'Eyespot: Recovered Password.', `Hi, ${snap.val()[userId].name}! Your recovered Eyespot password is ${snap.val()[userId].password}. Thanks for using Eyespot!`);
+                                    Communications.email([snap.val()[userId].email], null, null, 'Eyespot: Recovered Password', `Hi, ${snap.val()[userId].name}! Your recovered Eyespot password is ${snap.val()[userId].password}. Thanks for using Eyespot!`);
                                     Alert.alert('Email Success', 'Your recovered password has been sent to your email!');
                                   } else if(snap.val() && snap.val()[userId] && snap.val()[userId].email) {
                                     Alert.alert('Email Login Not Found', 'We did not find a password for your email. You may have previously signed up with Facebook.');

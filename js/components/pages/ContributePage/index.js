@@ -32,6 +32,7 @@ import Footer from '../../partials/Footer';
 import Header from '../../partials/Header';
 import ProductAndLocationView from './swiperViews/ProductAndLocationView';
 import Swiper from 'react-native-swiper';
+import TabBarLayout from '../../layouts/TabBarLayout';
 import uploadNewProduct from './helpers/upload.js';
 
 const firebaseApp = require('../../firebase');
@@ -77,7 +78,7 @@ var ContributePage = React.createClass({
             showNextButton: true
           });
       } else {
-        this.props.navigator.pop();
+        this.props.navigator.popToTop();
       }
     },
 
@@ -169,7 +170,7 @@ var ContributePage = React.createClass({
           onPress={() => {
             this.upload();
             this.incrementContributionCount();
-            this.props.navigator.pop();
+            this.props.navigator.popToTop();
           }}
           style={[styles.footerContainer]}>
             <View style={styles.footer}>

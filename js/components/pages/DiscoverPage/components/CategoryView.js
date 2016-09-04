@@ -68,7 +68,7 @@ var Panel = React.createClass({
           component: ProductFeed,
           passProps: {
               categoryKey: category_key,
-              categoryName: name
+              categoryName: name,
           }
         })}>
         <Image source={thumbImg} style={styles.panelImage}/>

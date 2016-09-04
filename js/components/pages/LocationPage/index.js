@@ -22,6 +22,7 @@ import PlacesAutocomplete from '../../partials/PlacesAutocomplete';
 import Header from '../../partials/Header';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 import EyespotPageBase from '../EyespotPageBase';
+import TabBarLayout from '../../layouts/TabBarLayout';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -43,7 +44,7 @@ var LocationPage = React.createClass({
   fetchData(callback){
     const { location } = this.props;
     const locationString = `${location.lat},${location.lng}`;
-    var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=1500&types=clothing_store&key=${google_places_api_key}`;
+    var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=50000&types=clothing_store&key=${google_places_api_key}`;
     fetch(endpoint)
      .then((response) => response.json())
      .then((responseJson) => {
@@ -85,17 +86,6 @@ var LocationPage = React.createClass({
   },
 
   render(){
-    nextButton =
-      <TouchableOpacity
-        onPress={() => {
-          this.props.navigator.pop();
-        }}
-        style={[styles.footerContainer]}>
-          <View style={styles.footer}>
-          <Text style={styles.footerText}>{"NEXT"}</Text>
-          </View>
-      </TouchableOpacity>;
-
     return (
       <View style={styles.layeredPageContainer}>
         {this._renderHeader()}
@@ -110,15 +100,10 @@ var LocationPage = React.createClass({
             setStore={this.props.setStore}/>
           </View>
         </EyespotPageBase>
-        {/*}<View style={styles.fixedFooterWrapper}>
-           {nextButton}
-        </View>*/}
       </View>
     )
   }
 })
-
-const footerHeight = 60;
 
 const styles = StyleSheet.create({
   section: {
@@ -147,34 +132,6 @@ const styles = StyleSheet.create({
     fontSize: height / 40,
     fontFamily: 'BodoniSvtyTwoITCTT-Book'
   },
-  fixedFooterSpacer: {height: 60},
-  fixedFooterWrapper: {
-    position: 'absolute',
-    top: height * 1.27
-  },
-  footerContainer: {
-    width,
-    height: footerHeight,
-    position: 'absolute',
-    bottom: 200,
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-    width,
-    height: footerHeight,
-
-  },
-  footerText: {
-    color: '#fff',
-    fontSize: height / 40,
-    fontFamily: 'Avenir-Roman',
-    letterSpacing: 2
-  },
-
-
 })
 
 module.exports = LocationPage;

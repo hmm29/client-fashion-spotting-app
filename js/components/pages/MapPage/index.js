@@ -33,6 +33,7 @@ import FilterBar from '../../partials/FilterBar';
 import Product from '../../partials/Product';
 import Map from '../../partials/Map';
 import EyespotLogoNegative from '../../partials/img/eyespot-logo-negative.png';
+import TabBarLayout from '../../layouts/TabBarLayout';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -72,7 +73,7 @@ var MapPage = React.createClass({
 
    _renderHeader() {
        let { categoryName } = this.props;
-       let ampersandIdx = categoryName.indexOf('&');
+       let ampersandIdx = categoryName && categoryName.indexOf('&');
 
        return (
            <Header containerStyle={styles.headerContainer}>
@@ -80,7 +81,7 @@ var MapPage = React.createClass({
                <View style={styles.pageTitle}>
                  <Image source={EyespotLogoNegative}
                        style={styles.pageTitleLogo} />
-                 <Text style={styles.pageTitleText}>{(categoryName.length > 12 ? categoryName.substring(0,ampersandIdx+1) + ' ...' : categoryName)}</Text>
+                 <Text style={styles.pageTitleText}>{(categoryName && categoryName.length > 12 ? categoryName && categoryName.substring(0,ampersandIdx+1) + ' ...' : categoryName)}</Text>
                </View>
                <View />
            </Header>

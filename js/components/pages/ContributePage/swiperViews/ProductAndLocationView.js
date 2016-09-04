@@ -211,14 +211,12 @@ var ProductAndLocationView = React.createClass({
 
 });
 
-const iconSize = height/30;
+const iconSize = height/35;
 const border = {
   borderColor: '#b9b9b9',
   borderRadius: 1,
   borderWidth: 1
 };
-
-const footerHeight = 60;
 
 const styles = StyleSheet.create({
   storeFilterBar: {

@@ -446,11 +446,11 @@ var AddImageView = React.createClass({
                   source={require('../../../partials/icons/contribute/img/gallery-text.png')}
                   style={styles.textIcon} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.captureButton} onPress={() => this.setState({imgSource: ''})}>
+              <View style={styles.captureButton}>
                 <Image
-                  source={require('../../../partials/icons/contribute/img/camera-icon.png')}
+                  source={require('../../../partials/icons/contribute/img/camera-icon-grey.png')}
                   style={styles.icon} />
-              </TouchableOpacity>
+              </View>
               <TouchableOpacity onPress={() => this.setState({imgSource: ''})}>
               <Image
                 source={require('../../../partials/icons/contribute/img/retake-text.png')}

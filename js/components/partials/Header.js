@@ -45,9 +45,9 @@ var Header = React.createClass({
       return (
         <View style={[styles.headerContainer, this.props.containerStyle]}>
           <View style={styles.header}>
-            <View style={{position: 'absolute', left: 10}}>{this.props.children[0]}</View>
+            <View style={{position: 'absolute', left: 0}}>{this.props.children[0]}</View>
             {this.props.children[1]}
-            <View style={{position: 'absolute', right: 10}}>{this.props.children[2]}</View>
+            <View style={{position: 'absolute', right: 0}}>{this.props.children[2]}</View>
             {this.props.children[3]}
           </View>
         </View>
@@ -56,9 +56,9 @@ var Header = React.createClass({
       return (
         <View style={[styles.headerContainer, this.props.containerStyle]}>
           <View style={styles.header}>
-            <View style={{position: 'absolute', left: 10}}>{this.props.children[0]}</View>
+            <View style={{position: 'absolute', left: 0}}>{this.props.children[0]}</View>
             {this.props.children[1]}
-            <View style={{position: 'absolute', right: 10}}>{this.props.children[2]}</View>
+            <View style={{position: 'absolute', right: 0}}>{this.props.children[2]}</View>
           </View>
         </View>
       );
@@ -66,8 +66,8 @@ var Header = React.createClass({
       return (
         <View style={[styles.headerContainer, this.props.containerStyle]}>
           <View style={styles.header}>
-            <View style={{position: 'absolute', left: 10}}>{this.props.children[0]}</View>
-            <View style={{position: 'absolute', right: 10}}>{this.props.children[1]}</View>
+            <View style={{position: 'absolute', left: 0}}>{this.props.children[0]}</View>
+            <View style={{position: 'absolute', right: 0}}>{this.props.children[1]}</View>
           </View>
         </View>
       );

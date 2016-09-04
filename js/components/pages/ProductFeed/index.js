@@ -34,6 +34,7 @@ import Map from '../../partials/Map';
 import MapsViewIcon from '../../partials/icons/product/MapsViewIcon';
 import Product from '../../partials/Product';
 import Swiper from 'react-native-swiper';
+import TabBarLayout from '../../layouts/TabBarLayout';
 
 import firebaseApp from '../../firebase';
 
@@ -160,7 +161,7 @@ var ProductFeed = React.createClass({
      if(this.state.catalogViewIconActive && this.currentProductSwiperPageIndex > 0) {
        this.refs[SWIPER_REF].scrollBy(-1);
      } else {
-       this.props.navigator.pop();
+       this.props.navigator.popToTop();
      }
    },
 
@@ -202,8 +203,8 @@ var ProductFeed = React.createClass({
 
    _renderHeader() {
       let { categoryName } = this.props;
-      categoryName = categoryName.capitalize();
-      let ampersandIdx = categoryName.indexOf('&');
+      categoryName = categoryName && categoryName.capitalize();
+      let ampersandIdx = categoryName && categoryName.indexOf('&');
 
        return (
          <Header containerStyle={styles.headerContainer}>
@@ -211,7 +212,7 @@ var ProductFeed = React.createClass({
            <View style={styles.pageTitle}>
              <Image source={EyespotLogoNegative}
                    style={styles.pageTitleLogo} />
-             <Text style={styles.pageTitleText}>{(categoryName.length > 12 ? categoryName.substring(0,ampersandIdx+1) + ' ...' : categoryName)}</Text>
+             <Text style={styles.pageTitleText}>{(categoryName && categoryName.length > 12 ? categoryName && categoryName.substring(0,ampersandIdx+1) + ' ...' : categoryName)}</Text>
            </View>
            <View style={{width: width/6, left: width/9, flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'}}>
                <CatalogViewIcon isActive={this.state.catalogViewIconActive} onPress={() => this.setState({catalogViewIconActive: true, mapsViewIconActive: false})} />
@@ -240,8 +241,8 @@ var ProductFeed = React.createClass({
        var vicinity = filteredProducts[0] && filteredProducts[0].store
        && filteredProducts[0].store.vicinity;
        var lastCommaInVicinity = vicinity && vicinity.lastIndexOf(',');
-       var city = vicinity.slice(lastCommaInVicinity+1);
-       if(city.indexOf('Washington') > -1) city = 'Washington, D.C.'
+       var city = vicinity && vicinity.slice(lastCommaInVicinity+1);
+       if(city && city.indexOf('Washington') > -1) city = 'Washington, D.C.'
        else city = ''
      }
 

@@ -27,6 +27,7 @@ import {
 import notification from '../../partials/img/notification.png';
 import helpers from '../../helpers';
 import firebaseApp from '../../firebase';
+import TabBarLayout from '../../layouts/TabBarLayout';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 

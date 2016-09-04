@@ -40,6 +40,7 @@ import Product from '../../partials/Product';
 import Notifications from '../../partials/Notifications';
 import NotificationsPage from '../NotificationsPage';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
+import TabBarLayout from '../../layouts/TabBarLayout';
 
 import firebaseApp from '../../firebase';
 
@@ -170,7 +171,8 @@ var PersonalPage = React.createClass({
 
            let { dataStore } = self.state;
            self.setState({
-             contributionCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].contributionCount
+             contributionCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].contributionCount,
+             likeCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].likeCount,
            })
 
          });
@@ -198,13 +200,13 @@ var PersonalPage = React.createClass({
 
    _renderHeader() {
        const backIcon = (
-         <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
+         <BackIcon color='white' onPress={() => this.props.navigator.popToTop()} />
        );
        const currentRoute = this.props.navigator.navigationContext.currentRoute;
 
        return (
            <Header containerStyle={styles.headerContainer}>
-               {currentRoute.title !== 'TabBarLayout' ? <BackIcon color='white' onPress={() => this.props.navigator.pop()} /> : <MoreIcon onPress={() => this.navigateToEditProfilePage(this.props.user)} />}
+               {currentRoute.title !== 'TabBarLayout' ? backIcon : <MoreIcon onPress={() => this.navigateToEditProfilePage(this.props.user)} />}
                <View style={styles.pageTitle}>
                  <Image source={EyespotNegativeLogo}
                                  style={styles.pageTitleLogo} />
@@ -234,7 +236,7 @@ var PersonalPage = React.createClass({
 
    render() {
 
-     const { contributionCount, dataStore } = this.state;
+     const { contributionCount, dataStore, likeCount } = this.state;
      const { navigator, user } = this.props;
      if(!user){
        return null
@@ -253,10 +255,14 @@ var PersonalPage = React.createClass({
               <View style={styles.container}>
                 <Title user={user}/>
                 <ProfileContainer user={user}/>
-                <View style={styles.myContributions}>
+                <View style={styles.stats}>
                   <Text style={styles.bodoni}>
                     <Text style={styles.italic}>My</Text> CONTRIBUTIONS
                     <Text style={styles.num}>  {contributionCount}</Text>
+                  </Text>
+                  <Text style={[styles.bodoni, {left: width/30}, styles.gray]}>
+                    <Text style={styles.italic}>My</Text> Likes
+                    <Text style={[styles.num, styles.gray]}>  {likeCount}</Text>
                   </Text>
                </View>
                 <UserProducts onPressMapEmblem={this.onPressMapEmblem} user={user} navigator={navigator} dataStore={dataStore}/>
@@ -304,15 +310,20 @@ const styles = StyleSheet.create({
      height: height / 3,
      resizeMode: 'cover'
    },
-   myContributions: {
+   stats: {
      width,
      padding: 20,
-     marginBottom: height/32
+     marginBottom: height/32,
+     flexDirection: 'row',
+     justifyContent: 'flex-start'
    },
    fixedFooterSpacer: {height: 60},
    fixedFooterWrapper: {
      position: 'absolute',
      top: height * 1.27
+   },
+   gray: {
+     color: '#999'
    },
    headerContainer: {
      backgroundColor: '#000',

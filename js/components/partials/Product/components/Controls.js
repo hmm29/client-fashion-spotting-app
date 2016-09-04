@@ -59,6 +59,7 @@ var Likes = React.createClass({
     });
 
   },
+
   likedByUser(userId){
     if(this.props.product.likes[userId]){
       return true
@@ -67,13 +68,34 @@ var Likes = React.createClass({
       return false
     }
   },
+
   addLike(userId, productId){
+    var userRef = firebaseApp.database().ref(`users/${userId}`);
+
     firebaseApp.database().ref(`products/${productId}/likes/${userId}`).set(true);
     this.createNotification(userId);
+    userRef.once('value', (snap) => {
+      if(snap.val() && snap.val().likeCount){
+        userRef.update({likeCount: snap.val().likeCount + 1})
+      } else {
+        userRef.update({likeCount: 1})
+      }
+    });
   },
+
   removeLike(userId, productId){
+    var userRef = firebaseApp.database().ref(`users/${userId}`);
+
     firebaseApp.database().ref(`products/${productId}/likes/${userId}`).set(false);
+    userRef.once('value', (snap) => {
+      if(snap.val() && snap.val().likeCount > 0){
+        userRef.update({likeCount: snap.val().likeCount - 1})
+      } else {
+        userRef.update({likeCount: 0})
+      }
+    });
   },
+
   createNotification(userId){
 
     const productId = this.props.product['.key'];

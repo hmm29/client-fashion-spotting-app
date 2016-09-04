@@ -76,7 +76,7 @@ var Contributor = React.createClass({
             this.props.navigator.push({
               title: 'Personal Page',
               component: PersonalPage,
-              passProps: {user: this.props.user}
+              passProps: {user}
             });
           }
         }} style={styles.profileContainer}>

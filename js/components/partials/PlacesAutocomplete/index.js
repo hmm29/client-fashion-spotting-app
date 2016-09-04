@@ -19,6 +19,7 @@ import {
   ListView
 } from 'react-native';
 
+import TabBarLayout from '../../layouts/TabBarLayout';
 var {height, width} = Dimensions.get('window');
 
 /*

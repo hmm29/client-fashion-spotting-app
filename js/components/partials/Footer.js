@@ -6,7 +6,7 @@
 * @flow
 */
 
-import React from 'react';
+import React, { PropTypes } from 'react';
 import {
  AsyncStorage,
  Dimensions,
@@ -26,7 +26,7 @@ const iconOffset = 40;
 var Footer = React.createClass({
 
   propTypes: {
-    navigator: React.PropTypes.object
+    navigator: PropTypes.object
   },
 
   componentWillMount() {
@@ -53,13 +53,13 @@ var Footer = React.createClass({
 
     this.props.navigator.replace({
       title: 'ContributePage',
-      component: ContributePage
+      component: ContributePage,
     });
   },
 
   onPressRight() {
     const PersonalPage = require('../pages/PersonalPage');
-    
+
     this.props.navigator.push({
       title: 'PersonalPage',
       component: PersonalPage,

@@ -32,6 +32,7 @@ import genderIcon from './img/gender-icon.png';
 import profileIcon from './img/profile-icon.png';
 import Header from '../../partials/Header';
 import ImagePicker from 'react-native-image-picker';
+import TabBarLayout from '../../layouts/TabBarLayout';
 
 import firebaseApp from '../../firebase';
 
@@ -187,7 +188,6 @@ var EditProfilePage = React.createClass({
        const backIcon = (
          <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
        );
-       const currentRoute = this.props.navigator.navigationContext.currentRoute;
 
        return (
            <Header containerStyle={styles.headerContainer}>
