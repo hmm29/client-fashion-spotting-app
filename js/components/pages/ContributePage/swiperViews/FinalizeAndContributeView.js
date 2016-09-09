@@ -62,7 +62,7 @@ var FinalizeAndContributeView = React.createClass({
 		this.setState({activeExcitingTag: buttonText});
 	},
 
-	onShare(app, contributeSummary=null) {
+	onShare(app) {
 		switch(app) {
 			case 'facebook':
 				KDSocialShare.shareOnFacebook({

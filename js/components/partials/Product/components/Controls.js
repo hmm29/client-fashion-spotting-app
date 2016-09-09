@@ -16,12 +16,15 @@ import React from 'react';
 import {
  AsyncStorage,
  Dimensions,
+ NativeModules,
  StyleSheet,
  View,
  Image,
  Text,
  TouchableOpacity
 } from 'react-native';
+
+var { KDSocialShare } = NativeModules;
 
 const firebaseApp = require('../../../firebase');
 
@@ -36,16 +39,27 @@ function getNumLikes(likes){
     }
   })
   return ret
-
 }
 
 
-var Share = React.createClass({
+var ShareContent = React.createClass({
+  shareLink() {
+    KDSocialShare.shareOnFacebook({
+          'text':'// Spotted with Eyespot app. Download yours for free!',
+          'link':'https://eyes.pt/',
+          'imagelink': this.props.product && this.props.product.image && this.props.product.image.url,
+        },
+        (results) => {
+          console.log(results);
+        }
+      );
+  },
+
   render() {
     return (
-      <View style={styles.control}>
+      <TouchableOpacity onPress={() => this.shareLink()} style={styles.control}>
         <Image source={require('../img/share.png')} style={styles.icon}/>
-      </View>
+      </TouchableOpacity>
     );
   }
 });
@@ -169,9 +183,12 @@ var Likes = React.createClass({
 var More = React.createClass({
   render() {
     return (
-      <View style={styles.control}>
+      <TouchableOpacity onPress={() => {
+        this.props.handleModalVisible(true);
+        this.props.addReportTagToProduct();
+      }} style={styles.control}>
         <Image source={require('../img/more.png')} style={styles.icon}/>
-      </View>
+      </TouchableOpacity>
     );
   }
 });
@@ -183,13 +200,18 @@ var More = React.createClass({
 
 
 var Controls = React.createClass({
+  addReportTagToProduct() {
+    const productId = this.props.product['.key'];
+    if(productId) firebaseApp.database().ref(`products/${productId}`).update({reported: true});
+  },
+
   render() {
     const { product } = this.props;
     return (
       <View style={styles.container}>
         <Likes product={product}/>
-        <Share/>
-        <More/>
+        <ShareContent product={product}/>
+        <More addReportTagToProduct={this.addReportTagToProduct} handleModalVisible={this.props.handleModalVisible}/>
       </View>
     );
   }

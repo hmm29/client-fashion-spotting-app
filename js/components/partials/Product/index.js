@@ -15,6 +15,7 @@
 import React, { PropTypes } from 'react';
 import {
  Dimensions,
+ Modal,
  StyleSheet,
  Text,
  TextInput,
@@ -46,6 +47,16 @@ var Product = React.createClass({
     user: PropTypes.object
   },
 
+  getInitialState() {
+    return {
+      modalVisible: false
+    }
+  },
+
+  handleModalVisible(modalVisible) {
+    this.setState({modalVisible});
+  },
+
  /*
   * render(): returns JSX that declaratively specifies page UI
   */
@@ -70,9 +81,17 @@ var Product = React.createClass({
             onPressMapEmblem={this.props.onPressMapEmblem}
             product={product}/>
           <Comment product={product}/>
-          <Controls product={product}/>
+          <Controls handleModalVisible={this.handleModalVisible} product={product}/>
           <Text style={styles.timestamp}>{product && product.timestamp ? helpers.getTimePassed(Date.parse(product.timestamp)) + ' ago' : '36m ago'}</Text>
         </View>
+        <Modal
+            animationType={"slide"}
+            transparent={true}
+            visible={this.state.modalVisible}>
+            <TouchableOpacity onPress={() => this.setState({modalVisible: false})} style={{width, height}}>
+            <Text style={styles.modalText}>Thank you for reporting this contribution.</Text>
+            </TouchableOpacity>
+            </Modal>
       </View>
     );
 
@@ -114,6 +133,14 @@ const styles = StyleSheet.create({
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center'
+    },
+    modalText: {
+      top: height/2.5,
+      marginHorizontal: width/8,
+      backgroundColor: 'white',
+      padding: 50,
+      borderColor: 'black',
+      borderWidth: 1
     },
     tag: {
       transform: [{rotate: '-90deg'}],

@@ -73,7 +73,8 @@ var ProductFeed = React.createClass({
 
    propTypes: {
      navigator: PropTypes.object,
-     categoryKey: PropTypes.string
+     categoryKey: PropTypes.string,
+     storeName: PropTypes.string
    },
 
    getInitialState(){
@@ -145,6 +146,31 @@ var ProductFeed = React.createClass({
      }
 
        filteredProducts = productKeys.map((productKey) => {
+         return allProducts[productKey];
+       });
+
+     return filteredProducts;
+
+   },
+
+   filterProductsByStoreName(){
+     var dataStore = this.state.dataStore;
+     const products = dataStore.products || [];
+     if(!dataStore){ return null };
+
+     var filteredProducts;
+     var productKeys = Object.keys(products);
+
+     var allProducts = addKeyToProducts(products);
+
+     // filter keys using storeName
+     var filteredProductKeys = _.filter(productKeys, (productKey) => {
+       return allProducts[productKey] && allProducts[productKey].store
+       && allProducts[productKey].store.name
+       && allProducts[productKey].store.name === this.props.storeName;
+     });
+
+       filteredProducts = filteredProductKeys.map((productKey) => {
          return allProducts[productKey];
        });
 
@@ -233,9 +259,17 @@ var ProductFeed = React.createClass({
     */
 
    render() {
-     var { categoryKey, navigator } = this.props;
+     var { categoryKey, navigator, storeName } = this.props;
+     var filteredProducts;
 
-     var filteredProducts = this.filterProductsByCategory();
+     if(categoryKey) {
+       filteredProducts = this.filterProductsByCategory();
+     } else if (storeName) {
+       filteredProducts = this.filterProductsByStoreName();
+     } else {
+       filteredProducts = [];
+     }
+
      if(!filteredProducts){ return null }
      else {
        var vicinity = filteredProducts[0] && filteredProducts[0].store

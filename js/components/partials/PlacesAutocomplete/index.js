@@ -51,10 +51,23 @@ function deg2rad(deg) {
 */
 
 var NotListed = React.createClass({
+  getInitialState() {
+    return {
+      modalVisible: false
+    }
+  },
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.modalVisible) {
+      this.setState({modalVisible: nextProps.modalVisible})
+    }
+  },
   render(){
     return (
-      <View style={[styles.row, styles.notListedRow]}>
+      <View>
+      <TouchableOpacity onPress={() => this.props.handleModalVisible(true)}
+        style={[styles.row, styles.notListedRow]}>
         <Text style={styles.notListedText}>Not Listed</Text>
+      </TouchableOpacity>
       </View>
     )
   }
@@ -95,6 +108,7 @@ var SuggestionRow = React.createClass({
 var PlacesAutocomplete = React.createClass({
 
   propTypes: {
+    handleModalVisible: PropTypes.func,
     myLocation: PropTypes.object,
     places: PropTypes.array,
   },
@@ -104,7 +118,8 @@ var PlacesAutocomplete = React.createClass({
     return {
       text: "",
       dataSource: ds.cloneWithRows([]),
-      numRows: ""
+      numRows: "",
+      modalVisible: false
     }
   },
 
@@ -178,7 +193,7 @@ var PlacesAutocomplete = React.createClass({
       )
     }
     if(rowID == maxRows || rowData.name == "Not Listed"){
-      return (<NotListed/>)
+      return (<NotListed handleModalVisible={this.props.handleModalVisible}/>)
     }
     return null
   },
@@ -262,7 +277,7 @@ const styles = StyleSheet.create({
 		height: iconSize,
 		resizeMode: Image.resizeMode.contain,
 		margin: width / 70
-	},
+	}
 });
 
 module.exports = PlacesAutocomplete;

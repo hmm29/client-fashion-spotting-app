@@ -1,11 +1,13 @@
 package com.eyespot;
 
 import com.facebook.react.ReactActivity;
+import cl.json.RNSharePackage;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.cmcewen.blurview.BlurViewPackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.yoloci.fileupload.FileUploadPackage;
 import com.projectseptember.RNGL.RNGLPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
-import com.cmcewen.blurview.BlurViewPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -47,11 +49,13 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new RNSharePackage(),
+            new FBSDKPackage(),
+            new BlurViewPackage(),
             new OrientationPackage(this),
             new FileUploadPackage(),
             new RNGLPackage(),
             new RCTCameraPackage(),
-            new BlurViewPackage(),
             new VectorIconsPackage(),
             new MapsPackage(),
             new LinearGradientPackage(),

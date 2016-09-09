@@ -17,6 +17,8 @@ import {
  View
  } from 'react-native';
 
+ var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+
  import firebaseApp from '../firebase';
  import helpers from '../helpers';
 
@@ -73,6 +75,8 @@ var Footer = React.createClass({
 
   //  var active = this.props.active;
    var active = 0; // HACK: temporary
+   if(!(this.state && this.state.user)) return null;
+   else var user = this.state.user;
 
    /*
     * calculate position (margin) for active arrow
@@ -114,8 +118,9 @@ var Footer = React.createClass({
     */
 
     var RightIcon =
-     <TouchableOpacity onPress={this.onPressRight} style={styles.iconContainer}>
-       <Image source={require('./img/profile.png')} style={[styles.icon, styles.iconRight]}/>
+     <TouchableOpacity onPress={this.onPressRight} style={[styles.iconContainer, styles.rightIconContainer]}>
+       <Text style={styles.badge}>{user && user.notifications && Object.keys(user.notifications) && Object.keys(user.notifications).length}</Text>
+       <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
      </TouchableOpacity>;
 
     return (
@@ -199,6 +204,24 @@ var styles = StyleSheet.create({
    height: 28,
    resizeMode: 'contain',
    transform: [{translateY: -18}]
+ },
+ badge: {
+   fontSize: height/55,
+   color: 'white',
+   fontWeight: 'bold',
+   backgroundColor: 'red',
+   padding: width/110,
+   paddingBottom: height/80,
+   left: width/11,
+   bottom: height/300,
+   borderRadius: width/40,
+   width: width/22,
+   height: width/20
+ },
+ rightIconContainer: {
+   flexDirection: 'row',
+   justifyContent: 'center',
+   right: width/45
  }
 });
 

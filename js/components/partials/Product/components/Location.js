@@ -24,7 +24,6 @@ import {
 
 var {width} = Dimensions.get('window'); /* gets screen dimensions */
 
-
 /*
 * defines the Location class
 */
@@ -54,10 +53,23 @@ var Location = React.createClass({
     });
   },
 
+  showProductsForStore() {
+    var ProductFeed = require('../../../pages/ProductFeed'); // lazy load
+
+    let { navigator, product } = this.props;
+
+    navigator.push({
+      title: 'ProductFeed',
+      component: ProductFeed,
+      passProps: {
+        storeName: product && product.store && product.store.name
+      }
+    });
+  },
+
   render() {
 
     const { product, products } = this.props;
-
     var store = product && product.store && product.store.name;
     var vicinity = product && product.store && product.store.vicinity;
     if(vicinity && vicinity.length > 12){
@@ -68,16 +80,17 @@ var Location = React.createClass({
     }
 
     return (
-      <View style={styles.container} onPress={this.handlePress}>
-        <Text><Text style={styles.italic}>at</Text> {store} /</Text>
-        <Text> {vicinity}</Text>
-          <TouchableOpacity onPress={this.handlePress}>
-          <Image
-            style={styles.locationIcon}
-            onPress={()=>{ this.handlePress()}}
-            source={require('../img/location.png')}/>
-          </TouchableOpacity>
-
+      <View style={styles.container}>
+        <TouchableOpacity style={styles.locationText} onPress={this.showProductsForStore}>
+        <Text><Text style={styles.italic}>at</Text> {store}</Text>
+        <Text>{vicinity}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this.handlePress}>
+        <Image
+          style={styles.locationIcon}
+          onPress={()=>{this.handlePress()}}
+          source={require('../img/location.png')}/>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -108,6 +121,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     marginLeft:10,
     left: width/30
+  },
+  locationText: {
+    width: width/1.3,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 
 });

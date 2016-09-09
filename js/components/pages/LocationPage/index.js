@@ -10,6 +10,7 @@ import React, { PropTypes } from 'react';
 
 import {
   Dimensions,
+  Modal,
   StyleSheet,
   View,
   TouchableOpacity,
@@ -36,6 +37,7 @@ var LocationPage = React.createClass({
 
   getInitialState(){
     return {
+      modalVisible: false,
       places: [],
       placesNames : []
     }
@@ -69,6 +71,10 @@ var LocationPage = React.createClass({
     })
   },
 
+  handleModalVisible(modalVisible) {
+    this.setState({modalVisible});
+  },
+
   /*
    * _renderHeader(): renders the imported header component
    */
@@ -87,19 +93,29 @@ var LocationPage = React.createClass({
 
   render(){
     return (
-      <View style={styles.layeredPageContainer}>
+      <View style={styles.layeredPageContainer} onPress={() => this.setState({modalVisible: false})}>
         {this._renderHeader()}
         <EyespotPageBase
           keyboardShouldPersistTaps={false}
           noScroll={false}>
           <View style={{paddingTop: height/36}}>
           <PlacesAutocomplete
+            handleModalVisible={this.handleModalVisible}
             myLocation={this.props.location}
             places={this.state.places}
             navigator={this.props.navigator}
             setStore={this.props.setStore}/>
           </View>
         </EyespotPageBase>
+        <Modal
+            animationType={"slide"}
+            transparent={true}
+            visible={this.state.modalVisible}
+            >
+            <TouchableOpacity onPress={() => this.setState({modalVisible: false})} style={{width, height}}>
+            <Text style={styles.modalText}>Sorry, we can’t find the location on Google Map of where you’ve spotted this item. Please try a different search.</Text>
+            </TouchableOpacity>
+            </Modal>
       </View>
     )
   }
@@ -114,6 +130,14 @@ const styles = StyleSheet.create({
     top: -10
   },
   layeredPageContainer: {flex: 1},
+  modalText: {
+    top: height/2.5,
+    marginHorizontal: width/8,
+    backgroundColor: 'white',
+    padding: 50,
+    borderColor: 'black',
+    borderWidth: 1
+  },
   pageTitle: {
     flexDirection: 'row',
     justifyContent: 'center',

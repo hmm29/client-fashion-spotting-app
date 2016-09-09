@@ -174,6 +174,8 @@ var TabBarLayout = React.createClass({
     */
 
    var activeStyle = {};
+   var { user } = this.state;
+
    activeStyle.left = activeArrowOffset(this.state.selected);
 
    /*
@@ -212,7 +214,8 @@ var TabBarLayout = React.createClass({
     */
 
     var RightIcon =
-     <View component='personal' style={styles.iconContainer}>
+     <View component='personal' style={[styles.iconContainer, styles.rightIconContainer]}>
+       <Text style={styles.badge}>{user && user.notifications && Object.keys(user.notifications) && Object.keys(user.notifications).length}</Text>
        <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
      </View>;
 
@@ -251,6 +254,19 @@ const iconEmblemHeight = iconEmblemWidth * 2;
 const loadingTextFontSize = 12;
 
 const styles = StyleSheet.create({
+  badge: {
+    fontSize: height/55,
+    color: 'white',
+    fontWeight: 'bold',
+    backgroundColor: 'red',
+    padding: width/110,
+    paddingBottom: height/80,
+    right: width/50,
+    bottom: height/300,
+    borderRadius: width/40,
+    width: width/22,
+    height: width/20
+  },
   centering: {
     alignSelf: 'center',
     top: height/2.5
@@ -323,6 +339,11 @@ const styles = StyleSheet.create({
    height: iconWidth/2,
    resizeMode: 'contain',
  },
+ rightIconContainer: {
+   flexDirection: 'row',
+   justifyContent: 'center',
+   right: width/45
+ }
 });
 
 module.exports = TabBarLayout;
