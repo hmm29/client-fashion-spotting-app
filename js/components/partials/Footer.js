@@ -119,7 +119,7 @@ var Footer = React.createClass({
 
     var RightIcon =
      <TouchableOpacity onPress={this.onPressRight} style={[styles.iconContainer, styles.rightIconContainer]}>
-       <Text style={styles.badge}>{user && user.notifications && Object.keys(user.notifications) && Object.keys(user.notifications).length}</Text>
+        {user && user.notifications && Object.keys(user.notifications) && Object.keys(user.notifications).length ? <View style={styles.badgeContainer}><Text style={styles.badge}>{Object.keys(user.notifications).length}</Text></View> : null}
        <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
      </TouchableOpacity>;
 
@@ -206,17 +206,25 @@ var styles = StyleSheet.create({
    transform: [{translateY: -18}]
  },
  badge: {
-   fontSize: height/55,
+   width: width/22,
+   height: width/20,
+   fontSize: height/50,
+   borderRadius: width/40,
    color: 'white',
    fontWeight: 'bold',
-   backgroundColor: 'red',
+   backgroundColor: 'transparent',
    padding: width/110,
    paddingBottom: height/80,
+   bottom: height/300,
+ },
+ badgeContainer: {
+   width: width/22,
+   height: width/20,
+   backgroundColor: 'red',
+   borderRadius: width/40,
+   backgroundColor: 'red',
    left: width/11,
    bottom: height/300,
-   borderRadius: width/40,
-   width: width/22,
-   height: width/20
  },
  rightIconContainer: {
    flexDirection: 'row',

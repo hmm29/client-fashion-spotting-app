@@ -215,7 +215,7 @@ var TabBarLayout = React.createClass({
 
     var RightIcon =
      <View component='personal' style={[styles.iconContainer, styles.rightIconContainer]}>
-       <Text style={styles.badge}>{user && user.notifications && Object.keys(user.notifications) && Object.keys(user.notifications).length}</Text>
+       {user && user.notifications && Object.keys(user.notifications) && Object.keys(user.notifications).length ? <View style={styles.badgeContainer}><Text style={styles.badge}>{Object.keys(user.notifications).length}</Text></View> : null}
        <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
      </View>;
 
@@ -255,17 +255,27 @@ const loadingTextFontSize = 12;
 
 const styles = StyleSheet.create({
   badge: {
-    fontSize: height/55,
+    width: width/22,
+    height: width/20,
+    fontSize: height/50,
+    borderRadius: width/40,
     color: 'white',
     fontWeight: 'bold',
-    backgroundColor: 'red',
+    backgroundColor: 'transparent',
     padding: width/110,
     paddingBottom: height/80,
     right: width/50,
     bottom: height/300,
-    borderRadius: width/40,
+  },
+  badgeContainer: {
     width: width/22,
-    height: width/20
+    height: width/20,
+    backgroundColor: 'red',
+    borderRadius: width/40,
+    backgroundColor: 'red',
+    paddingLeft: width/50,
+    right: width/50,
+    bottom: height/300,
   },
   centering: {
     alignSelf: 'center',
@@ -342,7 +352,8 @@ const styles = StyleSheet.create({
  rightIconContainer: {
    flexDirection: 'row',
    justifyContent: 'center',
-   right: width/45
+   right: width/45,
+   backgroundColor: 'transparent'
  }
 });
 
