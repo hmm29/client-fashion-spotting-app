@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
   badge: {
     width: width/22,
     height: width/20,
-    fontSize: height/50,
+    fontSize: height/48,
     borderRadius: width/40,
     color: 'white',
     fontWeight: 'bold',
