@@ -56,7 +56,7 @@ var ContributePage = React.createClass({
           showNextButton: false,
           imageData: {imgSource:{}},
           productAndLocationData: {store:{}},
-          finalizeAndContributeData: ""
+          finalizeAndContributeData: "",
         }
     },
 
@@ -74,6 +74,7 @@ var ContributePage = React.createClass({
       if(this.state.currentSwiperPageIndex > 0) {
         this.refs[SWIPER_REF].scrollBy(-1);
         this.setState({
+            buttonState: 'NEXT',
             currentSwiperPageIndex: this.state.currentSwiperPageIndex-1,
             showNextButton: true
           });
@@ -112,10 +113,9 @@ var ContributePage = React.createClass({
       if(func) this.setState({onPressButton: func});
     },
 
-
-       /*
-        * incrementContributionCount(): increment the number of contributions by 1
-        */
+   /*
+    * incrementContributionCount(): increment the number of contributions by 1
+    */
 
     incrementContributionCount() {
       var ref = firebaseApp.database().ref('users');
@@ -148,11 +148,10 @@ var ContributePage = React.createClass({
    */
 
   upload(){
-
     uploadNewProduct(
       this.state.imageData,
       this.state.productAndLocationData,
-      this.state.finalizeAndContributeData
+      this.state.finalizeAndContributeData,
     );
   },
 

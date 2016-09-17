@@ -9,6 +9,7 @@
 import React, { Component } from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Dimensions,
   Image,
   StyleSheet,
@@ -136,7 +137,7 @@ var AddImageView = React.createClass({
 	        console.log('User cancelled image picker');
 	      }
 	      else if (response.error) {
-	        console.log('ImagePickerManager Error: ', response.error);
+	        Alert.alert('Please Enable Photos Permissions', 'Go to Settings > Eyespot and turn on the Photos permissions in order to access the Camera Roll.');
 	      } else {
 	        // You can display the image using either data:
 	        const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
@@ -173,7 +174,7 @@ var AddImageView = React.createClass({
   },
 
 	takePicture() {
-	    this.camera.capture()
+	    this.camera && this.camera.capture()
 	      .then((response) => {
 	      	const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
 
@@ -395,7 +396,7 @@ var AddImageView = React.createClass({
             type={this.state.camera.type}
             flashMode={this.state.camera.flashMode}
             style={styles.view}>
-            <View style={[styles.cameraIconsContainer, {bottom: height/2.75}]}>
+            <View style={[styles.cameraIconsContainer, {bottom: height/2.8}]}>
 	          	  <TouchableOpacity onPress={this.changeFlashMode}>
                   <Image
                     source={this.getFlashModeIcon()}
@@ -408,17 +409,13 @@ var AddImageView = React.createClass({
 		          		style={[styles.icon, {left: width/14}]} />
 		          </TouchableOpacity>
 	          </View>
-	          <View style={[styles.cameraIconsContainer, {bottom: height/68}]}>
-	          	  <TouchableOpacity onPress={this.launchImageLibrary}>
+	          <View style={[styles.cameraIconsContainer, {bottom: height/70, paddingHorizontal: width/30}]}>
+	          	<TouchableOpacity onPress={this.launchImageLibrary}>
 		          	<Image
 		          		source={require('../../../partials/icons/contribute/img/gallery-text.png')}
 		          		style={styles.textIcon} />
 		          </TouchableOpacity>
-		          <TouchableOpacity style={styles.captureButton} onPress={this.takePicture}>
-		          	<Image
-		          		source={require('../../../partials/icons/contribute/img/camera-icon.png')}
-		          		style={styles.icon} />
-		          </TouchableOpacity>
+              <View style={styles.textIcon} />
               <View style={styles.textIcon}/>
 	          </View>
 	        </Camera>;
@@ -435,22 +432,18 @@ var AddImageView = React.createClass({
 					blur={this.state.sharpenValue}>
 					<GLImage
 					  source={this.state.imgSource}
-					  imageSize={{ width: height/2.2, height: height/2.2 }}
-					  resizeMode="contain"
+					  imageSize={{ width: height/2.2, height: height/1.2 }}
+					  resizeMode="cover"
 					/>
 		          </ImageEffects>
 		        </Surface>
-            <View style={[styles.cameraIconsContainer, {position: 'absolute', top: height/2.5}]}>
+            <View style={[styles.cameraIconsContainer, {position: 'absolute', top: height/2.5, paddingHorizontal: width/30}]}>
                 <TouchableOpacity onPress={this.launchImageLibrary}>
                 <Image
                   source={require('../../../partials/icons/contribute/img/gallery-text.png')}
                   style={styles.textIcon} />
               </TouchableOpacity>
-              <View style={styles.captureButton}>
-                <Image
-                  source={require('../../../partials/icons/contribute/img/camera-icon-grey.png')}
-                  style={styles.icon} />
-              </View>
+              <View style={styles.textIcon} />
               <TouchableOpacity onPress={() => this.setState({imgSource: ''})}>
               <Image
                 source={require('../../../partials/icons/contribute/img/retake-text.png')}
@@ -465,7 +458,16 @@ var AddImageView = React.createClass({
 				<View style={styles.section}>
 					{viewport}
 				</View>
-				<View style={styles.spacer} />
+        {this.state.imgSource ? <View style={styles.captureButton}>
+          <Image
+            source={require('../../../partials/icons/contribute/img/camera-icon-grey.png')}
+            style={styles.icon} />
+        </View> : <TouchableOpacity style={styles.captureButton} onPress={this.takePicture}>
+          <Image
+            source={require('../../../partials/icons/contribute/img/camera-icon.png')}
+            style={styles.icon} />
+        </TouchableOpacity>}
+        <View style={styles.spacer} />
 				<View style={styles.section}>
 					{this._renderBottomContent()}
 				</View>
@@ -475,6 +477,7 @@ var AddImageView = React.createClass({
 
 });
 
+const cameraIconSize = width/14;
 const iconSize = height/25;
 
 const styles = StyleSheet.create({
@@ -508,7 +511,6 @@ const styles = StyleSheet.create({
 	cameraIcon: {
 		width: iconSize,
 		height: iconSize,
-
 	},
 	cameraIconsContainer: {
 		flexDirection: 'row',
@@ -516,13 +518,18 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		width: height/2.2 // same as camera view height
 	},
+  captureButton: {
+    top: height/27,
+    width: cameraIconSize,
+    height: cameraIconSize,
+  },
 	view: {
 		flex: 1,
 	    justifyContent: 'flex-end',
 	    alignItems: 'center',
 	    height: height/2.2,
 	    width: height/2.2,
-	    backgroundColor: '#ccc'
+	    backgroundColor: 'transparent'
 	},
 	container: {
 		flexDirection: 'column',
@@ -558,7 +565,7 @@ const styles = StyleSheet.create({
 		bottom: -5
 	},
 	spacer: {
-		height: height/10
+		height: height/18
 	},
 	text: {
     fontFamily: 'Avenir-Medium',

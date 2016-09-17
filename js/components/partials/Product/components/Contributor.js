@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
  bodoni: {fontFamily: 'BodoniSvtyTwoITCTT-Book' },
  name: {
    color: 'red',
-   fontSize: height/27
+   fontSize: height/38
  }
 });
 

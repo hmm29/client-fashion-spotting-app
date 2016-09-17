@@ -20,8 +20,8 @@ function uploadProductToUser(productId, category, userId){
 function uploadNewProduct(imageData, productAndLocationData, finalizeAndContribute){
 
   AsyncStorage.getItem('@MyStore:uid').then(function(userId){
+    // FIXME: image upload is redundant if already done before Facebook Sharing on FinalizeAndContributeView
     uploadImage(imageData.imgSource.uri, function(response){
-
       const uploadData = {
         image: {
           brightnessValue: imageData.brightnessValue,
@@ -43,9 +43,7 @@ function uploadNewProduct(imageData, productAndLocationData, finalizeAndContribu
       uploadProductToCategory(productId, uploadData.category);
       uploadProductToUser(productId, uploadData.category, userId);
     });
-
   });
-
 }
 
 module.exports = uploadNewProduct;

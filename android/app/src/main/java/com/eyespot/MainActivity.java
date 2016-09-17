@@ -1,8 +1,10 @@
 package com.eyespot;
 
 import com.facebook.react.ReactActivity;
-import cl.json.RNSharePackage;
+import com.xxsnakerxx.socialauth.SocialAuthPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.chirag.RNMail.RNMail;
+import cl.json.RNSharePackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.yoloci.fileupload.FileUploadPackage;
@@ -49,8 +51,10 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
-            new RNSharePackage(),
+            new SocialAuthPackage(),
             new FBSDKPackage(),
+            new RNMail(),
+            new RNSharePackage(),
             new BlurViewPackage(),
             new OrientationPackage(this),
             new FileUploadPackage(),

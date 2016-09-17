@@ -29,7 +29,7 @@ import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
-import { FBLoginManager } from 'react-native-facebook-login';
+import SocialAuth from 'react-native-social-auth';
 import TabBarLayout from '../../layouts/TabBarLayout';
 
 const firebaseApp = require('../../firebase');
@@ -100,6 +100,8 @@ var SignUpPage = React.createClass({
             username: self.state.nicknameText,
             uid: user.uid
           });
+
+          AsyncStorage.setItem('@MyStore:uid', userId);
         }
       });
 
@@ -189,14 +191,14 @@ var SignUpPage = React.createClass({
                               this.props.navigator.push({
                                 title: 'TabBarLayout',
                                 component: TabBarLayout,
-                                passProps: {}
+                                passProps: {userId: user.uid}
                               });
                             })
                             .catch((error) => {
                               // Handle Errors here.
                               var errorCode = error.code;
                               var errorMessage = error.message;
-                              Alert.alert('Error creating user:', errorMessage);
+                              Alert.alert('Error Creating User:', errorMessage);
                             });
                           }}>
                             <Image
@@ -207,27 +209,28 @@ var SignUpPage = React.createClass({
                         <TouchableOpacity
                           onPress={() => {
                             var self = this;
-                            FBLoginManager.loginWithPermissions([], function(error, data){
-                              if (!error && data) {
-                                let { credentials } = data;
-                                let api = `https://graph.facebook.com/v2.3/${credentials.userId}?fields=name,email,gender,age_range&access_token=${credentials.token}`;
-                                fetch(api)
-                                      .then(response => response.json())
-                                      .then(responseData => {
-                                        self.updateUserWithFacebookSignInData(credentials.userId, responseData);
-                                      })
-                                      .done(() => {
-                                        self.props.navigator.push({
-                                           title: 'TabBarLayout',
-                                           component: TabBarLayout,
-                                           passProps: {}
-                                       });
-                                      })
 
-                              } else {
-                                Alert.alert("Login Error: ", error);
-                              }
+                            SocialAuth.setFacebookApp({id: '270246266700258', name: 'Eyespot'});
+                            SocialAuth.getFacebookCredentials(["email", "user_friends"], SocialAuth.facebookPermissionsType.read)
+                            .then((credentials) => {
+                              let api = `https://graph.facebook.com/v2.3/${credentials.userId}?fields=name,email,gender,age_range&access_token=${credentials.accessToken}`;
+                              fetch(api)
+                                    .then(response => response.json())
+                                    .then(responseData => {
+                                      self.updateUserWithFacebookSignInData(credentials.userId, responseData);
+                                    })
+                                    .done(() => {
+                                      self.props.navigator.push({
+                                         title: 'TabBarLayout',
+                                         component: TabBarLayout,
+                                         passProps: {userId: credentials.userId}
+                                     });
+                                    })
                             })
+                            .catch((error) => {
+                              if(!error.cancelled) Alert.alert('Login Error');
+                              console.log(error);
+                            });
                           }}>
                             <Image
                                 source={require('../../partials/img/login-with-facebook.png')}

@@ -74,7 +74,7 @@ var Dropdowns = React.createClass({
        if(findOne(selected, _.difference(dropdown, ['All'])) && dropdownItem === 'All') return {color: 'black'}
      }
 
-     if(filterName === 'Last Month' && selected.indexOf('Last Week') > -1 || selected.indexOf('Today') > -1) {
+     if(filterName === this.props.historyFilter && selected.indexOf('Last Week') > -1 || selected.indexOf('Today') > -1) {
        if(dropdownItem === 'All') return {color: 'black'}
      }
    }
@@ -194,7 +194,7 @@ var FilterBar = React.createClass({
  },
 
  render() {
-   const  { genderFilter, historyFilter, locationFilter, storeFilter, filters } = this.props;
+   const  { genderFilter, historyFilter, locationFilter, setFilter, storeFilter, filters } = this.props;
 
    return (
      <View style={styles.searchBar}>
@@ -202,7 +202,8 @@ var FilterBar = React.createClass({
          genderFilter={genderFilter}
          historyFilter={historyFilter}
          locationFilter={locationFilter}
-         setFilter={this.props.setFilter}
+         setFilter={setFilter}
+         storeFilter={storeFilter}
          nav={this.state.nav}
          _setNav={this._setNav}
          filters={filters}/>

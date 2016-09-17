@@ -46,8 +46,7 @@ var Panel = React.createClass({
 
   render(){
 
-    let { navigator, category_key, genderFilter } = this.props;
-
+    let { navigator, category_key, genderFilter, locationFilter, storeFilter } = this.props;
 
     const category = Categories.categoryThumbMap[category_key];
     const thumbImg = category.thumb;
@@ -69,6 +68,7 @@ var Panel = React.createClass({
           passProps: {
               categoryKey: category_key,
               categoryName: name,
+              storeName: (storeFilter !== 'All' ? storeFilter : undefined)
           }
         })}>
         <Image source={thumbImg} style={styles.panelImage}/>
@@ -92,12 +92,14 @@ var CategoryView = React.createClass({
 
   propTypes: {
     genderFilter: PropTypes.string,
+    locationFilter: PropTypes.string,
+    storeFilter: PropTypes.string,
     navigator: PropTypes.object
   },
 
   orderCategoryKeys(categoryKeys) {
     let { genderFilter } = this.props;
-    if(genderFilter === 'Men') {
+    if(genderFilter === 'Men' || genderFilter === 'All') {
       // move others category to the end
       move(categoryKeys, categoryKeys.indexOf('other_m'), categoryKeys.length-1)
     }

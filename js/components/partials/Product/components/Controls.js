@@ -14,6 +14,7 @@
 
 import React from 'react';
 import {
+ Alert,
  AsyncStorage,
  Dimensions,
  NativeModules,
@@ -30,6 +31,11 @@ const firebaseApp = require('../../../firebase');
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
+const FBSDK = require('react-native-fbsdk');
+const {
+  ShareDialog,
+} = FBSDK;
+
 function getNumLikes(likes){
   var likeKeys = Object.keys(likes);
   let ret = 0;
@@ -43,21 +49,70 @@ function getNumLikes(likes){
 
 
 var ShareContent = React.createClass({
-  shareLink() {
-    KDSocialShare.shareOnFacebook({
-          'text':'// Spotted with Eyespot app. Download yours for free!',
-          'link':'https://eyes.pt/',
-          'imagelink': this.props.product && this.props.product.image && this.props.product.image.url,
+  shareLinkWithShareDialog() {
+
+    // Build up a shareable link.
+    const shareLinkContent = {
+      /**
+       * The type of content to be shared is link.
+       */
+      contentType: 'link',
+
+      /**
+       * URL for the content being shared.
+       */
+      contentUrl: "https://eyes.pt/",
+
+      /**
+       * The Description of the link.
+       * If not specified, this field is automatically populated by information scraped
+       * from the contentURL,  typically the title of the page.
+       */
+      contentDescription: "// Spotted with Eyespot app. Download yours for free!",
+
+      /**
+       * The title to display for this link.
+       */
+      // contentTitle?: string,
+
+      /**
+       * The URL of a picture to attach to this comment.
+       */
+      imageUrl: this.props.product && this.props.product.image && this.props.product.image.url,
+
+      /**
+       * The predefine quote to attacth to this comment.
+       * If specified, the quote text will render with custom styling on top of the link.
+       */
+      // quote?: string,
+    };
+
+    // Share the link using the share dialog.
+      ShareDialog.canShow(shareLinkContent).then(
+        function(canShow) {
+          if (canShow) {
+            return ShareDialog.show(shareLinkContent);
+          }
+        }
+      ).then(
+        function(result) {
+          if (result.isCancelled) {
+            console.log('Share cancelled');
+          } else {
+            if(result.postId) console.log('Share success with postId: '
+              + result.postId);
+          }
         },
-        (results) => {
-          console.log(results);
+        function(error) {
+          Alert.alert('Share Error', 'There was an issue. Please try again.');
+          console.log('Share fail with error: ' + error);
         }
       );
   },
 
   render() {
     return (
-      <TouchableOpacity onPress={() => this.shareLink()} style={styles.control}>
+      <TouchableOpacity onPress={() => this.shareLinkWithShareDialog()} style={styles.control}>
         <Image source={require('../img/share.png')} style={styles.icon}/>
       </TouchableOpacity>
     );
@@ -185,7 +240,6 @@ var More = React.createClass({
     return (
       <TouchableOpacity onPress={() => {
         this.props.handleModalVisible(true);
-        this.props.addReportTagToProduct();
       }} style={styles.control}>
         <Image source={require('../img/more.png')} style={styles.icon}/>
       </TouchableOpacity>
@@ -200,18 +254,13 @@ var More = React.createClass({
 
 
 var Controls = React.createClass({
-  addReportTagToProduct() {
-    const productId = this.props.product['.key'];
-    if(productId) firebaseApp.database().ref(`products/${productId}`).update({reported: true});
-  },
-
   render() {
     const { product } = this.props;
     return (
       <View style={styles.container}>
         <Likes product={product}/>
         <ShareContent product={product}/>
-        <More addReportTagToProduct={this.addReportTagToProduct} handleModalVisible={this.props.handleModalVisible}/>
+        <More handleModalVisible={this.props.handleModalVisible}/>
       </View>
     );
   }

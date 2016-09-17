@@ -8,8 +8,11 @@
 
 import React, { PropTypes, Component } from 'react';
 import {
+  ActivityIndicator,
+  Alert,
   Dimensions,
   Image,
+  Modal,
   NativeModules,
   ScrollView,
   StyleSheet,
@@ -20,21 +23,23 @@ import {
 } from 'react-native';
 
 import Communications from 'react-native-communications';
+const FBSDK = require('react-native-fbsdk');
+const {
+  ShareDialog,
+} = FBSDK;
+
+import uploadImage from '../helpers/uploadImage.js';
 
 var { KDSocialShare } = NativeModules;
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 var FinalizeAndContributeView = React.createClass({
-
-  propTypes: {
-    updateUploadData: PropTypes.func.isRequired
-  },
-
 	getInitialState() {
 		return {
 			activeExcitingTag: "",
 			excitingTags: [],
-			input: ''
+			input: '',
+      modalVisible: false
 		}
 	},
 
@@ -63,31 +68,105 @@ var FinalizeAndContributeView = React.createClass({
 	},
 
 	onShare(app) {
+    var self = this;
+
 		switch(app) {
 			case 'facebook':
-				KDSocialShare.shareOnFacebook({
-			        'text':'// Spotted with Eyespot app. Download yours for free!',
-			        'link':'https://eyes.pt/',
-			        'imagelink': this.props.imageData.imgSource.uri,
-			      },
-			      (results) => {
-			        console.log(results);
-			      }
-			    );
+            self.shareLinkWithShareDialog();
+            break;
 			case 'twitter':
 				KDSocialShare.tweet({
               'text':'// Spotted with Eyespot app. Download yours for free!',
               'link':'https://eyes.pt/',
-              'imagelink': this.props.imageData.imgSource.uri,
+              'imagelink': this.props.imageData && this.props.imageData.imgSource && this.props.imageData.imgSource.uri,
 			      },
 			      (results) => {
 			        console.log(results);
 			      }
 			    );
+          break;
 			case 'SMS':
-				Communications.text(null, '// Spotted with Eyespot app. Download yours for free!\n' + 'https://eyes.pt/'.link('https://eyes.pt/'));
+        // FIXME: Apple does not allow for prefilled text messages, so can't add picture to pre-formatted text message :(
+        // find a way to add picture to the text
+				Communications.text(null, '// Spotted with Eyespot app. Download yours for free!\n' + 'https://eyes.pt/');
+        break;
+      default:
+        Alert.alert('Coming Soon!', 'This share feature is not yet offered, but is coming soon!')
 		}
 	},
+
+  shareLinkWithShareDialog() {
+        // show loading modal to divert user while waiting for asynchronous uploadImage response
+        this.setState({modalVisible: true});
+
+        // FIXME: because imageUrl of shareLinkContent has to be an absolute url,
+        // we need to upload to cloudinary in order to show it
+        // this might cause duplicate photo uploading here and in upload function
+
+        var self = this;
+        uploadImage(self.props.imageData && self.props.imageData.imgSource && self.props.imageData.imgSource.uri, function(response){
+          self.setState({modalVisible: false})
+          const secure_img_url = response.secure_url;
+          // Build up a shareable link.
+          const shareLinkContent = {
+            /**
+             * The type of content to be shared is link.
+             */
+            contentType: 'link',
+
+            /**
+             * URL for the content being shared.
+             */
+            contentUrl: "https://eyes.pt/",
+
+            /**
+             * The Description of the link.
+             * If not specified, this field is automatically populated by information scraped
+             * from the contentURL,  typically the title of the page.
+             */
+            contentDescription: "// Spotted with Eyespot app. Download yours for free!",
+
+            /**
+             * The title to display for this link.
+             */
+            // contentTitle?: string,
+
+            /**
+             * The URL of a picture to attach to this comment.
+             */
+            imageUrl: secure_img_url,
+
+            /**
+             * The predefine quote to attacth to this comment.
+             * If specified, the quote text will render with custom styling on top of the link.
+             */
+            // quote?: string,
+          };
+
+          // Share the link using the share dialog.
+            ShareDialog.canShow(shareLinkContent).then(
+              function(canShow) {
+                if (canShow) {
+                  return ShareDialog.show(shareLinkContent);
+                }
+              }
+            ).then(
+              function(result) {
+                if (result.isCancelled) {
+                  console.log('Share cancelled');
+                } else {
+                  if(result.postId) console.log('Share success with postId: '
+                    + result.postId);
+                }
+              },
+              function(error) {
+                Alert.alert('Share Error', 'There was an issue. Please try again.');
+                console.log('Share fail with error: ' + error);
+              }
+            );
+
+        });
+  },
 
 	render() {
 
@@ -112,7 +191,7 @@ var FinalizeAndContributeView = React.createClass({
 				<TextInput
 			        multiline = {true}
 			        editable = {true}
-			        maxLength = {100}
+			        maxLength = {80}
 			        onChangeText={(input) => this.setState({input})}
               onEndEditing={() => this.props.updateUploadData("finalizeAndContributeView", this.state)}
         			value={this.state.input}
@@ -187,6 +266,20 @@ var FinalizeAndContributeView = React.createClass({
 						</TouchableOpacity>
 				</View>
 				</View>
+        <Modal
+            animationType={"fade"}
+            transparent={true}
+            visible={this.state.modalVisible}>
+            <View style={{width, height}}>
+              <View style={styles.modalLoaderContainer}>
+                <ActivityIndicator
+                  animating={true}
+                  style={styles.modalLoader}
+                  size="large"
+                />
+              </View>
+            </View>
+            </Modal>
 			</View>
 		);
 	}
@@ -245,7 +338,7 @@ const styles = StyleSheet.create({
 	contributeSummaryPhoto: {
 		width: photoSize,
 		height: photoSize,
-		resizeMode: Image.resizeMode.stretch
+		resizeMode: Image.resizeMode.cover
 	},
 	contributeSummaryText: {
 		fontSize: height/50
@@ -273,6 +366,22 @@ const styles = StyleSheet.create({
 		resizeMode: Image.resizeMode.contain,
 		margin: width / 70
 	},
+  modalLoaderContainer: {
+    height: height/36,
+    width: height/36,
+    backgroundColor: 'white',
+    paddingVertical: height/22,
+    paddingHorizontal: height/22,
+    paddingLeft: height/44,
+    width: width/5,
+    top: height/2.2,
+    alignSelf: 'center',
+    borderRadius: width/32
+  },
+  modalLoader: {
+    left: width/45,
+    bottom: height/42
+  },
 	multilineTextInput: {
 		height: height/8,
 		borderWidth: 2,

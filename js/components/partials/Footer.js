@@ -184,7 +184,8 @@ var styles = StyleSheet.create({
  iconRight: {marginLeft: iconOffset},
  iconEmblemContainer: {
    width: iconEmblemWidth,
-   height: iconEmblemHeight
+   height: iconEmblemHeight,
+   top: height/100
  },
  iconEmblem: {
    width: iconEmblemWidth,
@@ -207,15 +208,14 @@ var styles = StyleSheet.create({
  },
  badge: {
    width: width/22,
-   height: width/20,
-   fontSize: height/48,
+   height: width/21,
+   fontSize: height/46,
    borderRadius: width/40,
    color: 'white',
    fontWeight: 'bold',
    backgroundColor: 'transparent',
    padding: width/110,
-   paddingBottom: height/80,
-   bottom: height/300,
+   bottom: height/250,
  },
  badgeContainer: {
    width: width/22,

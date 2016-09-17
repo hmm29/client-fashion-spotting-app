@@ -37,6 +37,7 @@ import FilterBar from '../../partials/FilterBar';
 import Map from '../../partials/Map';
 import MoreIcon from '../../partials/icons/navigation/MoreIcon'
 import Product from '../../partials/Product';
+import ProductFeed from '../ProductFeed';
 import Notifications from '../../partials/Notifications';
 import NotificationsPage from '../NotificationsPage';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
@@ -77,7 +78,7 @@ var ProfileContainer = React.createClass({
     return (
       <View>
         <Image
-          source={{ uri : user.profilePicture}}
+          source={{ uri : user && user.profilePicture || "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png"}}
           style={styles.profilePicture} />
       </View>
     );
@@ -98,7 +99,7 @@ var UserProducts = React.createClass({
 
     return (
       <View>
-        {user && user.products && Object.keys(user && user.products).map((key, i) => {
+        {user && user.products && Object.keys(user && user.products && _.reverse(user.products)).map((key, i) => {
 
 
          /*
@@ -154,7 +155,7 @@ var PersonalPage = React.createClass({
      dataStore: PropTypes.object,
    },
 
-   // componentWillMount lets you call functions before anything renders
+   // componentWillMount lets you call functions before initial render
    // This is important: you can check userId and fetch dataStore before render
 
    componentWillMount(){
@@ -163,18 +164,18 @@ var PersonalPage = React.createClass({
      ref.on('value', (snap) => {
        if(snap.val()){
          this.setState({
-           dataStore : snap.val(),
+           dataStore: snap.val()
          })
 
          AsyncStorage.getItem('@MyStore:uid').then((userId) => {
-           self.setState({userId});
+          self.setState({userId});
 
            let { dataStore } = self.state;
            self.setState({
-             contributionCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].contributionCount,
-             likeCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].likeCount,
+             contributionCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].contributionCount || 0,
+             likeCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].likeCount || 0,
+             userId
            })
-
          });
        }
      });
@@ -194,6 +195,29 @@ var PersonalPage = React.createClass({
      this.setState({catalogViewIconActive: true, mapsViewIconActive: false});
    },
 
+   showLikedProducts() {
+     let { navigator } = this.props;
+
+     navigator.push({
+       title: 'ProductFeed',
+       component: ProductFeed,
+       passProps: {
+         userId: this.state.userId
+       }
+     });
+   },
+
+   showNotifications(){
+     this.props.navigator.push({
+       title: 'Notifications',
+       component: NotificationsPage,
+       passProps:{
+         user: this.props.user,
+         dataStore: this.state.dataStore
+       }
+     });
+   },
+
    /*
     * _renderHeader(): renders the imported header component
     */
@@ -206,7 +230,7 @@ var PersonalPage = React.createClass({
 
        return (
            <Header containerStyle={styles.headerContainer}>
-               {currentRoute.title !== 'TabBarLayout' ? backIcon : <MoreIcon onPress={() => this.navigateToEditProfilePage(this.props.user)} />}
+               {currentRoute.title !== 'TabBarLayout' ? backIcon : <MoreIcon onPress={() => this.navigateToEditProfilePage(this.props.user || {})} />}
                <View style={styles.pageTitle}>
                  <Image source={EyespotNegativeLogo}
                                  style={styles.pageTitleLogo} />
@@ -217,17 +241,6 @@ var PersonalPage = React.createClass({
                </View>
            </Header>
        );
-   },
-
-   showNotifications(){
-     this.props.navigator.push({
-       title: 'Notifications',
-       component: NotificationsPage,
-       passProps:{
-         user: this.props.user,
-         dataStore: this.state.dataStore
-       }
-     });
    },
 
    /*
@@ -260,10 +273,10 @@ var PersonalPage = React.createClass({
                     <Text style={styles.italic}>My</Text> CONTRIBUTIONS
                     <Text style={styles.num}>  {contributionCount}</Text>
                   </Text>
-                  <Text style={[styles.bodoni, {left: width/30}, styles.gray]}>
+                  {user.uid === this.state.userId ? <TouchableOpacity onPress={this.showLikedProducts}><Text style={[styles.bodoni, {left: width/30}, styles.gray]}>
                     <Text style={styles.italic}>My</Text> Likes
                     <Text style={[styles.num, styles.gray]}>  {likeCount}</Text>
-                  </Text>
+                  </Text></TouchableOpacity> : null}
                </View>
                 <UserProducts onPressMapEmblem={this.onPressMapEmblem} user={user} navigator={navigator} dataStore={dataStore}/>
               </View>

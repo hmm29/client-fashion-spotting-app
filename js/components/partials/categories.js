@@ -36,7 +36,7 @@ exports.categoryThumbMap = {
    },
    bags_w: {
      thumb: require("./img/category-thumbnails/female-bagsetc..jpg"),
-     name: "Bags",
+     name: "Bags, etc.",
      gender: "women",
      key: "bags_w"
    },

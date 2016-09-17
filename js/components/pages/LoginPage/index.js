@@ -18,6 +18,7 @@ import {
   AsyncStorage,
   Dimensions,
   Image,
+  NativeModules,
   StyleSheet,
   Text,
   TextInput,
@@ -25,14 +26,18 @@ import {
   View
 } from 'react-native';
 
+import _ from 'lodash';
 import Button from 'apsl-react-native-button';
 import Communications from 'react-native-communications';
 import EyespotPageBase from '../EyespotPageBase';
-import { FBLoginManager } from 'react-native-facebook-login';
 import SignUpPage from '../SignupPage';
+import SocialAuth from 'react-native-social-auth';
 import TabBarLayout from '../../layouts/TabBarLayout';
 
 const firebaseApp = require('../../firebase');
+import * as firebase from 'firebase';
+var provider = new firebase.auth.FacebookAuthProvider();
+
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
@@ -75,6 +80,7 @@ var LoginPage = React.createClass({
 
       // set userId in local storage
       AsyncStorage.setItem('@MyStore:uid', userId);
+
     },
 
     /*
@@ -118,10 +124,11 @@ var LoginPage = React.createClass({
                            <TouchableOpacity onPress={() => {
                             firebaseApp.auth().signInWithEmailAndPassword(this.state.emailText, this.state.passwordText)
                             .then((user) => {
+                                AsyncStorage.setItem('@MyStore:uid', user.uid);
                                  this.props.navigator.push({
                                     title: 'TabBarLayout',
                                     component: TabBarLayout,
-                                    passProps: {}
+                                    passProps: {userId: user.uid}
                                 });
                                 console.log("Authenticated successfully with payload:", user);
                             }).catch((error) => {
@@ -137,27 +144,28 @@ var LoginPage = React.createClass({
                         <TouchableOpacity
                           onPress={() => {
                             var self = this;
-                            FBLoginManager.loginWithPermissions([], function(error, data){
-                              if (!error && data) {
-                                let { credentials } = data;
-                                let api = `https://graph.facebook.com/v2.3/${credentials.userId}?fields=name,email,gender,age_range&access_token=${credentials.token}`;
-                                fetch(api)
-                                      .then(response => response.json())
-                                      .then(responseData => {
-                                        self.updateUserWithFacebookSignInData(credentials.userId, responseData);
-                                      })
-                                      .done(() => {
-                                        self.props.navigator.push({
-                                           title: 'TabBarLayout',
-                                           component: TabBarLayout,
-                                           passProps: {}
-                                       });
-                                      })
 
-                              } else {
-                                Alert.alert("Login Error: ", error);
-                              }
+                            SocialAuth.setFacebookApp({id: '270246266700258', name: 'Eyespot'});
+                            SocialAuth.getFacebookCredentials(["email", "user_friends"], SocialAuth.facebookPermissionsType.read)
+                            .then((credentials) => {
+                              let api = `https://graph.facebook.com/v2.3/${credentials.userId}?fields=name,email,gender,age_range&access_token=${credentials.accessToken}`;
+                              fetch(api)
+                                    .then(response => response.json())
+                                    .then(responseData => {
+                                      self.updateUserWithFacebookSignInData(credentials.userId, responseData);
+                                    })
+                                    .done(() => {
+                                      self.props.navigator.push({
+                                         title: 'TabBarLayout',
+                                         component: TabBarLayout,
+                                         passProps: {userId: credentials.userId}
+                                     });
+                                    })
                             })
+                            .catch((error) => {
+                              if(!error.cancelled) Alert.alert('Login Error');
+                              console.log(error);
+                            });
                           }}>
                             <Image
                                 source={require('../../partials/img/login-with-facebook.png')}
@@ -185,18 +193,29 @@ var LoginPage = React.createClass({
                               // FIXME: Needs to be revised,
                               // This password recovery is super primitive because
                               // React Native doesn't offer open-source tools for password resets at the time
-                              AsyncStorage.getItem('@MyStore:uid').then((userId) => {
+                                let emailText = this.state.emailText.trim();
+
                                 var ref = firebaseApp.database().ref('users');
                                 ref.once('value', (snap) => {
-                                  if(snap.val() && snap.val()[userId] && snap.val()[userId].email && snap.val()[userId].password){
-                                    Communications.email([snap.val()[userId].email], null, null, 'Eyespot: Recovered Password', `Hi, ${snap.val()[userId].name}! Your recovered Eyespot password is ${snap.val()[userId].password}. Thanks for using Eyespot!`);
-                                    Alert.alert('Email Success', 'Your recovered password has been sent to your email!');
-                                  } else if(snap.val() && snap.val()[userId] && snap.val()[userId].email) {
+                                  let userIds = Object.keys(snap.val());
+                                  let currentUserId = _.head(_.filter(userIds, (userId) => {
+                                    return snap.val() && snap.val()[userId] && snap.val()[userId].email === emailText
+                                  }));
+
+                                  if (!emailText) {
+                                    Alert.alert('No Email Entered', 'Please enter your email in the email field in order to recover your password.');
+                                  } else if (currentUserId && snap.val()[currentUserId] && snap.val()[currentUserId].email && snap.val()[currentUserId].password){
+                                    let currentUser = snap.val()[currentUserId],
+                                        email = currentUser.email;
+                                        // FIXME: iOS doesn't allow for background email sending. You will likely have to set up server-side processes that are responsible for sending these sensitive password recovery emails
+                                        // to reiterate, iOS currently only allows you to compose and send emails but not send them in the background...
+                                        // Communications.email([email], null, null, 'EYESPOT: Account Info Recovery - do not reply', `Hi, ${currentUser.name}! Your recovered Eyespot password is ${currentUser.password}. Thanks for using Eyespot!`)
+                                        Alert.alert('Email Success', 'Your recovered account info has been sent to your email!');
+                                  } else if(currentUserId && snap.val()[currentUserId] && snap.val()[currentUserId].email) {
                                     Alert.alert('Email Login Not Found', 'We did not find a password for your email. You may have previously signed up with Facebook.');
                                   } else {
-                                    Alert.alert('Email Send Error', 'We could not send a password recovery email to your address, as there is no email on file. Please log in with another method.');
+                                    Alert.alert('Email Send Error', 'We could not identify an account with that email. Please sign up or log in with another method.');
                                   }
-                                });
                               });
                             }}>
                             Forgot Password?

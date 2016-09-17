@@ -30,6 +30,8 @@ import Location from './components/Location';
 import Contributor from './components/Contributor';
 import Comment from './components/Comment';
 
+const firebaseApp = require('../../firebase');
+
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 /*
@@ -53,8 +55,25 @@ var Product = React.createClass({
     }
   },
 
+  addReportTagToProduct() {
+    const productId = this.props.product['.key'];
+    if(productId) firebaseApp.database().ref(`products/${productId}`).update({reported: true});
+  },
+
   handleModalVisible(modalVisible) {
     this.setState({modalVisible});
+  },
+
+  getModalText() {
+    // this.state.willReportContributionResponse is either true or doesn't exist
+    // so only have to check for those cases
+    if(!this.state.willReportContributionResponse) {
+      return 'Would you like to report this product?';
+    }
+
+    if(this.state.willReportContributionResponse) {
+      return 'Thank you for reporting this contribution';
+    }
   },
 
  /*
@@ -82,14 +101,20 @@ var Product = React.createClass({
             product={product}/>
           <Comment product={product}/>
           <Controls handleModalVisible={this.handleModalVisible} product={product}/>
-          <Text style={styles.timestamp}>{product && product.timestamp ? helpers.getTimePassed(Date.parse(product.timestamp)) + ' ago' : '36m ago'}</Text>
+          <Text style={styles.timestamp}>{product && product.timestamp ? helpers.getTimePassed(Date.parse(product.timestamp)) + ' ago' : '36 days ago'}</Text>
         </View>
         <Modal
             animationType={"slide"}
             transparent={true}
             visible={this.state.modalVisible}>
             <TouchableOpacity onPress={() => this.setState({modalVisible: false})} style={{width, height}}>
-            <Text style={styles.modalText}>Thank you for reporting this contribution.</Text>
+            <View>
+            <Text style={[styles.modalText, (!this.state.willReportContributionResponse ? {borderBottomColor: '#fff'} : {})]}>{this.getModalText()}</Text>
+              {!this.state.willReportContributionResponse ? <View style={styles.modalButtonContainer}>
+                <TouchableOpacity onPress={() => {this.setState({willReportContributionResponse: true}); this.addReportTagToProduct()}} style={styles.modalButton}><Text>YES</Text></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.setState({modalVisible: false})} style={styles.modalButton}><Text>NO</Text></TouchableOpacity>
+              </View> : null}
+            </View>
             </TouchableOpacity>
             </Modal>
       </View>
@@ -105,7 +130,7 @@ var Product = React.createClass({
 */
 
 const panelMargin = 5;
-const sideMargin = 18;
+const sideMargin = 10;
 const panelWidth = (width - panelMargin * 4 - sideMargin * 2) / 2;
 const featuredPanelWidth = panelWidth * 2 + panelMargin * 2;
 
@@ -134,9 +159,20 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       justifyContent: 'center'
     },
+    modalButtonContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center'},
+    modalButton: {
+      top: height/2.6,
+      backgroundColor: 'white',
+      paddingHorizontal: width/6.4,
+      paddingVertical: height/200,
+      borderColor: 'black',
+      borderWidth: 1
+    },
     modalText: {
       top: height/2.5,
-      marginHorizontal: width/8,
+      marginHorizontal: width/8.4,
       backgroundColor: 'white',
       padding: 50,
       borderColor: 'black',
@@ -144,19 +180,19 @@ const styles = StyleSheet.create({
     },
     tag: {
       transform: [{rotate: '-90deg'}],
-      padding: height/80,
+      padding: height/200,
       backgroundColor: 'red',
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
       position: 'absolute',
       width: width/4.8, // fixed width for now to allow for text changes without disturbing tag rotation
-      top: height/40,
-      left: -(height/40),
+      top: height/29,
+      left: -(height/30),
     },
     tagText: {
       color: 'white',
-      fontSize: height/36,
+      fontSize: height/40,
       fontFamily: 'Avenir-Medium',
       marginHorizontal: height/200,
       marginVertical: height/400

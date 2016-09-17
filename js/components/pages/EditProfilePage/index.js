@@ -58,7 +58,7 @@ var Title = React.createClass({
     return (
       <View style={styles.titleContainer}>
         <Text style={[styles.italic, styles.bodoni]}>by</Text>
-        <Text style={[styles.username, styles.bodoni]}>{user.username && user.username.toUpperCase()}</Text>
+        <Text style={[styles.username, styles.bodoni]}>{user && user.username && user.username.toUpperCase()}</Text>
       </View>
     );
   }
@@ -71,9 +71,9 @@ var ProfileContainer = React.createClass({
     const { user, navigateToEditProfilePage } = this.props;
 
     return (
-      <TouchableOpacity onPress={() => navigateToEditProfilePage(user.profilePicture)}>
+      <TouchableOpacity onPress={() => navigateToEditProfilePage(user && user.profilePicture)}>
         <Image
-          source={{ uri : user.profilePicture || "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png"}}
+          source={{ uri : user && user.profilePicture || "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png"}}
           style={styles.profilePicture} />
       </TouchableOpacity>
     );
@@ -95,10 +95,10 @@ var EditProfilePage = React.createClass({
      let { user } = this.props;
 
       return {
-        email: user.email || '',
-        gender: user.gender && user.gender.capitalize() || '',
-        imgSource: {uri: user.profilePicture || ''},
-        username: user.username || '',
+        email: user && user.email || '',
+        gender: user && user.gender && user.gender.capitalize() || '',
+        imgSource: {uri: user && user.profilePicture || ''},
+        username: user && user.username || '',
       }
    },
 
@@ -203,7 +203,7 @@ var EditProfilePage = React.createClass({
    },
 
    updateProfile() {
-     var userRef = firebaseApp.database().ref(`users/${this.props.user.uid}`);
+     var userRef = firebaseApp.database().ref(`users/${this.props.user && this.props.user.uid || ''}`);
      userRef.update({
        email: this.state.email,
        gender: this.state.gender.toLowerCase(),

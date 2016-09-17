@@ -134,9 +134,20 @@ var DiscoverPage = React.createClass({
     },
 
     setFilter(type, filterName){
-      if(type == "Gender"){
-        this.setState({ genderFilter : filterName });
-      }
+      switch(type) {
+        case 'Gender':
+          this.setState({ genderFilter : filterName });
+          break;
+        case 'All':
+          this.setState({ historyFilter : filterName });
+          break;
+        case 'Location':
+          this.setState({ locationFilter : filterName });
+          break;
+        case 'Store':
+          this.setState({ storeFilter : filterName });
+          break;
+      };
     },
 
     /*
@@ -170,6 +181,8 @@ var DiscoverPage = React.createClass({
                   <Featured onPress={this.navigateToFallCollection}/>
                   <CategoryView
                     genderFilter={this.state.genderFilter}
+                    locationFilter={this.state.locationFilter}
+                    storeFilter={this.state.storeFilter}
                     {...this.props} />
                 </View>
             </EyespotPageBase>

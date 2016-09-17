@@ -153,21 +153,63 @@ var ProductFeed = React.createClass({
 
    },
 
-   filterProductsByStoreName(){
+   filterProductsByStoreName(filteredProductsArr=null){
+     // filteredProductsArr parameter takes in a previously filtered product list, for sequential filtering
+     // e.g. filtering for store name after category has been filtered
      var dataStore = this.state.dataStore;
      const products = dataStore.products || [];
      if(!dataStore){ return null };
 
-     var filteredProducts;
-     var productKeys = Object.keys(products);
-
-     var allProducts = addKeyToProducts(products);
+     var allProducts, filteredProducts, productKeys;
+     if(filteredProductsArr) {
+       allProducts = _.transform(filteredProductsArr, (result, value) => {
+         let key = value['.key'];
+         result[key] = value;
+       }, {});
+       productKeys = _.map(filteredProductsArr, (product) => product['.key'])
+     } else {
+       allProducts = addKeyToProducts(products);
+       productKeys = Object.keys(products);
+     }
 
      // filter keys using storeName
      var filteredProductKeys = _.filter(productKeys, (productKey) => {
        return allProducts[productKey] && allProducts[productKey].store
        && allProducts[productKey].store.name
        && allProducts[productKey].store.name === this.props.storeName;
+     });
+
+       filteredProducts = filteredProductKeys.map((productKey) => {
+         return allProducts[productKey];
+       });
+
+     return filteredProducts;
+
+   },
+
+   filterProductsByUserLikes(userId, filteredProductsArr=null){
+     // filteredProductsArr parameter takes in a previously filtered product list, for sequential filtering
+     // e.g. filtering for store name after category has been filtered
+     var dataStore = this.state.dataStore;
+     const products = dataStore.products || [];
+     if(!dataStore){ return null };
+
+     var allProducts, filteredProducts, productKeys;
+     if(filteredProductsArr) {
+       allProducts = _.transform(filteredProductsArr, (result, value) => {
+         let key = value['.key'];
+         result[key] = value;
+       }, {});
+       productKeys = _.map(filteredProductsArr, (product) => product['.key'])
+     } else {
+       allProducts = addKeyToProducts(products);
+       productKeys = Object.keys(products);
+     }
+
+     // filter keys using userId
+     var filteredProductKeys = _.filter(productKeys, (productKey) => {
+       return allProducts[productKey] && allProducts[productKey].likes
+       && allProducts[productKey].likes[userId]; // return if it is true that current user liked product
      });
 
        filteredProducts = filteredProductKeys.map((productKey) => {
@@ -249,7 +291,7 @@ var ProductFeed = React.createClass({
    },
 
    setFilter(type, filterName){
-     if(type == "History"){
+     if(type === this.state.historyFilter){
        this.setState({ historyFilter : filterName });
      }
    },
@@ -259,16 +301,22 @@ var ProductFeed = React.createClass({
     */
 
    render() {
-     var { categoryKey, navigator, storeName } = this.props;
+     var { categoryKey, navigator, storeName, userId } = this.props;
      var filteredProducts;
 
      if(categoryKey) {
        filteredProducts = this.filterProductsByCategory();
-     } else if (storeName) {
-       filteredProducts = this.filterProductsByStoreName();
+       if (storeName) {
+         filteredProducts = this.filterProductsByStoreName(filteredProducts);
+       }
+     } else if (userId) {
+       filteredProducts = this.filterProductsByUserLikes(userId);
      } else {
        filteredProducts = [];
      }
+
+     // FIXME: show newest products first
+     filteredProducts = _.reverse(filteredProducts);
 
      if(!filteredProducts){ return null }
      else {
@@ -282,7 +330,7 @@ var ProductFeed = React.createClass({
 
      const filters = [
        {
-         'name' : 'Last Month',
+         'name' : this.state.historyFilter,
          dropdown : ['All', 'Last Week', 'Today'],
        },
        {

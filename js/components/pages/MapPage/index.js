@@ -99,7 +99,7 @@ var MapPage = React.createClass({
    },
 
    setFilter(type, filterName){
-     if(type == "History"){
+     if(type === this.state.historyFilter){
        this.setState({ historyFilter : filterName });
      }
    },
@@ -113,7 +113,7 @@ var MapPage = React.createClass({
 
      const filters = [
        {
-         'name' : 'Last Month',
+         'name' : this.state.historyFilter,
          dropdown : ['All', 'Last Week', 'Today'],
        },
        {

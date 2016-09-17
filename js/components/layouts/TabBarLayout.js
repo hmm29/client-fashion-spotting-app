@@ -80,22 +80,14 @@ var TabBarLayout = React.createClass({
    * componentWillMount(): Invoked once, before the initial rendering occurs.
    */
 
-  componentWillMount() {
-    var self = this;
-
-    AsyncStorage.getItem('@MyStore:uid')
-    .then((userId) => {
-      if(!userId) return;
-
-      var ref = firebaseApp.database().ref();
-      ref.on('value', (snap) => {
-          const users = snap.val() && snap.val().users;
-          self.setState({
-            user : users[userId],
-          });
+   componentWillMount() {
+     if(!this.props.userId) {
+       let self = this;
+       AsyncStorage.getItem('@MyStore:uid').then((userId) => {
+         self.setState({userId})
       });
-    })
-  },
+     }
+   },
 
   /*
    * componentDidMount(): Invoked once, only on the client (not on the server), immediately after the initial rendering occurs.
@@ -120,14 +112,16 @@ var TabBarLayout = React.createClass({
 
       this.setState({
         dataStore: dataStore,
-        loaded: true
-      })
+        loaded: true,
+        user: dataStore && dataStore.users && dataStore.users[this.props.userId || this.state.userId]
+      });
     });
    },
 
 
   	_renderContent() {
 	 	   let title = this.state.selected;
+       let user = this.state.user;
 
       if(!this.state.loaded){
         return (
@@ -151,7 +145,7 @@ var TabBarLayout = React.createClass({
           <PersonalPage
             dataStore={this.state.dataStore}
             navigator={this.props.navigator}
-            user={this.state.user} />
+            user={user} />
         )
 	    }
 
@@ -215,7 +209,7 @@ var TabBarLayout = React.createClass({
 
     var RightIcon =
      <View component='personal' style={[styles.iconContainer, styles.rightIconContainer]}>
-       {user && user.notifications && Object.keys(user.notifications) && Object.keys(user.notifications).length ? <View style={styles.badgeContainer}><Text style={styles.badge}>{Object.keys(user.notifications).length}</Text></View> : null}
+       {user && user.notifications && Object.keys(user.notifications) && Object.keys(user.notifications).length ? <View style={styles.badgeContainer}><Text style={styles.badge}>{Object.keys(user.notifications).length}</Text></View> : <Text style={styles.badge}></Text>}
        <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
      </View>;
 
@@ -256,16 +250,15 @@ const loadingTextFontSize = 12;
 const styles = StyleSheet.create({
   badge: {
     width: width/22,
-    height: width/20,
-    fontSize: height/48,
+    height: width/21,
+    fontSize: height/46,
     borderRadius: width/40,
     color: 'white',
     fontWeight: 'bold',
     backgroundColor: 'transparent',
     padding: width/110,
-    paddingBottom: height/80,
     right: width/50,
-    bottom: height/300,
+    bottom: height/250,
   },
   badgeContainer: {
     width: width/22,
@@ -319,6 +312,7 @@ const styles = StyleSheet.create({
    flexDirection: 'column',
    justifyContent: 'center',
    alignItems: 'center',
+   top: height/100
  },
  iconEmblem: {
    width: iconEmblemWidth,

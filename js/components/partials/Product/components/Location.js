@@ -75,14 +75,11 @@ var Location = React.createClass({
     if(vicinity && vicinity.length > 12){
       vicinity = vicinity.slice(0,18) + "..";
     }
-    if(store && store.length > 12){
-      store = store.slice(0,18) + "..";
-    }
 
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.locationText} onPress={this.showProductsForStore}>
-        <Text><Text style={styles.italic}>at</Text> {store}</Text>
+        <Text><Text style={styles.italic}>at</Text> {store} / </Text>
         <Text>{vicinity}</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={this.handlePress}>
@@ -126,7 +123,8 @@ const styles = StyleSheet.create({
     width: width/1.3,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    overflow: 'hidden',
   }
 
 });

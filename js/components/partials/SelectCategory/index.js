@@ -194,8 +194,8 @@ const styles = StyleSheet.create({
 		marginBottom: height/85,
 		borderBottomWidth: 1,
 		borderColor: '#000',
-		paddingBottom: height/85,
-    paddingVertical: height/140
+		paddingBottom: height/60,
+    paddingVertical: height/200
 	},
 	categoryText: {
 		fontWeight: '700',
