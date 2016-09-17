@@ -79,13 +79,33 @@ var SelectCategory = React.createClass({
     }
   },
 	render() {
-    var options = [
-      'Top',
-      'Bottom',
-      'Accessory',
-      'Coverall',
-      'Shoe',
-    ]
+    var options;
+
+    if(this.state.gender === "women") {
+      options = [
+        'Dresses',
+        'Outerwear',
+        'Pants',
+        'Shirts & Top',
+        'Shoes',
+        'Skirts',
+        'Suits',
+        'Sweaters & Cardigan',
+        'Bags, etc.',
+      ]
+    }
+    else {
+      options = [
+        'Outerwear',
+        'Pants',
+        'Shirts',
+        'Shoes',
+        'Suits & Sportcoats',
+        'Sweaters',
+        'T-Shirts & Polos',
+        'Other'
+      ]
+    }
 
     const selectedStyle = {
       borderBottomColor : 'white',
@@ -124,7 +144,7 @@ var SelectCategory = React.createClass({
 
           </View>
 					<ScrollView
-            style={[styles.scrollView, {bottom: height/150}]}
+              contentContainerStyle={[styles.scrollView, {bottom: height/150, height: height/1.05}]}
 					    automaticallyAdjustContentInsets={false}
               showsVerticalScrollIndicator={false}
               directionalLockEnabled={true}>
@@ -160,8 +180,8 @@ const styles = StyleSheet.create({
   scrollView:{
     // borderTopWidth:1,
     // borderTopColor:'black',
-    paddingTop: height/80,
-    bottom: -(height/80),
+    paddingTop: height/40,
+    top: height/5000,
   },
   genderTabContainer:{
     flexDirection:'row',
@@ -220,6 +240,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
 	section: {
+    flex: 1,
 		width: width/1.3,
 		marginVertical: height/45,
 		flexDirection: 'column',

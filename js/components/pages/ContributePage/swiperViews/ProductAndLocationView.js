@@ -95,20 +95,32 @@ var ProductAndLocationView = React.createClass({
 
     if(gender === 'women') {
       switch(selected) {
-        case 'Top':
-            category = categoryThumbMap['shirts_and_top_w'];
+        case 'Dresses':
+            category = categoryThumbMap['dresses_w'];
             break;
-        case 'Bottom':
-            category = categoryThumbMap['pants_w'];
-            break;
-        case 'Accessory':
-            category = categoryThumbMap['bags_w'];
-            break;
-        case 'Coverall':
+        case 'Outerwear':
             category = categoryThumbMap['outerwear_w'];
             break;
-        case 'Shoe':
+        case 'Pants':
+            category = categoryThumbMap['pants_w'];
+            break;
+        case 'Shirts & Top':
+            category = categoryThumbMap['shirts_and_top_w'];
+            break;
+        case 'Shoes':
             category = categoryThumbMap['shoes_w'];
+            break;
+        case 'Skirts':
+            category = categoryThumbMap['skirts_w'];
+            break;
+        case 'Suits':
+            category = categoryThumbMap['suits_w'];
+            break;
+        case 'Sweaters & Cardigan':
+            category = categoryThumbMap['sweaterscardigan_w'];
+            break;
+        case 'Bags, etc.':
+            category = categoryThumbMap['bags_w'];
             break;
         }
 
@@ -116,23 +128,32 @@ var ProductAndLocationView = React.createClass({
 
     if(gender === 'men') {
       switch(selected) {
-        case 'Top':
-            category = categoryThumbMap['shirts_m'];
-            break;
-        case 'Bottom':
-            category = categoryThumbMap['pants_m'];
-            break;
-        case 'Accessory':
-            category = categoryThumbMap['other_m'];
-            break;
-        case 'Coverall':
+        case 'Outerwear':
             category = categoryThumbMap['outerwear_m'];
             break;
-        case 'Shoe':
+        case 'Pants':
+            category = categoryThumbMap['pants_m'];
+            break;
+        case 'Shirts':
+            category = categoryThumbMap['shirts_m'];
+            break;
+        case 'Shoes':
             category = categoryThumbMap['shoes_m'];
             break;
-        }
+        case 'Suits & Sportcoats':
+            category = categoryThumbMap['suits_and_sportcoats_m'];
+            break;
+        case 'Sweaters':
+            category = categoryThumbMap['sweaters_m'];
+            break;
+        case 'T-Shirts & Polos':
+            category = categoryThumbMap['t_shirtspolos_m'];
+            break;
+        case 'Other':
+            category = categoryThumbMap['other_m'];
+            break;
       }
+    }
 
       // NOTE: for this to work, always update parents in CALLBACK after setting new state
     this.setState({categorySelected: category}, function() {

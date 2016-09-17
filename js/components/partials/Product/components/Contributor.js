@@ -59,7 +59,7 @@ var Contributor = React.createClass({
 
     var ProfileImage = ( user && user.profilePicture)
       ? <Image source={{uri: user.profilePicture}} style={styles.profile}/>
-    : <Image source={require('../../img/profile.png')}
+    : <Image source={BlankProfile}
       style={styles.emptyProfile}/>
 
     return (
@@ -72,7 +72,7 @@ var Contributor = React.createClass({
 
           const PersonalPage = require('../../../pages/PersonalPage');
 
-          if (this.props.navigator && this.props.user) { // ensure navigator has been passed as prop
+          if (this.props.navigator && user && user.name) { // ensure navigator has been passed as prop, and ensure user has a name
             this.props.navigator.push({
               title: 'Personal Page',
               component: PersonalPage,
