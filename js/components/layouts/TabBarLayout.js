@@ -243,7 +243,7 @@ var TabBarLayout = React.createClass({
 
 const footerHeight = height / 13;
 const iconWidth = height/32;
-const iconEmblemWidth = height/18;
+const iconEmblemWidth = height/16;
 const iconEmblemHeight = iconEmblemWidth * 2;
 const loadingTextFontSize = 12;
 

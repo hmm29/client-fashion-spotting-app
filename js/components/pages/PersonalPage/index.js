@@ -271,7 +271,7 @@ var PersonalPage = React.createClass({
                 <View style={styles.stats}>
                   <Text style={styles.bodoni}>
                     <Text style={styles.italic}>My</Text> CONTRIBUTIONS
-                    <Text style={styles.num}>  {contributionCount}</Text>
+                    <Text style={styles.num}>  {user.uid === this.state.userId ? contributionCount : user && user.products && Object.keys(user.products) && Object.keys(user.products).length}</Text>
                   </Text>
                   {user.uid === this.state.userId ? <TouchableOpacity onPress={this.showLikedProducts}><Text style={[styles.bodoni, {left: width/30}, styles.gray]}>
                     <Text style={styles.italic}>My</Text> Likes

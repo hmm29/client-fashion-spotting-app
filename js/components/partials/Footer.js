@@ -142,9 +142,9 @@ var Footer = React.createClass({
   }
 });
 
-const footerHeight = 60;
-const iconWidth = 22;
-const iconEmblemWidth = 40;
+const footerHeight = height / 13;
+const iconWidth = height/32;
+const iconEmblemWidth = height/16;
 const iconEmblemHeight = iconEmblemWidth * 2;
 
 
