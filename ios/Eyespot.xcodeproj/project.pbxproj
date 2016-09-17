@@ -163,13 +163,6 @@
 			remoteGlobalIDString = 9350E0F11CE3B0920041D815;
 			remoteInfo = RCTFBSDK;
 		};
-		420E48701D8D0F03006E5E4D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 24996083E2EF4435AAD339BF /* RNSocialAuth.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 533DBF7D1C23D77400AE7307;
-			remoteInfo = RNSocialAuth;
-		};
 		42192CB41D778FC900552851 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 447794F780224316905140FA /* RCTFBLogin.xcodeproj */;
@@ -183,6 +176,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RCTOrientation;
+		};
+		423C87B11D8DC0DF004BCF47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7968766D46AC43F6BCC47BCD /* RNSocialAuth.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 533DBF7D1C23D77400AE7307;
+			remoteInfo = RNSocialAuth;
 		};
 		425F7B8C1D3C755C007002E1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -292,7 +292,6 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Eyespot/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Eyespot/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
-		24996083E2EF4435AAD339BF /* RNSocialAuth.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSocialAuth.xcodeproj; path = "../node_modules/react-native-social-auth/ios/RNSocialAuth.xcodeproj"; sourceTree = "<group>"; };
 		37DBC857DC814425824FEB6A /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		3C03D0A94DB04D0BA578DA93 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		3C9587EFE2CB408B9B122137 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
@@ -329,6 +328,7 @@
 		6817E59D1D3DC4870065D18A /* RNUploader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNUploader.xcodeproj; path = "../node_modules/react-native-uploader/RNUploader/RNUploader.xcodeproj"; sourceTree = "<group>"; };
 		7525C36095D149568C0BC5C0 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		7968766D46AC43F6BCC47BCD /* RNSocialAuth.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNSocialAuth.xcodeproj; path = "../node_modules/react-native-social-auth/ios/RNSocialAuth.xcodeproj"; sourceTree = "<group>"; };
 		7ADC7AE722EC4766B41953B1 /* libAirMaps.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libAirMaps.a; sourceTree = "<group>"; };
 		7D502E6F056A4B23AA19A484 /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
 		819E502178C84B76A7F401D9 /* BVLinearGradient.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = BVLinearGradient.xcodeproj; path = "../node_modules/react-native-linear-gradient/BVLinearGradient.xcodeproj"; sourceTree = "<group>"; };
@@ -536,14 +536,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		420E48551D8D0F03006E5E4D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				420E48711D8D0F03006E5E4D /* libRNSocialAuth.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		42192CAC1D778FC900552851 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -556,6 +548,14 @@
 			isa = PBXGroup;
 			children = (
 				4220B4ED1D76C0B9007971D3 /* libRCTOrientation.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		423C87961D8DC0DF004BCF47 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				423C87B21D8DC0DF004BCF47 /* libRNSocialAuth.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -670,7 +670,7 @@
 				447794F780224316905140FA /* RCTFBLogin.xcodeproj */,
 				ED682F36A6784B0E8A51E129 /* RNShare.xcodeproj */,
 				9813FD572ECD480FA0006A17 /* RNMail.xcodeproj */,
-				24996083E2EF4435AAD339BF /* RNSocialAuth.xcodeproj */,
+				7968766D46AC43F6BCC47BCD /* RNSocialAuth.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -896,8 +896,8 @@
 					ProjectRef = ED682F36A6784B0E8A51E129 /* RNShare.xcodeproj */;
 				},
 				{
-					ProductGroup = 420E48551D8D0F03006E5E4D /* Products */;
-					ProjectRef = 24996083E2EF4435AAD339BF /* RNSocialAuth.xcodeproj */;
+					ProductGroup = 423C87961D8DC0DF004BCF47 /* Products */;
+					ProjectRef = 7968766D46AC43F6BCC47BCD /* RNSocialAuth.xcodeproj */;
 				},
 				{
 					ProductGroup = 6817E59E1D3DC4870065D18A /* Products */;
@@ -1001,13 +1001,6 @@
 			remoteRef = 420E47CE1D8CBFB0006E5E4D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		420E48711D8D0F03006E5E4D /* libRNSocialAuth.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNSocialAuth.a;
-			remoteRef = 420E48701D8D0F03006E5E4D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		42192CB51D778FC900552851 /* libRCTFBLogin.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1020,6 +1013,13 @@
 			fileType = archive.ar;
 			path = libRCTOrientation.a;
 			remoteRef = 4220B4EC1D76C0B9007971D3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		423C87B21D8DC0DF004BCF47 /* libRNSocialAuth.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSocialAuth.a;
+			remoteRef = 423C87B11D8DC0DF004BCF47 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		425F7B8D1D3C755C007002E1 /* ReactNativeSocialShare.app */ = {
@@ -1401,6 +1401,7 @@
 					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 					"$(SRCROOT)/../node_modules/react-native-fbsdklogin/iOS",
 					"$(SRCROOT)/../node_modules/react-native-social-auth/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-social-auth/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1460,6 +1461,7 @@
 					"$(SRCROOT)/../node_modules/react-native-share/ios",
 					"$(SRCROOT)/../node_modules/react-native-mail/RNMail",
 					"$(SRCROOT)/../node_modules/react-native-fbsdklogin/iOS",
+					"$(SRCROOT)/../node_modules/react-native-social-auth/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-social-auth/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
