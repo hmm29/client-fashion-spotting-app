@@ -103,6 +103,24 @@ var TabBarLayout = React.createClass({
            });
          });
       });
+
+      // sometimes asyncronous function calling will not allow state to appear in time so fetch below and
+      // async will then update once response is received
+      var ref = firebaseApp.database().ref();
+      var dataStore = {};
+
+      ref.on('value', (snap) => {
+        dataStore = snap.val();
+        /*
+         * set firebase data to component's state
+         */
+
+        self.setState({
+          dataStore: dataStore,
+          loaded: true,
+          user: self.props.userId && dataStore && dataStore.users && dataStore.users[self.props.userId] || null
+        });
+      });
    },
 
   /*
@@ -115,7 +133,7 @@ var TabBarLayout = React.createClass({
     * retrieve data from firebase data store
     */
     let self = this;
-    if(!(self.props.user && self.props.user.name)) { // refetch to prevent blank name or photo
+    if(!self.props.user) { // refetch to prevent blank name or photo
       // must fetch data after rendering!!
       // important to put this data call in componentDidMount
       var ref = firebaseApp.database().ref();
@@ -284,7 +302,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     borderRadius: width/40,
     backgroundColor: 'red',
-    paddingLeft: width/50,
+    paddingLeft: width/45,
     right: width/50,
     bottom: height/300,
   },
