@@ -228,7 +228,7 @@ var SignUpPage = React.createClass({
                                     })
                             })
                             .catch((error) => {
-                              if(!error.cancelled) Alert.alert('Login Error');
+                              if(!error.cancelled) Alert.alert('Login Error', 'The operation could not be completed. Please try again.');
                               console.log(error);
                             });
                           }}>

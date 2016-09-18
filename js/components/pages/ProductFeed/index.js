@@ -309,6 +309,8 @@ var ProductFeed = React.createClass({
        if (storeName) {
          filteredProducts = this.filterProductsByStoreName(filteredProducts);
        }
+     } else if (storeName) {
+       filteredProducts = this.filterProductsByStoreName(filteredProducts);
      } else if (userId) {
        filteredProducts = this.filterProductsByUserLikes(userId);
      } else {
