@@ -168,8 +168,6 @@ var PersonalPage = React.createClass({
          })
 
          AsyncStorage.getItem('@MyStore:uid').then((userId) => {
-          self.setState({userId});
-
            let { dataStore } = self.state;
            self.setState({
              contributionCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].contributionCount || 0,
@@ -249,8 +247,8 @@ var PersonalPage = React.createClass({
 
    render() {
 
-     const { contributionCount, dataStore, likeCount } = this.state;
-     const { navigator, user } = this.props;
+     let { contributionCount, dataStore, likeCount } = this.state;
+     let { navigator, user } = this.props;
      if(!user){
        return null
      }

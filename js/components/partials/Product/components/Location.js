@@ -72,9 +72,6 @@ var Location = React.createClass({
     const { product, products } = this.props;
     var store = product && product.store && product.store.name;
     var vicinity = product && product.store && product.store.vicinity;
-    if(vicinity && vicinity.length > 12){
-      vicinity = vicinity.slice(0,18) + "..";
-    }
 
     return (
       <View style={styles.container}>

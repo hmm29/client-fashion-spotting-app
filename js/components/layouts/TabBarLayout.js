@@ -81,12 +81,28 @@ var TabBarLayout = React.createClass({
    */
 
    componentWillMount() {
-     if(!this.props.userId) {
        let self = this;
        AsyncStorage.getItem('@MyStore:uid').then((userId) => {
          self.setState({userId})
+
+         // must fetch data after rendering!!
+         // important to put this data call in componentDidMount
+         var ref = firebaseApp.database().ref();
+         var dataStore = {};
+
+         ref.on('value', (snap) => {
+           dataStore = snap.val();
+           /*
+            * set firebase data to component's state
+            */
+
+           self.setState({
+             dataStore: dataStore,
+             loaded: true,
+             user: dataStore && dataStore.users && dataStore.users[self.props.userId || userId]
+           });
+         });
       });
-     }
    },
 
   /*
@@ -98,24 +114,26 @@ var TabBarLayout = React.createClass({
    /*
     * retrieve data from firebase data store
     */
+    let self = this;
+    if(!(self.props.user && self.props.user.name)) { // refetch to prevent blank name or photo
+      // must fetch data after rendering!!
+      // important to put this data call in componentDidMount
+      var ref = firebaseApp.database().ref();
+      var dataStore = {};
 
-    // must fetch data after rendering!!
-    // important to put this data call in componentDidMount
-    var ref = firebaseApp.database().ref();
-    var dataStore = {};
+      ref.on('value', (snap) => {
+        dataStore = snap.val();
+        /*
+         * set firebase data to component's state
+         */
 
-    ref.on('value', (snap) => {
-      dataStore = snap.val();
-      /*
-       * set firebase data to component's state
-       */
-
-      this.setState({
-        dataStore: dataStore,
-        loaded: true,
-        user: dataStore && dataStore.users && dataStore.users[this.props.userId || this.state.userId]
+        self.setState({
+          dataStore: dataStore,
+          loaded: true,
+          user: dataStore && dataStore.users && dataStore.users[self.props.userId || self.state.userId]
+        });
       });
-    });
+    }
    },
 
 
