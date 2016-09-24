@@ -39,6 +39,8 @@ import TabBarLayout from '../../layouts/TabBarLayout';
 import firebaseApp from '../../firebase';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+var ONE_DAY = 86400000; // milliseconds in a day
+var ONE_WEEK = 604800000; // milliseconds in a week
 var SWIPER_REF = 'ProductFeedSwiper';
 var SIZE_OF_PRODUCT_ITEM = height * 0.9;
 
@@ -74,7 +76,9 @@ var ProductFeed = React.createClass({
    propTypes: {
      navigator: PropTypes.object,
      categoryKey: PropTypes.string,
-     storeName: PropTypes.string
+     storeName: PropTypes.string,
+     tag: PropTypes.string,
+     userId: PropTypes.string
    },
 
    getInitialState(){
@@ -89,6 +93,7 @@ var ProductFeed = React.createClass({
    // HACK: keep track of currentProductSwiper item index here in instance variable
    // doing so in state object will cause unwanted rerenders when index updated
    currentProductSwiperPageIndex: 0,
+   itemIndex: null,
    offset: 0,
 
    componentWillMount(){
@@ -187,6 +192,39 @@ var ProductFeed = React.createClass({
 
    },
 
+   filterProductsByTag(tag, filteredProductsArr=null){
+     // filteredProductsArr parameter takes in a previously filtered product list, for sequential filtering
+     // e.g. filtering for store name after category has been filtered
+     var dataStore = this.state.dataStore;
+     const products = dataStore.products || [];
+     if(!dataStore){ return null };
+
+     var allProducts, filteredProducts, productKeys;
+     if(filteredProductsArr) {
+       allProducts = _.transform(filteredProductsArr, (result, value) => {
+         let key = value['.key'];
+         result[key] = value;
+       }, {});
+       productKeys = _.map(filteredProductsArr, (product) => product['.key'])
+     } else {
+       allProducts = addKeyToProducts(products);
+       productKeys = Object.keys(products);
+     }
+
+     // filter keys using tag
+     var filteredProductKeys = _.filter(productKeys, (productKey) => {
+       return allProducts[productKey] && allProducts[productKey].likes
+       && allProducts[productKey].tag === tag; // return if tag matches
+     });
+
+       filteredProducts = filteredProductKeys.map((productKey) => {
+         return allProducts[productKey];
+       });
+
+     return filteredProducts;
+
+   },
+
    filterProductsByUserLikes(userId, filteredProductsArr=null){
      // filteredProductsArr parameter takes in a previously filtered product list, for sequential filtering
      // e.g. filtering for store name after category has been filtered
@@ -229,7 +267,7 @@ var ProductFeed = React.createClass({
      if(this.state.catalogViewIconActive && this.currentProductSwiperPageIndex > 0) {
        this.refs[SWIPER_REF].scrollBy(-1);
      } else {
-       this.props.navigator.popToTop();
+       this.props.navigator.pop();
      }
    },
 
@@ -243,14 +281,14 @@ var ProductFeed = React.createClass({
 
    onScroll(event) {
       var currentOffset = event.nativeEvent.contentOffset.x;
-      var direction = currentOffset > this.offset ? 'right' : 'left';
+      var direction = currentOffset > this.offset ? 'down' : 'up';
       var hasChangedItem = Math.abs(currentOffset-this.offset) > SIZE_OF_PRODUCT_ITEM;
       this.offset = currentOffset;
 
-      if(direction == 'right' && hasChangedItem) {
+      if(direction == 'down' && hasChangedItem) {
         this.currentProductSwiperPageIndex = this.currentProductSwiperPageIndex+1;
       }
-      else if (direction === 'left' && hasChangedItem) {
+      else if (direction === 'up' && hasChangedItem) {
         this.currentProductSwiperPageIndex = this.currentProductSwiperPageIndex-1;
       }
   },
@@ -301,7 +339,8 @@ var ProductFeed = React.createClass({
     */
 
    render() {
-     var { categoryKey, navigator, storeName, userId } = this.props;
+     var { categoryKey, navigator, productKey, storeName, tag, userId } = this.props;
+     var { historyFilter } = this.state;
      var filteredProducts;
 
      if(categoryKey) {
@@ -311,6 +350,8 @@ var ProductFeed = React.createClass({
        }
      } else if (storeName) {
        filteredProducts = this.filterProductsByStoreName(filteredProducts);
+     } else if (tag) {
+       filteredProducts = this.filterProductsByTag(tag);
      } else if (userId) {
        filteredProducts = this.filterProductsByUserLikes(userId);
      } else {
@@ -320,14 +361,19 @@ var ProductFeed = React.createClass({
      // FIXME: show newest products first
      filteredProducts = _.reverse(filteredProducts);
 
-     if(!filteredProducts){ return null }
+     if(!filteredProducts){
+       return null;
+     } else if (productKey) {
+       this.itemIndex = _.findIndex(filteredProducts, ['.key', productKey]);
+     }
+
      else {
        var vicinity = filteredProducts[0] && filteredProducts[0].store
        && filteredProducts[0].store.vicinity;
        var lastCommaInVicinity = vicinity && vicinity.lastIndexOf(',');
        var city = vicinity && vicinity.slice(lastCommaInVicinity+1);
        if(city && city.indexOf('Washington') > -1) city = 'Washington, D.C.'
-       else city = ''
+       else city = 'Washington, D.C' // default city
      }
 
      const filters = [
@@ -344,7 +390,7 @@ var ProductFeed = React.createClass({
      const products = (
        <View style ={styles.products}>
          <Swiper ref={SWIPER_REF}
-                 index={this.currentProductSwiperPageIndex}
+                 index={this.itemIndex || this.currentProductSwiperPageIndex}
                  bounces={false}
                  loop={false}
                  horizontal={false}
@@ -377,6 +423,13 @@ var ProductFeed = React.createClass({
        </View>
      )
 
+
+     if(historyFilter === 'Last Week') {
+       filteredProducts = _.filter(filteredProducts, (product) => (new Date()) - product.timestamp <= ONE_WEEK);
+     } else if (historyFilter === 'Today') {
+       filteredProducts = _.filter(filteredProducts, (product) => (new Date()) - product.timestamp <= ONE_DAY);
+     }
+
      return (
        <View style={styles.layeredPageContainer}>
          {this._renderHeader()}
@@ -386,7 +439,7 @@ var ProductFeed = React.createClass({
            <View style={styles.container}>
             {this.state.catalogViewIconActive ?
              products :
-               <Map onPressMapEmblem={this.onPressMapEmblem} products={[filteredProducts[this.currentProductSwiperPageIndex]]} />
+               <Map onPressMapEmblem={this.onPressMapEmblem} products={filteredProducts} />
              }
            </View>
          </EyespotPageBase>

@@ -25,6 +25,8 @@ import {
  TouchableOpacity
 } from 'react-native';
 
+import _ from 'lodash';
+import AutoComplete from 'react-native-autocomplete';
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import EyespotPageBase from '../EyespotPageBase';
 import emailIcon from './img/email-icon.png';
@@ -36,6 +38,7 @@ import TabBarLayout from '../../layouts/TabBarLayout';
 
 import firebaseApp from '../../firebase';
 
+var EDIT_GENDER_AUTOCOMPLETE_REF = 'editGenderAutocomplete';
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 String.prototype.capitalize = function () {
@@ -97,6 +100,7 @@ var EditProfilePage = React.createClass({
       return {
         email: user && user.email || '',
         gender: user && user.gender && user.gender.capitalize() || '',
+        genderMatches: [],
         imgSource: {uri: user && user.profilePicture || ''},
         username: user && user.username || '',
       }
@@ -179,6 +183,27 @@ var EditProfilePage = React.createClass({
          }
        })
    },
+
+  _onBlurGender() {
+
+  },
+
+  _onFocusGender() {
+
+  },
+
+  _onTyping(text:string) {
+    var GenderList = ['Female', 'Male'];
+
+    let genderMatches =
+      _.filter(GenderList, n => _.startsWith(n.toLowerCase(), text.toLowerCase()));
+
+    this.setState({genderMatches});
+  },
+
+  _setGender(selectedGender:string) {
+    this.setState({gender: selectedGender});
+  },
 
    /*
     * _renderHeader(): renders the imported header component
@@ -267,14 +292,27 @@ var EditProfilePage = React.createClass({
                 <View style={styles.row}>
                   <Image source={genderIcon} style={styles.icon} />
                   <View style={styles.inputContainer}>
-                  <TextInput autoCapitalize="none"
-                  autoCorrect={false}
-                  onChangeText={(gender) => this.setState({gender})}
-                  maxLength={6}
-                  placeholder="Gender"
-                  placeholderTextColor="#999"
-                  style={styles.input}
-                  value={this.state.gender} />
+                  <AutoComplete
+                    ref={EDIT_GENDER_AUTOCOMPLETE_REF}
+                    autoCompleteTableCellTextColor={'#000'}
+                    autoCompleteTableOriginOffset={0}
+                    autoCompleteTableViewHidden={false}
+                    showTextFieldDropShadowWhenAutoCompleteTableIsOpen={false}
+                    autoCompleteRowHeight={34}
+                    onBlur={this._onBlurGender}
+                    onFocus={this._onFocusGender}
+                    placeholderTextColor={'#000'}
+                    clearButtonMode='unless-editing'
+                    clearTextOnFocus={true}
+                    placeholder={this.state.gender}
+                    autoCompleteFontSize={height/50}
+                    applyBoldEffectToAutoCompleteSuggestions={true}
+                    onSelect={this._setGender}
+                    onTyping={this._onTyping}
+                    suggestions={this.state.genderMatches}
+                    textAlign='left'
+                    style={[styles.autocomplete, {height: 40, marginBottom: height/80}]}
+                    />
                   </View>
                   </View>
               </View>
@@ -293,6 +331,9 @@ const profilePictureSize = width/2.2;
 const iconSize = height/30;
 
 const styles = StyleSheet.create({
+  autocomplete: {
+    fontSize: height/50,
+  },
    container: {
      flexDirection: 'column',
      alignItems: 'center',

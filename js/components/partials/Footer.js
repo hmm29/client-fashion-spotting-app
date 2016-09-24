@@ -17,12 +17,11 @@ import {
  View
  } from 'react-native';
 
- var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+import _ from 'lodash';
+import firebaseApp from '../firebase';
+import helpers from '../helpers';
 
- import firebaseApp from '../firebase';
- import helpers from '../helpers';
-
-var {width} = Dimensions.get('window');
+var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 const iconOffset = 40;
 
 var Footer = React.createClass({
@@ -62,19 +61,26 @@ var Footer = React.createClass({
   onPressRight() {
     const PersonalPage = require('../pages/PersonalPage');
 
-    this.props.navigator.push({
-      title: 'PersonalPage',
-      component: PersonalPage,
-      passProps: {
-        user: this.state.user
-      }
-    });
+    const currentRoute = this.props.navigator.navigationContext.currentRoute;
+
+    if(currentRoute.title !== 'PersonalPage') {
+      this.props.navigator.push({
+        title: 'PersonalPage',
+        component: PersonalPage,
+        passProps: {
+          user: this.state.user
+        }
+      });
+    }
   },
 
  render() {
 
   //  var active = this.props.active;
    var active = 0; // HACK: temporary
+   const currentRoute = this.props.navigator.navigationContext.currentRoute;
+   if(currentRoute.title === 'PersonalPage') active = 2;
+
    if(!(this.state && this.state.user)) return null;
    else var user = this.state.user;
 
@@ -119,7 +125,7 @@ var Footer = React.createClass({
 
     var RightIcon =
      <TouchableOpacity onPress={this.onPressRight} style={[styles.iconContainer, styles.rightIconContainer]}>
-        {user && user.notifications && Object.keys(user.notifications) && Object.keys(user.notifications).length ? <View style={styles.badgeContainer}><Text style={styles.badge}>{Object.keys(user.notifications).length}</Text></View> : null}
+       {user && user.notifications && Object.values(user.notifications) && _.filter(Object.values(user.notifications), (notification) => !notification.read) && _.filter(Object.values(user.notifications), (notification) => !notification.read).length ? <View style={styles.badgeContainer}><Text style={styles.badge}>{_.filter(Object.values(user.notifications), (notification) => !notification.read).length}</Text></View> : <Text style={styles.badge}></Text>}
        <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
      </TouchableOpacity>;
 
@@ -185,7 +191,7 @@ var styles = StyleSheet.create({
  iconEmblemContainer: {
    width: iconEmblemWidth,
    height: iconEmblemHeight,
-   top: height/100
+   top: height/80
  },
  iconEmblem: {
    width: iconEmblemWidth,

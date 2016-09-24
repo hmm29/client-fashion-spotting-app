@@ -50,7 +50,7 @@ var PlacesNearby = React.createClass({
   fetchData(callback){
     const { location } = this.props;
     const locationString = `${location.lat},${location.lng}`;
-    var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=50000&types=clothing_store&key=${google_places_api_key}`;
+    var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=1000&rankby=prominence&type=clothing_store&key=${google_places_api_key}`;
     fetch(endpoint)
      .then((response) => response.json())
      .then((responseJson) => {

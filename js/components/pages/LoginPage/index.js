@@ -186,7 +186,7 @@ var LoginPage = React.createClass({
                             }} >
                             New User? Sign Up Now!
                         </Button>
-                        <Button
+                        {/* <Button
                             style={[styles.loginOption, {bottom: 20}]}
                             textStyle={styles.loginOptionText}
                             onPress={() => {
@@ -219,7 +219,7 @@ var LoginPage = React.createClass({
                               });
                             }}>
                             Forgot Password?
-                        </Button>
+                        </Button> */}
                     </View>
                 </View>
             </EyespotPageBase>

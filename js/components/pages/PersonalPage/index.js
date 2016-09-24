@@ -34,6 +34,7 @@ import MapsViewIcon from '../../partials/icons/product/MapsViewIcon';
 import EyespotPageBase from '../EyespotPageBase';
 import Header from '../../partials/Header';
 import FilterBar from '../../partials/FilterBar';
+import Footer from '../../partials/Footer';
 import Map from '../../partials/Map';
 import MoreIcon from '../../partials/icons/navigation/MoreIcon'
 import Product from '../../partials/Product';
@@ -41,17 +42,23 @@ import ProductFeed from '../ProductFeed';
 import Notifications from '../../partials/Notifications';
 import NotificationsPage from '../NotificationsPage';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
+import Swiper from 'react-native-swiper';
 import TabBarLayout from '../../layouts/TabBarLayout';
 
 import firebaseApp from '../../firebase';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+var SWIPER_REF = 'PersonalPageSwiper';
+var SIZE_OF_PRODUCT_ITEM = height * 0.9;
 
-/*
-* defines the Categories class
-* this code is for the two-column category component
-*/
-
+function addKeyToProducts(allProducts){
+  var product_keys = Object.keys(allProducts);
+  var products = allProducts;
+  product_keys.map(function(key){
+    products[key]['.key'] = key;
+  })
+  return products
+}
 
 var Title = React.createClass({
 
@@ -89,6 +96,24 @@ var ProfileContainer = React.createClass({
 
 var UserProducts = React.createClass({
 
+  /*
+   * onScroll(): keep track of product flipboard item index and direction of swiping
+   */
+
+  onScroll(event) {
+     var currentOffset = event.nativeEvent.contentOffset.x;
+     var direction = currentOffset > this.offset ? 'down' : 'up';
+     var hasChangedItem = Math.abs(currentOffset-this.offset) > SIZE_OF_PRODUCT_ITEM;
+     this.offset = currentOffset;
+
+     if(direction == 'down' && hasChangedItem) {
+       this.currentProductSwiperPageIndex = this.currentProductSwiperPageIndex+1;
+     }
+     else if (direction === 'up' && hasChangedItem) {
+       this.currentProductSwiperPageIndex = this.currentProductSwiperPageIndex-1;
+     }
+ },
+
   render() {
     const { user, dataStore, onPressMapEmblem, navigator } = this.props;
 
@@ -98,37 +123,48 @@ var UserProducts = React.createClass({
 
 
     return (
-      <View>
-        {user && user.products && Object.keys(user && user.products && _.reverse(user.products)).map((key, i) => {
+      <View style ={styles.products}>
+        <Swiper ref={SWIPER_REF}
+                index={this.currentProductSwiperPageIndex}
+                bounces={false}
+                loop={false}
+                horizontal={false}
+                onScroll={this.onScroll}
+                scrollEnabled={true}
+                scrollEventThrottle={-1000}
+                showsPagination={false}
+                style={styles.wrapper}>
+                {user && user.products && Object.keys(user && user.products) && _.reverse(Object.keys(user && user.products)).map((key, i) => {
 
 
-         /*
-          * return Product component for each product
-          */
-          const product_id = user && user.products && user.products[key];
+                 /*
+                  * return Product component for each product
+                  */
+                  const product_id = user && user.products && user.products[key];
 
-          const product = dataStore.products[product_id];
-          _.assign(product, {'.key': product_id})
+                  const product = dataStore.products[product_id];
+                  _.assign(product, {'.key': product_id})
 
-          if(!product){
-            return null
-          }
+                  if(!product){
+                    return null
+                  }
 
-          return (
-            <Product
-              key={i}
-              navigator={navigator}
-              onPressMapEmblem={() => {navigator.pop(); onPressMapEmblem()}}
-              product={product}
-              user={user}/>
-          );
-        }) || []}
-      </View>
+                  return (
+                    <Product
+                      key={i}
+                      navigator={navigator}
+                      onPressMapEmblem={() => {navigator.pop(); onPressMapEmblem()}}
+                      product={product}
+                      style={styles.product}
+                      user={user}/>
+                  );
+                }) || []}
+            </Swiper>
+        </View>
     );
   }
 
 });
-
 
 /*
 * defines the PersonalPage class
@@ -189,10 +225,6 @@ var PersonalPage = React.createClass({
      })
    },
 
-   onPressMapEmblem() {
-     this.setState({catalogViewIconActive: true, mapsViewIconActive: false});
-   },
-
    showLikedProducts() {
      let { navigator } = this.props;
 
@@ -242,6 +274,16 @@ var PersonalPage = React.createClass({
    },
 
    /*
+   * _renderFooter(): renders the imported footer component
+   */
+
+  _renderFooter() {
+    return (
+        <Footer navigator={this.props.navigator} />
+    );
+  },
+
+   /*
     * render(): returns JSX that declaratively specifies page UI
     */
 
@@ -251,6 +293,10 @@ var PersonalPage = React.createClass({
      let { navigator, user } = this.props;
      if(!user){
        return null
+     }
+
+     if(dataStore) {
+       dataStore.products = addKeyToProducts(dataStore.products);
      }
 
      return (
@@ -266,6 +312,7 @@ var PersonalPage = React.createClass({
               <View style={styles.container}>
                 <Title user={user}/>
                 <ProfileContainer user={user}/>
+                {user.uid === this.state.userId ? <Notifications user={user} dataStore={dataStore} showNotifications={this.showNotifications}/> : null}
                 <View style={styles.stats}>
                   <Text style={styles.bodoni}>
                     <Text style={styles.italic}>My</Text> CONTRIBUTIONS
@@ -279,7 +326,7 @@ var PersonalPage = React.createClass({
                 <UserProducts onPressMapEmblem={this.onPressMapEmblem} user={user} navigator={navigator} dataStore={dataStore}/>
               </View>
               :
-                <Map onPressMapEmblem={this.onPressMapEmblem} products={user && user.products && Object.keys(user.products).map((key, i) => {
+                <Map navigator={navigator} onPressMapEmblem={null} products={user && user.products && Object.keys(user.products).map((key, i) => {
                   const product_id = user && user.products && user.products[key];
                   const product = dataStore.products[product_id];
                   return product;
@@ -287,8 +334,7 @@ var PersonalPage = React.createClass({
               }
              </View>
          </EyespotPageBase>
-         {user.uid === this.state.userId ? <Notifications user={user} dataStore={dataStore} showNotifications={this.showNotifications}/> : null}
-
+         {this._renderFooter()}
        </View>
      );
    }
@@ -324,7 +370,7 @@ const styles = StyleSheet.create({
    stats: {
      width,
      padding: 20,
-     marginBottom: height/32,
+     marginBottom: height/550,
      flexDirection: 'row',
      justifyContent: 'flex-start'
    },
@@ -359,6 +405,17 @@ const styles = StyleSheet.create({
      fontSize: height / 40,
      fontFamily: 'BodoniSvtyTwoITCTT-Book'
 
+   },
+   product: {
+     bottom: 0,
+   },
+   products: {
+     flexDirection: 'column',
+     justifyContent: 'flex-start',
+   },
+   wrapper: {
+     backgroundColor: '#fff',
+     width
    }
 });
 

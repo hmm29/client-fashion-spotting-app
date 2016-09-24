@@ -24,6 +24,7 @@ import {
  View
 } from 'react-native';
 
+import _ from 'lodash';
 import helpers from '../helpers';
 import Tabs from 'react-native-tabs';
 
@@ -133,7 +134,6 @@ var TabBarLayout = React.createClass({
     * retrieve data from firebase data store
     */
     let self = this;
-    if(!self.props.user) { // refetch to prevent blank name or photo
       // must fetch data after rendering!!
       // important to put this data call in componentDidMount
       var ref = firebaseApp.database().ref();
@@ -151,7 +151,6 @@ var TabBarLayout = React.createClass({
           user: dataStore && dataStore.users && dataStore.users[self.props.userId || self.state.userId]
         });
       });
-    }
    },
 
 
@@ -245,7 +244,7 @@ var TabBarLayout = React.createClass({
 
     var RightIcon =
      <View component='personal' style={[styles.iconContainer, styles.rightIconContainer]}>
-       {user && user.notifications && Object.keys(user.notifications) && Object.keys(user.notifications).length ? <View style={styles.badgeContainer}><Text style={styles.badge}>{Object.keys(user.notifications).length}</Text></View> : <Text style={styles.badge}></Text>}
+     {user && user.notifications && Object.values(user.notifications) && _.filter(Object.values(user.notifications), (notification) => !notification.read) && _.filter(Object.values(user.notifications), (notification) => !notification.read).length ? <View style={styles.badgeContainer}><Text style={styles.badge}>{_.filter(Object.values(user.notifications), (notification) => !notification.read).length}</Text></View> : <Text style={styles.badge}></Text>}
        <Image source={require('../partials/img/profile.png')} style={[styles.icon, styles.iconRight]}/>
      </View>;
 
@@ -302,7 +301,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     borderRadius: width/40,
     backgroundColor: 'red',
-    paddingLeft: width/45,
+    paddingLeft: width/49.5,
     right: width/50,
     bottom: height/300,
   },
@@ -348,7 +347,7 @@ const styles = StyleSheet.create({
    flexDirection: 'column',
    justifyContent: 'center',
    alignItems: 'center',
-   top: height/100
+   top: height/80
  },
  iconEmblem: {
    width: iconEmblemWidth,

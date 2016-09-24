@@ -123,18 +123,56 @@ var Map = React.createClass({
       );
 
       // create markers from products' location data
-      var markers = spaceOutNearbyProducts(this.props.products).map((product) => {
+      var markers = spaceOutNearbyProducts(this.state.products || this.props.products).map((product) => {
 
         return {
+          category: product && product.category,
+          key: product && product[".key"],
           latlng: {
             // (&& chaining lets me ensure all properties in nested objects are there)
             latitude: product && product.store && product.store.location && product.store.location.lat,
             longitude: product && product.store && product.store.location && product.store.location.lng,
-            title: product && product.store && product.store.name
-          }
+          },
+          title: product && product.store && product.store.name
         }
       })
       this.setState({ markers : markers });
+    },
+
+    componentWillReceiveProps(nextProps) {
+      this.setState({products: nextProps.products});
+
+      // create markers from products' location data
+      var markers = spaceOutNearbyProducts(nextProps.products).map((product) => {
+
+        return {
+          category: product && product.category,
+          key: product && product[".key"],
+          latlng: {
+            // (&& chaining lets me ensure all properties in nested objects are there)
+            latitude: product && product.store && product.store.location && product.store.location.lat,
+            longitude: product && product.store && product.store.location && product.store.location.lng,
+          },
+          title: product && product.store && product.store.name
+        }
+      })
+      this.setState({ markers : markers });
+    },
+
+    navigateToProduct(categoryKey, productKey) {
+      const ProductFeed = require('../../pages/ProductFeed');
+      let { navigator } = this.props;
+
+      if(navigator) {
+        navigator.push({
+          title: 'ProductFeed',
+          component: ProductFeed,
+          passProps: {
+              categoryKey,
+              productKey
+          }
+        });
+      }
     },
 
     onRegionChange(region) {
@@ -142,7 +180,7 @@ var Map = React.createClass({
     },
 
     render() {
-      var products = spaceOutNearbyProducts(this.props.products);
+      var products = spaceOutNearbyProducts(this.state.products || this.props.products);
 
       return (
         <MapView
@@ -163,7 +201,7 @@ var Map = React.createClass({
                 title={marker.title}
                 description={marker.description}
                 image={Emblem}
-                onPress={this.props.onPressMapEmblem}
+                onPress={() => {this.props.onPressMapEmblem && this.props.onPressMapEmblem() || this.navigateToProduct(marker.category, marker.key)}}
               />
             )
           })}
@@ -181,10 +219,6 @@ const styles = StyleSheet.create({
     width: width,
     height: height,
   },
-  marker:{
-    width: 10,
-    height: 10,
-  }
 });
 
 /*

@@ -46,6 +46,7 @@ var Product = React.createClass({
     product: PropTypes.object.isRequired,
     navigator: PropTypes.object,
     onPressMapEmblem: PropTypes.func,
+    style: PropTypes.object,
     user: PropTypes.object
   },
 
@@ -85,7 +86,7 @@ var Product = React.createClass({
     const { categoryName, navigator, user, product } = this.props;
 
     return (
-      <View style={styles.product}>
+      <View style={[styles.product, this.props.style]}>
         <View style={styles.productImageContainer}>
         <Image source={{uri : product && product.image && product.image.url }} style={styles.productImage}/>
         {product.tag ? <View style={styles.tag}><Text style={styles.tagText}>{product.tag && product.tag.toUpperCase()}</Text></View> : null}
@@ -129,7 +130,7 @@ var Product = React.createClass({
 * CSS stylings
 */
 
-const panelMargin = 5;
+const panelMargin = 5.2;
 const sideMargin = 10;
 const panelWidth = (width - panelMargin * 4 - sideMargin * 2) / 2;
 const featuredPanelWidth = panelWidth * 2 + panelMargin * 2;
@@ -140,18 +141,17 @@ const styles = StyleSheet.create({
        flexDirection: 'column',
        alignItems: 'center',
        width,
-       bottom: height/28,
+       bottom: height/20,
     },
     productImage: {
       alignSelf: 'center',
       width: featuredPanelWidth,
-      height: height * 5.2 / 12,
       resizeMode: 'cover',
       flex: 1
     },
     productImageContainer: {
       width: featuredPanelWidth,
-      height: height * 5.2 / 12
+      height: height * 6.4 / 12,
     },
     info: {
       width: featuredPanelWidth,

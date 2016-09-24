@@ -97,7 +97,7 @@ var Location = React.createClass({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 10,
+    paddingVertical: 7,
     width,
     flexDirection: 'row',
     alignItems: 'center',

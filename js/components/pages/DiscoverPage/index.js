@@ -107,9 +107,7 @@ var DiscoverPage = React.createClass({
           title: 'ProductFeed',
           component: ProductFeed,
           passProps: {
-              // control items to display for fall collection here
-              categoryKey: 'dresses_w',
-              categoryName: 'Dresses',
+              tag: "Fall!"
           }
         });
 

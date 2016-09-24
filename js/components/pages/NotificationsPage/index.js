@@ -159,20 +159,23 @@ var NotificationsPage = React.createClass({
   componentDidMount(){
     var products = {};
     var self = this;
-    //not immediately
-    setTimeout(function(){
-      var notifications = self.props.user.notifications;
-      if(notifications && notifications.length > 0) { // if there are notifications
-        // mark them as read
+
+    var ref = self.props.user.uid && firebaseApp.database().ref(`users/${self.props.user.uid}/notifications`);
+    ref.on('value', (snap) => {
+      if(snap.val()) {
+        let notifications = snap.val();
+
+        // mark notifications as read
         for(var key in notifications){
           notifications[key].read = true;
         }
 
-      // update them in the database
-      var ref = self.props.user.uid && firebaseApp.database().ref(`users/${self.props.user.uid}`).update({notifications});
-      }
+        // update in database
+        ref.update(notifications);
 
-    }, 2000); // wait 2000 ms (2 seconds) before showing notifications
+      }
+    });
+
   },
 
   getNewNotifications(){
@@ -250,7 +253,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width:notificationTabWidth,
     left:0,
-    top: 100,
+    top: height/4.8,
     backgroundColor: 'white',
     flexDirection:'column',
     alignItems:'center',

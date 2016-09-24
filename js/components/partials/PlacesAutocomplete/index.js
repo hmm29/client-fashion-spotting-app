@@ -182,7 +182,7 @@ var PlacesAutocomplete = React.createClass({
     )
   },
   _renderRow(rowData, sectionID, rowID){
-    const maxRows = 7;
+    const maxRows = 9;
     if(rowID < maxRows && rowData.name != "Not Listed"){
         return (
           <SuggestionRow

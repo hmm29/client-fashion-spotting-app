@@ -19,7 +19,7 @@ import {
   View
 } from 'react-native';
 
-import Camera from 'react-native-camera';
+import Camera from '@nitrog7/react-native-camera';
 const {Image: GLImage} = require("gl-react-image"); // must use require syntax to use {Image: GLImage}
 import ImagePicker from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/EvilIcons';
@@ -396,7 +396,7 @@ var AddImageView = React.createClass({
             type={this.state.camera.type}
             flashMode={this.state.camera.flashMode}
             style={styles.view}>
-            <View style={[styles.cameraIconsContainer, {bottom: height/2.8}]}>
+            <View style={[styles.cameraIconsContainer, {bottom: height/2.45}]}>
 	          	  <TouchableOpacity onPress={this.changeFlashMode}>
                   <Image
                     source={this.getFlashModeIcon()}
@@ -420,16 +420,16 @@ var AddImageView = React.createClass({
 	          </View>
 	        </Camera>;
 
+        const viewportSize = height/1.95;
+
         const viewport = (this.state.imgSource ?
         	<View style={styles.view}>
-        		<Surface ref="surface" width={height/2.2} height={height/2.2}>
+        		<Surface ref="surface" width={viewportSize} height={viewportSize}>
 		          <ImageEffects
-		          	width={height/2.2}
-		          	height={height/2.2}
 		          	brightness={this.state.brightnessValue}
-					saturation={this.state.colorTemperatureValue}
-					contrast={this.state.contrastValue}
-					blur={this.state.sharpenValue}>
+      					saturation={this.state.colorTemperatureValue}
+      					contrast={this.state.contrastValue}
+      					blur={this.state.sharpenValue}>
 					<GLImage
 					  source={this.state.imgSource}
 					  imageSize={{ width: height/2.2, height: height/1.2 }}
@@ -437,17 +437,17 @@ var AddImageView = React.createClass({
 					/>
 		          </ImageEffects>
 		        </Surface>
-            <View style={[styles.cameraIconsContainer, {position: 'absolute', top: height/2.5, paddingHorizontal: width/30}]}>
+            <View style={[styles.cameraIconsContainer, {position: 'absolute', top: height/2.2, paddingHorizontal: width/30}]}>
                 <TouchableOpacity onPress={this.launchImageLibrary}>
                 <Image
                   source={require('../../../partials/icons/contribute/img/gallery-text.png')}
                   style={styles.textIcon} />
               </TouchableOpacity>
               <View style={styles.textIcon} />
-              <TouchableOpacity onPress={() => this.setState({imgSource: ''})}>
+              <TouchableOpacity onPress={() => this.setState({imgSource: null})}>
               <Image
                 source={require('../../../partials/icons/contribute/img/retake-text.png')}
-                style={styles.textIcon} />
+                style={[styles.textIcon, {height: height/65}]} />
             </TouchableOpacity>
             </View>
         	</View> : camera);
@@ -516,10 +516,10 @@ const styles = StyleSheet.create({
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
-		width: height/2.2 // same as camera view height
+		width: height/1.95 // same as camera view height
 	},
   captureButton: {
-    top: height/27,
+    top: height/70,
     width: cameraIconSize,
     height: cameraIconSize,
   },
@@ -527,9 +527,9 @@ const styles = StyleSheet.create({
 		flex: 1,
 	    justifyContent: 'flex-end',
 	    alignItems: 'center',
-	    height: height/2.2,
-	    width: height/2.2,
-	    backgroundColor: 'transparent'
+	    backgroundColor: 'transparent',
+      height: height/1.95,
+      width: height/1.95
 	},
 	container: {
 		flexDirection: 'column',
@@ -565,7 +565,7 @@ const styles = StyleSheet.create({
 		bottom: -5
 	},
 	spacer: {
-		height: height/18
+		height: height/100
 	},
 	text: {
     fontFamily: 'Avenir-Medium',

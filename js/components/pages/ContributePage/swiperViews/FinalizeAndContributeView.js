@@ -232,38 +232,6 @@ var FinalizeAndContributeView = React.createClass({
 								source={require('../../../partials/icons/contribute/img/share-facebook.png')}
 								style={styles.shareIcon} />
 						</TouchableOpacity>
-						<View style={styles.shareIconPartition} />
-						<TouchableOpacity onPress={() => {
-							this.onShare('pinterest');
-						}}>
-							<Image
-								source={require('../../../partials/icons/contribute/img/share-pinterest.png')}
-								style={styles.shareIcon} />
-						</TouchableOpacity>
-						<View style={styles.shareIconPartition} />
-						<TouchableOpacity onPress={() => {
-							this.onShare('twitter');
-						}}>
-							<Image
-								source={require('../../../partials/icons/contribute/img/share-twitter.png')}
-								style={styles.shareIcon} />
-						</TouchableOpacity>
-						<View style={styles.shareIconPartition} />
-						<TouchableOpacity onPress={() => {
-							this.onShare('snapchat');
-						}}>
-							<Image
-								source={require('../../../partials/icons/contribute/img/share-snapchat.png')}
-								style={styles.shareIcon} />
-						</TouchableOpacity>
-						<View style={styles.shareIconPartition} />
-						<TouchableOpacity onPress={() => {
-							this.onShare('SMS')
-						}}>
-							<Image
-								source={require('../../../partials/icons/contribute/img/share-SMS.png')}
-								style={styles.shareIcon} />
-						</TouchableOpacity>
 				</View>
 				</View>
         <Modal

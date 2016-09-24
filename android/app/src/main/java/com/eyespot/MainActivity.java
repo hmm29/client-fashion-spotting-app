@@ -1,6 +1,7 @@
 package com.eyespot;
 
 import com.facebook.react.ReactActivity;
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.xxsnakerxx.socialauth.SocialAuthPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
 import com.chirag.RNMail.RNMail;
@@ -51,6 +52,7 @@ public class MainActivity extends ReactActivity {
     protected List<ReactPackage> getPackages() {
         return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new RCTCameraPackage(),
             new SocialAuthPackage(),
             new FBSDKPackage(),
             new RNMail(),

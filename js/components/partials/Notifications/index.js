@@ -209,9 +209,8 @@ const styles = StyleSheet.create({
     flex:1,
     width: notificationTabWidth,
     height: height/13.5,
-    top:height/6,
+    top:height/7,
     left:0,
-    backgroundColor: 'red'
   },
   tab:{
     position: 'absolute',

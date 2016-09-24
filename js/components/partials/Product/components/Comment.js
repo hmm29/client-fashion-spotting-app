@@ -38,7 +38,7 @@ var Comments = React.createClass({
     return (
       <View style={styles.container}>
         {comment ? <Image source={require('../img/quotes.png')} style={styles.icon}/> : null}
-        <Text style={styles.commentText}>{comment}</Text>
+        <Text style={[styles.commentText, (comment.length > 40 ? {width: width/1.23} : {})]}>{comment && comment.slice(0,80)}</Text>
       </View>
     );
   }
@@ -57,18 +57,24 @@ const featuredPanelWidth = panelWidth * 2 + panelMargin * 2;
 const styles = StyleSheet.create({
   container: {
     transform: [{translateY: -20}],
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: 10
+    padding: 10,
+    paddingLeft: 2,
+    paddingVertical: 4,
   },
   icon: {
     width: 15,
     height: 15,
-    resizeMode: 'contain'
+    resizeMode: 'contain',
+    marginRight: width/30,
+    alignSelf: 'flex-start',
+    top: height/160
   },
   commentText: {
-    textAlign: 'center',
-    lineHeight: 20
+    textAlign: 'left',
+    lineHeight: 20,
   }
 });
 
