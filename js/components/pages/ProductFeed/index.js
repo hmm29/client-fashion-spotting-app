@@ -76,6 +76,7 @@ var ProductFeed = React.createClass({
    propTypes: {
      navigator: PropTypes.object,
      categoryKey: PropTypes.string,
+     lastPage: PropTypes.string,
      storeName: PropTypes.string,
      tag: PropTypes.string,
      userId: PropTypes.string
@@ -299,7 +300,7 @@ var ProductFeed = React.createClass({
 
    _renderFooter() {
      return (
-         <Footer navigator={this.props.navigator} />
+         <Footer navigator={this.props.navigator} lastPage={this.props.lastPage || null} />
      );
    },
 

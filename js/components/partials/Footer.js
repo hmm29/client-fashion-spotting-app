@@ -27,6 +27,7 @@ const iconOffset = 40;
 var Footer = React.createClass({
 
   propTypes: {
+    lastPage: PropTypes.string,
     navigator: PropTypes.object
   },
 
@@ -79,7 +80,7 @@ var Footer = React.createClass({
   //  var active = this.props.active;
    var active = 0; // HACK: temporary
    const currentRoute = this.props.navigator.navigationContext.currentRoute;
-   if(currentRoute.title === 'PersonalPage') active = 2;
+   if(currentRoute.title === 'PersonalPage' || this.props.lastPage === "PersonalPage") active = 2;
 
    if(!(this.state && this.state.user)) return null;
    else var user = this.state.user;

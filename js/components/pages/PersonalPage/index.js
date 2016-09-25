@@ -52,6 +52,8 @@ var SWIPER_REF = 'PersonalPageSwiper';
 var SIZE_OF_PRODUCT_ITEM = height * 0.9;
 
 function addKeyToProducts(allProducts){
+  if(!allProducts) return;
+
   var product_keys = Object.keys(allProducts);
   var products = allProducts;
   product_keys.map(function(key){
@@ -232,6 +234,7 @@ var PersonalPage = React.createClass({
        title: 'ProductFeed',
        component: ProductFeed,
        passProps: {
+         lastPage: "PersonalPage",
          userId: this.state.userId
        }
      });
@@ -295,7 +298,7 @@ var PersonalPage = React.createClass({
        return null
      }
 
-     if(dataStore) {
+     if(dataStore && dataStore.products) {
        dataStore.products = addKeyToProducts(dataStore.products);
      }
 
@@ -328,7 +331,7 @@ var PersonalPage = React.createClass({
               :
                 <Map navigator={navigator} onPressMapEmblem={null} products={user && user.products && Object.keys(user.products).map((key, i) => {
                   const product_id = user && user.products && user.products[key];
-                  const product = dataStore.products[product_id];
+                  const product = dataStore && dataStore.products && dataStore.products[product_id];
                   return product;
                 }) || []} />
               }
