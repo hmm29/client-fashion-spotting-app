@@ -54,7 +54,7 @@ var AddImageView = React.createClass({
 
 			},
 			imgSource: null,
-      medium: '' // where image came from - either camera or photoLibrary
+      medium: 'camera' // where image came from - either camera or photoLibrary
 		}
 
 	},
