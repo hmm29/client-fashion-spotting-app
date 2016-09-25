@@ -18,6 +18,7 @@ import {
  AsyncStorage,
  Dimensions,
  Image,
+ LayoutAnimation,
  StyleSheet,
  Text,
  TextInput,
@@ -99,6 +100,7 @@ var EditProfilePage = React.createClass({
 
       return {
         email: user && user.email || '',
+        hasKeyboardSpace: false,
         gender: user && user.gender && user.gender.capitalize() || '',
         genderMatches: [],
         imgSource: {uri: user && user.profilePicture || ''},
@@ -185,18 +187,26 @@ var EditProfilePage = React.createClass({
    },
 
   _onBlurGender() {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    this.setState({
+      genderMatches: [], // refresh gender suggestions
+      hasKeyboardSpace: false
+    });
 
   },
 
   _onFocusGender() {
-
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+    this.setState({
+      genderMatches: [], // refresh gender suggestions
+      hasKeyboardSpace: true
+    });
   },
 
   _onTyping(text:string) {
     var GenderList = ['Female', 'Male'];
 
-    let genderMatches =
-      _.filter(GenderList, n => _.startsWith(n.toLowerCase(), text.toLowerCase()));
+    let genderMatches = GenderList;
 
     this.setState({genderMatches});
   },
@@ -252,7 +262,7 @@ var EditProfilePage = React.createClass({
              keyboardShouldPersistTaps={false}
              noScroll={false}
              >
-             <View style={styles.container}>
+             <View style={[styles.container,{bottom: this.state.hasKeyboardSpace ? height/ 3 : 0}]}>
               <View style={styles.section}>
                 <Text style={styles.sectionTitle}>PROFILE</Text>
                 <View style={styles.row}>

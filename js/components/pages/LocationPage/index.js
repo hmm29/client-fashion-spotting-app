@@ -18,6 +18,7 @@ import {
   Image,
 } from 'react-native';
 
+import _ from 'lodash';
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import PlacesAutocomplete from '../../partials/PlacesAutocomplete';
 import Header from '../../partials/Header';
@@ -44,14 +45,75 @@ var LocationPage = React.createClass({
   },
 
   fetchData(callback){
+    const self = this;
     const { location } = this.props;
     const locationString = `${location.lat},${location.lng}`;
     var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=1000&rankby=prominence&type=clothing_store&key=${google_places_api_key}`;
     fetch(endpoint)
      .then((response) => response.json())
      .then((responseJson) => {
-       callback(responseJson);
+       callback(responseJson)
        return responseJson;
+     })
+     .then((responseJson) => {
+        var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=2000&type=department_store&key=${google_places_api_key}`;
+        fetch(endpoint)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            self.setState({
+              places: self.state.places.concat(responseJson.results),
+              placesNames: self.state.placesNames.concat(responseJson.results.map(p => p.name))
+            })
+            return responseJson;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+     })
+     .then((responseJson) => {
+        var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=3000&type=shopping_mall&key=${google_places_api_key}`;
+        fetch(endpoint)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            self.setState({
+              places: self.state.places.concat(responseJson.results),
+              placesNames: self.state.placesNames.concat(responseJson.results.map(p => p.name))
+            })
+            return responseJson;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+     })
+     .then((responseJson) => {
+        var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=4000&type=shoe_store&key=${google_places_api_key}`;
+        fetch(endpoint)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            self.setState({
+              places: self.state.places.concat(responseJson.results),
+              placesNames: self.state.placesNames.concat(responseJson.results.map(p => p.name))
+            })
+            return responseJson;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+     })
+     .then((responseJson) => {
+        var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=5000&type=store&key=${google_places_api_key}`;
+        fetch(endpoint)
+          .then((response) => response.json())
+          .then((responseJson) => {
+            self.setState({
+              places: self.state.places.concat(responseJson.results),
+              placesNames: self.state.placesNames.concat(responseJson.results.map(p => p.name))
+            })
+            return responseJson;
+          })
+          .catch((error) => {
+            console.error(error);
+          });
      })
      .catch((error) => {
        console.error(error);
@@ -61,12 +123,11 @@ var LocationPage = React.createClass({
   componentDidMount(){
     var self = this;
     this.fetchData(function(response){
-      var placesNames = response.results.map(function(r, i){
-        return r.name
-      })
+      var places = response.results;
+      var placesNames = response.results.map(p => p.name);
       self.setState({
-        places : response.results,
-        placesNames : placesNames
+        places,
+        placesNames
       });
     })
   },

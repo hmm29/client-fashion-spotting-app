@@ -143,7 +143,7 @@ var PlacesAutocomplete = React.createClass({
     // filter places by input text
     var filteredPlaces = [];
     this.props.places.map(function(place){
-      if(place.name.startsWith(text)){
+      if(place && place.name && place.name.startsWith(text)){
         filteredPlaces.push(place);
       }
     }, this);
@@ -192,7 +192,7 @@ var PlacesAutocomplete = React.createClass({
             place={rowData}/>
       )
     }
-    if(rowID == maxRows || rowData.name == "Not Listed"){
+    if(rowID == maxRows || rowData.name == "Not Listed" || !(rowData.name && rowData.name.length)){
       return (<NotListed handleModalVisible={this.props.handleModalVisible}/>)
     }
     return null

@@ -22,7 +22,7 @@ import {
 
 import _ from 'lodash';
 import MapView from 'react-native-maps';
-import Emblem from '../img/marker.png';
+import Emblem from '../img/marker-small.png';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 

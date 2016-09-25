@@ -60,11 +60,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Eyespot would like to use the camera to capture images.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Eyespot requires location services to let you find the best products.</string>
+	<string>Eyespot would like to location services so you can find the best products.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Eyespot requires location services to let you find the best products.</string>
+	<string>Eyespot would like to use location services so you can find the best products.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Eyespot lets you use images from your photo library.</string>
+	<string>Eyespot would like to include images from your photo library.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>BodoniSvtyTwoITCTT-BookIta.ttf</string>

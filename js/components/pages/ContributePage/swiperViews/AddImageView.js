@@ -37,8 +37,8 @@ var AddImageView = React.createClass({
 	getInitialState() {
 		return {
       camera: {
-        type: Camera.constants.Type.back,
-        flashMode: Camera.constants.FlashMode.auto,
+        type: Camera && Camera.constants.Type.back,
+        flashMode: Camera && Camera.constants.FlashMode.auto,
       },
 			// store effect values separately to avoid
 			// continuously copying and updated a shared object with values
@@ -54,6 +54,7 @@ var AddImageView = React.createClass({
 
 			},
 			imgSource: null,
+      medium: '' // where image came from - either camera or photoLibrary
 		}
 
 	},
@@ -81,6 +82,10 @@ var AddImageView = React.createClass({
         flashMode: newFlashMode,
       },
     });
+  },
+
+  componentWillUnmount() {
+    this.setState({imgSource: null, medium: ''});
   },
 
   getFlashModeIcon() {
@@ -120,7 +125,7 @@ var AddImageView = React.createClass({
 	      maxHeight: height, // photos only
 	      aspectX: 2, // aspectX:aspectY, the cropping image's ratio of width to height
 	      aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
-	      quality: 0.6, // photos only
+	      quality: 0.85, // photos only
 	      angle: 0, // photos only
 	      allowsEditing: true, // Built in functionality to resize/reposition the image
 	      noData: false, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
@@ -146,7 +151,7 @@ var AddImageView = React.createClass({
 	        //const source = {uri: response.uri.replace('file://', ''), isStatic: true};
 
 	        this.setState({
-	          imgSource: source
+	          imgSource: source, medium: 'photoLibrary'
 	        });
 	        this.props.handleShowNextButton(true);
           this.props.updateUploadData("imageView", this.state);
@@ -178,7 +183,7 @@ var AddImageView = React.createClass({
 	      .then((response) => {
 	      	const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
 
-	      	this.setState({imgSource: source});
+	      	this.setState({imgSource: source, medium: 'camera'});
 	      	this.props.handleShowNextButton(true);
           this.props.updateUploadData("imageView", this.state);
 	      })
@@ -386,12 +391,13 @@ var AddImageView = React.createClass({
   	},
 
 	render() {
-		const camera =
+		const camera = Camera && Camera.constants && Camera.constants.CaptureQuality &&
 			<Camera
 	          ref={(cam) => {
 	            this.camera = cam;
 	          }}
             captureAudio={false}
+            captureQuality={Camera.constants.CaptureQuality.photo}
             captureTarget={Camera.constants.CaptureTarget.memory}
             type={this.state.camera.type}
             flashMode={this.state.camera.flashMode}
@@ -418,7 +424,7 @@ var AddImageView = React.createClass({
               <View style={styles.textIcon} />
               <View style={styles.textIcon}/>
 	          </View>
-	        </Camera>;
+	        </Camera> || null;
 
         const viewportSize = height/1.95;
 
@@ -433,7 +439,7 @@ var AddImageView = React.createClass({
 					<GLImage
 					  source={this.state.imgSource}
 					  imageSize={{ width: height/2.2, height: height/1.2 }}
-					  resizeMode="cover"
+					  resizeMode={this.state.medium === 'camera' ? 'cover' : 'stretch'}
 					/>
 		          </ImageEffects>
 		        </Surface>
@@ -494,12 +500,12 @@ const styles = StyleSheet.create({
 		alignItems: 'center'
 	},
 	bottomContentLabel: {
-        color: '#000',
-        position: 'absolute',
-        bottom: height/15,
-        left: width/4,
-        fontSize: height / 45,
-        fontFamily: 'BodoniSvtyTwoITCTT-Book'
+      color: '#000',
+      position: 'absolute',
+      bottom: height/15,
+      left: width/4,
+      fontSize: height / 45,
+      fontFamily: 'BodoniSvtyTwoITCTT-Book'
     },
     bottomContentSection: {
     	flex: 1,
@@ -519,7 +525,7 @@ const styles = StyleSheet.create({
 		width: height/1.95 // same as camera view height
 	},
   captureButton: {
-    top: height/70,
+    top: height/78,
     width: cameraIconSize,
     height: cameraIconSize,
   },
