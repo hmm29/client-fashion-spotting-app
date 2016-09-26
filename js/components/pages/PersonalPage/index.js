@@ -257,7 +257,7 @@ var PersonalPage = React.createClass({
 
    _renderHeader() {
        const backIcon = (
-         <BackIcon color='white' onPress={() => this.props.navigator.popToTop()} />
+         <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
        );
        const currentRoute = this.props.navigator.navigationContext.currentRoute;
 
