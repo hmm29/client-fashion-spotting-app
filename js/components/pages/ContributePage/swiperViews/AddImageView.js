@@ -397,7 +397,7 @@ var AddImageView = React.createClass({
 	            this.camera = cam;
 	          }}
             captureAudio={false}
-            captureQuality={Camera.constants.CaptureQuality.photo}
+            captureQuality={Camera.constants.CaptureQuality.high}
             captureTarget={Camera.constants.CaptureTarget.memory}
             type={this.state.camera.type}
             flashMode={this.state.camera.flashMode}

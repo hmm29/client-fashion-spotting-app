@@ -20,7 +20,7 @@ import {
 
 import _ from 'lodash';
 import BackIcon from '../../partials/icons/navigation/BackIcon';
-import PlacesAutocomplete from '../../partials/PlacesAutocomplete';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Header from '../../partials/Header';
 import EyespotNegativeLogo from '../../partials/img/eyespot-logo-negative.png';
 import EyespotPageBase from '../EyespotPageBase';
@@ -44,94 +44,6 @@ var LocationPage = React.createClass({
     }
   },
 
-  fetchData(callback){
-    const self = this;
-    const { location } = this.props;
-    const locationString = `${location.lat},${location.lng}`;
-    var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=1000&rankby=prominence&type=clothing_store&key=${google_places_api_key}`;
-    fetch(endpoint)
-     .then((response) => response.json())
-     .then((responseJson) => {
-       callback(responseJson)
-       return responseJson;
-     })
-     .then((responseJson) => {
-        var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=2000&type=department_store&key=${google_places_api_key}`;
-        fetch(endpoint)
-          .then((response) => response.json())
-          .then((responseJson) => {
-            self.setState({
-              places: self.state.places.concat(responseJson.results),
-              placesNames: self.state.placesNames.concat(responseJson.results.map(p => p.name))
-            })
-            return responseJson;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-     })
-     .then((responseJson) => {
-        var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=3000&type=shopping_mall&key=${google_places_api_key}`;
-        fetch(endpoint)
-          .then((response) => response.json())
-          .then((responseJson) => {
-            self.setState({
-              places: self.state.places.concat(responseJson.results),
-              placesNames: self.state.placesNames.concat(responseJson.results.map(p => p.name))
-            })
-            return responseJson;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-     })
-     .then((responseJson) => {
-        var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=4000&type=shoe_store&key=${google_places_api_key}`;
-        fetch(endpoint)
-          .then((response) => response.json())
-          .then((responseJson) => {
-            self.setState({
-              places: self.state.places.concat(responseJson.results),
-              placesNames: self.state.placesNames.concat(responseJson.results.map(p => p.name))
-            })
-            return responseJson;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-     })
-     .then((responseJson) => {
-        var endpoint = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${locationString}&radius=5000&type=store&key=${google_places_api_key}`;
-        fetch(endpoint)
-          .then((response) => response.json())
-          .then((responseJson) => {
-            self.setState({
-              places: self.state.places.concat(responseJson.results),
-              placesNames: self.state.placesNames.concat(responseJson.results.map(p => p.name))
-            })
-            return responseJson;
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-     })
-     .catch((error) => {
-       console.error(error);
-     });
-  },
-
-  componentDidMount(){
-    var self = this;
-    this.fetchData(function(response){
-      var places = response.results;
-      var placesNames = response.results.map(p => p.name);
-      self.setState({
-        places,
-        placesNames
-      });
-    })
-  },
-
   handleModalVisible(modalVisible) {
     this.setState({modalVisible});
   },
@@ -153,19 +65,66 @@ var LocationPage = React.createClass({
   },
 
   render(){
+    const { location } = this.props;
+    const locationString = `${location.lat},${location.lng}`;
+
     return (
       <View style={styles.layeredPageContainer} onPress={() => this.setState({modalVisible: false})}>
         {this._renderHeader()}
         <EyespotPageBase
           keyboardShouldPersistTaps={false}
           noScroll={false}>
-          <View style={{paddingTop: height/36}}>
-          <PlacesAutocomplete
-            handleModalVisible={this.handleModalVisible}
-            myLocation={this.props.location}
-            places={this.state.places}
-            navigator={this.props.navigator}
-            setStore={this.props.setStore}/>
+          <View style={{paddingTop: height/40}}>
+          <GooglePlacesAutocomplete
+            placeholder='Search'
+            minLength={1} // minimum length of text to search
+            autoFocus={false}
+            fetchDetails={true}
+            onPress={(data, details = null) => { // 'details' is provided when fetchDetails = true
+              if(!(data && details)) {
+                this.handleModalVisible(true);
+              } else {
+                this.props.setStore(details);
+                this.props.navigator.pop();
+              }
+            }}
+            getDefaultValue={() => {
+              return ''; // text input default value
+            }}
+            query={{
+              // available options: https://developers.google.com/places/web-service/autocomplete
+              key: google_places_api_key,
+              language: 'en', // language of the results,
+              location: locationString,
+              radius: 50000,
+              types: 'establishment', // default: 'geocode'
+            }}
+            styles={{
+              description: {
+                fontWeight: 'bold',
+              },
+              predefinedPlacesDescription: {
+                color: '#1faadb',
+              },
+            }}
+
+            currentLocation={false} // Will add a 'Current location' button at the top of the predefined places list
+            currentLocationLabel="Current location"
+            nearbyPlacesAPI='GooglePlacesSearch' // Which API to use: GoogleReverseGeocoding or GooglePlacesSearch
+            GoogleReverseGeocodingQuery={{
+              // available options for GoogleReverseGeocoding API : https://developers.google.com/maps/documentation/geocoding/intro
+            }}
+            GooglePlacesSearchQuery={{
+              // available options for GooglePlacesSearch API : https://developers.google.com/places/web-service/search
+              rankby: 'distance',
+              types: 'clothing_store',
+            }}
+
+
+            // filterReverseGeocodingByTypes={['locality', 'administrative_area_level_3']} // filter the reverse geocoding results by types - ['locality', 'administrative_area_level_3'] if you want to display only cities
+
+            predefinedPlaces={[]}
+          />
           </View>
         </EyespotPageBase>
         <Modal
