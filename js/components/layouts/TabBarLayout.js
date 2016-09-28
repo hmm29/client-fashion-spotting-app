@@ -77,12 +77,16 @@ var TabBarLayout = React.createClass({
 		}
 	},
 
+  userId: this.props.userId,
+
   /*
    * componentWillMount(): Invoked once, before the initial rendering occurs.
    */
 
    componentWillMount() {
        let self = this;
+
+
        AsyncStorage.getItem('@MyStore:uid').then((userId) => {
          self.setState({userId})
 
@@ -100,7 +104,7 @@ var TabBarLayout = React.createClass({
            self.setState({
              dataStore: dataStore,
              loaded: true,
-             user: dataStore && dataStore.users && dataStore.users[self.props.userId || userId]
+             user: dataStore && dataStore.users && dataStore.users[self.props.userId || userId || self.userId]
            });
          });
       });
@@ -119,7 +123,7 @@ var TabBarLayout = React.createClass({
         self.setState({
           dataStore: dataStore,
           loaded: true,
-          user: self.props.userId && dataStore && dataStore.users && dataStore.users[self.props.userId] || null
+          user: dataStore && dataStore.users && dataStore.users[self.props.userId || self.state.userId || self.userId]
         });
       });
    },
@@ -148,7 +152,7 @@ var TabBarLayout = React.createClass({
         self.setState({
           dataStore: dataStore,
           loaded: true,
-          user: dataStore && dataStore.users && dataStore.users[self.props.userId || self.state.userId]
+          user: dataStore && dataStore.users && dataStore.users[self.props.userId || self.state.userId || self.userId]
         });
       });
    },
@@ -347,7 +351,7 @@ const styles = StyleSheet.create({
    flexDirection: 'column',
    justifyContent: 'center',
    alignItems: 'center',
-   top: height/80
+   top: height/49
  },
  iconEmblem: {
    width: iconEmblemWidth,

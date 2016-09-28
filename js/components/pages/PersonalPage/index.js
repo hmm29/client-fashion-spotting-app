@@ -282,7 +282,7 @@ var PersonalPage = React.createClass({
 
   _renderFooter() {
     return (
-        <Footer navigator={this.props.navigator} />
+        <Footer {...this.props} />
     );
   },
 
@@ -306,9 +306,10 @@ var PersonalPage = React.createClass({
        <View style={styles.layeredPageContainer}>
          {this._renderHeader()}
          <EyespotPageBase
+             bounces={false}
              keyboardShouldPersistTaps={false}
              noScroll={false}
-             style={(this.state.mapsViewIconActive ? {height, bottom: height/45} : {})}
+             style={(this.state.mapsViewIconActive ? {height, bottom: height/45} : {top: height/200})}
              >
              <View style={styles.container}>
              {this.state.catalogViewIconActive ?
@@ -377,11 +378,6 @@ const styles = StyleSheet.create({
      flexDirection: 'row',
      justifyContent: 'flex-start'
    },
-   fixedFooterSpacer: {height: 60},
-   fixedFooterWrapper: {
-     position: 'absolute',
-     top: height * 1.27
-   },
    gray: {
      color: '#999'
    },
@@ -418,7 +414,7 @@ const styles = StyleSheet.create({
    },
    wrapper: {
      backgroundColor: '#fff',
-     width
+     width,
    }
 });
 

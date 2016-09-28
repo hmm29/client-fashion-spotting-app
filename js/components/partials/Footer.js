@@ -192,7 +192,7 @@ var styles = StyleSheet.create({
  iconEmblemContainer: {
    width: iconEmblemWidth,
    height: iconEmblemHeight,
-   top: height/80
+   top: height/49
  },
  iconEmblem: {
    width: iconEmblemWidth,

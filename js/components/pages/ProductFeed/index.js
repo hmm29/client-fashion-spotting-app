@@ -155,6 +155,9 @@ var ProductFeed = React.createClass({
          return allProducts[productKey];
        });
 
+       // order from most recent to least recent
+      filteredProducts = _.orderBy(filteredProducts, (p) => Date.parse(p.timestamp), ['asc']);
+
      return filteredProducts;
 
    },
@@ -189,6 +192,9 @@ var ProductFeed = React.createClass({
          return allProducts[productKey];
        });
 
+     // order from most recent to least recent
+     filteredProducts = _.orderBy(filteredProducts, (p) => Date.parse(p.timestamp), ['asc']);
+
      return filteredProducts;
 
    },
@@ -214,13 +220,16 @@ var ProductFeed = React.createClass({
 
      // filter keys using tag
      var filteredProductKeys = _.filter(productKeys, (productKey) => {
-       return allProducts[productKey] && allProducts[productKey].likes
+       return allProducts[productKey] && allProducts[productKey].tag
        && allProducts[productKey].tag === tag; // return if tag matches
      });
 
        filteredProducts = filteredProductKeys.map((productKey) => {
          return allProducts[productKey];
        });
+
+     // order from most recent to least recent
+     filteredProducts = _.orderBy(filteredProducts, (p) => Date.parse(p.timestamp), ['asc']);
 
      return filteredProducts;
 
@@ -254,6 +263,9 @@ var ProductFeed = React.createClass({
        filteredProducts = filteredProductKeys.map((productKey) => {
          return allProducts[productKey];
        });
+
+     // order from most recent to least recent
+     filteredProducts = _.orderBy(filteredProducts, (p) => Date.parse(p.timestamp), ['asc']);
 
      return filteredProducts;
 
@@ -440,7 +452,7 @@ var ProductFeed = React.createClass({
            <View style={styles.container}>
             {this.state.catalogViewIconActive ?
              products :
-               <Map onPressMapEmblem={this.onPressMapEmblem} products={filteredProducts} />
+               <Map onPressMapEmblem={null} navigator={navigator} products={filteredProducts} />
              }
            </View>
          </EyespotPageBase>

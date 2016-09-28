@@ -14,6 +14,7 @@
 
 import React, { PropTypes } from 'react';
 import {
+ AsyncStorage,
  Dimensions,
  Image,
  StyleSheet,
@@ -44,6 +45,14 @@ var Contributor = React.createClass({
     user: PropTypes.object
   },
 
+  componentWillMount() {
+    const self = this;
+
+    AsyncStorage.getItem('@MyStore:uid').then((userId) => {
+      self.setState({userId});
+    });
+  },
+
 
   render() {
 
@@ -71,12 +80,13 @@ var Contributor = React.createClass({
           // has this Contributor component in it
 
           const PersonalPage = require('../../../pages/PersonalPage');
+          const self = this;
 
           if (this.props.navigator && user && user.name) { // ensure navigator has been passed as prop, and ensure user has a name
             this.props.navigator.push({
               title: 'Personal Page',
               component: PersonalPage,
-              passProps: {user}
+              passProps: {user, lastPage: (user.uid === self.state.userId ? "PersonalPage" : null)}
             });
           }
         }} style={styles.profileContainer}>

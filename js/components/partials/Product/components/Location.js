@@ -47,7 +47,7 @@ var Location = React.createClass({
       component: MapPage,
       passProps: {
         categoryName: categoryName,
-        onPressMapEmblem: onPressMapEmblem,
+        onPressMapEmblem: null, // change to null so redirected to appropriate product
         products : [this.props.product]
       }
     });
@@ -97,7 +97,7 @@ var Location = React.createClass({
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 7,
+    paddingVertical: 5,
     width,
     flexDirection: 'row',
     alignItems: 'center',
