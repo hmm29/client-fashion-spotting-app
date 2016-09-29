@@ -36,6 +36,8 @@ const {
   ShareDialog,
 } = FBSDK;
 
+const APP_LINK = 'https://itunes.apple.com/us/app/eyespot-app/id1143690263?ls=1&mt=8';
+
 function getNumLikes(likes){
   var likeKeys = Object.keys(likes);
   let ret = 0;
@@ -61,7 +63,7 @@ var ShareContent = React.createClass({
       /**
        * URL for the content being shared.
        */
-      contentUrl: "https://eyes.pt/",
+      contentUrl: APP_LINK,
 
       /**
        * The Description of the link.

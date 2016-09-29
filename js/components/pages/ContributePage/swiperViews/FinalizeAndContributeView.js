@@ -28,6 +28,7 @@ const {
   ShareDialog,
 } = FBSDK;
 
+const APP_LINK = 'https://itunes.apple.com/us/app/eyespot-app/id1143690263?ls=1&mt=8';
 import uploadImage from '../helpers/uploadImage.js';
 
 var { KDSocialShare } = NativeModules;
@@ -77,7 +78,7 @@ var FinalizeAndContributeView = React.createClass({
 			case 'twitter':
 				KDSocialShare.tweet({
               'text':'// Spotted with Eyespot app. Download yours for free!',
-              'link':'https://eyes.pt/',
+              'link': APP_LINK,
               'imagelink': this.props.imageData && this.props.imageData.imgSource && this.props.imageData.imgSource.uri,
 			      },
 			      (results) => {
