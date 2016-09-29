@@ -77,7 +77,7 @@ var TabBarLayout = React.createClass({
 		}
 	},
 
-  userId: this.props.userId,
+  userId: null,
 
   /*
    * componentWillMount(): Invoked once, before the initial rendering occurs.
@@ -85,6 +85,10 @@ var TabBarLayout = React.createClass({
 
    componentWillMount() {
        let self = this;
+
+       if(self.props && self.props.userId) {
+         self.userId = self.props.userId;
+       }
 
 
        AsyncStorage.getItem('@MyStore:uid').then((userId) => {

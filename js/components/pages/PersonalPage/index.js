@@ -210,7 +210,8 @@ var PersonalPage = React.createClass({
            self.setState({
              contributionCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].contributionCount || 0,
              likeCount: dataStore.users && dataStore.users[userId] && dataStore.users[userId].likeCount || 0,
-             userId
+             userId,
+             user: dataStore.users && dataStore.users[userId]
            })
          });
        }
@@ -294,8 +295,10 @@ var PersonalPage = React.createClass({
 
      let { contributionCount, dataStore, likeCount } = this.state;
      let { navigator, user } = this.props;
-     if(!user){
-       return null
+     if(!user && this.state.user){
+       user = this.state.user;
+     } else if (!user){
+       return null;
      }
 
      if(dataStore && dataStore.products) {
