@@ -436,11 +436,10 @@ var ProductFeed = React.createClass({
        </View>
      )
 
-
      if(historyFilter === 'Last Week') {
-       filteredProducts = _.filter(filteredProducts, (product) => (new Date()) - product.timestamp <= ONE_WEEK);
+       filteredProducts = _.filter(filteredProducts, (product) => (new Date()) - Date.parse(product.timestamp) <= ONE_WEEK);
      } else if (historyFilter === 'Today') {
-       filteredProducts = _.filter(filteredProducts, (product) => (new Date()) - product.timestamp <= ONE_DAY);
+       filteredProducts = _.filter(filteredProducts, (product) => (new Date()) - Date.parse(product.timestamp) <= ONE_DAY);
      }
 
      return (

@@ -24,6 +24,7 @@ import {
  TouchableOpacity
 } from 'react-native';
 
+import _ from 'lodash';
 import BackIcon from '../../partials/icons/navigation/BackIcon';
 import Button from 'apsl-react-native-button';
 import EyespotPageBase from '../EyespotPageBase';
@@ -36,6 +37,8 @@ import EyespotLogoNegative from '../../partials/img/eyespot-logo-negative.png';
 import TabBarLayout from '../../layouts/TabBarLayout';
 
 var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+var ONE_DAY = 86400000; // milliseconds in a day
+var ONE_WEEK = 604800000; // milliseconds in a week
 
 /*
 * defines the Categories class
@@ -110,6 +113,8 @@ var MapPage = React.createClass({
     */
 
    render() {
+     var { historyFilter } = this.state;
+     var filteredProducts = this.props.products;
 
      const filters = [
        {
@@ -122,13 +127,19 @@ var MapPage = React.createClass({
        },
      ]
 
+     if(historyFilter === 'Last Week') {
+       filteredProducts = _.filter(filteredProducts, (product) => (new Date()) - Date.parse(product.timestamp) <= ONE_WEEK);
+     } else if (historyFilter === 'Today') {
+       filteredProducts = _.filter(filteredProducts, (product) => (new Date()) - Date.parse(product.timestamp) <= ONE_DAY);
+     }
+
      return (
        <View style={styles.container}>
          {this._renderHeader()}
          <EyespotPageBase
              keyboardShouldPersistTaps={false}
              noScroll={true}>
-             <Map {...this.props}/>
+             <Map {...this.props} products={filteredProducts}/>
          </EyespotPageBase>
          <FilterBar filters={filters} historyFilter={this.state.historyFilter} locationFilter={this.state.locationFilter} setFilter={this.setFilter}/>
          {this._renderFooter()}

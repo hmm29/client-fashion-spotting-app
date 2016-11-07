@@ -211,11 +211,11 @@ var FinalizeAndContributeView = React.createClass({
 					{this.state.excitingTags && this.state.excitingTags.map((excitingTag, i) => (
 		                <TouchableOpacity key={i} onPress={() => {
                       // NOTE; update upload data in callback of setState to ensure new changes applied
-                      this.setState({activeExcitingTag: excitingTag}, function() {
+                      this.setState({activeExcitingTag: (this.state.activeExcitingTag === excitingTag ? "" : excitingTag)}, function() {
                         this.props.updateUploadData("finalizeAndContributeView", this.state);
+                        this.handleToggleButtonState(this.state.activeExcitingTag);
+                        this.props.handleShowNextButton(true, 'Contribute');
                       });
-		                	this.handleToggleButtonState(excitingTag);
-		                	this.props.handleShowNextButton(true, 'Contribute');
 		                }} style={[styles.excitingTag, this.getButtonColor(excitingTag)]}><Text
 		                  style={styles.excitingTagText}>{excitingTag && excitingTag.toUpperCase()}</Text>
 		                 </TouchableOpacity>

@@ -96,7 +96,7 @@ var SignUpPage = React.createClass({
             email: self.state.emailAddressText.toLowerCase(),
             name: self.state.nameText,
             password: self.state.passwordText,
-            profilePicture: "https://res.cloudinary.com/celena/image/upload/v1468541932/u_1.png",
+            profilePicture: "",
             username: self.state.nicknameText,
             uid: user.uid
           });

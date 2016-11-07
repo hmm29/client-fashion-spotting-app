@@ -1,4 +1,5 @@
 import {
+  Alert,
   AsyncStorage,
 } from 'react-native';
 
@@ -40,8 +41,14 @@ function uploadNewProduct(imageData, productAndLocationData, finalizeAndContribu
         userId : userId
       }
       var productId = firebaseApp.database().ref("products").push(uploadData).key;
-      uploadProductToCategory(productId, uploadData.category);
-      uploadProductToUser(productId, uploadData.category, userId);
+
+      //@hmm: fail-safe for product upload
+      if(!productId) {
+        Alert.alert('Please Re-upload Your Product', 'Sorry, there was a problem while recording your contribution. Please resubmit your product.');
+      } else {
+        uploadProductToCategory(productId, uploadData.category);
+        uploadProductToUser(productId, uploadData.category, userId);
+      }
     });
   });
 }
