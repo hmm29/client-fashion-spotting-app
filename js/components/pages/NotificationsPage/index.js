@@ -93,23 +93,6 @@ var NotificationsList = React.createClass({
   componentWillReceiveProps(nextProps){
     this.setState({ dataSource: this.state.dataSource.cloneWithRows(nextProps.notifications) });
   },
-  // _setFilter(text){
-  //   // filter places by input text
-  //   var filteredPlaces = [];
-  //   this.props.places.map(function(place){
-  //     if(place.name.startsWith(text)){
-  //       filteredPlaces.push(place);
-  //     }
-  //   }, this);
-  //
-  //   filteredPlaces.push({name:'Not Listed'});
-  //
-  //   this.setState({
-  //     text : text,
-  //     dataSource: this.state.dataSource.cloneWithRows(filteredPlaces),
-  //     numRows : filteredPlaces.length
-  //   });
-  // },
 
   render(){
 
