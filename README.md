@@ -1,34 +1,15 @@
-# Eyespot
+# fashionApp
 
-Eyespot lets users discover quality fashion products through a community-driven, visual magazine.
-
-## Most recent snapshot(s): 
-#### Personal Page - Product Detail Page - Discover Page
-
-![Screenshot](https://raw.githubusercontent.com/CelenaConsortium/eyespot/master/personal-page-screenshot.png)
-
-![Screenshot](https://raw.githubusercontent.com/CelenaConsortium/eyespot/master/product-detail-page-screenshot.png)
-
-![Screenshot](https://raw.githubusercontent.com/CelenaConsortium/eyespot/master/discover-page-screenshot.png)
-
-## Running this app
-
-Before running the app, make sure you ran:
-
-    git clone https://github.com/CelenaConsortium/eyespot.git
-    cd eyespot
-    npm install
+This app lets users discover quality fashion products through a community-driven, visual magazine.
 
 ### Running on iOS
 
 Mac OS and Xcode are required.
 
-- Open `ios/Eyespot.xcodeproj` to open the project in Xcode
+- Open `ios/fashionApp.xcodeproj` to open the project in Xcode
 - Hit the Run button (or press Cmd + R)
 
 See [Running on device](https://facebook.github.io/react-native/docs/running-on-device-ios.html) in the React Native Docs if you want to test on a physical device. This will involve (1) changing the JavaScript code location IP address in the AppDelegate.m file and (2) choosing a different target device in XCode.
-
-To check out the Waffle.io project organizer go to [https://waffle.io/CelenaConsortium/eyespot](https://waffle.io/CelenaConsortium/eyespot).
 
 ## Functional Specification
 						
