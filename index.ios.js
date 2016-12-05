@@ -5,9 +5,7 @@
 
 'use strict'; /* enables JS strict mode for any ES5 code */
 
-/*
- * imports required modules
- */
+/* imports required modules */
 
 import React, { Component } from 'react';
 import {
@@ -21,30 +19,33 @@ import {
   View
 } from 'react-native';
 
+import firebaseApp from './js/components/firebase';
 import OnboardingPage from './js/components/pages/OnboardingPage';
 import Orientation from 'react-native-orientation';
 import TabBarLayout from './js/components/layouts/TabBarLayout';
+import TimerMixin from 'react-timer-mixin';
 
-const firebaseApp = require('./js/components/firebase');
-
-/*
- * defines the Eyespot class
- */
+/* defines the Eyespot class */
 
 class Eyespot extends Component {
+  constructor() {
+    super();
+    this.state = {
+      
+    }
+  }
 
   componentWillMount() {
-    var self = this;
+    const self = this;
 
     // Lock to portrait mode
     Orientation.lockToPortrait();
 
     // Login check
-
     AsyncStorage.getItem('@MyStore:uid')
       .then(uid => {
         if(!uid) {
-          setTimeout(() => {
+          TimerMixin.setTimeout(() => {
             self.refs.nav.push({
                title: 'OnboardingPage',
                component: OnboardingPage,
@@ -82,34 +83,31 @@ class Eyespot extends Component {
    */
 
   render() {
+
     /*
      * nextRouteProps: properties to pass to next route
      */
 
-    const nextRouteProps = {};
-
-    var onExit = false;
+    const nextRouteProps = {}, onExit = false;
 
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
         <NavigatorIOS
           ref='nav'
-          navigationBarHidden={true}    /* hide navigation bar */
-          initialRoute={{               /* initial route in navigator */
+          navigationBarHidden={true}                            // hide navigation bar
+          initialRoute={{                                       // initial route in navigator
             title: 'TabBarLayout',
             component: TabBarLayout,
           }}
-          itemWrapperStyle={styles.itemWrapper} /* styles for nav background */
+          itemWrapperStyle={styles.itemWrapper}                 // styles for nav background
           style={{flex: 1}} />
       </View>
     );
   }
 }
 
-/*
- * CSS stylings
- */
+// CSS stylings
 
 const styles = StyleSheet.create({
   container: {

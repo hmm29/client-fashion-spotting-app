@@ -1,6 +1,6 @@
-var CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 
-function uploadImage(uri, callback) {
+const uploadImage = (uri, callback) => {
 
   let timestamp = (Date.now() / 1000 | 0).toString();
   let api_key = '275677552221336'

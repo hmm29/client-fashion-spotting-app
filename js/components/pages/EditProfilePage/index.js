@@ -39,8 +39,8 @@ import TabBarLayout from '../../layouts/TabBarLayout';
 
 import firebaseApp from '../../firebase';
 
-var EDIT_GENDER_AUTOCOMPLETE_REF = 'editGenderAutocomplete';
-var {height, width} = Dimensions.get('window'); /* gets screen dimensions */
+const EDIT_GENDER_AUTOCOMPLETE_REF = 'editGenderAutocomplete';
+const {height, width} = Dimensions.get('window'); /* gets screen dimensions */
 
 String.prototype.capitalize = function () {
   return this.charAt(0).toUpperCase() + this.slice(1);
@@ -51,8 +51,7 @@ String.prototype.capitalize = function () {
 * this code is for the two-column category component
 */
 
-
-var Title = React.createClass({
+const Title = React.createClass({
 
   render() {
     const { user } = this.props;
@@ -69,7 +68,7 @@ var Title = React.createClass({
 
 });
 
-var ProfileContainer = React.createClass({
+const ProfileContainer = React.createClass({
 
   render() {
     const { user, navigateToEditProfilePage } = this.props;
@@ -86,8 +85,8 @@ var ProfileContainer = React.createClass({
 });
 
 /*
-* defines the EditProfilePage class
-*/
+ * defines the EditProfilePage class
+ */
 
 var EditProfilePage = React.createClass({
 
@@ -139,28 +138,28 @@ var EditProfilePage = React.createClass({
    },
 
    launchImageLibrary() {
-     let options = {
-         title: null, // specify null or empty string to remove the title
+     const options = {
+         title: null,                                                 // specify null or empty string to remove the title
          cancelButtonTitle: 'Cancel',
-         takePhotoButtonTitle: 'Take Photo...', // specify null or empty string to remove this button
-         chooseFromLibraryButtonTitle: 'Choose from Library...', // specify null or empty string to remove this button
+         takePhotoButtonTitle: 'Take Photo...',                       // specify null or empty string to remove this button
+         chooseFromLibraryButtonTitle: 'Choose from Library...',      // specify null or empty string to remove this button
          customButtons: {
-           'Use My Facebook Profile Photo': 'fb', // [Button Text] : [String returned upon selection]
+           'Use My Facebook Profile Photo': 'fb',                     // [Button Text] : [String returned upon selection]
          },
-         cameraType: 'front', // 'front' or 'back'
-         mediaType: 'photo', // 'photo' or 'video'
-         videoQuality: 'high', // 'low', 'medium', or 'high'
-         maxWidth: width, // photos only
-         maxHeight: height, // photos only
-         aspectX: 2, // aspectX:aspectY, the cropping image's ratio of width to height
-         aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
-         quality: 0.6, // photos only
-         angle: 0, // photos only
-         allowsEditing: true, // Built in functionality to resize/reposition the image
-         noData: false, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
-         //storageOptions: { // if this key is provided, the image will get saved in the documents/pictures directory (rather than a temporary directory)
-         //  skipBackup: true, // image will NOT be backed up to icloud
-         // path: 'images' // will save image at /Documents/images rather than the root
+         cameraType: 'front',                                         // 'front' or 'back'
+         mediaType: 'photo',                                          // 'photo' or 'video'
+         videoQuality: 'high',                                        // 'low', 'medium', or 'high'
+         maxWidth: width,                                             // photos only
+         maxHeight: height,                                           // photos only
+         aspectX: 2,                                                  // aspectX:aspectY, the cropping image's ratio of width to height
+         aspectY: 1,                                                  // aspectX:aspectY, the cropping image's ratio of width to height
+         quality: 0.6,                                                // photos only
+         angle: 0,                                                    // photos only
+         allowsEditing: true,                                         // Built in functionality to resize/reposition the image
+         noData: false,                                               // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
+         //storageOptions: {                                          // if this key is provided, the image will get saved in the documents/pictures directory (rather than a temporary directory)
+         //  skipBackup: true,                                        // image will NOT be backed up to icloud
+         // path: 'images'                                            // will save image at /Documents/images rather than the root
          //}
        };
 
@@ -173,14 +172,12 @@ var EditProfilePage = React.createClass({
          else if (response.error) {
            console.log('ImagePickerManager Error: ', response.error);
          } else {
-           // You can display the image using either data:
-           const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
 
-           // uri on iOS
-           //const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+           // format the image source string
+           const imgSource = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
 
            this.setState({
-             imgSource: source
+             imgSource
            });
          }
        })
@@ -189,7 +186,7 @@ var EditProfilePage = React.createClass({
   _onBlurGender() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.setState({
-      genderMatches: [], // refresh gender suggestions
+      genderMatches: [],                                              // refresh gender suggestions
       hasKeyboardSpace: false
     });
 
@@ -198,16 +195,13 @@ var EditProfilePage = React.createClass({
   _onFocusGender() {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
     this.setState({
-      genderMatches: [], // refresh gender suggestions
+      genderMatches: [],                                              // refresh gender suggestions
       hasKeyboardSpace: true
     });
   },
 
   _onTyping(text:string) {
-    var GenderList = ['Female', 'Male'];
-
-    let genderMatches = GenderList;
-
+    const genderMatches = ['Female', 'Male'];
     this.setState({genderMatches});
   },
 
@@ -221,8 +215,8 @@ var EditProfilePage = React.createClass({
 
    _renderHeader() {
        const backIcon = (
-         <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
-       );
+        <BackIcon color='white' onPress={() => this.props.navigator.pop()} />
+        );
 
        return (
            <Header containerStyle={styles.headerContainer}>
@@ -238,7 +232,7 @@ var EditProfilePage = React.createClass({
    },
 
    updateProfile() {
-     var userRef = firebaseApp.database().ref(`users/${this.props.user && this.props.user.uid || ''}`);
+     const userRef = firebaseApp.database().ref(`users/${this.props.user && this.props.user.uid || ''}`);
      userRef.update({
        email: this.state.email,
        gender: this.state.gender.toLowerCase(),

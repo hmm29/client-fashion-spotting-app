@@ -4,7 +4,7 @@
 
 import * as firebase from 'firebase';
 
-var config = {
+const config = {
     apiKey: "AIzaSyCygLcYQL110PLj4cXAeC3SRFWPmg9QsXE",
     authDomain: "eyespot-658a5.firebaseapp.com",
     databaseURL: "https://eyespot-658a5.firebaseio.com",
@@ -12,6 +12,5 @@ var config = {
   };
 
 const firebaseApp = firebase.initializeApp(config);
-
 
 module.exports = firebaseApp;
