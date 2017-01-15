@@ -1,4 +1,4 @@
-# fashionApp
+# fashion-spotting app
 
 This app lets users discover quality fashion products through a community-driven, visual magazine.
 
